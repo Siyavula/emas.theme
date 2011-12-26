@@ -14,6 +14,7 @@
       description="Installs the emas.theme package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  <!-- -*- extra stuff goes here -*- -->
   
+    <adapter factory=".marshal.CNXMLWriteFile" />
+
 </configure>
