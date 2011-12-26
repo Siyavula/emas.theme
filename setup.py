@@ -27,6 +27,15 @@ setup(name='emas.theme',
           'setuptools',
           # -*- Extra requirements: -*-
       ],
+      tests_require=[
+        'rhaptos.xmlfile',
+      ],
+      extras_require={
+        'test': [
+          'plone.app.testing',
+          'rhaptos.xmlfile',
+        ],
+      },
       entry_points="""
       # -*- Entry points: -*-
 
