@@ -12,9 +12,11 @@ class TestCase(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         import rhaptos.xmlfile
         import rhaptos.cnxmltransforms
+        import rhaptos.compilation
         import emas.theme
         self.loadZCML(package=rhaptos.xmlfile)
         self.loadZCML(package=rhaptos.cnxmltransforms)
+        self.loadZCML(package=rhaptos.compilation)
         self.loadZCML(package=emas.theme)
 
     def setUpPloneSite(self, portal):
