@@ -16,5 +16,6 @@
       />
   
     <adapter factory=".marshal.CNXMLWriteFile" />
+    <include package=".browser" />
 
 </configure>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts" meta_type="JavaScripts Registry">
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.roundupstatus.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.categories.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.markdown.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/showdown.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.permissions.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.auth.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.store.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/json2.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+</object>
