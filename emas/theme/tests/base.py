@@ -13,10 +13,12 @@ class TestCase(PloneSandboxLayer):
         import rhaptos.xmlfile
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
+        import upfront.shorturl
         import emas.theme
         self.loadZCML(package=rhaptos.xmlfile)
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)
+        self.loadZCML(package=upfront.shorturl)
         self.loadZCML(package=emas.theme)
 
     def setUpPloneSite(self, portal):

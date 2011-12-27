@@ -29,11 +29,13 @@ setup(name='emas.theme',
       ],
       tests_require=[
         'rhaptos.xmlfile',
+        'upfront.shorturl',
       ],
       extras_require={
         'test': [
           'plone.app.testing',
           'rhaptos.xmlfile',
+          'upfront.shorturl',
         ],
       },
       entry_points="""
