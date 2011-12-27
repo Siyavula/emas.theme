@@ -2,6 +2,7 @@ import logging
 from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 from Products.MimetypesRegistry.MimeTypeItem import MimeTypeItem
+from Products.PortalTransforms.chain import chain
 
 log = logging.getLogger('emas.theme-setuphandlers')
 
@@ -70,6 +71,15 @@ def install_cnxml_to_shortcodehtml(portal):
         pt.manage_addTransform(cnxml_to_shortcodehtml, cnxml_to_shortcodehtml_module)
     log.info('cnxml_to_shortcodehtml transform installed successfully.')
 
+def install_cnxmlplus_to_html_chain(portal):
+    pt = getToolByName(portal, 'portal_transforms')
+    chainid = 'cnxmlplus_to_html_chain'
+    pt.manage_addTransformsChain(chainid, 'CNXML+ to HTML transforms')
+    emas_chain = pt[chainid]
+    emas_chain.manage_addObject('cnxmlplus_to_cnxml')
+    emas_chain.manage_addObject('cnxml_to_shortcodehtml')
+    emas_chain.manage_addObject('shortcodehtml_to_html')
+
 def reorder_contenttype_registry(portal):
     registry = getToolByName(portal, 'content_type_registry')
     # move cnxml predicate to the top
@@ -86,4 +96,6 @@ def install(context):
     install_cnxmlplus_to_cnxml(site)
     install_cnxml_to_shortcodehtml(site)
     install_shortcodehtml_to_html(site)
+    install_cnxmlplus_to_html_chain(site)
+
     reorder_contenttype_registry(site)
