@@ -60,6 +60,11 @@ def install_cnxmlplus_to_html(portal):
         pt.manage_addTransform(cnxmlplus_to_html, cnxmlplus_to_html_module)
     log.info('cnxmlplus_to_html transform installed successfully.')
 
+def reorder_contenttype_registry(portal):
+    registry = getToolByName(portal, 'content_type_registry')
+    # move cnxml predicate to the top
+    registry.reorderPredicate('cnxml', 0)
+
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
@@ -68,4 +73,4 @@ def install(context):
     install_cnxmlplus_to_cnxml(site)
     #register_shortcode_html(site)
     #install_cnxmlplus_to_html(site)
-
+    reorder_contenttype_registry(site)
