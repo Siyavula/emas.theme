@@ -5,5 +5,6 @@
         <dependency>profile-rhaptos.xmlfile:default</dependency>
         <dependency>profile-rhaptos.cnxmltransforms:default</dependency>
         <dependency>profile-rhaptos.compilation:default</dependency>
+        <dependency>profile-upfront.shorturl:default</dependency>
     </dependencies>
 </metadata>
