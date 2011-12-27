@@ -5,6 +5,14 @@
                 compression="none"
                 cookable="True"
                 enabled="True"
+                id="++resource++emas.theme.resources/annotator.load.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
                 id="++resource++emas.theme.resources/annotator.roundupstatus.js"
                 insert-after="jquery.js"
                 inline="False"/>
@@ -29,7 +37,7 @@
                 compression="none"
                 cookable="True"
                 enabled="True"
-                id="++resource++emas.theme.resources/showdown.js"
+                id="++resource++emas.theme.resources/showdown.min.js"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -70,6 +78,14 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/json2.min.js"
+                insert-after="jquery.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/jquery.sub.js"
                 insert-after="jquery.js"
                 inline="False"/>
 
