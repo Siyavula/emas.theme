@@ -1,3 +1,4 @@
+import logging
 import datetime
 from email.Message import Message
 from lxml import etree
@@ -13,6 +14,8 @@ from plone.dexterity.filerepresentation import WriteFileBase
 from plone.dexterity.utils import iterSchemata
 
 from rhaptos.xmlfile.xmlfile import IXMLFile
+
+log = logging.getLogger('rhaptos.cnxmlfile.marshal')
 
 class CNXMLWriteFile(WriteFileBase):
     """IRawWriteFile file adapter for CNXML files.
@@ -41,11 +44,12 @@ class CNXMLWriteFile(WriteFileBase):
         self._closed = True
         data = self._getStream().getvalue()
         msg = Message()
+        msg['Content-Type'] = self.mimeType
+        encoding = 'utf-8'
+
         try:
             tree = etree.fromstring(data)
             docinfo = tree.getroottree().docinfo
-            encoding = docinfo.encoding
-            msg['Content-Type'] = self.mimeType
             if docinfo.system_url == \
                 'http://cnx.rice.edu/cnxml/0.5/DTD/cnxml_mathml.dtd':
                 nsmap = {
@@ -71,11 +75,16 @@ class CNXMLWriteFile(WriteFileBase):
                 if not elems:
                     continue
                 msg[attrname] = elems[0].text
+            if docinfo.encoding:
+                encoding = docinfo.encoding
+            msg.set_payload(data)
+        except etree.XMLSyntaxError, e:
+            log.error('Error parsing %s\nXMLSyntaxError: %s' % (
+                self.context.getId(), e.msg))
+            data = 'XMLSyntaxError: %s\n%s' % (e.msg, data)
+            msg.set_payload(data)
 
-        except etree.XMLSyntaxError:
-            encoding = 'utf-8'
-
-        msg.set_payload(data)
+        msg.set_charset(encoding)
         initializeObjectFromSchemata(self.context, iterSchemata(self.context),
                                      msg, encoding)
 
