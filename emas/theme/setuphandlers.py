@@ -85,5 +85,5 @@ def install(context):
 
     install_cnxmlplus_to_cnxml(site)
     install_cnxml_to_shortcodehtml(site)
-    #install_shortcodehtml_to_html(site)
+    install_shortcodehtml_to_html(site)
     reorder_contenttype_registry(site)

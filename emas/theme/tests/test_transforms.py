@@ -5,6 +5,7 @@ from base import INTEGRATION_TESTING
 from Products.PortalTransforms.data import datastream
 
 from emas.theme.transforms.cnxmlplus2cnxml import cnxmlplus_to_cnxml
+from emas.theme.transforms.shortcodehtml2html import shortcodehtml_to_html
 from rhaptos.cnxmltransforms.cnxml2html import cnxml_to_html
 
 dirname = os.path.dirname(__file__)
@@ -27,3 +28,9 @@ class TestTransforms(unittest.TestCase):
         transform = cnxml_to_html()
         data = datastream('cnxml')
         data = transform.convert(cnxml, data) 
+
+    def test_shortcodehtml2html(self):
+        html = open(os.path.join(dirname, 'test.html')).read()
+        transform = shortcodehtml_to_html()
+        data = datastream(html)
+        data = transform.convert(html, data) 
