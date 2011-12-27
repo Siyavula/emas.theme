@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="emas.theme" version="20111227-01"
+                handler="emas.theme.setuphandlers.install"
+                title="emas.theme">
+        <dependency step="componentregistry"/>
+        emas.theme installation step.
+    </import-step>
+</import-steps>
