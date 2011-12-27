@@ -1,5 +1,4 @@
 import urllib2
-import sys
 import os
 import BeautifulSoup
 from xml.dom.minidom import parseString
@@ -9,7 +8,6 @@ from zope.interface import implements
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
-import utils
 
 dirname = os.path.dirname(__file__)
 
