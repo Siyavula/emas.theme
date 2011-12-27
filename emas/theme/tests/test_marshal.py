@@ -25,5 +25,9 @@ class TestMarshal(unittest.TestCase):
 
         xmlfile = createObject('rhaptos.xmlfile.xmlfile', id='test.cnxml')
         writer = IRawWriteFile(xmlfile, None)
+        writer.write(cnxml)
         self.assertTrue(isinstance(writer, CNXMLWriteFile))
+        writer.close()
+        self.assertEquals(xmlfile.title, u'Calculating Descriptive Statistics')
+        self.assertEquals(xmlfile.body.raw, cnxml)
 
