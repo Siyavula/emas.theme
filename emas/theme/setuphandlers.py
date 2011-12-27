@@ -60,6 +60,16 @@ def install_cnxmlplus_to_html(portal):
         pt.manage_addTransform(cnxmlplus_to_html, cnxmlplus_to_html_module)
     log.info('cnxmlplus_to_html transform installed successfully.')
 
+def install_cnxml_to_shortcodehtml(portal):
+    log.info('Installing cnxml_to_shortcodehtml transform')
+    cnxml_to_shortcodehtml = 'cnxml_to_shortcodehtml'
+    cnxml_to_shortcodehtml_module = "rhaptos.cnxmltransforms.cnxml2html"
+    pt = getToolByName(portal, 'portal_transforms')
+
+    if cnxml_to_shortcodehtml not in pt.objectIds():
+        pt.manage_addTransform(cnxml_to_shortcodehtml, cnxml_to_shortcodehtml_module)
+    log.info('cnxml_to_shortcodehtml transform installed successfully.')
+
 def reorder_contenttype_registry(portal):
     registry = getToolByName(portal, 'content_type_registry')
     # move cnxml predicate to the top
@@ -69,8 +79,11 @@ def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
     site = context.getSite()
+
     register_cnxmlplus_mimetype(site)
+    register_shortcode_html(site)
+
     install_cnxmlplus_to_cnxml(site)
-    #register_shortcode_html(site)
-    #install_cnxmlplus_to_html(site)
+    install_cnxml_to_shortcodehtml(site)
+    #install_shortcodehtml_to_html(site)
     reorder_contenttype_registry(site)
