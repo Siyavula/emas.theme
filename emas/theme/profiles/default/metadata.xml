@@ -4,5 +4,6 @@
     <dependencies>
         <dependency>profile-rhaptos.xmlfile:default</dependency>
         <dependency>profile-rhaptos.cnxmltransforms:default</dependency>
+        <dependency>profile-rhaptos.compilation:default</dependency>
     </dependencies>
 </metadata>
