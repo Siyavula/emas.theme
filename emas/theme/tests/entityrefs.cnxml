@@ -1,0 +1,848 @@
+<?xml version="1.0"?> 
+<!DOCTYPE document PUBLIC "-//CNX//DTD CNXML 0.5 plus MathML//EN"
+   "http://cnx.rice.edu/cnxml/0.5/DTD/cnxml_mathml.dtd">
+
+<document
+  xmlns="http://cnx.rice.edu/cnxml"
+  xmlns:m="http://www.w3.org/1998/Math/MathML" 
+  id="m0528" > 
+
+  <name>Deriving the Fast Fourier Transform</name>
+
+  <metadata xmlns:md="http://cnx.rice.edu/mdml/0.4">
+  <md:version>2.6</md:version>
+  <md:created>2000/08/09</md:created>
+  <md:revised>2004/08/04 16:00:44.701 GMT-5</md:revised>
+  <md:authorlist>
+      <md:author id="dhj">
+      <md:firstname>Don</md:firstname>
+      
+      <md:surname>Johnson</md:surname>
+      <md:email>dhj@rice.edu</md:email>
+    </md:author>
+  </md:authorlist>
+
+  <md:maintainerlist>
+    <md:maintainer id="prash">
+      <md:firstname>Prashant</md:firstname>
+      
+      <md:surname>Singh</md:surname>
+      <md:email>prash@ece.rice.edu</md:email>
+    </md:maintainer>
+    <md:maintainer id="richb">
+      <md:firstname>Richard</md:firstname>
+      <md:othername>G.</md:othername>
+      <md:surname>Baraniuk</md:surname>
+      <md:email>richb@rice.edu</md:email>
+    </md:maintainer>
+    <md:maintainer id="mariyah">
+      <md:firstname>Mariyah</md:firstname>
+      
+      <md:surname>Poonawala</md:surname>
+      <md:email>mariyah@rice.edu</md:email>
+    </md:maintainer>
+  </md:maintainerlist>
+  
+  <md:keywordlist>
+    <md:keyword>complexity</md:keyword>
+    <md:keyword>fast fourier transform</md:keyword>
+    <md:keyword>fft</md:keyword>
+    <md:keyword>butterfly</md:keyword>
+    <md:keyword>order</md:keyword>
+    <md:keyword>Cooley-Tukey</md:keyword>
+  </md:keywordlist>
+
+  <md:abstract>Using the Cooley-Tukey algorithm to derive fast transforms.
+</md:abstract>
+</metadata>
+
+  <content>
+
+    <para id="intro">
+      To derive the FFT, we assume that the signal's duration is a
+      power of two:
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:ci>N</m:ci>
+	  <m:apply>
+	    <m:power/>
+	    <m:cn>2</m:cn>
+	    <m:ci>l</m:ci>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      .  Consider what happens to the even-numbered and odd-numbered
+      elements of the sequence in the DFT calculation.
+    </para>
+
+    <equation id="zerozerozeroone">
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:apply>
+	    <m:ci type="fn">S</m:ci>
+	    <m:ci>k</m:ci>
+	  </m:apply>
+
+	  <m:apply>
+	    <m:plus/>
+	    <m:apply>
+	      <m:ci type="fn">s</m:ci>
+	      <m:cn>0</m:cn>
+	    </m:apply>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:cn>2</m:cn>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:cn>2</m:cn>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:ci>N</m:ci>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	    <m:ci>&hellip;</m:ci>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:apply>
+		  <m:minus/>
+		  <m:ci>N</m:ci>
+		  <m:cn>2</m:cn>
+		</m:apply>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:apply>
+			<m:minus/>
+			<m:ci>N</m:ci>
+			<m:cn>2</m:cn>
+		      </m:apply>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:ci>N</m:ci>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:cn>1</m:cn>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:ci>N</m:ci>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:cn>3</m:cn>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:apply>
+			<m:plus/>
+			<m:cn>2</m:cn>
+			<m:cn>1</m:cn>
+		      </m:apply>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:ci>N</m:ci>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	    <m:ci>&hellip;</m:ci>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:apply>
+		  <m:minus/>
+		  <m:ci>N</m:ci>
+		  <m:cn>1</m:cn>
+		</m:apply>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:apply>
+			<m:plus/>
+			<m:apply>
+			  <m:minus/>
+			  <m:ci>N</m:ci>
+			  <m:cn>2</m:cn>
+			</m:apply>
+			<m:cn>1</m:cn>
+		      </m:apply>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:ci>N</m:ci>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	  </m:apply>
+	  
+	  <m:apply>
+	    <m:plus/>
+	    <m:apply>
+	      <m:ci type="fn">s</m:ci>
+	      <m:cn>0</m:cn>
+	    </m:apply>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:cn>2</m:cn>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:apply>
+		      <m:divide/>
+		      <m:ci>N</m:ci>
+		      <m:cn>2</m:cn>
+		    </m:apply>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	    <m:ci>&hellip;</m:ci>
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:ci type="fn">s</m:ci>
+		<m:apply>
+		  <m:minus/>
+		  <m:ci>N</m:ci>
+		  <m:cn>2</m:cn>
+		</m:apply>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:imaginaryi/>
+		  </m:apply>
+		  <m:apply>
+		    <m:divide/>
+		    <m:apply>
+		      <m:times/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:apply>
+			<m:minus/>
+			<m:apply>
+			  <m:divide/>
+			  <m:ci>N</m:ci>
+			  <m:cn>2</m:cn>
+			</m:apply>
+			<m:cn>1</m:cn>
+		      </m:apply>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		    <m:apply>
+		      <m:divide/>
+		      <m:ci>N</m:ci>
+		      <m:cn>2</m:cn>
+		    </m:apply>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+
+	    <m:apply>
+	      <m:times/>
+	      <m:apply>
+		<m:plus/>
+		<m:apply>
+		  <m:ci type="fn">s</m:ci>
+		  <m:cn>1</m:cn>
+		</m:apply>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:ci type="fn">s</m:ci>
+		    <m:cn>3</m:cn>
+		  </m:apply>
+		  <m:apply>
+		    <m:exp/>
+		    <m:apply>
+		      <m:times/>
+		      <m:apply>
+			<m:minus/>
+			<m:imaginaryi/>
+		      </m:apply>
+		      <m:apply>
+			<m:divide/>
+			<m:apply>
+			  <m:times/>
+			  <m:cn>2</m:cn>
+			  <m:pi/>
+			  <m:ci>k</m:ci>
+			</m:apply>
+			<m:apply>
+			  <m:divide/>
+			  <m:ci>N</m:ci>
+			  <m:cn>2</m:cn>
+			</m:apply>
+		      </m:apply>
+		    </m:apply>
+		  </m:apply>
+		</m:apply>
+		<m:ci>&hellip;</m:ci>
+		<m:apply>
+		  <m:times/>
+		  <m:apply>
+		    <m:ci type="fn">s</m:ci>
+		    <m:apply>
+		      <m:minus/>
+		      <m:ci>N</m:ci>
+		      <m:cn>1</m:cn>
+		    </m:apply>
+		  </m:apply>
+		  <m:apply>
+		    <m:exp/>
+		    <m:apply>
+		      <m:times/>
+		      <m:apply>
+			<m:minus/>
+			<m:imaginaryi/>
+		      </m:apply>
+		      <m:apply>
+			<m:divide/>
+			<m:apply>
+			  <m:times/>
+			  <m:cn>2</m:cn>
+			  <m:pi/>
+			  <m:apply>
+			    <m:minus/>
+		  	    <m:apply>
+			      <m:divide/>
+			      <m:ci>N</m:ci>
+			      <m:cn>2</m:cn>
+			    </m:apply>
+			    <m:cn>1</m:cn>
+			  </m:apply>
+			  <m:ci>k</m:ci>
+			</m:apply>
+			<m:apply>
+			  <m:divide/>
+			  <m:ci>N</m:ci>
+			  <m:cn>2</m:cn>
+			</m:apply>
+		      </m:apply>
+		    </m:apply>
+		  </m:apply>
+		</m:apply>
+	      </m:apply>
+	      <m:apply>
+		<m:exp/>
+		<m:apply>
+		  <m:divide/>
+		  <m:apply>
+		    <m:minus/>
+		    <m:apply> 
+		      <m:times/>
+		      <m:imaginaryi/>
+		      <m:cn>2</m:cn>
+		      <m:pi/>
+		      <m:ci>k</m:ci>
+		    </m:apply>
+		  </m:apply>
+		  <m:ci>N</m:ci>
+		</m:apply>
+	      </m:apply>
+	    </m:apply>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+    </equation>
+
+    <para id="expln"> 
+      Each term in square brackets has the <term>form</term> of a 
+      <m:math>
+	<m:apply>
+	  <m:divide/>
+	  <m:ci>N</m:ci>
+	  <m:cn>2</m:cn>
+	</m:apply>
+      </m:math>
+      -length DFT.  The first one is a DFT of the even-numbered
+      elements, and the second of the odd-numbered elements.  The
+      first DFT is combined with the second multiplied by the complex
+      exponential
+      <m:math>
+	<m:apply>
+	  <m:exp/>
+	  <m:apply>
+	    <m:divide/>
+	    <m:apply>
+	      <m:minus/>
+	      <m:apply> 
+		<m:times/>
+		<m:imaginaryi/>
+		<m:cn>2</m:cn>
+		<m:pi/>
+		<m:ci>k</m:ci>
+	      </m:apply>
+	    </m:apply>
+	    <m:ci>N</m:ci>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      .  The half-length transforms are each evaluated at frequency indices 
+      <m:math>
+	<m:apply>
+	  <m:in/>
+	  <m:ci>k</m:ci>
+	  <m:set>
+	    <m:cn>0</m:cn>
+	    <m:ci>&hellip;</m:ci>
+	    <m:apply>
+	      <m:minus/>
+	      <m:ci>N</m:ci>
+	      <m:cn>1</m:cn>
+	    </m:apply>
+	  </m:set>
+	</m:apply>
+      </m:math>
+      .  Normally, the number of frequency indices in a DFT
+      calculation range between zero and the transform length minus
+      one.  The <term>computational advantage</term> of the FFT comes
+      from recognizing the periodic nature of the discrete Fourier
+      transform.  The FFT simply reuses the computations made in the
+      half-length transforms and combines them through additions and
+      the multiplication by
+      <m:math>
+	<m:apply>
+	  <m:exp/>
+	  <m:apply>
+	    <m:divide/>
+	    <m:apply>
+	      <m:minus/>
+	      <m:apply> 
+		<m:times/>
+		<m:imaginaryi/>
+		<m:cn>2</m:cn>
+		<m:pi/>
+		<m:ci>k</m:ci>
+	      </m:apply>
+	    </m:apply>
+	    <m:ci>N</m:ci>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      , which is not periodic over 
+      <m:math>
+	<m:apply>
+	  <m:divide/>
+	  <m:ci>N</m:ci>
+	  <m:cn>2</m:cn>
+	</m:apply>
+      </m:math>
+      , to rewrite the length-N DFT.  <cnxn target="fig1001"
+	strength="8"/> illustrates this decomposition.  As it stands, we
+      now compute two length-
+      <m:math>
+	<m:apply>
+	  <m:divide/>
+	  <m:ci>N</m:ci>
+	  <m:cn>2</m:cn>
+	</m:apply>
+      </m:math>
+      transforms (complexity 
+      <m:math>
+	<m:apply>
+	  <m:times/>
+	  <m:cn>2</m:cn>
+	  <m:apply>
+	    <m:ci type="fn">O</m:ci>
+	    <m:apply>
+	      <m:divide/>
+	      <m:apply>
+		<m:power/>
+		<m:ci>N</m:ci>
+		<m:cn>2</m:cn>
+	      </m:apply>
+	      <m:cn>4</m:cn>
+	    </m:apply>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      ), multiply one of them by the complex exponential (complexity 
+      <m:math>
+	<m:apply>
+	  <m:ci type="fn">O</m:ci>
+	  <m:ci>N</m:ci>
+	</m:apply>
+      </m:math>
+      ), and add the results (complexity 
+      <m:math>
+	<m:apply>
+	  <m:ci type="fn">O</m:ci>
+	  <m:ci>N</m:ci>
+	</m:apply>
+      </m:math>
+      ).  At this point, the total complexity is still dominated by
+      the half-length DFT calculations, but the proportionality
+      coefficient has been reduced.
+    </para>
+
+    <para id="fun">
+      Now for the fun.  Because 
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:ci>N</m:ci>
+	  <m:apply>
+	    <m:power/>
+	    <m:cn>2</m:cn>
+	    <m:ci>l</m:ci>
+	  </m:apply>
+	</m:apply> 
+      </m:math>
+      , each of the half-length transforms can be reduced to two
+      quarter-length transforms, each of these to two eighth-length
+      ones, etc.  This decomposition continues until we are left with
+      length-2 transforms.  This transform is quite simple, involving
+      only additions.  Thus, the first stage of the FFT has
+      <m:math>
+	<m:apply>
+	  <m:divide/>
+	  <m:ci>N</m:ci>
+	  <m:cn>2</m:cn>
+	</m:apply>
+      </m:math> length-2 transforms (see the bottom part of <cnxn
+	target="fig1001" strength="8"/>).  Pairs of these transforms are
+      combined by adding one to the other multiplied by a complex
+      exponential.  Each pair requires 4 additions and 4
+      multiplications, giving a total number of computations equaling
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:apply>
+	    <m:times/>
+	    <m:cn>8</m:cn>
+	    <m:apply>
+	      <m:divide/>
+	      <m:ci>N</m:ci>
+	      <m:cn>4</m:cn>
+	    </m:apply>
+	  </m:apply>
+	  <m:apply>
+	    <m:divide/>
+	    <m:ci>N</m:ci>
+	    <m:cn>2</m:cn>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      .  This number of computations does not change from stage to
+      stage.  Because the number of stages, the number of times the
+      length can be divided by two, equals
+      <m:math>
+	<m:apply>
+	  <m:log/>
+	  <m:logbase><m:cn>2</m:cn></m:logbase>
+	  <m:ci>N</m:ci>
+	</m:apply>
+      </m:math>
+      , the complexity of the FFT is 
+      <m:math>
+	<m:apply>
+	  <m:ci type="fn">O</m:ci>
+	  <m:apply>
+	    <m:times/>
+	    <m:ci>N</m:ci>
+	    <m:apply>
+	      <m:log/>
+	      <m:ci>N</m:ci>
+	    </m:apply>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      .
+    </para>
+
+    <figure id="fig1001" orient="vertical"> 
+      <name>Length-8 DFT decomposition</name>
+      <subfigure id="oneoneohone">
+	<media type="image/png" src="sys9.png"/>
+      </subfigure> 
+      <subfigure id="oneoneohtwo">
+	<media type="image/png" src="sys11.png"/>
+      </subfigure> 
+      <caption>
+	The initial decomposition of a length-8 DFT into the terms
+	using even- and odd-indexed inputs marks the first phase of
+	developing the FFT algorithm.  When these half-length transforms
+	are successively decomposed, we are left with the diagram shown
+	in the bottom panel that depicts the length-8 FFT computation.
+      </caption>
+    </figure>
+
+    <para id="exampleexplained">
+      Doing an example will make computational savings more obvious.
+      Let's look at the details of a length-8 DFT.  As shown on <cnxn
+	target="fig1001" strength="8"/>, we first decompose the DFT into
+      two length-4 DFTs, with the outputs added and subtracted
+      together in pairs.  Considering <cnxn target="fig1001"
+	strength="8"/> as the frequency index goes from 0 through 7, we
+      recycle values from the length-4 DFTs into the final calculation
+      because of the periodicity of the DFT output.  Examining how
+      pairs of outputs are collected together, we create the basic
+      computational element known as a <term>butterfly</term> (<cnxn
+	target="fig1002" strength="8"/>).
+    </para>
+    
+    <figure id="fig1002">
+      <name>Butterfly</name>
+      <media type="image/png" src="sys10.png"/>
+      <caption>
+	The basic computational element of the fast Fourier transform
+	is the butterfly.  It takes two complex numbers, represented
+	by <emphasis>a</emphasis> and <emphasis>b</emphasis>, and
+	forms the quantities shown.  Each butterfly requires one
+	complex multiplication and two complex additions.
+      </caption>
+    </figure>
+
+    <para id="afterexplication">
+      By considering together the computations involving common output
+      frequencies from the two half-length DFTs, we see that the two
+      complex multiplies are related to each other, and we can reduce
+      our computational work even further.  By further decomposing the
+      length-4 DFTs into two length-2 DFTs and combining their
+      outputs, we arrive at the diagram summarizing the length-8 fast
+      Fourier transform (<cnxn target="fig1001" strength="8"/>).
+      Although most of the complex multiplies are quite simple
+      (multiplying by
+      <m:math>
+	<m:apply>
+	  <m:exp/>
+	  <m:apply>
+	    <m:minus/>
+	    <m:apply>
+	      <m:times/>
+	      <m:imaginaryi/>
+	      <m:pi/>
+	    </m:apply>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      means negating real and imaginary parts), let's count those for
+      purposes of evaluating the complexity as full complex
+      multiplies.  We have
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:apply>
+	    <m:divide/>
+	    <m:ci>N</m:ci>
+	    <m:cn>2</m:cn>
+	  </m:apply>
+	  <m:cn>4</m:cn>
+	</m:apply>
+      </m:math>
+      complex multiplies and
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:apply>
+	    <m:times/>
+	    <m:cn>2</m:cn>
+	    <m:ci>N</m:ci>
+	  </m:apply>
+	  <m:cn>16</m:cn>
+	</m:apply>
+      </m:math>
+      additions for each stage and
+      <m:math>
+	<m:apply>
+	  <m:eq/>
+	  <m:apply>
+	    <m:log/>
+	    <m:logbase><m:cn>2</m:cn></m:logbase>
+	    <m:ci>N</m:ci>
+	  </m:apply>
+	  <m:cn>3</m:cn>
+	</m:apply>
+      </m:math>
+      stages, making the number of basic computations 
+      <m:math>
+	<m:apply>
+	  <m:times/>
+	  <m:apply>
+	    <m:divide/>
+	    <m:apply>
+	      <m:times/>
+	      <m:cn>3</m:cn>
+	      <m:ci>N</m:ci>
+	    </m:apply>
+	    <m:cn>2</m:cn>
+	  </m:apply>
+	  <m:apply>
+	    <m:log/>
+	    <m:logbase><m:cn>2</m:cn></m:logbase>
+	    <m:ci>N</m:ci>
+	  </m:apply>
+	</m:apply>
+      </m:math> 
+      as predicted. 
+    </para>
+
+    <exercise id="exer1">
+      <problem> 
+	<para id="prob1">
+	  Note that the ordering of the input sequence in the two
+	  parts of <cnxn target="fig1001" strength="8"/> aren't quite
+	  the same.  Why not?  How is the ordering determined?
+	</para>
+      </problem>
+
+      <solution>
+	<para id="soln1">
+	  The upper panel has not used the FFT algorithm to compute
+	  the length-4 DFTs while the lower one has. The ordering is
+	  determined by the algorithm.
+	</para>
+      </solution>
+    </exercise>
+
+    <para id="conclusion">
+      Other "fast" algorithms were discovered, all of which make use
+      of how many common factors the transform length N has.  In
+      number theory, the number of prime factors a given integer has
+      measures how <term>composite</term> it is.  The numbers 16 and
+      81 are highly composite (equaling
+      <m:math>
+	<m:apply>
+	  <m:power/>
+	  <m:cn>2</m:cn>
+	  <m:cn>4</m:cn>
+	</m:apply>
+      </m:math> 
+      and 
+      <m:math>
+	<m:apply>
+	  <m:power/>
+	  <m:cn>3</m:cn>
+	  <m:cn>4</m:cn>
+	</m:apply>
+      </m:math> 
+      respectively), the number 18 is less so ( 
+      <m:math>
+	<m:apply>
+	  <m:times/>
+	  <m:apply>
+	    <m:power/>
+	    <m:cn>2</m:cn>
+	    <m:cn>1</m:cn>
+	  </m:apply>
+	  <m:apply>
+	    <m:power/>
+	    <m:cn>3</m:cn>
+	    <m:cn>2</m:cn>
+	  </m:apply>
+	</m:apply>
+      </m:math>
+      ), and 17 not at all (it's prime).  In over thirty years of
+      Fourier transform algorithm development, the original
+      Cooley-Tukey algorithm is far and away the most frequently
+      used.  It is so computationally efficient that power-of-two
+      transform lengths are frequently used regardless of what the
+      actual length of the data.
+    </para>
+
+  </content>
+</document>

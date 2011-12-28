@@ -29,5 +29,11 @@ class TestMarshal(unittest.TestCase):
         self.assertTrue(isinstance(writer, CNXMLWriteFile))
         writer.close()
         self.assertEquals(xmlfile.title, u'Calculating Descriptive Statistics')
-        self.assertEquals(xmlfile.body.raw, cnxml)
+        self.assertEquals(xmlfile.body.raw_encoded, cnxml)
 
+        # test with cnxmlfile with entity refs
+        cnxml = open(os.path.join(dirname, 'entityrefs.cnxml')).read()
+        xmlfile = createObject('rhaptos.xmlfile.xmlfile', id='test.cnxml')
+        writer = IRawWriteFile(xmlfile, None)
+        writer.write(cnxml)
+        writer.close()
