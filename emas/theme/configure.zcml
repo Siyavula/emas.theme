@@ -16,6 +16,7 @@
       />
   
     <adapter factory=".marshal.CNXMLWriteFile" />
+    <include package="plone.app.registry" />
     <include package=".browser" />
 
 </configure>

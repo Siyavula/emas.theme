@@ -12,11 +12,10 @@ jQuery(function ($) {
 
   maybeWaitForMathJax(function () {
     if (typeof $.fn.annotator !== 'function') {
-      alert("Ooops! it looks like you haven't built the Annotator concatenation file. " +
-            "Either download a tagged release from GitHub, or modify the Cakefile to point " +
-            "at your copy of the YUI compressor and run `cake package`.");
-    } else {
-        var elem = $('#content');
+      alert("Annotator not properly installed.");
+        return;
+    var elem = $('#content');
+    if (elem.length) {
         var account_id = '0b776919ee56436a11fdd72b3f001a23';
         var annotator_store = 'http://192.168.0.7:5000/api';
         var userid = null;

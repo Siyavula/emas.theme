@@ -8,4 +8,19 @@
         directory="resources"
         />
 
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="emas-settings"
+        class=".views.EmasControlPanel"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        for="*"
+        name="annotator-config"
+        class=".views.AnnotatorConfig"
+        template="annotatorconfig.pt"
+        permission="zope2.View"
+        />
+
 </configure>
