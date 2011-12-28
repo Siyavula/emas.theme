@@ -57,12 +57,11 @@ jQuery(function ($) {
         annotator.addPlugin('Store', {
             prefix: annotator_store,
             annotationData: {
-                'uri':  'http://192.168.0.7/cnxdemo/pr01.html',
-                // set account id
+                'uri': AnnotatorConfig.getAbsoluteUrl(),
                 'account_id': account_id
             },
             loadFromSearch: {
-                'uri': 'http://192.168.0.7/cnxdemo/pr01.html',
+                'uri': AnnotatorConfig.getAbsoluteUrl(),
                 limit: -1 
             }
         });

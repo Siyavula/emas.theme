@@ -2,14 +2,18 @@
 var AnnotatorConfig = {};
 
 AnnotatorConfig.getAccountId = function(){
-    return '<tal:a tal:replace="structure view/accountId" />';
+    return '<tal:a tal:replace="view/accountId" />';
 }
 
 AnnotatorConfig.getAnnotatorStore = function(){
-    return '<tal:a tal:replace="structure view/annotatorStore" />';
+    return '<tal:a tal:replace="view/annotatorStore" />';
 }
 
 AnnotatorConfig.getUserId = function(){
-    return '<tal:a tal:replace="structure view/userId" />';
+    return '<tal:a tal:replace="view/userId" />';
+}
+
+AnnotatorConfig.getAbsoluteUrl() = function(){
+    return '<tal:a replace="context/absolute_url" />';
 }
 <tal:script replace="structure string:</script>" />
