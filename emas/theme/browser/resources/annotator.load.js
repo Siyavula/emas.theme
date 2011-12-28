@@ -20,6 +20,7 @@ jQuery(function ($) {
         var account_id = AnnotatorConfig.getAccountId();
         var annotator_store = AnnotatorConfig.getAnnotatorStore();
         var userid = AnnotatorConfig.getUserId();
+        var absolute_url = AnnotatorConfig.getAbsoluteUrl();
         if (userid == ''){
             userid = "siyavula";
         }
@@ -57,11 +58,11 @@ jQuery(function ($) {
         annotator.addPlugin('Store', {
             prefix: annotator_store,
             annotationData: {
-                'uri': AnnotatorConfig.getAbsoluteUrl(),
+                'uri': absolute_url,
                 'account_id': account_id
             },
             loadFromSearch: {
-                'uri': AnnotatorConfig.getAbsoluteUrl(),
+                'uri': absolute_url,
                 limit: -1 
             }
         });

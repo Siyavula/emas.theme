@@ -13,7 +13,7 @@ AnnotatorConfig.getUserId = function(){
     return '<tal:a tal:replace="view/userId" />';
 }
 
-AnnotatorConfig.getAbsoluteUrl() = function(){
+AnnotatorConfig.getAbsoluteUrl = function(){
     return '<tal:a replace="context/absolute_url" />';
 }
 <tal:script replace="structure string:</script>" />
