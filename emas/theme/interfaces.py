@@ -2,6 +2,9 @@ from zope.schema import List, TextLine, Bool
 from zope.interface import Interface
 from emas.theme import MessageFactory as _
 
+class IEmasThemeLayer(Interface):
+    """ Marker interface for emas.theme. """
+
 class IEmasSettings(Interface):
     """ So we can store some settings related to this product and the
         annotator.

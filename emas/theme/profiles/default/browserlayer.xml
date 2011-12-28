@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<layers>
+    <layer
+        name="emas.theme"
+        interface="emas.theme.interfaces.IEmasThemeLayer" />
+</layers>

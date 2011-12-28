@@ -1,5 +1,6 @@
 from zope.component import queryUtility
-from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
@@ -15,10 +16,13 @@ class EmasSettingsForm(RegistryEditForm):
 class EmasControlPanel(ControlPanelFormWrapper):
     form = EmasSettingsForm
 
-class AnnotatorConfig(BrowserView):
-    def __init__(self, context, request):
-        self.context = context
-        self.request = request
+class AnnotatorConfigViewlet(ViewletBase):
+    """ Adds a bit of javascript to the top of the page with details about
+        the annotator. """
+    index = ViewPageTemplateFile('annotatorconfig.pt')
+
+    def update(self):
+        super(AnnotatorConfigViewlet, self).update()
         registry = queryUtility(IRegistry)
         self.settings = registry.forInterface(IEmasSettings)
 
@@ -29,7 +33,4 @@ class AnnotatorConfig(BrowserView):
         return self.settings.store
 
     def userId(self):
-        import pdb; pdb.set_trace()
-        member = self.context.restrictedTraverse(
-            '@@plone_portal_state').member()
-        return member.getId()
+        return self.portal_state.member().getId()

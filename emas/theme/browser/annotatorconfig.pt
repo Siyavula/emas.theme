@@ -1,5 +1,4 @@
-<tal:js omit-tag=""
-        define="dummy python: request.response.setHeader('Content-Type', 'text/javascript')">
+<tal:script replace="structure string:<script" /> type="text/javascript"<tal:script replace="structure string:>" />
 var AnnotatorConfig = {};
 
 AnnotatorConfig.getAccountId = function(){
@@ -13,4 +12,4 @@ AnnotatorConfig.getAnnotatorStore = function(){
 AnnotatorConfig.getUserId = function(){
     return '<tal:a tal:replace="structure view/userId" />';
 }
-</tal:js>
+<tal:script replace="structure string:</script>" />

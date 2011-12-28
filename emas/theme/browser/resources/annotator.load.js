@@ -14,18 +14,17 @@ jQuery(function ($) {
     if (typeof $.fn.annotator !== 'function') {
       alert("Annotator not properly installed.");
         return;
+    }
     var elem = $('#content');
     if (elem.length) {
-        var account_id = '0b776919ee56436a11fdd72b3f001a23';
-        var annotator_store = 'http://192.168.0.7:5000/api';
-        var userid = null;
-        while (userid == null){
-            userid = prompt("Please enter your dummy user name, for testing","");
-            console.log(userid);
-        }
+        var account_id = AnnotatorConfig.getAccountId();
+        var annotator_store = AnnotatorConfig.getAnnotatorStore();
+        var userid = AnnotatorConfig.getUserId();
         if (userid == ''){
             userid = "siyavula";
         }
+        console.log(userid);
+
         // user name if different from userid (could be ip address if no real user)
         var options = {};
         options.permissions = {};
