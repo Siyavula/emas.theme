@@ -10,11 +10,13 @@ class TestCase(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
+        import plone.app.registry
         import rhaptos.xmlfile
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
         import upfront.shorturl
         import emas.theme
+        self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=rhaptos.xmlfile)
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)
