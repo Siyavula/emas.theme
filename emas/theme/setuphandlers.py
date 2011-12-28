@@ -74,11 +74,12 @@ def install_cnxml_to_shortcodehtml(portal):
 def install_cnxmlplus_to_html_chain(portal):
     pt = getToolByName(portal, 'portal_transforms')
     chainid = 'cnxmlplus_to_html_chain'
-    pt.manage_addTransformsChain(chainid, 'CNXML+ to HTML transforms')
-    emas_chain = pt[chainid]
-    emas_chain.manage_addObject('cnxmlplus_to_cnxml')
-    emas_chain.manage_addObject('cnxml_to_shortcodehtml')
-    emas_chain.manage_addObject('shortcodehtml_to_html')
+    if chainid not in pt.objectIds():
+        pt.manage_addTransformsChain(chainid, 'CNXML+ to HTML transforms')
+        emas_chain = pt[chainid]
+        emas_chain.manage_addObject('cnxmlplus_to_cnxml')
+        emas_chain.manage_addObject('cnxml_to_shortcodehtml')
+        emas_chain.manage_addObject('shortcodehtml_to_html')
 
 def reorder_contenttype_registry(portal):
     registry = getToolByName(portal, 'content_type_registry')
