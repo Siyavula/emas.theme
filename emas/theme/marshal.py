@@ -48,8 +48,9 @@ class CNXMLWriteFile(WriteFileBase):
         encoding = 'utf-8'
 
         try:
-            tree = etree.fromstring(data)
-            docinfo = tree.getroottree().docinfo
+            parser = etree.XMLParser(resolve_entities=False)
+            tree = etree.parse(StringIO(data), parser)
+            docinfo = tree.docinfo
             if docinfo.system_url == \
                 'http://cnx.rice.edu/cnxml/0.5/DTD/cnxml_mathml.dtd':
                 nsmap = {
@@ -57,18 +58,18 @@ class CNXMLWriteFile(WriteFileBase):
                     'md': 'http://cnx.rice.edu/mdml/0.4',
                     }
                 xpath_attr_map = (('//cnxml:name', 'title'), 
-                                ('//md:abstract', 'description'),
-                                ('//md:created', 'created'),
-                                ('//md:revised', 'modified'))
+                                  ('//md:abstract', 'description'),
+                                  ('//md:created', 'created'),
+                                  ('//md:revised', 'modified'))
             else:
                 nsmap = {
                     'cnxml': 'http://cnx.rice.edu/cnxml',
                     'md': 'http://cnx.rice.edu/mdml',
                     }
                 xpath_attr_map = (('//md:title', 'title'), 
-                                ('//md:abstract', 'description'),
-                                ('//md:created', 'created'),
-                                ('//md:revised', 'modified'))
+                                  ('//md:abstract', 'description'),
+                                  ('//md:created', 'created'),
+                                  ('//md:revised', 'modified'))
 
             for xpath, attrname in xpath_attr_map:
                 elems = tree.xpath(xpath, namespaces=nsmap)
