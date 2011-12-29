@@ -955,3 +955,7 @@ a.active.annotator-help-trigger {
     color: #64735B;
     border-bottom: 1px solid #ffffff;
 }
+
+.annotator-help-panel li {
+    display: list-item;
+}
