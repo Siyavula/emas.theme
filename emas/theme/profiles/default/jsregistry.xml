@@ -80,13 +80,4 @@
                 id="++resource++emas.theme.resources/json2.min.js"
                 insert-after="jquery.js"
                 inline="False"/>
-
-    <javascript cacheable="True"
-                compression="safe"
-                cookable="True"
-                enabled="True"
-                id="++resource++emas.theme.resources/jquery.sub.js"
-                insert-after="jquery.js"
-                inline="False"/>
-
 </object>

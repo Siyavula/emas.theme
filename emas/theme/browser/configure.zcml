@@ -23,4 +23,12 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:viewlet
+        name="annotator-help"
+        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+        class=".views.AnnotatorHelpViewlet"
+        permission="zope2.View"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
 </configure>

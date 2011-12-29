@@ -25,7 +25,7 @@
 -------------------------------------------------------------------- */
 
 .annotator-adder {
-	background-image: url(../img/annotator-icon-sprite.png);
+	background-image: url(++resource++emas.theme.resources/annotator-icon-sprite.png);
 	background-repeat: no-repeat;
 }
 
@@ -35,7 +35,7 @@
 .annotator-viewer .annotator-controls button,
 .annotator-filter .annotator-filter-navigation button::after,
 .annotator-filter .annotator-filter-property .annotator-filter-clear {
-	background-image: url(../img/annotator-glyph-sprite.png);
+	background-image: url(++resources++emas.theme.resources/annotator-glyph-sprite.png);
 	background-repeat: no-repeat;
 }
 
@@ -884,4 +884,78 @@
 
 .annotator-hl-filtered {
 	background-color: transparent;
+}
+
+a.annotator-help-trigger {
+    position: fixed;
+    text-decoration: none;
+    bottom: 0px;
+    right: 0;
+    font-size: 14px;
+    letter-spacing:-1px;
+    font-family: verdana, helvetica, arial, sans-serif;
+    color:#fff;
+    padding: 20px 30px 20px 15px;
+    font-weight: 700;
+    background: #3096D3 url(++resource++emas.theme.resources/plus.png) 90% 50% no-repeat;
+    border:1px solid #444444;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    display: block;
+    z-index: 20;
+}
+
+a.annotator-help-trigger:hover {
+    padding: 20px 40px 20px 20px;
+    background:#2B698E url(++resource++emas.theme.resources/plus.png) 85% 55% no-repeat;
+}
+
+a.active.annotator-help-trigger {
+    background: #3096D3 url(++resource++emas.theme.resources/minus.png) 85% 55% no-repeat;
+}
+
+
+.annotator-help-panel {
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    display: none;
+    background: #FFFFFF;
+    border: 1px solid #111111;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    width: 330px;
+    height: auto;
+    padding: 30px 30px 30px 30px;
+    opacity: 0.95;
+    z-index: 10;
+}
+
+.annotator-help-panel p {
+    margin: 0 0 15px 0;
+    padding: 0;
+    color: #000000;
+}
+
+.annotator-help-panel a, .annotator-help-panel a:visited {
+    margin: 0;
+    padding: 0;
+    color: #58B91B;
+    text-decoration: none;
+    border-bottom: 1px solid #9FC54E;
+}
+
+.annotator-help-panel a:hover, .annotator-help-panel a:visited:hover {
+    color: #64735B;
+    border-bottom: 1px solid #ffffff;
+}
+
+.annotator-help-panel li {
+    display: list-item;
 }

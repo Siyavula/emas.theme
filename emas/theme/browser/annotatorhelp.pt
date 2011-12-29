@@ -1,0 +1,22 @@
+<div class="annotator-help-panel">
+    <h2>Welcome to the Siyavula Annotator!</h2>
+    <br/> <br/>
+    <h3> Instructions: </h3>
+    <ul>
+        <li> Click and drag to highlight text.</li>
+        <li> Click on the <img src="annotator-icon.png"
+                               tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++emas.theme.resources/annotator-icon.png"
+                               alt="Annotator button" height="5%" align="middle"/></li>
+        <li> Enter your comment and choose the correct category.</li>
+        <li> Click Save. </li>
+    </ul>
+
+    <h3>The colour codes: </h3>
+    <p> The annotations are colour coded according to their categories:</p>
+    <ul>
+        <li> <span class="annotator-hl annotator-hl-errata">    Errata     </span>: Something is wrong with this text. </li>
+        <li> <span class="annotator-hl annotator-hl-comment">   Comment    </span>: Any comments, critique etc.  </li>
+        <li> <span class="annotator-hl annotator-hl-suggestion">Suggestion </span>: Suggest something! </li>
+    </ul>
+</div>
+<a class="annotator-help-trigger" href="#">Help</a>
