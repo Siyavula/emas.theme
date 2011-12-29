@@ -11,16 +11,16 @@ import utils
 
 dirname = os.path.dirname(__file__)
 
-class cnxmlplus_to_cnxml:
+class cnxmlplus_to_shortcodecnxml:
     """Convert CNXML+ down to CNXML
        traverse every element in tree, find matching environments, transform
     """
 
     implements(ITransform)
 
-    __name__ = "cnxmlplus_to_cnxml"
+    __name__ = "cnxmlplus_to_shortcodecnxml"
     inputs = ("application/cnxmlplus+xml",)
-    output = "application/cnxml+xml"
+    output = "application/shortcodecnxml+xml"
     cnxmlNamespace = "http://cnx.rice.edu/cnxml"
 
     def name(self):
@@ -312,4 +312,4 @@ class cnxmlplus_to_cnxml:
         return markup
 
 def register():
-    return cnxmlplus_to_cnxml()
+    return cnxmlplus_to_shortcodecnxml()

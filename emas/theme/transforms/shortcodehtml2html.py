@@ -2,12 +2,12 @@ import urllib2
 import os
 import BeautifulSoup
 from xml.dom.minidom import parseString
+from xml.parsers.expat import ExpatError
 
 from zope.interface import implements
 
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
-
 
 dirname = os.path.dirname(__file__)
 
@@ -57,12 +57,21 @@ class shortcodehtml_to_html:
 
     def getURLContent(self, shortURL):
         content = ''
+        errors = []
         try:
             handle = urllib2.urlopen(shortURL)
             content = handle.read()
-            html = BeautifulSoup.BeautifulSoup(content)
-            content = html.find('div', id='content')
-            content = content.text
+            try:
+                dom = parseString(content)
+                elements = dom.getElementsByTagName('div')
+                for element in elements:
+                    if element.getAttribute('id') == 'content':
+                        content = element.toxml()
+            except ExpatError as e:
+                errors.append(e.message)
+                html = BeautifulSoup.BeautifulSoup(content)
+                content = html.find('div', id='content')
+                content = content.text
         except urllib2.URLError as e:
             msg = ''
             if hasattr(e, 'reason'):
@@ -71,6 +80,8 @@ class shortcodehtml_to_html:
                 msg = e.code
             print('The call failed:%s' %msg)
             content = 'Content not found'
+        if not content:
+            content = ''.join(errors) 
         return content
 
 def register():
