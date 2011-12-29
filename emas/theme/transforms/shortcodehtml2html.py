@@ -1,8 +1,7 @@
 import urllib2
 import os
 import BeautifulSoup
-from xml.dom.minidom import parseString
-from xml.parsers.expat import ExpatError
+import lxml.html
 
 from zope.interface import implements
 
@@ -32,57 +31,25 @@ class shortcodehtml_to_html:
         return data
 
     def process(self, orig):
-        dom = parseString(orig)
-        elements = dom.getElementsByTagName('shortcodes')
-        for element in elements:
-            content = self.getContent(element, dom)
-            parent = element.parentNode
-            parent.replaceChild(content, element)
-        return dom.toxml()
+        tree = lxml.html.fromstring(orig)
+        for element in tree.xpath('//shortcodes//url'):
+            content = lxml.html.fromstring(self.getURLContent(element.text))
+            element.getparent().replace(element, content)
+        return lxml.html.tostring(tree)
    
-    def getContent(self, element, dom):
-        content = dom.createElement('div')
-        entries = element.getElementsByTagName('entry')
-        for entry in entries:
-            for code in entry.getElementsByTagName('url'):
-                url = code.firstChild.nodeValue
-                if url:
-                    tmpcontent = self.getURLContent(url)
-                    if tmpcontent:
-                        newelement = dom.createElement('div')
-                        textnode = dom.createTextNode(tmpcontent)
-                        newelement.appendChild(textnode)
-                        content.appendChild(newelement)
-        return content
-
     def getURLContent(self, shortURL):
-        content = ''
-        errors = []
-        try:
-            handle = urllib2.urlopen(shortURL)
-            content = handle.read()
-            try:
-                dom = parseString(content)
-                elements = dom.getElementsByTagName('div')
-                for element in elements:
-                    if element.getAttribute('id') == 'content':
-                        content = element.toxml()
-            except ExpatError as e:
-                errors.append(e.message)
-                html = BeautifulSoup.BeautifulSoup(content)
-                content = html.find('div', id='content')
-                content = content.text
-        except urllib2.URLError as e:
-            msg = ''
-            if hasattr(e, 'reason'):
-                msg = e.reason
-            elif hasattr(e, 'code'):
-                msg = e.code
-            print('The call failed:%s' %msg)
-            content = 'Content not found'
-        if not content:
-            content = ''.join(errors) 
-        return content
+        result = ''
+        handle = urllib2.urlopen(shortURL)
+        content = handle.read()
+        element = lxml.html.fromstring(content)
+        for question in element.xpath(
+                '//div[@id="item"]/div[@class="question"]'):
+            result += lxml.html.tostring(question)
+        for answer in element.xpath(
+                '//div[@id="item"]/div[@class="field answer"]'):
+            result += lxml.html.tostring(answer)
+
+        return result
 
 def register():
     return shortcodehtml_to_html()
