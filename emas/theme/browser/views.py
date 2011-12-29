@@ -34,3 +34,7 @@ class AnnotatorConfigViewlet(ViewletBase):
 
     def userId(self):
         return self.portal_state.member().getId()
+
+class AnnotatorHelpViewlet(ViewletBase):
+    """ Adds a help panel for the annotator. """
+    index = ViewPageTemplateFile('annotatorhelp.pt')

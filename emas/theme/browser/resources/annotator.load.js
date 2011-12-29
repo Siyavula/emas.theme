@@ -84,4 +84,12 @@ jQuery(function ($) {
         annotator.addPlugin('Markdown');
     }
   });
+
+  // The little help box on the side
+  $(".annotator-help-trigger").click(function(){
+      $(".annotator-help-panel").toggle("fast");
+      $(this).toggleClass("active");
+      return false;
+  });
+
 });
