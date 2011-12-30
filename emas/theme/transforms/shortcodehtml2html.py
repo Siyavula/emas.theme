@@ -1,6 +1,5 @@
 import urllib2
 import os
-import BeautifulSoup
 import lxml.html
 
 from zope.interface import implements
