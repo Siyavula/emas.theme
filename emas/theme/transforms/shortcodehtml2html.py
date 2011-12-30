@@ -8,6 +8,10 @@ from zope.interface import implements
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
+from logging import getLogger
+
+LOGGER = getLogger('%s:' % __name__)
+
 dirname = os.path.dirname(__file__)
 
 class shortcodehtml_to_html:
@@ -32,13 +36,20 @@ class shortcodehtml_to_html:
 
     def process(self, orig):
         tree = lxml.html.fromstring(orig)
-        for element in tree.xpath('//shortcodes//url'):
-            content = lxml.html.fromstring(self.getURLContent(element.text))
-            element.getparent().replace(element, content)
+        for element in tree.xpath('//shortcodes'):
+            content = []
+            # get all the content from the contained urls
+            for url in element.findall('.//url'):
+                content.append(self.getURLContent(url.text))
+            # build a shortcode tree to contain all the fetched content
+            sctree = lxml.html.fromstring(''.join(content))
+            sctree.set('class', 'shortcode-content')
+            element.getparent().replace(element, sctree)
         return lxml.html.tostring(tree)
    
     def getURLContent(self, shortURL):
         result = ''
+        LOGGER.info('Fetching url:%s' %shortURL)
         handle = urllib2.urlopen(shortURL)
         content = handle.read()
         element = lxml.html.fromstring(content)
