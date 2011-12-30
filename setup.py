@@ -25,7 +25,10 @@ setup(name='emas.theme',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'plone.app.theming',
+          'rhaptos.xmlfile',
+          'rhaptos.cnxmltransforms',
+          'upfront.shorturl',
       ],
       tests_require=[
         'plone.app.registry',
