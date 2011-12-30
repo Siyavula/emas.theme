@@ -24,6 +24,8 @@
         <drop theme="/html/head/script" />
         <drop theme="/html/head/link" />
 
+        <drop content="//div[@id='plone-document-byline']" />
+
         <!-- Copy over the id/class attributes on the body tag.
              This is important for per-section styling -->
         <merge attributes="class" css:content="body" css:theme="body" />
