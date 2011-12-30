@@ -3,6 +3,7 @@
     <version>1000</version>
     <dependencies>
         <dependency>profile-plone.app.registry:default</dependency>
+        <dependency>profile-plone.app.theming:default</dependency>
         <dependency>profile-rhaptos.xmlfile:default</dependency>
         <dependency>profile-rhaptos.cnxmltransforms:default</dependency>
         <dependency>profile-rhaptos.compilation:default</dependency>
