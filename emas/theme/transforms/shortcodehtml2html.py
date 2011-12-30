@@ -4,6 +4,7 @@ import BeautifulSoup
 import lxml.html
 
 from zope.interface import implements
+from plone.memoize import ram
 
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
@@ -13,6 +14,9 @@ from logging import getLogger
 LOGGER = getLogger('%s:' % __name__)
 
 dirname = os.path.dirname(__file__)
+
+def cache_key(func, self, shortURL):
+    return shortURL
 
 class shortcodehtml_to_html:
     """ Convert HTML with embedded shortcodes to HTML with the full dereferenced
@@ -47,6 +51,7 @@ class shortcodehtml_to_html:
             element.getparent().replace(element, sctree)
         return lxml.html.tostring(tree)
    
+    @ram.cache(cache_key)
     def getURLContent(self, shortURL):
         result = ''
         LOGGER.info('Fetching url:%s' %shortURL)
