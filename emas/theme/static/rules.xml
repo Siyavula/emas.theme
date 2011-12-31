@@ -31,6 +31,9 @@
         <merge attributes="class" css:content="body" css:theme="body" />
         <copy attributes="id dir" css:content="body" css:theme="body" />
 
+        <!-- site title -->
+        <replace theme-children="//h1[@id='sitetitle']" content-children="/html/head/title" />
+
         <!-- Content -->
         <replace css:content-children="#content" css:theme-children="#content" />
 
