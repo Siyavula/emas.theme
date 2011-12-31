@@ -1,5 +1,10 @@
 import logging
 from StringIO import StringIO
+
+from zope.interface import directlyProvides, directlyProvidedBy
+
+from plone.app.layout.navigation.interfaces import INavigationRoot
+
 from Products.CMFCore.utils import getToolByName
 from Products.MimetypesRegistry.MimeTypeItem import MimeTypeItem
 from Products.PortalTransforms.chain import chain
@@ -102,6 +107,51 @@ def reorder_contenttype_registry(portal):
     # move cnxml predicate to the top
     registry.reorderPredicate('cnxml', 0)
 
+def setupPortalContent(portal):
+    # delete all content in the root
+    for objId in ('front-page', 'Members', 'news', 'events'):
+        if portal.hasObject(objId):
+            portal.manage_delObjects(ids=objId)
+
+    # add folder for maths
+    if not portal.hasObject('maths'):
+        portal.invokeFactory(id='maths', type_name='Folder',
+                             title='Everything Maths')
+
+        maths = portal.maths
+        directlyProvides(maths, directlyProvidedBy(maths), INavigationRoot)
+        for i in range(10,13):
+            objId = 'grade-%s' % i
+            objTitle = 'Grade %s Mathematics' % i
+            maths.invokeFactory(id=objId, type_name='Folder',
+                                title=objTitle)
+            obj = maths[objId]
+            obj.setNextPreviousEnabled(True)
+            directlyProvides(obj, directlyProvidedBy(obj), INavigationRoot)
+
+
+    # add folder for science
+    if not portal.hasObject('science'):
+        portal.invokeFactory(id='science', type_name='Folder',
+                             title='Everything Science')
+        science = portal.science
+        directlyProvides(science, directlyProvidedBy(science), INavigationRoot)
+        for i in range(10,13):
+            objId = 'grade-%s' % i
+            objTitle = 'Grade %s Physics' % i
+            science.invokeFactory(id=objId, type_name='Folder',
+                                title=objTitle)
+            obj = science[objId]
+            obj.setNextPreviousEnabled(True)
+            directlyProvides(obj, directlyProvidedBy(obj), INavigationRoot)
+
+    # publish folders
+    plone_utils = getToolByName(portal, 'plone_utils')
+    paths = ['/'.join(maths.getPhysicalPath()),
+             '/'.join(science.getPhysicalPath())]
+    plone_utils.transitionObjectsByPaths('publish', paths,
+                                         include_children=True)
+
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
@@ -118,3 +168,4 @@ def install(context):
     install_cnxmlplus_to_html_chain(site)
 
     reorder_contenttype_registry(site)
+    setupPortalContent(site)
