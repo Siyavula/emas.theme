@@ -32,7 +32,9 @@
         <copy attributes="id dir" css:content="body" css:theme="body" />
 
         <!-- site title -->
-        <replace theme-children="//h1[@id='sitetitle']" content-children="/html/head/title" />
+        <replace css:theme="#sitetitle">
+            <h1 id="sitetitle"><xsl:value-of select="//a[@id='portal-logo']/@title"/></h1>
+        </replace>
 
         <!-- Content -->
         <replace css:content-children="#content" css:theme-children="#content" />
