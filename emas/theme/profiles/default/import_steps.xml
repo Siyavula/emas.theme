@@ -3,7 +3,7 @@
     <import-step id="emas.theme" version="20111227-01"
                 handler="emas.theme.setuphandlers.install"
                 title="emas.theme">
-        <dependency step="contenttyperegistry"/>
+        <dependency step="plone-content"/>
         emas.theme installation step.
     </import-step>
 </import-steps>
