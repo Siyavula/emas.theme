@@ -152,6 +152,10 @@ def setupPortalContent(portal):
     plone_utils.transitionObjectsByPaths('publish', paths,
                                          include_children=True)
 
+    # disable tabs
+    pprop = getToolByName(portal, 'portal_properties')
+    pprop.site_properties._updateProperty('disable_folder_sections', True)
+
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
