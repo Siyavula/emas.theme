@@ -36,6 +36,11 @@
             <h1 id="sitetitle"><xsl:value-of select="//a[@id='portal-logo']/@title"/></h1>
         </replace>
 
+        <merge attributes="class href" css:theme=".navback" css:content=".listingBar a.previous" css:if-content=".listingBar a.previous"/>
+        <merge attributes="class href" css:theme=".navforward" css:content=".listingBar a.next" css:if-content=".listingBar a.next"/>
+        <merge attributes="href" css:theme=".navtoc" css:content="#portal-logo" />
+
+
         <!-- Content -->
         <replace css:content-children="#content" css:theme-children="#content" />
 

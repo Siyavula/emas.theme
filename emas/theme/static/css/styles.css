@@ -88,31 +88,36 @@ div.navigation {
     display: inline-block;
 }
 
-.navbuttonouter {
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    width: 33px;
-    height: 27px;
-}
-
 .navbutton {
+    display: inline-block;
     margin-top: 5px;
     height: 17px;
     padding: 0 2px;
     width: 29px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 27px;
+    height: 27px;
 }
 .navback {
+    opacity: 0.25;
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -241px -17px;
+    background-position: -243px -25px;
+}
+.previous {
+    opacity: 1;
 }
 .navforward {
+    opacity: 0.25;
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -241px 0;
+    background-position: -241px -3px;
+}
+.next {
+    opacity: 1;
 }
 .navtoc {
-    opacity: 0.5;
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -242px -47px;
+    background-position: -242px -61px;
 }
 
 #content {
