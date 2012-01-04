@@ -89,6 +89,7 @@ div.navigation {
 }
 
 .navbutton {
+    opacity: 0.25;
     display: inline-block;
     margin-top: 5px;
     height: 17px;
@@ -100,7 +101,6 @@ div.navigation {
     height: 27px;
 }
 .navback {
-    opacity: 0.25;
     background-image: url("../images/combined_v35_vr.png");
     background-position: -243px -25px;
 }
@@ -108,7 +108,6 @@ div.navigation {
     opacity: 1;
 }
 .navforward {
-    opacity: 0.25;
     background-image: url("../images/combined_v35_vr.png");
     background-position: -241px -3px;
 }
@@ -116,6 +115,7 @@ div.navigation {
     opacity: 1;
 }
 .navtoc {
+    opacity: 1;
     background-image: url("../images/combined_v35_vr.png");
     background-position: -242px -61px;
 }
