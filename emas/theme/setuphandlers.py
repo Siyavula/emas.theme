@@ -156,6 +156,12 @@ def setupPortalContent(portal):
     pprop = getToolByName(portal, 'portal_properties')
     pprop.site_properties._updateProperty('disable_folder_sections', True)
 
+    # add index.cnxml as default page
+    pprop = getToolByName(portal, 'portal_properties')
+    default_pages = list(pprop.site_properties.getProperty('default_page'))
+    default_pages.append('index.cnxml')
+    pprop.site_properties._updateProperty('default_page', default_pages)
+
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
