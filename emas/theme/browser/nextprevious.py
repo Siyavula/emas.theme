@@ -33,7 +33,6 @@ class NextPrevious(object):
 
     def getNextItem(self, obj, camefrom=None):
         """ return info about the next item in the container """
-        import pdb;pdb.set_trace()
         if not self.order:
             return None
         pos = self.context.getObjectPosition(obj.getId())
