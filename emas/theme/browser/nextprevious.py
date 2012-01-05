@@ -4,6 +4,7 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import IContentish
 from plone.app.layout.nextprevious.interfaces import INextPreviousProvider
+plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.folder.folder import IATUnifiedFolder
 
 
@@ -26,14 +27,37 @@ class NextPrevious(object):
 
     @property
     def enabled(self):
-        excludeFromNav = self.context.getExcludeFromNav() 
+        includeInNav = not self.context.getExcludeFromNav() 
         nextPreviousEnabled = self.context.getNextPreviousEnabled()
         # only report 'enabled' True when both conditions are met
-        return excludeFromNav and nextPreviousEnabled
+        return includeInNav and nextPreviousEnabled
+
+    def getFirstItem(self):
+        items = self.context.objectValues()[:]
+        return items and items[0] or None
+
+    def getLastItem(self):
+        items = self.context.objectValues()[:]
+        items.reverse()
+        return items and items[0] or None
+
+    def isFirstItem(self, obj):
+        if obj is None:
+            raise TypeError("Cannot compare 'None' to objects in container.")
+        firstItem = self.getFirstItem()
+        return obj == firstItem and True or False
+
+    def isLastItem(self, obj):
+        if obj is None:
+            raise TypeError("Cannot compare 'None' to objects in container.")
+        lastItem = self.getLastItem()
+        return obj == lastItem and True or False
 
     def getNextItem(self, obj, camefrom=None):
         """ return info about the next item in the container """
         if not self.order:
+            return None
+        if self.isLastItem(obj):
             return None
         pos = self.context.getObjectPosition(obj.getId())
         for oid in self.order[pos+1:]:
@@ -41,9 +65,11 @@ class NextPrevious(object):
             if data:
                 return data
         # couldn't find one, let's see of our parent knows
-        parent = self.context.aq_parent
-        if parent.enabled:
-            return parent.getNextItem(self.context, camefrom)
+        if not self.isLastItem(obj):
+            parent = self.context.aq_parent
+            if parent.enabled:
+                return parent.getNextItem(self.context, camefrom)
+        return None
 
     def getPreviousItem(self, obj, camefrom=None):
         """ return info about the previous item in the container """
@@ -56,9 +82,13 @@ class NextPrevious(object):
             if data:
                 return data
         # couldn't find one, let's see of our parent knows
-        parent = self.context.aq_parent
-        if parent.enabled:
-            return parent.getPreviousItem(self.context, camefrom)
+        if self.isFirstItem(obj) and INavigationRoot.providedBy(self.context):
+            return None
+        else:
+            parent = self.context.aq_parent
+            if parent.enabled:
+                return parent.getPreviousItem(self.context, camefrom)
+        return None
 
     def getData(self, obj):
         """ return the expected mapping, see `INextPreviousProvider` """

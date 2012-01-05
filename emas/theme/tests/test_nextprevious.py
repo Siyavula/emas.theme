@@ -30,10 +30,16 @@ class TestNextPrevious(unittest.TestCase):
             itemId, itemType, itemTitle = details
             id = book.invokeFactory(itemType, itemId, title=itemTitle)
             chapter = book[id]
-            chapter.invokeFactory(
+            chapter.setNextPreviousEnabled(True)
+            chapter.setExcludeFromNav(False)
+            id = chapter.invokeFactory(
                 'File',
                 'file%s' %number,
                 title=u'File %s' %number)
+            item = chapter._getOb(id)
+            item.setNextPreviousEnabled(True)
+            item.setExcludeFromNav(False)
+            chapter.setDefaultPage(id) 
         return book
 
     def setUp(self):
@@ -50,13 +56,14 @@ class TestNextPrevious(unittest.TestCase):
         assert adapter is not None
     
     def test_nextpreviousEnabled(self):
-        self.book.setExcludeFromNav(True)
-        self.book.setNextPreviousEnabled(True)
         adapter = queryAdapter(
             self.book, INextPreviousProvider, 'emas.nextprevious')
-        self.assertEqual(adapter.enabled, True)
 
         self.book.setExcludeFromNav(False)
+        self.book.setNextPreviousEnabled(True)
+        self.assertEqual(adapter.enabled, True)
+
+        self.book.setExcludeFromNav(True)
         self.book.setNextPreviousEnabled(True)
         self.assertEqual(adapter.enabled, False)
 
@@ -64,10 +71,54 @@ class TestNextPrevious(unittest.TestCase):
         self.book.setNextPreviousEnabled(False)
         self.assertEqual(adapter.enabled, False)
     
-    def test_getFirst(self):
+    def test_getNextItem(self):
+        adapter = queryAdapter(
+            self.book, INextPreviousProvider, 'emas.nextprevious')
+        items = self.book.objectValues()
+        
+        currentItem = items[0]
+        nextItem = adapter.getNextItem(currentItem)
+        self.assertEqual(nextItem['url'], items[1].absolute_url())
+
+        currentItem = items[1]
+        nextItem = adapter.getNextItem(currentItem)
+        self.assertEqual(nextItem['url'], items[2].absolute_url())
+    
+    def test_getFirstItem(self):
         firstItem = self.book.objectValues()[0]
         adapter = queryAdapter(
             self.book, INextPreviousProvider, 'emas.nextprevious')
-        nextItem = adapter.getNextItem(firstItem)
-        secondItem = self.book.objectValues()[1]
-        self.assertEqual(nextItem['url'], secondItem.absolute_url())
+        self.assertEqual(
+            firstItem, adapter.getFirstItem(), 'Incorrect first item')
+
+    def test_getLastItem(self):
+        items = self.book.objectValues()[:]
+        items.reverse()
+        lastItem = items[0]
+        adapter = queryAdapter(
+            self.book, INextPreviousProvider, 'emas.nextprevious')
+        self.assertEqual(
+            lastItem, adapter.getLastItem(), 'Incorrect last item')
+
+    def test_isFirstItem(self):
+        firstItem = self.book.objectValues()[0]
+        adapter = queryAdapter(
+            self.book, INextPreviousProvider, 'emas.nextprevious')
+        self.assertEqual(
+            firstItem, adapter.getFirstItem(), 'First item check failed.')
+
+    def test_isLastItem(self):
+        items = self.book.objectValues()[:]
+        items.reverse()
+        lastItem = items[0]
+        adapter = queryAdapter(
+            self.book, INextPreviousProvider, 'emas.nextprevious')
+        self.assertEqual(
+            lastItem, adapter.getLastItem(), 'Last item check failed.')
+
+    def test_stopAtFirst(self):
+        firstItem = self.book.objectValues()[0]
+        adapter = queryAdapter(
+            self.book, INextPreviousProvider, 'emas.nextprevious')
+        prevItem = adapter.getPreviousItem(firstItem)
+        self.assertEqual(prevItem, None)
