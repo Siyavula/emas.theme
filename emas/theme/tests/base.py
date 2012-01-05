@@ -13,6 +13,7 @@ class TestCase(PloneSandboxLayer):
         import plone.app.registry
         import plone.resource
         import plone.app.theming
+        import plone.app.folder
         import rhaptos.xmlfile
         import rhaptos.cnxmltransforms
         import rhaptos.compilation

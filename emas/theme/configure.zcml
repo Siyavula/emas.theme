@@ -16,10 +16,26 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   
-    <adapter factory=".marshal.CNXMLWriteFile" />
     <include package="plone.app.registry" />
     <include package=".browser" />
 
+    <adapter factory=".marshal.CNXMLWriteFile" />
+
+    <adapter factory=".browser.nextprevious.NextPrevious"
+             name="emas.nextprevious"
+             />
+
     <plone:static type="theme" directory="static" />
+
+    -*- extra stuff goes here -*-
+
+    <plone:behavior
+        title="Related content behavior"
+        description="Add a link to a piece of related content."
+        provides=".behaviors.relatedcontentbehavior.IRelatedcontentbehavior"
+        factory=".behaviors.relatedcontentbehavior.Relatedcontentbehavior"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
 
 </configure>
