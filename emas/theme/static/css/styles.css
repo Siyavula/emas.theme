@@ -18,6 +18,13 @@ h1, h2, h3, h4, h5, h6 {
     color: #444;
 }
 
+td, th {
+    padding: 0.5em 1em;
+    vertical-align: top;
+    line-height: 1em;
+}
+
+
 #header {
     background-color:#efefef;
     color: #000000;
@@ -81,31 +88,36 @@ div.navigation {
     display: inline-block;
 }
 
-.navbuttonouter {
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    width: 33px;
-    height: 27px;
-}
-
 .navbutton {
+    opacity: 0.25;
+    display: inline-block;
     margin-top: 5px;
     height: 17px;
     padding: 0 2px;
     width: 29px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 27px;
+    height: 27px;
 }
 .navback {
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -241px -17px;
+    background-position: -243px -25px;
+}
+.previous {
+    opacity: 1;
 }
 .navforward {
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -241px 0;
+    background-position: -241px -3px;
+}
+.next {
+    opacity: 1;
 }
 .navtoc {
-    opacity: 0.5;
+    opacity: 1;
     background-image: url("../images/combined_v35_vr.png");
-    background-position: -242px -47px;
+    background-position: -242px -61px;
 }
 
 #content {
@@ -125,4 +137,31 @@ div.navigation {
 #content p, #content div, #content dd, #content dt {
     line-height: 1.55em;
     margin: 1.2em 0;
+}
+
+#content table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.shortcode-content {
+    background-color: #f5f5f5;
+    padding: 0 1em;
+}
+
+.shortcode-content label.formQuestion {
+    font-weight: bold;
+}
+
+.shortcode-content .answer {
+    border-bottom: 1px solid #ccc;
+}
+
+.figure table {
+    width: 100%;
+}
+
+table.plain th, table.plain td {
+    border: 1px solid #DDDDDD;
 }

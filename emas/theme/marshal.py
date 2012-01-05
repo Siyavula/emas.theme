@@ -30,7 +30,10 @@ class CNXMLWriteFile(WriteFileBase):
     
     @getproperty
     def mimeType(self):
-        return 'application/cnxml+xml'
+        if self.context.getId().endswith('.cnxml'):
+            return 'application/cnxml+xml'
+        elif self.context.getId().endswith('.cnxmlplus'):
+            return 'application/cnxmlplus+xml'
     
     @getproperty
     def name(self):
