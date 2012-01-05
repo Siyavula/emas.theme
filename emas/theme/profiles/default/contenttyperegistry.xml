@@ -3,4 +3,7 @@
     <predicate name="cnxml" content_type_name="rhaptos.xmlfile.xmlfile" predicate_type="extension">
         <argument value="cnxml"/>
     </predicate>
+    <predicate name="cnxmlplus" content_type_name="rhaptos.xmlfile.xmlfile" predicate_type="extension">
+        <argument value="cnxmlplus"/>
+    </predicate>
 </object>

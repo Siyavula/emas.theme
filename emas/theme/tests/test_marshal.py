@@ -27,6 +27,7 @@ class TestMarshal(unittest.TestCase):
         writer = IRawWriteFile(xmlfile, None)
         writer.write(cnxml)
         self.assertTrue(isinstance(writer, CNXMLWriteFile))
+        self.assertEquals(writer.mimeType, 'application/cnxml+xml')
         writer.close()
         self.assertEquals(xmlfile.title, u'Calculating Descriptive Statistics')
         self.assertEquals(xmlfile.body.raw_encoded, cnxml)
@@ -37,3 +38,9 @@ class TestMarshal(unittest.TestCase):
         writer = IRawWriteFile(xmlfile, None)
         writer.write(cnxml)
         writer.close()
+
+        # test cnxmlplus
+        cnxml = open(os.path.join(dirname, 'test.cnxmlplus')).read()
+        xmlfile = createObject('rhaptos.xmlfile.xmlfile', id='test.cnxmlplus')
+        writer = IRawWriteFile(xmlfile, None)
+        self.assertEquals(writer.mimeType, 'application/cnxmlplus+xml')

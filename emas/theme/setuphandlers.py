@@ -104,8 +104,9 @@ def install_cnxmlplus_to_html_chain(portal):
 
 def reorder_contenttype_registry(portal):
     registry = getToolByName(portal, 'content_type_registry')
-    # move cnxml predicate to the top
+    # move cnxml and cnxml+ predicate to the top
     registry.reorderPredicate('cnxml', 0)
+    registry.reorderPredicate('cnxmlplus', 1)
 
 def setupPortalContent(portal):
     # delete all content in the root
@@ -147,8 +148,8 @@ def setupPortalContent(portal):
 
     # publish folders
     plone_utils = getToolByName(portal, 'plone_utils')
-    paths = ['/'.join(maths.getPhysicalPath()),
-             '/'.join(science.getPhysicalPath())]
+    paths = ['/'.join(portal.maths.getPhysicalPath()),
+             '/'.join(portal.science.getPhysicalPath())]
     plone_utils.transitionObjectsByPaths('publish', paths,
                                          include_children=True)
 
@@ -159,7 +160,10 @@ def setupPortalContent(portal):
     # add index.cnxml as default page
     pprop = getToolByName(portal, 'portal_properties')
     default_pages = list(pprop.site_properties.getProperty('default_page'))
-    default_pages.append('index.cnxml')
+    if 'index.cnxml' not in default_pages:
+        default_pages.append('index.cnxml')
+    if 'index.cnxmlplus' not in default_pages:
+        default_pages.append('index.cnxmlplus')
     pprop.site_properties._updateProperty('default_page', default_pages)
 
 def install(context):
