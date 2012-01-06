@@ -24,7 +24,17 @@
         <drop theme="/html/head/script" />
         <drop theme="/html/head/link" />
 
+        <before
+            css:content="#portal-personaltools-wrapper"
+            css:theme="#logo"
+            />
+        <before
+            css:content="#portal-searchbox"
+            css:theme="#logo"
+            />
+
         <drop content="//div[@id='plone-document-byline']" />
+        <drop css:content="div.searchSection" />
 
         <!-- Copy over the id/class attributes on the body tag.
              This is important for per-section styling -->
@@ -43,6 +53,10 @@
 
         <!-- Content -->
         <replace css:content-children="#content" css:theme-children="#content" />
+
+        <!-- Copy annotator viewlet -->
+        <after css:theme-children="body" css:content="div.annotator-help-panel"/>
+        <after css:theme-children="body" css:content="a.annotator-help-trigger"/>
 
     </rules>
 

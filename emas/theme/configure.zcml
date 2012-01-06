@@ -23,8 +23,6 @@
 
     <plone:static type="theme" directory="static" />
 
-    -*- extra stuff goes here -*-
-
     <plone:behavior
         title="Related content behavior"
         description="Add a link to a piece of related content."
