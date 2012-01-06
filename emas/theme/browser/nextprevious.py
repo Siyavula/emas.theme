@@ -4,7 +4,7 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import IContentish
 from plone.app.layout.nextprevious.interfaces import INextPreviousProvider
-plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.folder.folder import IATUnifiedFolder
 
 
