@@ -8,10 +8,6 @@
         />
     <stylesheet
         expression="not:request/HTTP_X_THEME_ENABLED | nothing"
-        id="public.css"
-        />
-    <stylesheet
-        expression="not:request/HTTP_X_THEME_ENABLED | nothing"
         id="member.css"
         />
     <stylesheet
