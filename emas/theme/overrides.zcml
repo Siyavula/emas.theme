@@ -4,3 +4,4 @@
   
     <adapter factory=".browser.nextprevious.NextPrevious" />
 
+</configure>
