@@ -1,6 +1,7 @@
 import os
 import unittest2 as unittest
 from zope.component import queryAdapter
+from zope.interface import directlyProvides, directlyProvidedBy
 
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -9,6 +10,7 @@ from base import INTEGRATION_TESTING
 from Products.ATContentTypes.interface import IATFolder
 from plone.app.folder.folder import IATUnifiedFolder
 from plone.app.layout.nextprevious.interfaces import INextPreviousProvider
+from plone.app.layout.navigation.interfaces import INavigationRoot
 
 dirname = os.path.dirname(__file__)
 
@@ -22,6 +24,8 @@ class TestNextPrevious(unittest.TestCase):
             'Maths',
             title=u"Maths Grade 10")
         book = self.portal._getOb(id)
+        directlyProvides(book, directlyProvidedBy(book), INavigationRoot)
+
         structure = (('folder001', 'Folder', u'Folder 001'),
                      ('folder002', 'Folder', u'Folder 002'),
                      ('folder003', 'Folder', u'Folder 003'),
