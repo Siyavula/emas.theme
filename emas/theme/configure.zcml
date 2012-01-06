@@ -21,10 +21,6 @@
 
     <adapter factory=".marshal.CNXMLWriteFile" />
 
-    <adapter factory=".browser.nextprevious.NextPrevious"
-             name="emas.nextprevious"
-             />
-
     <plone:static type="theme" directory="static" />
 
     -*- extra stuff goes here -*-
