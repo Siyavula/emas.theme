@@ -80,4 +80,13 @@
                 id="++resource++emas.theme.resources/json2.min.js"
                 insert-after="jquery.js"
                 inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                expression=""
+                id="++resource++fullmarks.mathjax/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+                inline="False"/>
+
 </object>
