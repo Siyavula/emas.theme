@@ -132,6 +132,12 @@ div.navigation {
     font: bold 1.25em Georgia, "Times New Roman", serif;
 }
 
+#content .annotator-adder {
+    margin-left: -25px;
+    margin-top: -41px;
+    font-size: 10px;
+    line-height: 1;
+}
 
 #footer {
     background-color: #efefef;
