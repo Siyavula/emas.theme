@@ -128,6 +128,9 @@ div.navigation {
     display: inline;
     padding: 0;
 }
+#content .documentDescription, #content #description {
+    font: bold 1.25em Georgia, "Times New Roman", serif;
+}
 
 
 #footer {
