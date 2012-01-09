@@ -3,4 +3,5 @@
     xmlns:browser="http://namespaces.zope.org/browser">
   
     <adapter factory=".browser.nextprevious.NextPrevious" />
+
 </configure>

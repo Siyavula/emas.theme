@@ -8,5 +8,6 @@
         <dependency>profile-rhaptos.cnxmltransforms:default</dependency>
         <dependency>profile-rhaptos.compilation:default</dependency>
         <dependency>profile-upfront.shorturl:default</dependency>
+        <dependency>profile-fullmarks.mathjax:default</dependency>
     </dependencies>
 </metadata>

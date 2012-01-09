@@ -66,8 +66,8 @@ class NextPrevious(object):
                 return data
         # couldn't find one, let's see of our parent knows
         if not self.isLastItem(obj):
-            parent = self.context.aq_parent
-            if parent.enabled:
+            parent = INextPreviousProvider(self.context.aq_parent)
+            if parent and parent.enabled:
                 return parent.getNextItem(self.context, camefrom)
         return None
 
@@ -85,8 +85,8 @@ class NextPrevious(object):
         if self.isFirstItem(obj) and INavigationRoot.providedBy(self.context):
             return None
         else:
-            parent = self.context.aq_parent
-            if parent.enabled:
+            parent = INextPreviousProvider(self.context.aq_parent)
+            if parent and parent.enabled:
                 return parent.getPreviousItem(self.context, camefrom)
         return None
 
