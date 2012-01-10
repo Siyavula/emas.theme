@@ -1,6 +1,7 @@
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
+from plone.app.testing import quickInstallProduct
 
 from plone.testing import z2
 
@@ -18,6 +19,7 @@ class TestCase(PloneSandboxLayer):
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
         import upfront.shorturl
+        import fullmarks.mathjax
         import emas.theme
         self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=plone.resource)
@@ -26,9 +28,12 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)
         self.loadZCML(package=upfront.shorturl)
+        self.loadZCML(package=fullmarks.mathjax)
         self.loadZCML(package=emas.theme)
+        self.loadZCML('overrides.zcml', package=emas.theme)
 
     def setUpPloneSite(self, portal):
+        quickInstallProduct(portal, 'emas.theme')
         self.applyProfile(portal, '%s:default' % PROJECTNAME)
 
     def tearDownZope(self, app):
