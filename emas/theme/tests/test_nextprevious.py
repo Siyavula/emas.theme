@@ -55,13 +55,11 @@ class TestNextPrevious(unittest.TestCase):
         assert IATUnifiedFolder.providedBy(self.book)
     
     def test_findNextPreviousAdapter(self):
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         assert adapter is not None
     
     def test_nextpreviousEnabled(self):
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
 
         self.book.setExcludeFromNav(False)
         self.book.setNextPreviousEnabled(True)
@@ -76,8 +74,7 @@ class TestNextPrevious(unittest.TestCase):
         self.assertEqual(adapter.enabled, False)
     
     def test_getNextItem(self):
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         items = self.book.objectValues()
         
         currentItem = items[0]
@@ -90,8 +87,7 @@ class TestNextPrevious(unittest.TestCase):
     
     def test_getFirstItem(self):
         firstItem = self.book.objectValues()[0]
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         self.assertEqual(
             firstItem, adapter.getFirstItem(), 'Incorrect first item')
 
@@ -99,15 +95,13 @@ class TestNextPrevious(unittest.TestCase):
         items = self.book.objectValues()[:]
         items.reverse()
         lastItem = items[0]
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         self.assertEqual(
             lastItem, adapter.getLastItem(), 'Incorrect last item')
 
     def test_isFirstItem(self):
         firstItem = self.book.objectValues()[0]
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         self.assertEqual(
             firstItem, adapter.getFirstItem(), 'First item check failed.')
 
@@ -115,14 +109,23 @@ class TestNextPrevious(unittest.TestCase):
         items = self.book.objectValues()[:]
         items.reverse()
         lastItem = items[0]
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         self.assertEqual(
             lastItem, adapter.getLastItem(), 'Last item check failed.')
 
     def test_stopAtFirst(self):
         firstItem = self.book.objectValues()[0]
-        adapter = queryAdapter(
-            self.book, INextPreviousProvider, 'emas.nextprevious')
+        adapter = INextPreviousProvider(self.book)
         prevItem = adapter.getPreviousItem(firstItem)
         self.assertEqual(prevItem, None)
+
+    def test_nextItemExcludedFromNav(self):
+        """ If 'excludedFromNav' is set, the adapter should ignore this item.
+        """
+        firstItem = self.book.objectValues()[0]
+        secondItem = self.book.objectValues()[1]
+        adapter = INextPreviousProvider(self.book)
+        secondItem.setExcludeFromNav(True)
+        adapter.getNextItem(firstItem)
+
+
