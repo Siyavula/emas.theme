@@ -40,6 +40,7 @@
              This is important for per-section styling -->
         <merge attributes="class" css:content="body" css:theme="body" />
         <copy attributes="id dir" css:content="body" css:theme="body" />
+        <copy attributes="href" css:content="#portal-logo" css:theme="#logo" />
 
         <!-- site title -->
         <replace css:theme="#sitetitle">
