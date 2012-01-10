@@ -98,6 +98,9 @@ class NextPrevious(object):
             # do not return a not contentish object
             # such as a local workflow policy for example (#11234)
             return None
+        # pay attention to the 'excludedFromNav' attribute itself too
+        elif obj.getExcludeFromNav():
+            return None
 
         ptype = obj.portal_type
         url = obj.absolute_url()

@@ -126,6 +126,13 @@ class TestNextPrevious(unittest.TestCase):
         secondItem = self.book.objectValues()[1]
         adapter = INextPreviousProvider(self.book)
         secondItem.setExcludeFromNav(True)
-        adapter.getNextItem(firstItem)
+        item_data = adapter.getNextItem(firstItem)
+        assert secondItem.absolute_url() != item_data['url']
+        self.assertEqual(item_data['url'], self.book.objectValues()[2].absolute_url())
+
+        secondItem.setExcludeFromNav(False)
+        item_data = adapter.getNextItem(firstItem)
+        assert secondItem.absolute_url() == item_data['url']
+        self.assertEqual(item_data['url'], self.book.objectValues()[1].absolute_url())
 
 
