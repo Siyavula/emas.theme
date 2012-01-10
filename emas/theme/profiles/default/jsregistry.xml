@@ -6,8 +6,7 @@
                 id="jquery.js"
                 expression="not:request/HTTP_X_THEME_ENABLED | nothing" />
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
@@ -16,8 +15,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="safe"
                 cookable="True"
                 enabled="True"
@@ -26,8 +24,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="safe"
                 cookable="True"
                 enabled="True"
@@ -36,8 +33,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="safe"
                 cookable="True"
                 enabled="True"
@@ -46,8 +42,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
@@ -56,8 +51,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
@@ -66,8 +60,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
@@ -76,8 +69,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
@@ -86,8 +78,7 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript authenticated="True" 
-                cacheable="True"
+    <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
