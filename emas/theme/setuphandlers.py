@@ -128,7 +128,6 @@ def setupPortalContent(portal):
                                 title=objTitle)
             obj = maths[objId]
             obj.setNextPreviousEnabled(True)
-            directlyProvides(obj, directlyProvidedBy(obj), INavigationRoot)
 
 
     # add folder for science
@@ -144,7 +143,6 @@ def setupPortalContent(portal):
                                 title=objTitle)
             obj = science[objId]
             obj.setNextPreviousEnabled(True)
-            directlyProvides(obj, directlyProvidedBy(obj), INavigationRoot)
 
     # publish folders
     plone_utils = getToolByName(portal, 'plone_utils')
