@@ -19,7 +19,7 @@
         name="annotator-config"
         manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
         class=".views.AnnotatorConfigViewlet"
-        permission="zope2.View"
+        permission="cmf.SetOwnProperties"
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
@@ -27,7 +27,7 @@
         name="annotator-help"
         manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
         class=".views.AnnotatorHelpViewlet"
-        permission="zope2.View"
+        permission="cmf.SetOwnProperties"
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
