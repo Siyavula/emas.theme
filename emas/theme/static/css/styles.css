@@ -1,5 +1,5 @@
 body {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     text-align: left;
     color: #333;
     font-size: 1.2em;
@@ -15,8 +15,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Georgia, "Times New Roman", serif;
-    color: #444;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #111;
 }
 
 td, th {
@@ -28,32 +28,117 @@ td, th {
 #header {
     background-color:#efefef;
     color: #000000;
-    border-bottom: 1px solid #ccc;
     width: 100%;
 }
 
-#sitetitle {
-    margin-top: 1em;
+#navbar {
+    background-color: #008fb4;
+    padding: 10px;
+    width: 100%;
+}
+
+#login {
+    margin-top: 40px;
+    float: right;
+}
+
+#sitetitletop {
+    padding: 0.7em 0 0;
+    font-size: 2.6em;
+    font-family: "Montserrat";
+    font-weight: normal;
+    text-transform: uppercase;
+    line-height: 100%;
+    color: #bbb;
+}
+#sitetitlebottom {
+    font-size: 2.6em;
+    font-family: "Montserrat";
+    font-weight: normal;
+    text-transform: uppercase;
+    line-height: 100%;
+    letter-spacing: 10px;
+}
+#belowtitle {
+    color: #008fb4;
+    font-size: 0.7em;
+    font-family: "Montserrat";
+    font-weight: normal;
+    text-transform: uppercase;
+    padding-left: 0.4em;
+    padding-bottom: 2em;
+    letter-spacing: 3px;
 }
 
 .fixedwidth {
     margin: auto;
-    max-width: 750px;
+    max-width: 800px;
 }
 
+#personalbar {
+    background-color: #ddd;
+    height: 30px;
+}
+
+#personal-tools-wrapper {
+    float: right;
+}
+#portal-personaltools {
+    background: transparent;
+    font-size: 70%;
+    padding: 0.5em 0 0;
+}
 
 #logo {
-    display: inline-block;
+    float: right;
+    padding: 2.5em 0;
+}
+#sitelogo {
     padding: 1em 0;
 }
 
-#portal-searchbox {
-    margin: 66px 0;
+#globalnav a {
+    padding-right: 1.5em;
+    color: white;
 }
+
+#portal-searchbox {
+    background: url("../images/searcharea.png") no-repeat scroll 0 0 transparent;
+    height: 34px;
+    margin-top: -0.5em;
+    padding: 0;
+    text-align: right;
+    text-transform: none;
+    white-space: nowrap;
+    width: 240px;
+}
+#globalnav form {
+    margin: 0;
+    padding: 0;
+}
+#portal-searchbox input.searchButton {
+    background: url("../images/searchicon.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    float: left;
+    font-size: 0;
+    height: 34px;
+    margin: 0;
+    padding: 0;
+    width: 25px;
+}
+#searchGadget {
+    border: medium none;
+    height: 18px;
+    margin-right: 10px;
+    margin-top: 8px;
+    padding: 0;
+    width: 200px;
+}
+
 
 div.navigation {
     margin: 0.1em 0;
-    max-width: 750px;
+    max-width: 800px;
     float: right;
 }
 
@@ -96,7 +181,7 @@ div.navigation {
 
 #content {
     margin: 1em auto;
-    max-width: 750px;
+    max-width: 780px;
     font-size: 100%;
 }
 
@@ -130,7 +215,7 @@ div.navigation {
     padding: 0;
 }
 #content .documentDescription, #content #description {
-    font: bold 1.25em Georgia, "Times New Roman", serif;
+    font: bold 1.25em "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 #content .annotator-adder {
@@ -140,8 +225,11 @@ div.navigation {
     line-height: 1;
 }
 
+#content-core img {
+    border: 1px dotted black;
+}
+
 #footer {
-    background-color: #efefef;
     color: #000000;
     border-top: 1px solid #ccc;
     height: 140px;
@@ -173,3 +261,5 @@ div.navigation {
 table.plain th, table.plain td {
     border: 1px solid #DDDDDD;
 }
+
+

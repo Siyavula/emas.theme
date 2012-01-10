@@ -22,19 +22,15 @@
 
         <drop theme="/html/head/style" />
         <drop theme="/html/head/script" />
-        <drop theme="/html/head/link" />
 
-        <before
+        <replace
             css:content="#portal-personaltools-wrapper"
-            css:theme="#logo"
-            />
-        <before
-            css:content="#portal-searchbox"
-            css:theme="#logo"
+            css:theme="#personaltools"
             />
 
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
+        <drop css:content="h1.documentFirstHeading" if-path="/Plone/maths"/>
 
         <!-- Copy over the id/class attributes on the body tag.
              This is important for per-section styling -->
