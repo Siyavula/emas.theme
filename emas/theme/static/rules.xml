@@ -33,12 +33,19 @@
         <drop css:content="h1.documentFirstHeading" if-path="/Plone/maths"/>
         <drop css:content="h1.documentFirstHeading" if-path="/"/>
 
+
+        <replace theme="//h1[@id='sitetitlebottom']//a">
+            <h1 id="sitetitlebottom" class="sitetitle"><a><xsl:attribute name="href"><xsl:value-of select="//a[id='portal-logo']/@href"/></xsl:attribute><xsl:if test="contains(//title/text(), 'Maths')">Maths</xsl:if><xsl:if test="contains(//title/text(), 'Science')">Science</xsl:if></a></h1>
+        </replace>
+        <replace theme="//h2[@id='belowtitle']">
+            <h2 id="belowtitle" class="sitetitle"><xsl:if test="contains(//title/text(), 'Maths')">Excel in Mathematics</xsl:if><xsl:if test="contains(//title/text(), 'Science')">Excel in Science</xsl:if></h2>
+        </replace>
+
         <!-- Copy over the id/class attributes on the body tag.
              This is important for per-section styling -->
         <merge attributes="class" css:content="body" css:theme="body" />
         <copy attributes="id dir" css:content="body" css:theme="body" />
         <copy attributes="href" css:content="#portal-logo" css:theme="#sitetitletop a" />
-        <copy attributes="href" css:content="#portal-logo" css:theme="#sitetitlebottom a" />
 
         <!-- site title -->
         <replace css:theme="#sitetitle">
