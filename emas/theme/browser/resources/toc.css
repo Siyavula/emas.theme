@@ -1,0 +1,101 @@
+/* Basic styles for expandable tree like navigation */
+
+h2, h3, h4, h5, h6 {
+    margin: .5em 0;
+    font-size: 1em !important;
+}
+
+.cnx_chapter_header, #cnx_course_content ul {
+    margin: 0;
+}
+
+.cnx_chapter_header {
+    cursor: pointer;
+    display: inline;
+}
+
+#cnx_course_content ul, #cnx_course_content li {
+    list-style-type: none;
+}
+
+#cnx_course_start {
+    font-size: 1.2em;
+}
+
+#cnx_course_contributors {
+    display: none;
+}
+
+#cnx_course_content {
+    margin: 1em 0;
+}
+
+#cnx_course_content dl, #cnx_course_content dt, #cnx_course_content dd {
+    margin: 0;
+}
+
+ul#collapsibleDemo {
+    padding-left: 12px;
+}
+
+ol {
+    padding-left: 10px;
+    list-style-type: decimal;
+}
+
+hr {
+    margin: 0;
+    height: 0;
+    border-width: 0;
+    border-top: 1px solid #999;
+}
+
+ol.arabic { list-style-type: decimal; }
+ol.upper-roman { list-style-type: upper-roman; }
+ol.lower-roman { list-style-type: lower-roman; }
+ol.upper-alpha { list-style-type: upper-alpha; }
+ol.lower-alpha { list-style-type: lower-alpha; }
+ul.bullet { list-style-type: disc; }
+ul.open-circle { list-style-type: circle; }
+ul.other { list-style-type: none; }
+ol.other { list-style-type: none; }
+ul.labeled-item { list-style-type: none; }
+
+.smallcaps {
+    font-variant: small-caps;
+}
+
+.normal {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    font-variant: normal;
+}
+
+.normal em {
+    font-style: normal;
+}
+
+.cnxn-target {
+    text-transform: capitalize;
+}
+
+pre.underline {
+    text-decoration: underline;              
+}
+
+pre.space {
+    display: inline;
+}
+
+
+ul#collapsibleDemo li {
+    list-style-type: none;
+}
+
+img.tree-icon {
+    height: 9px;
+    width: 9px;
+    padding-right: 0px;
+    margin-left: -13px;
+}
