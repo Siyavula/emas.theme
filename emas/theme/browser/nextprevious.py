@@ -57,18 +57,15 @@ class NextPrevious(object):
         """ return info about the next item in the container """
         if not self.order:
             return None
-        if self.isLastItem(obj):
-            return None
         pos = self.context.getObjectPosition(obj.getId())
         for oid in self.order[pos+1:]:
             data = self.getData(self.context[oid])
             if data:
                 return data
         # couldn't find one, let's see of our parent knows
-        if not self.isLastItem(obj):
-            parent = INextPreviousProvider(self.context.aq_parent)
-            if parent and parent.enabled:
-                return parent.getNextItem(self.context, camefrom)
+        parent = INextPreviousProvider(self.context.aq_parent)
+        if parent and parent.enabled:
+            return parent.getNextItem(self.context, camefrom)
         return None
 
     def getPreviousItem(self, obj, camefrom=None):
