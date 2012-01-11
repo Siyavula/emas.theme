@@ -1,15 +1,22 @@
-import sys
-import os
-from lxml import etree, html
+import sys, os
+from lxml import etree
+import utils
 
 from zope.interface import implements
-
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
-import utils
-
 dirname = os.path.dirname(__file__)
+
+"""
+if len(sys.argv) != 2:
+    print 'Usage: %s filename.xml'%sys.argv[0]
+    sys.exit()
+
+filename = sys.argv[1]
+with open(filename, 'rt') as fp:
+    markup = fp.read()
+"""
 
 class cnxmlplus_to_shortcodecnxml:
     """Convert CNXML+ down to CNXML
@@ -21,7 +28,6 @@ class cnxmlplus_to_shortcodecnxml:
     __name__ = "cnxmlplus_to_shortcodecnxml"
     inputs = ("application/cnxmlplus+xml",)
     output = "application/shortcodecnxml+xml"
-    cnxmlNamespace = "http://cnx.rice.edu/cnxml"
 
     def name(self):
         return self.__name__
@@ -31,7 +37,49 @@ class cnxmlplus_to_shortcodecnxml:
         data.setData(result)
         return data
 
+    def process(self, markup):
+        # Convert down to CNXML
+
+        # Strip comments
+        pos = 0
+        while True:
+            start = markup.find('<!--', pos)
+            if start == -1:
+                break
+            stop = markup.find('-->', start)
+            assert stop != -1
+            stop += 3
+            markup = markup[:start] + markup[stop:]
+            pos = start
+
+        dom = etree.fromstring(markup)
+
+        # Strip out <section type="chapter">
+        dom = dom.find('content')
+        assert len(dom) == 1 # only a single chapter section
+        assert (dom[0].tag == 'section') and (dom[0].attrib['type'] == 'chapter')
+        chapterNode = dom[0]
+        titleNode = chapterNode[0]
+        assert titleNode.tag == 'title'
+        contentsNodes = chapterNode[1:]
+        del dom[0]
+        dom.append(titleNode)
+        dom.append(utils.create_node('content'))
+        for node in contentsNodes:
+            dom[-1].append(node)
+
+        # Transform all elements in document
+        self.psPictureCount = 0
+        self.traverse_dom_for_cnxml(dom)
+
+        markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
+        assert markup[:8] == '<content'
+        assert markup[-10:] == '</content>'
+        markup = '<?xml version="1.0"?>\n<document xmlns="http://cnx.rice.edu/cnxml"' + markup[8:-10] + '</document>\n'
+        return markup
+
     def traverse_dom_for_cnxml(self, element):
+        # traverse every element in tree, find matching environments, transform
         for child in element:
             self.traverse_dom_for_cnxml(child)
 
@@ -76,7 +124,8 @@ class cnxmlplus_to_shortcodecnxml:
             elif child.tag == 'pspicture':
                 # <pspicture><code>
                 #element[childIndex] = child[0]
-                src = ''
+                self.psPictureCount += 1
+                src = 'pspictures/%03i.png'%self.psPictureCount
                 mediaNode = utils.create_node('media')
                 mediaNode.append(utils.create_node('image'))
                 mediaNode.attrib['alt'] = 'Image'
@@ -256,7 +305,11 @@ class cnxmlplus_to_shortcodecnxml:
                 mathNode.append(utils.create_node('msubsup', namespace=namespace))
                 mathNode[-1].append(utils.create_node('mo', namespace=namespace, text=u'\u200b'))
                 mathNode[-1].append(utils.create_node('mn', namespace=namespace, text=child.find('atomic_number').text))
-                mathNode[-1].append(utils.create_node('mn', namespace=namespace, text=child.find('mass_number').text))
+                if child.find('mass_number') is not None:
+                    massNumber = child.find('mass_number').text
+                else:
+                    massNumber = u'\u200b'
+                mathNode[-1].append(utils.create_node('mn', namespace=namespace, text=massNumber))
                 mathNode.append(utils.create_node('mtext', namespace=namespace, text=child.find('symbol').text))
 
                 mathNode.tail = child.tail
@@ -279,37 +332,60 @@ class cnxmlplus_to_shortcodecnxml:
                         shortcode = shortCodeNode.text.strip()
                         child.remove(shortCodeNode)
                     if shortcode is not None:
-                        child.find('title').text += ' [' + shortcode + ']'
+                        titleNode = child.find('title')
+                        if len(titleNode) == 0:
+                            if titleNode.text is None:
+                                titleNode.text = ''
+                            titleNode.text += ' [' + shortcode + ']'
+                        else:
+                            if titleNode[-1].tail is None:
+                                titleNode[-1].tail = ''
+                            titleNode[-1].tail += ' [' + shortcode + ']'
                 childIndex += 1
+
+            elif child.tag in ['chem_compound', 'spec_note']:
+                assert len(child) == 0, "<chem_compound> element not expected to have sub-elements."
+                if child.text is None:
+                    child.text = ''
+                child.text = child.text.strip()
+                assert child.text != '', "<chem_compound> element must contain text."
+
+                compoundText = child.text
+                pos = 0
+                textOpen = False
+                while pos < len(compoundText):
+                    if 'a' <= compoundText[pos].lower() <= 'z':
+                        if not textOpen:
+                            compoundText = compoundText[:pos] + r'\text{' + compoundText[pos:]
+                            textOpen = True
+                            pos += len(r'\text{') + 1
+                        else:
+                            pos += 1
+                    else:
+                        if textOpen:
+                            compoundText = compoundText[:pos] + '}' + compoundText[pos:]
+                            textOpen = False
+                            pos += 2
+                        else:
+                            pos += 1
+                if textOpen:
+                    compoundText += '}'
+                compoundXml = utils.xmlify(r'\(' + compoundText + r'\)')
+
+                compoundDom = etree.fromstring(compoundXml[compoundXml.find('<formula '):compoundXml.rfind('\n</p>')])
+                utils.etree_replace_with_node_list(element, child, compoundDom)
+                childIndex += len(child)
 
             else:
                 childIndex += 1
 
-    def process(self, markup):
-        # First strip out <section type="chapter">
-        dom = etree.fromstring(markup)
-        dom = dom.find('content')
-        assert len(dom) == 1 # only a single chapter section
-        assert (dom[0].tag == 'section') and (dom[0].attrib['type'] == 'chapter')
+# --------------
 
-        chapterNode = dom[0]
-        titleNode = chapterNode[0]
-        assert titleNode.tag == 'title'
-
-        contentsNodes = chapterNode[1:]
-        del dom[0]
-
-        dom.append(titleNode)
-        dom.append(utils.create_node('content'))
-        for node in contentsNodes:
-            dom[-1].append(node)
-
-        self.traverse_dom_for_cnxml(dom)
-        markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
-        assert markup[:8] == '<content'
-        assert markup[-10:] == '</content>'
-        markup = '<?xml version="1.0"?>\n<document xmlns="http://cnx.rice.edu/cnxml"' + markup[8:-10] + '</document>'
-        return markup
+"""
+markup = cnxmlplus_to_shortcodecnxml().process(markup)
+with open('process_chapter.cnxml','wt') as fp:
+    fp.write(markup)
+"""
 
 def register():
     return cnxmlplus_to_shortcodecnxml()

@@ -33,6 +33,9 @@ class TestTransforms(unittest.TestCase):
         transform = cnxmlplus_to_shortcodecnxml()
         data = datastream('cnxml')
         data = transform.convert(cnxmlplus, data) 
+        data = data.getData()
+        self.assertTrue(len(data) > 0)
+        self.assertNotEquals(cnxmlplus, data)
 
     def test_shortcodecnxml2shortcodehtml_iotypes(self):
         transform = self.portal.portal_transforms['shortcodecnxml_to_shortcodehtml']

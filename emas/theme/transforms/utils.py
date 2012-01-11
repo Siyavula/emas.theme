@@ -234,11 +234,17 @@ def find_all_environments(latex, start=None, exclude=[]):
             start += len(argument)
             if environment not in exclude:
                 if environment != environmentStack[-1][2]:
+                    print '-------------------------------'
+                    print latex
+                    print '-------------------------------'
                     raise ValueError, "Unmatched environment commands \\begin{%s} and \\end{%s}."%(environmentStack[-1][2], environment)
                 environmentStack[-1][1] = start
                 result.append(environmentStack.pop())
         else: # command is None:
             if len(environmentStack) != 0:
+                print '-------------------------------'
+                print latex
+                print '-------------------------------'
                 raise ValueError, "Environment stack not empty: " + repr(environmentStack)
             break
     return result
@@ -249,12 +255,14 @@ ignoreCommands = {
     '\\addtocounter': 2,
     '\\fancyfoot': 1,
     '\\newpage': 0,
+    '\\clearpage': 0,
     '\\noindent': 0,
     '\\nopagebreak': 0,
     '\\pagebreak': 0,
     '\\setcounter': 2,
     '\\vspace': 1,
     '\\vspace*': 1,
+    '\\rule': 2,
 }
 
 def strip_ignore(latex):
@@ -272,7 +280,7 @@ def strip_ignore(latex):
             if latex[stop] == '[':
                 # Skip optional arguments
                 stop += len(parse_argument(latex, delimiter='[]', start=stop))
-            for i in range(ignoreCommands[command]):
+            for i in range(argumentCount):
                 stop += len(parse_argument(latex, delimiter='{}', start=stop))
         latex = latex[:start] + latex[stop:]
         pos = start
@@ -518,6 +526,78 @@ def base26decode(base26number):
     result = 0
     for digit in base26number:
         result *= 26
-        result += ord(digit.lower()) - ord('a')
+        result += ord(digit.lower()) - ord('a') + 1
     return result
+
+
+def base26encode(integer):
+    result = ''
+    while integer > 0:
+        integer -= 1
+        result = chr(integer % 26  + ord('A')) + result
+        integer //= 26
+    return result
+
+
+from html_entities import mapping as html_entity_mapping
+def xmlify(latex, singleElement=False):
+    import tempfile, subprocess, os, shutil
+    global html_entity_mapping
+
+    # Remove trailing newlines and other crud
+    latex = latex.strip()
+    stripTrailing = ['{}', r'\\', r'\newline']
+    done = False
+    while not done:
+        done = True
+        for s in stripTrailing:
+            if latex[-len(s):] == s:
+                latex = latex[:-len(s)].strip()
+                done = False
+                break
+    if latex == '':
+        return ''
+
+    tempDir = tempfile.mkdtemp()
+    latexPath = os.path.join(tempDir, 'temp.tex')
+    xmlPath = os.path.join(tempDir, 'temp.xml')
+
+    # Write LaTeX
+    with open(latexPath, 'wt') as fp:
+        fp.write(latex.encode('utf-8'))
+
+    # Run tralics
+    proc = subprocess.Popen(["tralics", latexPath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc.wait()
+
+    # Read back XML and clean up
+    with open(xmlPath, 'rt') as fp:
+        xml = fp.read().decode('latin-1')
+    shutil.rmtree(tempDir)
+    substr = '<unknown>'
+    start = xml.find(substr)
+    assert start != -1
+    start += len(substr)
+    stop = xml.rfind("</unknown>")
+    xml = xml[start:stop].strip()
+
+    if singleElement:
+        assert xml[:3] == '<p>'
+        assert xml[-4:] == '</p>'
+        xml = xml[3:-4].strip()
+
+    pos = 0
+    while True:
+        start = xml.find('&', pos)
+        if start == -1:
+            break
+        stop = xml.find(';', start)
+        assert stop != -1
+        stop += 1
+        entity = xml[start:stop]
+        entity = html_entity_mapping.get(entity, entity)
+        xml = xml[:start] + entity + xml[stop:]
+        pos = start + len(entity)
+
+    return xml
 
