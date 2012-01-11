@@ -92,7 +92,8 @@ td, th {
 
 #logo {
     float: right;
-    padding: 2.5em 0;
+    padding: 2.5em 0 0;
+    margin-bottom: 1em;
 }
 #sitelogo {
     padding: 1em 0;
@@ -120,7 +121,7 @@ td, th {
 #portal-searchbox {
     background: url("../images/searcharea.png") no-repeat scroll 0 0 transparent;
     height: 34px;
-    margin-top: -19px;
+    margin-top: -27px;
     padding: 0;
     text-align: right;
     text-transform: none;
