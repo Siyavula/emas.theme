@@ -31,4 +31,20 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="toc"
+        class=".toc.TableOfContentsHelpers"
+        template="templates/toc.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="toc-helpers"
+        class=".toc.TableOfContentsHelpers"
+        template="templates/tochelpers.pt"
+        permission="zope2.View"
+        />
+
 </configure>
