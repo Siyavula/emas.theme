@@ -15,13 +15,6 @@ class TableOfContentsHelpers(BrowserView):
         return IATUnifiedFolder.providedBy(item) and True or False
     
     def getTitle(self, item):
-        title = item.Title()
-        # so it does not have its own title, now we see if it has a default
-        # page and use that title.
-        if title is None or len(title) < 1:
-            title = 'Unknown'
-            page_id = item.getDefaultPage()
-            if page_id:
-                page = item._getOb(page_id)
-                title = page.Title()
-        return title
+        """ If it does not have its own title, we fall back to id.
+        """
+        return item.Title() or item.getId()
