@@ -42,29 +42,30 @@ td, th {
     float: right;
 }
 
-#sitetitletop {
-    padding: 0.7em 0 0;
-    font-size: 2.6em;
-    font-family: "Montserrat";
+.sitetitle {
+    font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     line-height: 100%;
+}
+
+#sitetitletop {
+    padding: 0.7em 0 0;
+    font-size: 2.6em;
+}
+#sitetitletop a {
     color: #bbb;
 }
 #sitetitlebottom {
     font-size: 2.6em;
-    font-family: "Montserrat";
-    font-weight: normal;
-    text-transform: uppercase;
-    line-height: 100%;
     letter-spacing: 10px;
+}
+#sitetitlebottom a {
+    color: #111;
 }
 #belowtitle {
     color: #008fb4;
     font-size: 0.7em;
-    font-family: "Montserrat";
-    font-weight: normal;
-    text-transform: uppercase;
     padding-left: 0.4em;
     padding-bottom: 2em;
     letter-spacing: 3px;
@@ -97,15 +98,29 @@ td, th {
     padding: 1em 0;
 }
 
-#globalnav a {
-    padding-right: 1.5em;
+#portal-globalnav {
+    clear: none;
+    background: #008fb4;
+    margin: 0;
+}
+#portal-globalnav li a {
+    background: #008fb4;
+    border: none;
+    color: white;
+    padding: 0 2em 0 0;
+    min-width: 0;
+}
+#portal-globalnav li.selected a,
+#portal-globalnav li.selected a:hover,
+#portal-globalnav li a:hover {
+    background: #008fb4;
     color: white;
 }
 
 #portal-searchbox {
     background: url("../images/searcharea.png") no-repeat scroll 0 0 transparent;
     height: 34px;
-    margin-top: -0.5em;
+    margin-top: -19px;
     padding: 0;
     text-align: right;
     text-transform: none;
