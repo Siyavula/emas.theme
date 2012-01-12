@@ -34,17 +34,17 @@
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="toc"
-        class=".toc.TableOfContentsHelpers"
+        class=".toc.TOCView"
         template="templates/toc.pt"
         permission="zope2.View"
         />
 
     <browser:page
-        for="Products.ATContentTypes.interfaces.IATFolder"
-        name="toc-helpers"
-        class=".toc.TableOfContentsHelpers"
-        template="templates/tochelpers.pt"
-        permission="zope2.View"
+        for="*"
+        name="toc_builder_view"
+        class=".toc.CatalogTOC"
+        permission="zope.Public"
+        allowed_attributes="toc"
         />
 
     <browser:menuItem
@@ -54,5 +54,11 @@
         action="@@toc"
         description="Display a table of contents for a folder hierarchy"
         />
+
+    <adapter
+        for="*
+             .interfaces.ITOC"
+        factory="Products.CMFPlone.browser.navtree.SitemapNavtreeStrategy"
+        provides="plone.app.layout.navigation.interfaces.INavtreeStrategy" />
 
 </configure>

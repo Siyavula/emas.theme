@@ -7,29 +7,13 @@
       i18n:domain="emas.theme">
 <body>
 
-<metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
-
-            <h1 class="documentFirstHeading" tal:content="context/title" />
-        
-        <div class="discreet">
-        </div>
-
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
-
-        <p class="documentDescription" tal:content="context/description" />
-
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-        
-        <span tal:replace="structure context/@@toc-helpers" />
-
-        <div tal:replace="structure provider:plone.belowcontentbody" />
-
-    </tal:main-macro>
-</metal:main>
+    <metal:core fill-slot="content-core">
+        <h2 i18n:translate="help_enable_table_of_contents">Table of contents</h2>
+        <ul id="table-of-contents"
+            class="navTreeLevel1 visualNoMarker">
+            <tal:sitemap replace="structure view/createTOC" />
+        </ul>
+    </metal:core>
 
 </body>
 </html>
