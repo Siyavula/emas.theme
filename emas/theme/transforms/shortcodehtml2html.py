@@ -33,7 +33,7 @@ class shortcodehtml_to_html:
         return self.__name__
 
     def convert(self, orig, data, **kwargs):
-        result = self.process(orig)
+        result = self.postProcess(self.process(orig))
         data.setData(result)
         return data
 
@@ -49,6 +49,11 @@ class shortcodehtml_to_html:
             sctree.set('class', 'shortcode-content')
             element.getparent().replace(element, sctree)
         return lxml.html.tostring(tree)
+
+    def postProcess(self, orig):
+        # Placeholder. Use this to fix up any HTML we don't like, that
+        # came out of cnxml2html.
+        return orig
    
     @ram.cache(cache_key)
     def getURLContent(self, shortURL):
@@ -68,3 +73,4 @@ class shortcodehtml_to_html:
 
 def register():
     return shortcodehtml_to_html()
+

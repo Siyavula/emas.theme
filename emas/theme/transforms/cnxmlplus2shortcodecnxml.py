@@ -1,4 +1,4 @@
-import sys, os
+import os
 from lxml import etree
 import utils
 
@@ -7,16 +7,6 @@ from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
 dirname = os.path.dirname(__file__)
-
-"""
-if len(sys.argv) != 2:
-    print 'Usage: %s filename.xml'%sys.argv[0]
-    sys.exit()
-
-filename = sys.argv[1]
-with open(filename, 'rt') as fp:
-    markup = fp.read()
-"""
 
 class cnxmlplus_to_shortcodecnxml:
     """Convert CNXML+ down to CNXML
@@ -379,13 +369,7 @@ class cnxmlplus_to_shortcodecnxml:
             else:
                 childIndex += 1
 
-# --------------
-
-"""
-markup = cnxmlplus_to_shortcodecnxml().process(markup)
-with open('process_chapter.cnxml','wt') as fp:
-    fp.write(markup)
-"""
 
 def register():
     return cnxmlplus_to_shortcodecnxml()
+
