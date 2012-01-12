@@ -58,15 +58,34 @@ class cnxmlplus_to_shortcodecnxml:
         for node in contentsNodes:
             dom[-1].append(node)
 
-        # Transform all elements in document
-        self.psPictureCount = 0
+        # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
+
+        # Transform pspictures
+        self.psPictureCount = 0
+        self.traverse_dom_for_pspictures(dom)
 
         markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
         assert markup[:8] == '<content'
         assert markup[-10:] == '</content>'
         markup = '<?xml version="1.0"?>\n<document xmlns="http://cnx.rice.edu/cnxml"' + markup[8:-10] + '</document>\n'
         return markup
+
+    def traverse_dom_for_pspictures(self, element):
+        # <pspicture><code>
+        if element.tag == 'pspicture':
+            self.psPictureCount += 1
+            src = 'pspictures/%03i.png'%self.psPictureCount
+            mediaNode = utils.create_node('media')
+            mediaNode.append(utils.create_node('image'))
+            mediaNode.attrib['alt'] = 'Image'
+            mediaNode[0].attrib['src'] = src
+            mediaNode.tail = element.tail
+            element.getparent().replace(element, mediaNode)
+        else:
+            children = element.getchildren()
+            for child in children:
+                self.traverse_dom_for_pspictures(child)
 
     def traverse_dom_for_cnxml(self, element):
         # traverse every element in tree, find matching environments, transform
@@ -93,9 +112,48 @@ class cnxmlplus_to_shortcodecnxml:
                 else:
                     mediaNode[0].attrib['src'] = ''
 
+                widthNode = child.find('width')
+                if widthNode is not None:
+                    mediaNode[0].attrib['width'] = widthNode.text.strip()
+
+                heightNode = child.find('height')
+                if heightNode is not None:
+                    mediaNode[0].attrib['height'] = heightNode.text.strip()
+
                 mediaNode.tail = child.tail
                 element[childIndex] = mediaNode
                 childIndex += 1
+
+                """
+            elif child.tag == 'simulation':
+                #<simulation><title>...</title><shortcode>...</shortcode>[<url/>]</simulation>
+                mediaNode = utils.create_node('media')
+                mediaNode.append(utils.create_node('video'))
+
+                titleNode = child.find('title')
+                if titleNode is not None:
+                    mediaNode.attrib['alt'] = titleNode.text.strip()
+                else:
+                    mediaNode.attrib['alt'] = 'Video'
+
+                urlNode = child.find('url')
+                if urlNode is not None:
+                    mediaNode[0].attrib['src'] = urlNode.text.strip()
+                else:
+                    mediaNode[0].attrib['src'] = ''
+
+                widthNode = child.find('width')
+                if widthNode is not None:
+                    mediaNode[0].attrib['width'] = widthNode.text.strip()
+
+                heightNode = child.find('height')
+                if heightNode is not None:
+                    mediaNode[0].attrib['height'] = heightNode.text.strip()
+
+                mediaNode.tail = child.tail
+                element[childIndex] = mediaNode
+                childIndex += 1
+                """
 
             elif child.tag == 'image':
                 # <image> <arguments/> <src/> </image>
@@ -107,19 +165,6 @@ class cnxmlplus_to_shortcodecnxml:
                     mediaNode[0].attrib['src'] = urlNode.text.strip()
                 else:
                     mediaNode[0].attrib['src'] = ''
-                mediaNode.tail = child.tail
-                element[childIndex] = mediaNode
-                childIndex += 1
-
-            elif child.tag == 'pspicture':
-                # <pspicture><code>
-                #element[childIndex] = child[0]
-                self.psPictureCount += 1
-                src = 'pspictures/%03i.png'%self.psPictureCount
-                mediaNode = utils.create_node('media')
-                mediaNode.append(utils.create_node('image'))
-                mediaNode.attrib['alt'] = 'Image'
-                mediaNode[0].attrib['src'] = src
                 mediaNode.tail = child.tail
                 element[childIndex] = mediaNode
                 childIndex += 1
@@ -242,7 +287,11 @@ class cnxmlplus_to_shortcodecnxml:
                         coeffText += ',' + fracPart
                     if expNode is None:
                         assert baseNode is None
-                        dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                        try:
+                            dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                        except etree.XMLSyntaxError, msg:
+                            print repr(coeffText)
+                            raise etree.XMLSyntaxError, msg
                     else:
                         if baseNode is None:
                             baseText = '10'
