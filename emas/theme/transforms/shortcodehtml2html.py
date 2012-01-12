@@ -38,6 +38,9 @@ class shortcodehtml_to_html:
         return data
 
     def process(self, orig):
+        from lxml import etree
+        dom = etree.fromstring(orig)
+
         tree = lxml.html.fromstring(orig)
         for element in tree.xpath('//shortcodes'):
             content = []
@@ -48,12 +51,41 @@ class shortcodehtml_to_html:
             sctree = lxml.html.fromstring(''.join(content))
             sctree.set('class', 'shortcode-content')
             element.getparent().replace(element, sctree)
-        return lxml.html.tostring(tree)
+        return lxml.html.tostring(tree, method='xml')
 
     def postProcess(self, orig):
-        # Placeholder. Use this to fix up any HTML we don't like, that
-        # came out of cnxml2html.
-        return orig
+        # Fix up any HTML we don't like, that came out of cnxml2html.
+        from lxml import etree
+
+        # Remove annotation parts of MathML so as not to confuse MathJax.
+        pos = 0
+        while True:
+            start = orig.find("<m:annotation-xml", pos)
+            if start == -1:
+                break
+            substr = "</m:annotation-xml>"
+            stop = orig.find(substr, start)
+            assert stop != -1
+            stop += len(substr)
+            orig = orig[:start] + orig[stop:]
+            pos = start
+
+        # Remove the annoying "Media file:" labels.
+        nsPrefix = "{http://www.w3.org/1999/xhtml}"
+        dom = etree.fromstring(orig)
+        def traverse(node):
+            if (node.tag == nsPrefix + 'div') and (node.attrib.get('class') == 'media'):
+                objectNode = node.find(nsPrefix + 'object')
+                if objectNode is not None:
+                    if (len(objectNode) > 2) and (objectNode[0].tag == nsPrefix + 'span') and (objectNode[0].attrib.get('class') == 'cnx_label') and (objectNode[1].tag == nsPrefix + 'a') and (objectNode[1].attrib.get('href') == ''):
+                        del objectNode[0]
+                        del objectNode[0]
+            for child in node:
+                traverse(child)
+        traverse(dom)
+        html = etree.tostring(dom)
+
+        return html
    
     @ram.cache(cache_key)
     def getURLContent(self, shortURL):
@@ -64,10 +96,10 @@ class shortcodehtml_to_html:
         element = lxml.html.fromstring(content)
         for question in element.xpath(
                 '//div[@id="item"]/div[@class="question"]'):
-            result += lxml.html.tostring(question)
+            result += lxml.html.tostring(question, method='xml')
         for answer in element.xpath(
                 '//div[@id="item"]/div[@class="field answer"]'):
-            result += lxml.html.tostring(answer)
+            result += lxml.html.tostring(answer, method='xml')
 
         return result
 
