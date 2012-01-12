@@ -61,6 +61,7 @@
 
         <!-- Content -->
         <replace css:content-children="#content" css:theme-children="#content" />
+        <drop css:content="#table-of-contents img"/>
 
         <!-- Copy annotator viewlet -->
         <after css:theme-children="body" css:content="div.annotator-help-panel"/>
