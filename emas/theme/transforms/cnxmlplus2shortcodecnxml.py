@@ -95,65 +95,10 @@ class cnxmlplus_to_shortcodecnxml:
         childIndex = 0
         while childIndex < len(element):
             child = element[childIndex]
-            if child.tag == 'video':
-                #<video><title>...</title><shortcode>...</shortcode>[<url/>]</video>
-                mediaNode = utils.create_node('media')
-                mediaNode.append(utils.create_node('video'))
 
-                titleNode = child.find('title')
-                if titleNode is not None:
-                    mediaNode.attrib['alt'] = titleNode.text.strip()
-                else:
-                    mediaNode.attrib['alt'] = 'Video'
-
-                urlNode = child.find('url')
-                if urlNode is not None:
-                    mediaNode[0].attrib['src'] = urlNode.text.strip()
-                else:
-                    mediaNode[0].attrib['src'] = ''
-
-                widthNode = child.find('width')
-                if widthNode is not None:
-                    mediaNode[0].attrib['width'] = widthNode.text.strip()
-
-                heightNode = child.find('height')
-                if heightNode is not None:
-                    mediaNode[0].attrib['height'] = heightNode.text.strip()
-
-                mediaNode.tail = child.tail
-                element[childIndex] = mediaNode
+            if child.tag in ['video', 'simulation']:
+                child.tag = 'todo-' + child.tag
                 childIndex += 1
-
-                """
-            elif child.tag == 'simulation':
-                #<simulation><title>...</title><shortcode>...</shortcode>[<url/>]</simulation>
-                mediaNode = utils.create_node('media')
-                mediaNode.append(utils.create_node('video'))
-
-                titleNode = child.find('title')
-                if titleNode is not None:
-                    mediaNode.attrib['alt'] = titleNode.text.strip()
-                else:
-                    mediaNode.attrib['alt'] = 'Video'
-
-                urlNode = child.find('url')
-                if urlNode is not None:
-                    mediaNode[0].attrib['src'] = urlNode.text.strip()
-                else:
-                    mediaNode[0].attrib['src'] = ''
-
-                widthNode = child.find('width')
-                if widthNode is not None:
-                    mediaNode[0].attrib['width'] = widthNode.text.strip()
-
-                heightNode = child.find('height')
-                if heightNode is not None:
-                    mediaNode[0].attrib['height'] = heightNode.text.strip()
-
-                mediaNode.tail = child.tail
-                element[childIndex] = mediaNode
-                childIndex += 1
-                """
 
             elif child.tag == 'image':
                 # <image> <arguments/> <src/> </image>

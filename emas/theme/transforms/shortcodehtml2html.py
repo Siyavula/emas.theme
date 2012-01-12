@@ -38,10 +38,9 @@ class shortcodehtml_to_html:
         return data
 
     def process(self, orig):
-        from lxml import etree
-        dom = etree.fromstring(orig)
-
         tree = lxml.html.fromstring(orig)
+
+        # Replace exercise shortcodes with solutions from fullmarks
         for element in tree.xpath('//shortcodes'):
             content = []
             # get all the content from the contained urls
@@ -51,6 +50,38 @@ class shortcodehtml_to_html:
             sctree = lxml.html.fromstring(''.join(content))
             sctree.set('class', 'shortcode-content')
             element.getparent().replace(element, sctree)
+
+        # Embed videos
+        # <video>
+        #   <title>The dissolving process</title> # NOTE: <title> gets mangled to <strong> by cnxml2html
+        #   <shortcode>VPabz</shortcode>
+        #   <url>http://www.mindset.co.za/resources//0000033849/0000053197/0000054557/The_dissolving_process.flv</url>
+        #   <width>300</width>
+        #   <height>245</height>
+        # </video>
+        for element in tree.xpath('//todo-video'):
+            subNodes = {}
+            params = {}
+            for key in ['strong', 'shortcode', 'url', 'width', 'height']:
+                subNodes[key] = element.find('.//' + key)
+                if subNodes[key] is not None:
+                    params[key] = subNodes[key].text
+                else:
+                    params[key] = None
+            if (params['url'] is None) or (params['url'].lower() == 'todo'):
+                print 'Warning: video without URL... deleting.'
+                element.getparent().remove(element)
+            elif 'mindset.co.za' in params['url']:
+                # Mindset video
+                embedString = '<div class="video"><embed src="http://www.mindset.co.za/learn/sites/all/modules/mindset_video/mediaplayer/player.swf" width="' + params.get('width', '300') + '" height="' + params.get('height', 245) + '" allowscriptaccess="always" allowfullscreen="true" flashvars="file=' + params['url'] + '"/>'
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
+            else:
+                print 'Warning: do not know how to handle URL (%s)... deleting.'%params['url']
+                element.getparent().remove(element)
+
         return lxml.html.tostring(tree, method='xml')
 
     def postProcess(self, orig):
