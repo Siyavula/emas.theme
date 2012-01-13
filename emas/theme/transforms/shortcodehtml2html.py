@@ -67,7 +67,7 @@ class shortcodehtml_to_html:
                 if subNodes[key] is not None:
                     params[key] = subNodes[key].text
             if (params.get('url') is None) or (params['url'].lower() == 'todo'):
-                print 'Warning: video without URL... deleting.'
+                LOGGER.info('ERROR: video without URL... deleting.')
                 element.getparent().remove(element)
             elif 'mindset.co.za' in params['url']:
                 # Mindset video
@@ -84,7 +84,7 @@ class shortcodehtml_to_html:
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             else:
-                print 'Warning: do not know how to handle video URL (%s)... deleting.'%params['url']
+                LOGGER.info('ERROR: do not know how to handle video URL (%s)... deleting.'%params['url'])
                 element.getparent().remove(element)
 
         # Embed simulations
@@ -101,7 +101,7 @@ class shortcodehtml_to_html:
                 if subNodes[key] is not None:
                     params[key] = subNodes[key].text
             if (params.get('url') is None) or (params['url'].lower() == 'todo'):
-                print 'Warning: simulation without URL... deleting.'
+                LOGGER.info('ERROR: simulation without URL... deleting.')
                 element.getparent().remove(element)
             elif 'phet.colorado.edu' in params['url']:
                 # Phet simulation
@@ -111,12 +111,18 @@ class shortcodehtml_to_html:
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             else:
-                print 'Warning: do not know how to handle simulation URL (%s)... deleting.'%params['url']
+                LOGGER.info('ERROR: do not know how to handle simulation URL (%s)... deleting.'%params['url'])
                 element.getparent().remove(element)
 
         # Remove to-do notes
+        import utils
+        dummyNode = utils.create_node('dummy')
         for element in tree.xpath('//todo'):
-            element.getparent().remove(element)
+            # Use function from utils rather than
+            #    element.getparent().remove(element)
+            # so that the tail of the <todo> element being removed is
+            # preserved.
+            utils.etree_replace_with_node_list(element.getparent(), element, dummyNode)
 
         return lxml.html.tostring(tree, method='xml')
 
@@ -160,7 +166,7 @@ class shortcodehtml_to_html:
         if shortURL.lower() == 'todo':
             result = '<div class="question">\n                \n                    <div class="field ArchetypesField-TextField" id="archetypes-fieldname-question">\n          \n      \n        \n          \n            \n      <label class="formQuestion"><span>Question</span>:</label>\n      \n      <br /><div class="" id="parent-fieldname-question">\n            <p>To-do.</p>\n            \n        </div>\n    \n    \n        \n      \n    \n    </div>\n                \n            </div>\n\n\n            \n                <div class="field answer">\n                    <label class="formQuestion">Answer:</label>\n                    <p>To-do.</p>\n                </div>\n            \n\n            \n\n\n            '
         else:
-            LOGGER.info('Fetching url: %s' %shortURL)
+            LOGGER.info('Fetching url: %s'%shortURL)
             handle = urllib2.urlopen(shortURL)
             content = handle.read()
             element = lxml.html.fromstring(content)
