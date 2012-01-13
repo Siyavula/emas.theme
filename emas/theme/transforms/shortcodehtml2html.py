@@ -160,10 +160,11 @@ class shortcodehtml_to_html:
         if shortURL.lower() == 'todo':
             result = '<div class="question">\n                \n                    <div class="field ArchetypesField-TextField" id="archetypes-fieldname-question">\n          \n      \n        \n          \n            \n      <label class="formQuestion"><span>Question</span>:</label>\n      \n      <br /><div class="" id="parent-fieldname-question">\n            <p>To-do.</p>\n            \n        </div>\n    \n    \n        \n      \n    \n    </div>\n                \n            </div>\n\n\n            \n                <div class="field answer">\n                    <label class="formQuestion">Answer:</label>\n                    <p>To-do.</p>\n                </div>\n            \n\n            \n\n\n            '
         else:
-            LOGGER.info('Fetching url:%s' %shortURL)
+            LOGGER.info('Fetching url: %s' %shortURL)
             handle = urllib2.urlopen(shortURL)
             content = handle.read()
             element = lxml.html.fromstring(content)
+            element.make_links_absolute(base_url="http://www.fullmarks.org.za")
             for question in element.xpath(
                     '//div[@id="item"]/div[@class="question"]'):
                 result += lxml.html.tostring(question, method='xml')
@@ -171,6 +172,7 @@ class shortcodehtml_to_html:
                     '//div[@id="item"]/div[@class="field answer"]'):
                 result += lxml.html.tostring(answer, method='xml')
         return result
+
 
 def register():
     return shortcodehtml_to_html()
