@@ -99,6 +99,12 @@ class NextPrevious(object):
         elif obj.getExcludeFromNav():
             return None
 
+        portal_properties = getToolByName(self.context, 'portal_properties')
+        navtree_properties = getattr(portal_properties, 'navtree_properties')
+        if obj.portal_type in navtree_properties.getProperty(
+            'metaTypesNotToList', ()):
+            return None
+
         ptype = obj.portal_type
         url = obj.absolute_url()
         if ptype in self.vat:       # "use view action in listings"
