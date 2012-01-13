@@ -115,8 +115,14 @@ class shortcodehtml_to_html:
                 element.getparent().remove(element)
 
         # Remove to-do notes
+        import utils
+        dummyNode = utils.create_node('dummy')
         for element in tree.xpath('//todo'):
-            element.getparent().remove(element)
+            # Use function from utils rather than
+            #    element.getparent().remove(element)
+            # so that the tail of the <todo> element being removed is
+            # preserved.
+            utils.etree_replace_with_node_list(element.getparent(), element, dummyNode)
 
         return lxml.html.tostring(tree, method='xml')
 
