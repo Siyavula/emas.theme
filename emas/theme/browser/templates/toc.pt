@@ -8,11 +8,31 @@
 <body>
 
     <metal:core fill-slot="content-core">
-        <h2 i18n:translate="help_enable_table_of_contents">Table of contents</h2>
-        <ul id="table-of-contents"
-            class="navTreeLevel1 visualNoMarker">
-            <tal:sitemap replace="structure view/createTOC" />
+        <h2 class="toc" i18n:translate="help_enable_table_of_contents">Table of Contents</h2>
+
+        <ul id="table-of-contents" class="visualNoMarker"
+            tal:define="toc_container nocall:context">
+            <metal:rendertoc define-macro="rendertoc">              
+            <tal:items repeat="item python:view.getContentItems(toc_container)">
+            <li class="navTreeItem visualNoMarker"
+                tal:define="is_folder python:view.isFolder(item)">
+                <tal:folder tal:condition="is_folder">
+                    <div>
+                        <span tal:replace="python:view.getTitle(item)">Title</span>
+                    </div>
+                    <ul class="navTree"
+                        tal:define="toc_container nocall:item">
+                        <span metal:use-macro="view/macros/rendertoc" />
+                    </ul>
+                </tal:folder>
+                <tal:notfolder tal:condition="not:is_folder">
+                    <a href="#" tal:attributes="href item/absolute_url" tal:content="item/Title">Title</a>
+                </tal:notfolder>
+            </li>
+            </tal:items>
+            </metal:rendertoc>              
         </ul>
+
     </metal:core>
 
 </body>

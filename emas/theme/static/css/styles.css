@@ -238,8 +238,8 @@ td, th {
     border: 1px dotted black;
 }
 
-#content #table-of-contents {
-    margin-left: 1em;
+#content #table-of-contents div {
+    margin: 0;
 }
 
 #footer {
