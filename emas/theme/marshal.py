@@ -78,7 +78,9 @@ class CNXMLWriteFile(WriteFileBase):
                 elems = tree.xpath(xpath, namespaces=nsmap)
                 if not elems:
                     continue
-                msg[attrname] = elems[0].text
+                text = elems[0].text
+                if text:
+                    msg[attrname] = text
             if docinfo.encoding:
                 encoding = docinfo.encoding
             msg.set_payload(data)
