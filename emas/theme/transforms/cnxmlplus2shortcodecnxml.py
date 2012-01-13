@@ -6,6 +6,10 @@ from zope.interface import implements
 from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
+from logging import getLogger
+
+LOGGER = getLogger('%s:' % __name__)
+
 dirname = os.path.dirname(__file__)
 
 class cnxmlplus_to_shortcodecnxml:
@@ -434,7 +438,7 @@ class cnxmlplus_to_shortcodecnxml:
                     path = '/'.join(path)
                     for key, url in namespaces.iteritems():
                         path = path.replace('{%s}'%url, key+':')
-                    print 'Unhandled element:', path
+                    LOGGER.info('Unhandled element: ' + path)
 
                 childIndex += 1
 
