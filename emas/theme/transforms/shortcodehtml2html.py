@@ -66,9 +66,7 @@ class shortcodehtml_to_html:
                 subNodes[key] = element.find('.//' + key)
                 if subNodes[key] is not None:
                     params[key] = subNodes[key].text
-                else:
-                    params[key] = None
-            if (params['url'] is None) or (params['url'].lower() == 'todo'):
+            if (params.get('url') is None) or (params['url'].lower() == 'todo'):
                 print 'Warning: video without URL... deleting.'
                 element.getparent().remove(element)
             elif 'mindset.co.za' in params['url']:
@@ -86,11 +84,8 @@ class shortcodehtml_to_html:
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             else:
-                print 'Warning: do not know how to handle URL (%s)... deleting.'%params['url']
+                print 'Warning: do not know how to handle video URL (%s)... deleting.'%params['url']
                 element.getparent().remove(element)
-
-        for element in tree.xpath('//todo'):
-            element.getparent().remove(element)
 
         # Embed simulations
         # <simulation>
@@ -99,8 +94,29 @@ class shortcodehtml_to_html:
 	#   <url>http://phet.colorado.edu/en/simulation/circuit-construction-kit-dc</url>
         # </simulation>
         for element in tree.xpath('//todo-simulation'):
-            from lxml import etree
-            print etree.tostring(element)
+            subNodes = {}
+            params = {}
+            for key in ['strong', 'shortcode', 'url', 'width', 'height']:
+                subNodes[key] = element.find('.//' + key)
+                if subNodes[key] is not None:
+                    params[key] = subNodes[key].text
+            if (params.get('url') is None) or (params['url'].lower() == 'todo'):
+                print 'Warning: simulation without URL... deleting.'
+                element.getparent().remove(element)
+            elif 'phet.colorado.edu' in params['url']:
+                # Phet simulation
+                embedString = '<div class="simulation"><iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
+            else:
+                print 'Warning: do not know how to handle simulation URL (%s)... deleting.'%params['url']
+                element.getparent().remove(element)
+
+        # Remove to-do notes
+        for element in tree.xpath('//todo'):
+            element.getparent().remove(element)
 
         return lxml.html.tostring(tree, method='xml')
 

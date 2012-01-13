@@ -58,6 +58,10 @@ class cnxmlplus_to_shortcodecnxml:
         for node in contentsNodes:
             dom[-1].append(node)
 
+        # Build chapter hash from title: for pspictures directory
+        import hashlib
+        self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
+
         # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
 
@@ -75,7 +79,7 @@ class cnxmlplus_to_shortcodecnxml:
         # <pspicture><code>
         if element.tag == 'pspicture':
             self.psPictureCount += 1
-            src = 'pspictures/%03i.png'%self.psPictureCount
+            src = 'pspictures%s/%03i.png'%(self.chapterHash, self.psPictureCount)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
             mediaNode.attrib['alt'] = 'Image'
@@ -380,20 +384,20 @@ class cnxmlplus_to_shortcodecnxml:
                 valid = [
                     'emphasis',
                     'para',
-                    'list',
                     'figure/type',
                     'exercise/problem', 'exercise/title',
                     'exercise/shortcodes/entry/number', 'exercise/shortcodes/entry/shortcode', 'exercise/shortcodes/entry/url',
-                    'list/item',
+                    'list/item/label',
                     'table/tgroup/tbody/row/entry',
                     'table/tgroup/colspec',
                     'definition/term', 'definition/meaning',
                     'sup',
                     'sub',
-                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover',
+                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover', 'm:munder', 'm:mover',
                     'equation',
-                    'para/link',
+                    'link',
                     'quote',
+                    'rule/title', 'rule/statement', 'rule/proof',
 
                     'section/title',
                     'section/shortcode',
@@ -408,6 +412,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'math_extension/body',
                     'document/content/title',
                     'document/content/content',
+                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height',
                 ]
                 validSet = set([])
                 for entry in valid:
