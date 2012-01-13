@@ -152,6 +152,11 @@ td, th {
 }
 
 
+#content {
+    margin: 1.5em auto;
+    max-width: 780px;
+}
+
 #content div.navigation {
     margin: -2.8em 0 0;
     max-width: 800px;
@@ -190,10 +195,6 @@ td, th {
     background-position: -242px -61px;
 }
 
-#content {
-    margin: 1em auto;
-    max-width: 780px;
-}
 
 #content h1 {
     border-bottom: 2px solid #ddd;
@@ -235,6 +236,10 @@ td, th {
 
 #content-core img {
     border: 1px dotted black;
+}
+
+#content #table-of-contents {
+    margin-left: 1em;
 }
 
 #footer {
