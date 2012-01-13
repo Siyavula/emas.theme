@@ -361,6 +361,62 @@ class cnxmlplus_to_shortcodecnxml:
                 childIndex += len(child)
 
             else:
+                path = [child.tag]
+                node = child
+                while True:
+                    node = node.getparent()
+                    if node is None:
+                        break
+                    path.append(node.tag)
+                path.reverse()
+
+                namespaces = {'m': 'http://www.w3.org/1998/Math/MathML'}
+                valid = [
+                    'emphasis',
+                    'para',
+                    'list',
+                    'figure/type',
+                    'exercise/problem', 'exercise/title',
+                    'exercise/shortcodes/entry/number', 'exercise/shortcodes/entry/shortcode', 'exercise/shortcodes/entry/url',
+                    'list/item',
+                    'table/tgroup/tbody/row/entry',
+                    'table/tgroup/colspec',
+                    'definition/term', 'definition/meaning',
+                    'sup',
+                    'sub',
+                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref',
+                    'equation',
+                    'para/link',
+
+                    'section/title',
+                    'section/shortcode',
+                    'image/arguments',
+                    'image/src',
+                    'number/coeff', 'number/exp', 'number/base',
+                    'pspicture/code',
+                    'video/title', 'video/shortcode', 'video/url', 'video/width', 'video/height',
+                    'worked_example/answer/workstep/title', 'worked_example/question', 'worked_example/title',
+                    'activity/title',
+                ]
+                validSet = set([])
+                for entry in valid:
+                    entry = entry.split('/')
+                    for i in range(len(entry)):
+                        if ':' in entry[i]:
+                            entry[i] = entry[i].split(':')
+                            assert len(entry[i]) == 2
+                            entry[i] = '{%s}%s'%(namespaces[entry[i][0]], entry[i][1])
+                        validSet.add(tuple(entry[:i+1]))
+                valid = validSet
+
+                passed = False
+                for entry in valid:
+                    if tuple(path[-len(entry):]) == entry:
+                        passed = True
+                        break
+                if not passed:
+                    print 'Unhandled element:', '/'.join(path)
+
                 childIndex += 1
 
 

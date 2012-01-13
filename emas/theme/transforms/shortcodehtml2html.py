@@ -82,6 +82,19 @@ class shortcodehtml_to_html:
                 print 'Warning: do not know how to handle URL (%s)... deleting.'%params['url']
                 element.getparent().remove(element)
 
+        for element in tree.xpath('//todo'):
+            element.getparent().remove(element)
+
+        # Embed simulations
+        # <simulation>
+        #   <title>The following simulation allows...</title>
+        #   <shortcode>VPcyz</shortcode>
+	#   <url>http://phet.colorado.edu/en/simulation/circuit-construction-kit-dc</url>
+        # </simulation>
+        for element in tree.xpath('//todo-simulation'):
+            from lxml import etree
+            print etree.tostring(element)
+
         return lxml.html.tostring(tree, method='xml')
 
     def postProcess(self, orig):
@@ -91,10 +104,10 @@ class shortcodehtml_to_html:
         # Remove annotation parts of MathML so as not to confuse MathJax.
         pos = 0
         while True:
-            start = orig.find("<m:annotation-xml", pos)
+            start = orig.find("<annotation-xml", pos)
             if start == -1:
                 break
-            substr = "</m:annotation-xml>"
+            substr = "</annotation-xml>"
             stop = orig.find(substr, start)
             assert stop != -1
             stop += len(substr)
