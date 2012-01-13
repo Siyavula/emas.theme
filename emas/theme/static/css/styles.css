@@ -152,15 +152,10 @@ td, th {
 }
 
 
-div.navigation {
-    margin: 0.1em 0;
+#content div.navigation {
+    margin: -2.8em 0 0;
     max-width: 800px;
     float: right;
-}
-
-.navigation div {
-    background-color: #efefef;
-    display: inline-block;
 }
 
 .navbutton {
@@ -198,15 +193,12 @@ div.navigation {
 #content {
     margin: 1em auto;
     max-width: 780px;
-    font-size: 100%;
 }
 
 #content h1 {
-    border-bottom: 2px solid #CDCDCC;
+    border-bottom: 2px solid #ddd;
     clear: both;
-    font-size: 1.7em;
     margin: 4px 0 0;
-    padding: 0.2em 0 0.3em;
     line-height: 125%;
 }
 
