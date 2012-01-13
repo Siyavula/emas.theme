@@ -45,11 +45,6 @@
         <copy attributes="id dir" css:content="body" css:theme="body" />
         <copy attributes="href" css:content="#portal-logo" css:theme="#sitetitletop a" />
 
-        <!-- site title -->
-        <replace css:theme="#sitetitle">
-            <h1 id="sitetitle"><xsl:value-of select="//a[@id='portal-logo']/@title"/></h1>
-        </replace>
-
         <replace css:theme="#globalnav" css:content="#portal-globalnav"/>
 
         <drop css:theme="#topnav"
