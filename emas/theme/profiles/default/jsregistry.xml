@@ -100,14 +100,6 @@
                 compression="none"
                 cookable="True"
                 enabled="True"
-                expression=""
-                id="++resource++fullmarks.mathjax/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-                inline="False"/>
-
-    <javascript cacheable="True"
-                compression="none"
-                cookable="True"
-                enabled="True"
                 id="++resource++emas.theme.resources/ASCIIMathML.js"
                 insert-after="jquery.js"
                 inline="False"/>
