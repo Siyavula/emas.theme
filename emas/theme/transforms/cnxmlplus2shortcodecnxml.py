@@ -390,9 +390,10 @@ class cnxmlplus_to_shortcodecnxml:
                     'definition/term', 'definition/meaning',
                     'sup',
                     'sub',
-                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref',
+                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover',
                     'equation',
                     'para/link',
+                    'quote',
 
                     'section/title',
                     'section/shortcode',
@@ -405,6 +406,8 @@ class cnxmlplus_to_shortcodecnxml:
                     'activity/title',
                     'math_extension/title',
                     'math_extension/body',
+                    'document/content/title',
+                    'document/content/content',
                 ]
                 validSet = set([])
                 for entry in valid:
