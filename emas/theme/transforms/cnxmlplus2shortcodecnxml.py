@@ -1,4 +1,4 @@
-import sys, os
+import os
 from lxml import etree
 import utils
 
@@ -7,16 +7,6 @@ from Products.PortalTransforms.interfaces import ITransform
 from Products.PortalTransforms.utils import log
 
 dirname = os.path.dirname(__file__)
-
-"""
-if len(sys.argv) != 2:
-    print 'Usage: %s filename.xml'%sys.argv[0]
-    sys.exit()
-
-filename = sys.argv[1]
-with open(filename, 'rt') as fp:
-    markup = fp.read()
-"""
 
 class cnxmlplus_to_shortcodecnxml:
     """Convert CNXML+ down to CNXML
@@ -68,15 +58,38 @@ class cnxmlplus_to_shortcodecnxml:
         for node in contentsNodes:
             dom[-1].append(node)
 
-        # Transform all elements in document
-        self.psPictureCount = 0
+        # Build chapter hash from title: for pspictures directory
+        import hashlib
+        self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
+
+        # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
+
+        # Transform pspictures
+        self.psPictureCount = 0
+        self.traverse_dom_for_pspictures(dom)
 
         markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
         assert markup[:8] == '<content'
         assert markup[-10:] == '</content>'
         markup = '<?xml version="1.0"?>\n<document xmlns="http://cnx.rice.edu/cnxml"' + markup[8:-10] + '</document>\n'
         return markup
+
+    def traverse_dom_for_pspictures(self, element):
+        # <pspicture><code>
+        if element.tag == 'pspicture':
+            self.psPictureCount += 1
+            src = 'pspictures%s/%03i.png'%(self.chapterHash, self.psPictureCount)
+            mediaNode = utils.create_node('media')
+            mediaNode.append(utils.create_node('image'))
+            mediaNode.attrib['alt'] = 'Image'
+            mediaNode[0].attrib['src'] = src
+            mediaNode.tail = element.tail
+            element.getparent().replace(element, mediaNode)
+        else:
+            children = element.getchildren()
+            for child in children:
+                self.traverse_dom_for_pspictures(child)
 
     def traverse_dom_for_cnxml(self, element):
         # traverse every element in tree, find matching environments, transform
@@ -86,25 +99,9 @@ class cnxmlplus_to_shortcodecnxml:
         childIndex = 0
         while childIndex < len(element):
             child = element[childIndex]
-            if child.tag == 'video':
-                #<video><title>...</title><shortcode>...</shortcode>[<url/>]</video>
-                mediaNode = utils.create_node('media')
-                mediaNode.append(utils.create_node('video'))
 
-                titleNode = child.find('title')
-                if titleNode is not None:
-                    mediaNode.attrib['alt'] = titleNode.text.strip()
-                else:
-                    mediaNode.attrib['alt'] = 'Video'
-
-                urlNode = child.find('url')
-                if urlNode is not None:
-                    mediaNode[0].attrib['src'] = urlNode.text.strip()
-                else:
-                    mediaNode[0].attrib['src'] = ''
-
-                mediaNode.tail = child.tail
-                element[childIndex] = mediaNode
+            if child.tag in ['video', 'simulation']:
+                child.tag = 'todo-' + child.tag
                 childIndex += 1
 
             elif child.tag == 'image':
@@ -117,19 +114,6 @@ class cnxmlplus_to_shortcodecnxml:
                     mediaNode[0].attrib['src'] = urlNode.text.strip()
                 else:
                     mediaNode[0].attrib['src'] = ''
-                mediaNode.tail = child.tail
-                element[childIndex] = mediaNode
-                childIndex += 1
-
-            elif child.tag == 'pspicture':
-                # <pspicture><code>
-                #element[childIndex] = child[0]
-                self.psPictureCount += 1
-                src = 'pspictures/%03i.png'%self.psPictureCount
-                mediaNode = utils.create_node('media')
-                mediaNode.append(utils.create_node('image'))
-                mediaNode.attrib['alt'] = 'Image'
-                mediaNode[0].attrib['src'] = src
                 mediaNode.tail = child.tail
                 element[childIndex] = mediaNode
                 childIndex += 1
@@ -252,7 +236,11 @@ class cnxmlplus_to_shortcodecnxml:
                         coeffText += ',' + fracPart
                     if expNode is None:
                         assert baseNode is None
-                        dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                        try:
+                            dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                        except etree.XMLSyntaxError, msg:
+                            print repr(coeffText)
+                            raise etree.XMLSyntaxError, msg
                     else:
                         if baseNode is None:
                             baseText = '10'
@@ -292,14 +280,6 @@ class cnxmlplus_to_shortcodecnxml:
                 utils.etree_replace_with_node_list(element, child, child)
 
             elif child.tag == 'nuclear_notation':
-                '''
-                dummyNode = utils.create_node('dummy')
-                dummyNode.append(utils.create_node('sup', text=child.find('mass_number').text))
-                dummyNode.append(utils.create_node('sub', text=child.find('atomic_number').text))
-                dummyNode[-1].tail = child.find('symbol').text
-                utils.etree_replace_with_node_list(element, child, dummyNode)
-                childIndex += len(dummyNode)
-                '''
                 namespace = 'http://www.w3.org/1998/Math/MathML'
                 mathNode = utils.create_node('math', namespace=namespace)
                 mathNode.append(utils.create_node('msubsup', namespace=namespace))
@@ -314,6 +294,18 @@ class cnxmlplus_to_shortcodecnxml:
 
                 mathNode.tail = child.tail
                 element[childIndex] = mathNode
+                childIndex += 1
+
+            elif child.tag == 'math_extension':
+                child.tag = 'note'
+                titleNode = child.find('title')
+                if titleNode is not None:
+                    titleNode.tag = 'label'
+                    titleNode.text = u'Extension \u2014 ' + titleNode.text.strip()
+                else:
+                    child.insert(0, utils.create_node('label', text='Extension'))
+                bodyNode = child.find('body')
+                utils.etree_replace_with_node_list(child, bodyNode, bodyNode)
                 childIndex += 1
 
             elif child.tag == 'section':
@@ -331,6 +323,7 @@ class cnxmlplus_to_shortcodecnxml:
                             print 'WARNING: section "%s" should not have a shortcode'%child.find('title').text.strip()
                         shortcode = shortCodeNode.text.strip()
                         child.remove(shortCodeNode)
+                    """ # Commented out so that shortcodes do not get displayed
                     if shortcode is not None:
                         titleNode = child.find('title')
                         if len(titleNode) == 0:
@@ -341,6 +334,7 @@ class cnxmlplus_to_shortcodecnxml:
                             if titleNode[-1].tail is None:
                                 titleNode[-1].tail = ''
                             titleNode[-1].tail += ' [' + shortcode + ']'
+                    """
                 childIndex += 1
 
             elif child.tag in ['chem_compound', 'spec_note']:
@@ -377,15 +371,74 @@ class cnxmlplus_to_shortcodecnxml:
                 childIndex += len(child)
 
             else:
+                path = [child.tag]
+                node = child
+                while True:
+                    node = node.getparent()
+                    if node is None:
+                        break
+                    path.append(node.tag)
+                path.reverse()
+
+                namespaces = {'m': 'http://www.w3.org/1998/Math/MathML'}
+                valid = [
+                    'emphasis',
+                    'para',
+                    'figure/type',
+                    'exercise/problem', 'exercise/title',
+                    'exercise/shortcodes/entry/number', 'exercise/shortcodes/entry/shortcode', 'exercise/shortcodes/entry/url',
+                    'list/item/label',
+                    'table/tgroup/tbody/row/entry',
+                    'table/tgroup/colspec',
+                    'definition/term', 'definition/meaning',
+                    'sup',
+                    'sub',
+                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover', 'm:munder', 'm:mover',
+                    'equation',
+                    'link',
+                    'quote',
+                    'rule/title', 'rule/statement', 'rule/proof',
+
+                    'section/title',
+                    'section/shortcode',
+                    'image/arguments',
+                    'image/src',
+                    'number/coeff', 'number/exp', 'number/base',
+                    'pspicture/code',
+                    'video/title', 'video/shortcode', 'video/url', 'video/width', 'video/height',
+                    'worked_example/answer/workstep/title', 'worked_example/question', 'worked_example/title',
+                    'activity/title',
+                    'math_extension/title',
+                    'math_extension/body',
+                    'document/content/title',
+                    'document/content/content',
+                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height',
+                ]
+                validSet = set([])
+                for entry in valid:
+                    entry = entry.split('/')
+                    for i in range(len(entry)):
+                        if ':' in entry[i]:
+                            entry[i] = entry[i].split(':')
+                            assert len(entry[i]) == 2
+                            entry[i] = '{%s}%s'%(namespaces[entry[i][0]], entry[i][1])
+                        validSet.add(tuple(entry[:i+1]))
+                valid = validSet
+
+                passed = False
+                for entry in valid:
+                    if tuple(path[-len(entry):]) == entry:
+                        passed = True
+                        break
+                if not passed:
+                    path = '/'.join(path)
+                    for key, url in namespaces.iteritems():
+                        path = path.replace('{%s}'%url, key+':')
+                    print 'Unhandled element:', path
+
                 childIndex += 1
 
-# --------------
-
-"""
-markup = cnxmlplus_to_shortcodecnxml().process(markup)
-with open('process_chapter.cnxml','wt') as fp:
-    fp.write(markup)
-"""
 
 def register():
     return cnxmlplus_to_shortcodecnxml()
+

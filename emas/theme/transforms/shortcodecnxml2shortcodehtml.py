@@ -21,3 +21,4 @@ class shortcodecnxml_to_shortcodehtml(cnxml_to_html):
 
 def register():
     return shortcodecnxml_to_shortcodehtml()
+
