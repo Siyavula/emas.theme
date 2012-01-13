@@ -7,9 +7,33 @@
             <property name="title" i18n:translate="">Home</property>
             <property name="description" i18n:translate=""></property>
             <property
-                name="url_expr">string:${globals_view/navigationRootUrl}</property>
+                name="url_expr">string:${context/portal_url}</property>
             <property name="icon_expr"></property>
             <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="science" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Everything Science</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${globals_view/navigationRootUrl}/science</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:'science' in context.objectIds()</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="maths" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Everything Maths</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${globals_view/navigationRootUrl}/maths</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:'maths' in context.objectIds()</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
@@ -21,7 +45,7 @@
             <property
                 name="url_expr">string:${globals_view/navigationRootUrl}/grade-10</property>
             <property name="icon_expr"></property>
-            <property name="available_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
@@ -33,7 +57,7 @@
             <property
                 name="url_expr">string:${globals_view/navigationRootUrl}/grade-11</property>
             <property name="icon_expr"></property>
-            <property name="available_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
@@ -45,7 +69,7 @@
             <property
                 name="url_expr">string:${globals_view/navigationRootUrl}/grade-10</property>
             <property name="icon_expr"></property>
-            <property name="available_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
             <property name="permissions">
                 <element value="View"/>
             </property>

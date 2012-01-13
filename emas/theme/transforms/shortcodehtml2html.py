@@ -170,6 +170,7 @@ class shortcodehtml_to_html:
             handle = urllib2.urlopen(shortURL)
             content = handle.read()
             element = lxml.html.fromstring(content)
+            element.make_links_absolute(base_url="http://www.fullmarks.org.za")
             for question in element.xpath(
                     '//div[@id="item"]/div[@class="question"]'):
                 result += lxml.html.tostring(question, method='xml')
@@ -177,6 +178,7 @@ class shortcodehtml_to_html:
                     '//div[@id="item"]/div[@class="field answer"]'):
                 result += lxml.html.tostring(answer, method='xml')
         return result
+
 
 def register():
     return shortcodehtml_to_html()

@@ -151,16 +151,20 @@ td, th {
     width: 200px;
 }
 
-
-div.navigation {
-    margin: 0.1em 0;
-    max-width: 800px;
-    float: right;
+#portal-breadcrumbs {
+    margin: 1em 0.7em;
+    white-space: nowrap;
 }
 
-.navigation div {
-    background-color: #efefef;
-    display: inline-block;
+#content {
+    margin: 1.5em auto;
+    max-width: 780px;
+}
+
+#content div.navigation {
+    margin: -2.8em 0 0;
+    max-width: 800px;
+    float: right;
 }
 
 .navbutton {
@@ -195,18 +199,11 @@ div.navigation {
     background-position: -242px -61px;
 }
 
-#content {
-    margin: 1em auto;
-    max-width: 780px;
-    font-size: 100%;
-}
 
 #content h1 {
-    border-bottom: 2px solid #CDCDCC;
+    border-bottom: 2px solid #ddd;
     clear: both;
-    font-size: 1.7em;
     margin: 4px 0 0;
-    padding: 0.2em 0 0.3em;
     line-height: 125%;
 }
 
@@ -243,6 +240,14 @@ div.navigation {
 
 #content-core img {
     border: 1px dotted black;
+}
+
+#content #table-of-contents {
+    margin-left: 1em;
+}
+
+#content #table-of-contents div {
+    margin: 0;
 }
 
 #footer {
