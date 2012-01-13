@@ -30,13 +30,11 @@
 
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
-        <drop css:content="h1.documentFirstHeading" if-path="/Plone/maths"/>
-        <drop css:content="h1.documentFirstHeading" if-path="/"/>
 
-
-        <replace theme="//h1[@id='sitetitlebottom']//a">
-            <h1 id="sitetitlebottom" class="sitetitle"><a><xsl:attribute name="href"><xsl:value-of select="//a[id='portal-logo']/@href"/></xsl:attribute><xsl:if test="contains(//title/text(), 'Maths')">Maths</xsl:if><xsl:if test="contains(//title/text(), 'Science')">Science</xsl:if></a></h1>
+        <replace theme="//h1[@id='sitetitlebottom']">
+            <h1 id="sitetitlebottom" class="sitetitle"><a><xsl:attribute name="href"><xsl:value-of select="//a[@id='portal-logo']/@href"/></xsl:attribute><xsl:if test="contains(//title/text(), 'Maths')">Maths</xsl:if><xsl:if test="contains(//title/text(), 'Science')">Science</xsl:if></a></h1>
         </replace>
+
         <replace theme="//h2[@id='belowtitle']">
             <h2 id="belowtitle" class="sitetitle"><xsl:if test="contains(//title/text(), 'Maths')">Excel in Mathematics</xsl:if><xsl:if test="contains(//title/text(), 'Science')">Excel in Science</xsl:if></h2>
         </replace>
@@ -54,13 +52,25 @@
 
         <replace css:theme="#globalnav" css:content="#portal-globalnav"/>
 
+        <drop css:theme="#topnav"
+            if="not(//a[@class='next'] or a[@class='previous'])"/>
+
         <merge attributes="class href" css:theme=".navback" css:content=".listingBar a.previous" css:if-content=".listingBar a.previous"/>
         <merge attributes="class href" css:theme=".navforward" css:content=".listingBar a.next" css:if-content=".listingBar a.next"/>
         <merge attributes="href" css:theme=".navtoc" css:content="#portal-logo" />
 
 
         <!-- Content -->
-        <replace css:content-children="#content" css:theme-children="#content" />
+        <replace
+            css:theme="h1.documentFirstHeading"
+            css:content="h1.documentFirstHeading" />
+        <replace
+            css:content-children="div.documentDescription"
+            css:theme-children="div.documentDescription" />
+        <replace
+            css:content-children="#content-core"
+            css:theme-children="#content-core" />
+
         <drop css:content="#table-of-contents img"/>
 
         <!-- Copy annotator viewlet -->
