@@ -47,4 +47,12 @@
         description="Display a table of contents for a folder hierarchy"
         />
 
+    <browser:page
+        for="*"
+        name="emas.search"
+        class=".views.SearchView"
+        permission="zope2.View"
+        />
+
+
 </configure>
