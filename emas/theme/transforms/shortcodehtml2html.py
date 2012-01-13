@@ -78,6 +78,13 @@ class shortcodehtml_to_html:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
+            elif 'youtube.com' in params['url']:
+                # YouTube video
+                embedString = '<div class="video"><iframe width="' + params.get('width', '420') + '" height="' + params.get('height', '315') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
             else:
                 print 'Warning: do not know how to handle URL (%s)... deleting.'%params['url']
                 element.getparent().remove(element)

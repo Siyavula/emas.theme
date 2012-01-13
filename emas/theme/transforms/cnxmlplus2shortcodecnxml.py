@@ -276,14 +276,6 @@ class cnxmlplus_to_shortcodecnxml:
                 utils.etree_replace_with_node_list(element, child, child)
 
             elif child.tag == 'nuclear_notation':
-                '''
-                dummyNode = utils.create_node('dummy')
-                dummyNode.append(utils.create_node('sup', text=child.find('mass_number').text))
-                dummyNode.append(utils.create_node('sub', text=child.find('atomic_number').text))
-                dummyNode[-1].tail = child.find('symbol').text
-                utils.etree_replace_with_node_list(element, child, dummyNode)
-                childIndex += len(dummyNode)
-                '''
                 namespace = 'http://www.w3.org/1998/Math/MathML'
                 mathNode = utils.create_node('math', namespace=namespace)
                 mathNode.append(utils.create_node('msubsup', namespace=namespace))
@@ -298,6 +290,18 @@ class cnxmlplus_to_shortcodecnxml:
 
                 mathNode.tail = child.tail
                 element[childIndex] = mathNode
+                childIndex += 1
+
+            elif child.tag == 'math_extension':
+                child.tag = 'note'
+                titleNode = child.find('title')
+                if titleNode is not None:
+                    titleNode.tag = 'label'
+                    titleNode.text = u'Extension \u2014 ' + titleNode.text.strip()
+                else:
+                    child.insert(0, utils.create_node('label', text='Extension'))
+                bodyNode = child.find('body')
+                utils.etree_replace_with_node_list(child, bodyNode, bodyNode)
                 childIndex += 1
 
             elif child.tag == 'section':
@@ -315,6 +319,7 @@ class cnxmlplus_to_shortcodecnxml:
                             print 'WARNING: section "%s" should not have a shortcode'%child.find('title').text.strip()
                         shortcode = shortCodeNode.text.strip()
                         child.remove(shortCodeNode)
+                    """ # Commented out so that shortcodes do not get displayed
                     if shortcode is not None:
                         titleNode = child.find('title')
                         if len(titleNode) == 0:
@@ -325,6 +330,7 @@ class cnxmlplus_to_shortcodecnxml:
                             if titleNode[-1].tail is None:
                                 titleNode[-1].tail = ''
                             titleNode[-1].tail += ' [' + shortcode + ']'
+                    """
                 childIndex += 1
 
             elif child.tag in ['chem_compound', 'spec_note']:
@@ -397,6 +403,8 @@ class cnxmlplus_to_shortcodecnxml:
                     'video/title', 'video/shortcode', 'video/url', 'video/width', 'video/height',
                     'worked_example/answer/workstep/title', 'worked_example/question', 'worked_example/title',
                     'activity/title',
+                    'math_extension/title',
+                    'math_extension/body',
                 ]
                 validSet = set([])
                 for entry in valid:
@@ -415,7 +423,10 @@ class cnxmlplus_to_shortcodecnxml:
                         passed = True
                         break
                 if not passed:
-                    print 'Unhandled element:', '/'.join(path)
+                    path = '/'.join(path)
+                    for key, url in namespaces.iteritems():
+                        path = path.replace('{%s}'%url, key+':')
+                    print 'Unhandled element:', path
 
                 childIndex += 1
 
