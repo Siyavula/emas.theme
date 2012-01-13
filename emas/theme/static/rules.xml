@@ -55,6 +55,11 @@
         <merge attributes="href" css:theme=".navtoc" css:content="#portal-logo" />
 
 
+        <!-- breadcrumbs -->
+        <replace
+            css:theme="#portal-breadcrumbs"
+            css:content="#portal-breadcrumbs" />
+
         <!-- Content -->
         <replace
             css:theme="h1.documentFirstHeading"

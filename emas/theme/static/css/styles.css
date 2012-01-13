@@ -151,6 +151,10 @@ td, th {
     width: 200px;
 }
 
+#portal-breadcrumbs {
+    margin: 1em 0.7em;
+    white-space: nowrap;
+}
 
 #content {
     margin: 1.5em auto;
@@ -236,6 +240,10 @@ td, th {
 
 #content-core img {
     border: 1px dotted black;
+}
+
+#content #table-of-contents {
+    margin-left: 1em;
 }
 
 #content #table-of-contents div {
