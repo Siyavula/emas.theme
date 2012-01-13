@@ -275,7 +275,19 @@ td, th {
     border-bottom: 1px solid #ccc;
 }
 
-.figure table {
+#content .table {
+    margin: 1.5em 0;
+    text-align: center;
+    width: 100%;
+}
+#content .table table,
+#content .table table td,
+#content .figure table td {
+    text-align: center;
+    margin: auto;
+}
+
+#content .figure table {
     width: 100%;
 }
 
@@ -283,4 +295,23 @@ table.plain th, table.plain td {
     border: 1px solid #DDDDDD;
 }
 
+.equation {
+    margin: .5em 0 1em;
+    position: relative;
+}
 
+.equation-number {
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
+.table-text {
+    text-align: left;
+    line-height: normal;
+    padding-top: .3em;
+}
+
+#content .solution {
+    margin: .5em 0 .5em 3em;
+}
