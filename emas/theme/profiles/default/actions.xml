@@ -67,7 +67,7 @@
             <property name="title" i18n:translate="">Grade 12</property>
             <property name="description" i18n:translate=""></property>
             <property
-                name="url_expr">string:${globals_view/navigationRootUrl}/grade-10</property>
+                name="url_expr">string:${globals_view/navigationRootUrl}/grade-12</property>
             <property name="icon_expr"></property>
             <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
             <property name="permissions">
