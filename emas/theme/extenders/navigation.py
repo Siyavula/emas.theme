@@ -7,7 +7,7 @@ from archetypes.schemaextender.field import ExtensionField
 from archetypes.schemaextender.interfaces import ISchemaExtender
 
 import logging
-LOG = logging.getLogger('NaviationExtender')
+LOG = logging.getLogger('NavigationExtender')
 
 class _NavigationRestrictionExtensionField(ExtensionField, BooleanField): pass
 
