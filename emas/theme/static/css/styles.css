@@ -171,9 +171,7 @@ td, th {
     opacity: 0.25;
     display: inline-block;
     margin-top: 5px;
-    height: 17px;
     padding: 0 2px;
-    width: 29px;
     border: 1px solid #ccc;
     border-radius: 2px;
     width: 27px;
@@ -199,6 +197,17 @@ td, th {
     background-position: -242px -61px;
 }
 
+#content dl.bookrelated {
+    float: right;
+    font-size: 100%;
+    margin: 1em 0 0.5em 1.5em;
+    width: 35%;
+    clear: both;
+}
+#content dl.bookrelated .portletItem {
+    margin: 0;
+    padding: 0 1em;
+}
 
 #content h1 {
     border-bottom: 2px solid #ddd;

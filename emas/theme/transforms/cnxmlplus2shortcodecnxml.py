@@ -104,7 +104,7 @@ class cnxmlplus_to_shortcodecnxml:
         while childIndex < len(element):
             child = element[childIndex]
 
-            if child.tag in ['video', 'simulation']:
+            if child.tag in ['video', 'simulation', 'presentation']:
                 child.tag = 'todo-' + child.tag
                 childIndex += 1
 
@@ -397,7 +397,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'definition/term', 'definition/meaning',
                     'sup',
                     'sub',
-                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover', 'm:munder', 'm:mover',
+                    'm:mn', 'm:mo', 'm:mi', 'm:msup', 'm:mrow', 'm:math', 'm:mtable', 'm:mtr', 'm:mtd', 'm:msub', 'm:mfrac', 'm:msqrt', 'm:mspace', 'm:mstyle', 'm:mfenced', 'm:mtext', 'm:mroot', 'm:mref', 'm:msubsup', 'm:munderover', 'm:munder', 'm:mover', 'm:mphantom',
                     'equation',
                     'link',
                     'quote',
@@ -408,6 +408,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'image/arguments',
                     'image/src',
                     'number/coeff', 'number/exp', 'number/base',
+                    'nuclear_notation/mass_number', 'nuclear_notation/atomic_number', 'nuclear_notation/symbol',
                     'pspicture/code',
                     'video/title', 'video/shortcode', 'video/url', 'video/width', 'video/height',
                     'worked_example/answer/workstep/title', 'worked_example/question', 'worked_example/title',
@@ -416,7 +417,8 @@ class cnxmlplus_to_shortcodecnxml:
                     'math_extension/body',
                     'document/content/title',
                     'document/content/content',
-                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height',
+                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height', 'simulation/embed',
+                    'presentation/title', 'presentation/url', 'presentation/shortcode', 'presentation/embed',
                 ]
                 validSet = set([])
                 for entry in valid:
