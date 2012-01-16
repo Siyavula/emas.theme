@@ -4,14 +4,14 @@
     <!-- Modify jquery, only include if theme is not active -->
     <javascript compression="none"
                 id="jquery.js"
-                expression="not:request/HTTP_X_THEME_ENABLED | nothing" />
+                expression="not:context/@@annotator-enabled | nothing" />
 
     <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.load.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -20,7 +20,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.roundupstatus.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -29,7 +29,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.categories.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -38,7 +38,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.markdown.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -47,7 +47,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/showdown.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -56,7 +56,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.permissions.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -65,7 +65,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.auth.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -74,7 +74,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.store.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -83,7 +83,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/annotator.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -92,7 +92,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/json2.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
@@ -110,7 +110,7 @@
                 cookable="True"
                 enabled="True"
                 id="++resource++emas.theme.resources/jquery.min.js"
-                expression="request/HTTP_X_THEME_ENABLED | nothing"
+                expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
 
