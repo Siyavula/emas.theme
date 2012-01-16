@@ -63,3 +63,13 @@ class SearchView(BrowserView):
             search_url = '%s/search?SearchableText=%s' % (
                 root.absolute_url(), searchtext)
             self.request.response.redirect(search_url)
+
+class AnnotatorEnabledView(BrowserView):
+    """ Return true if annotator should be enabled
+    """
+    def enabled(self):
+        enabled = self.context.Schema().getField(
+            'enableAnnotations').getAccessor(self.context)()
+        return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
+
+    __call__ = enabled

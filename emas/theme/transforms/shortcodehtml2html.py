@@ -217,9 +217,11 @@ class shortcodehtml_to_html:
             content = handle.read()
             element = lxml.html.fromstring(content)
             element.make_links_absolute(base_url="http://www.fullmarks.org.za")
+            """ # Commented out so that questions are not displayed twice.
             for question in element.xpath(
                     '//div[@id="item"]/div[@class="question"]'):
                 result += lxml.html.tostring(question, method='xml')
+            """
             for answer in element.xpath(
                     '//div[@id="item"]/div[@class="field answer"]'):
                 result += lxml.html.tostring(answer, method='xml')
@@ -228,4 +230,3 @@ class shortcodehtml_to_html:
 
 def register():
     return shortcodehtml_to_html()
-

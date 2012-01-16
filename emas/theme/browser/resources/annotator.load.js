@@ -15,7 +15,7 @@ jQuery(function ($) {
       alert("Annotator not properly installed.");
         return;
     }
-    var elem = $('#content');
+    var elem = $('#content-core');
     if (elem.length) {
         var account_id = AnnotatorConfig.getAccountId();
         var annotator_store = AnnotatorConfig.getAnnotatorStore();

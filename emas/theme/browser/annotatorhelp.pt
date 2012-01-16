@@ -1,3 +1,4 @@
+<tal:w condition="context/@@annotator-enabled">
 <div class="annotator-help-panel">
     <h2>Welcome to the Siyavula Annotator!</h2>
     <br/> <br/>
@@ -20,3 +21,4 @@
     </ul>
 </div>
 <a class="annotator-help-trigger" href="#">Help</a>
+</tal:w>

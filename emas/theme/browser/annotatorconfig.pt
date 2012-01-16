@@ -1,3 +1,4 @@
+<tal:w condition="context/@@annotator-enabled">
 <tal:script replace="structure string:<script" /> type="text/javascript"<tal:script replace="structure string:>" />
 var AnnotatorConfig = {};
 
@@ -17,3 +18,4 @@ AnnotatorConfig.getAbsoluteUrl = function(){
     return '<tal:a replace="context/absolute_url" />';
 }
 <tal:script replace="structure string:</script>" />
+</tal:w>
