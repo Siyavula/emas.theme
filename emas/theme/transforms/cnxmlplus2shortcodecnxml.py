@@ -104,7 +104,7 @@ class cnxmlplus_to_shortcodecnxml:
         while childIndex < len(element):
             child = element[childIndex]
 
-            if child.tag in ['video', 'simulation']:
+            if child.tag in ['video', 'simulation', 'presentation']:
                 child.tag = 'todo-' + child.tag
                 childIndex += 1
 
@@ -418,6 +418,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'document/content/title',
                     'document/content/content',
                     'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height', 'simulation/embed',
+                    'presentation/title', 'presentation/url', 'presentation/shortcode', 'presentation/embed',
                 ]
                 validSet = set([])
                 for entry in valid:
