@@ -103,15 +103,61 @@ class shortcodehtml_to_html:
             if (params.get('url') is None) or (params['url'].lower() == 'todo'):
                 LOGGER.info('ERROR: simulation without URL... deleting.')
                 element.getparent().remove(element)
+            elif element.find('embed') is not None:
+                # Verbatim embed code
+                embedNode = element.find('embed')
+                embedString = embedNode.text
+                embedString = '<div class="simulation">' + embedString
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
             elif 'phet.colorado.edu' in params['url']:
                 # Phet simulation
-                embedString = '<div class="simulation"><iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                embedString = '<iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                embedString = '<div class="simulation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             else:
                 LOGGER.info('ERROR: do not know how to handle simulation URL (%s)... deleting.'%params['url'])
+                element.getparent().remove(element)
+
+        # Embed presentation
+        # <presentation>
+        #   <title>Chapter summary</title>
+        #   <shortcode>VPcyl</shortcode>
+	#   <url>http://www.slideshare.net/slideshow/embed_code/11078077</url>
+        # </presentation>
+        for element in tree.xpath('//todo-presentation'):
+            subNodes = {}
+            params = {}
+            for key in ['strong', 'shortcode', 'url', 'width', 'height']:
+                subNodes[key] = element.find('.//' + key)
+                if subNodes[key] is not None:
+                    params[key] = subNodes[key].text
+            if (params.get('url') is None) or (params['url'].lower() == 'todo'):
+                LOGGER.info('ERROR: presentation without URL... deleting.')
+                element.getparent().remove(element)
+            elif element.find('embed') is not None:
+                # Verbatim embed code
+                embedNode = element.find('embed')
+                embedString = embedNode.text
+                embedString = '<div class="presentation">' + embedString
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
+            elif 'www.slideshare.net' in params['url']:
+                embedString = '<div style="width:' + params.get('width', '425') + 'px"><iframe src="' + params['url'] + '" width="' + params.get('width', '425') + '" height="' + params.get('height', '355') + '" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"> </iframe></div>'
+                embedString = '<div class="presentation">' + embedString
+                if params.get('strong') is not None:
+                    embedString += '<p>' + params['strong'] + '</p>'
+                embedString += '</div>'
+                element.getparent().replace(element, lxml.html.fromstring(embedString))
+            else:
+                LOGGER.info('ERROR: do not know how to handle presentation URL (%s)... deleting.'%params['url'])
                 element.getparent().remove(element)
 
         # Remove to-do notes
