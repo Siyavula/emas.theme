@@ -417,7 +417,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'math_extension/body',
                     'document/content/title',
                     'document/content/content',
-                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height',
+                    'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height', 'simulation/embed',
                 ]
                 validSet = set([])
                 for entry in valid:

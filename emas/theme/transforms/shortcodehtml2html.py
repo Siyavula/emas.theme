@@ -105,7 +105,13 @@ class shortcodehtml_to_html:
                 element.getparent().remove(element)
             elif 'phet.colorado.edu' in params['url']:
                 # Phet simulation
-                embedString = '<div class="simulation"><iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                embedNode = element.find('embed')
+                if embedNode is not None:
+                    # Verbatim embed code
+                    embedString = embedNode.text
+                else:
+                    embedString = '<iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                embedString = '<div class="simulation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
