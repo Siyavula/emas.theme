@@ -13,4 +13,10 @@
         factory=".navigation.NavigationRestrictionsExtender"
         />
 
+    <adapter
+        for="Products.Archetypes.interfaces.IBaseContent"
+        provides="archetypes.schemaextender.interfaces.ISchemaExtender"
+        factory=".annotations.AnnotationsExtender"
+        />
+
 </configure>
