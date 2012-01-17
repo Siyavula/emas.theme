@@ -4,6 +4,7 @@ from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
+from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
 from Acquisition import aq_inner
@@ -78,3 +79,8 @@ class AnnotatorEnabledView(BrowserView):
         return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
 
     __call__ = enabled
+
+class EmasUserDataPanel(UserDataPanel):
+    def __init__(self, context, request):
+        super(EmasUserDataPanel, self).__init__(context, request)
+        self.form_fields = self.form_fields.omit('credits')

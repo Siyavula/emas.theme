@@ -61,4 +61,12 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        name="personal-information"
+        class=".views.EmasUserDataPanel"
+        permission="cmf.SetOwnProperties"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
 </configure>

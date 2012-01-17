@@ -4,4 +4,10 @@
   
     <adapter factory=".browser.nextprevious.NextPrevious" />
 
+    <adapter
+      provides=".userdataschema.IEmasUserDataSchema"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      factory=".adapters.EmasUserDataPanelAdapter"
+      />
+
 </configure>
