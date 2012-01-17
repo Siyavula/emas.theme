@@ -247,10 +247,6 @@ td, th {
     line-height: 1;
 }
 
-#content-core img {
-    border: 1px dotted black;
-}
-
 #content #table-of-contents {
     margin-left: 1em;
 }
