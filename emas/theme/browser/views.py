@@ -69,6 +69,8 @@ class AnnotatorEnabledView(BrowserView):
     """ Return true if annotator should be enabled
     """
     def enabled(self):
+        # XXX: Return true until we have a behaviour for Dexterity Types
+        return True
         if not IBaseContent.providedBy(self.context):
             return False
         enabled = self.context.Schema().getField(
