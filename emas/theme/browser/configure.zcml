@@ -55,7 +55,7 @@
         />
 
     <browser:page
-        for="Products.Archetypes.interfaces.IBaseContent"
+        for="*"
         name="annotator-enabled"
         class=".views.AnnotatorEnabledView"
         permission="zope2.View"
