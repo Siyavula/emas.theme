@@ -348,10 +348,9 @@ h3.section-header .title
 
 #content .example
 {
-   background:#ddd;
    padding-left:.5em;
    padding-right:.5em;
-   border: 1px solid #999;
+   border: 5px solid #ccc;
 }
 
 #content .exercise
