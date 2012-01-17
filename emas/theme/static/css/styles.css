@@ -272,7 +272,7 @@ td, th {
 
 
 .shortcode-content {
-    background-color: #f5f5f5;
+    border: 5px solid #ccc;
     padding: 1em 2em;
 }
 
@@ -324,3 +324,40 @@ table.plain th, table.plain td {
 #content .solution {
     margin: .5em 0 .5em 3em;
 }
+
+#content .definition
+{
+   margin:.5em;
+   padding:.5em;
+   border: 2px solid black;
+}
+
+h2.section-header .title
+{
+   border-bottom: 1px solid #999999;
+   padding-left:.5em;
+   display:block;
+   background:#efefef;
+}
+h3.section-header .title
+{
+   border-bottom: 1px solid #999999;
+   padding-left:.5em;
+   display:block;
+}
+
+#content .example
+{
+   background:#ddd;
+   padding-left:.5em;
+   padding-right:.5em;
+   border: 1px solid #999;
+}
+
+#content .exercise
+{
+   padding-left:.5em;
+   padding-right:.5em;
+   border: 5px solid #ccc;
+}
+
