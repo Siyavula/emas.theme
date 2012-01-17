@@ -84,3 +84,13 @@ class EmasUserDataPanel(UserDataPanel):
     def __init__(self, context, request):
         super(EmasUserDataPanel, self).__init__(context, request)
         self.form_fields = self.form_fields.omit('credits')
+
+class CreditsViewlet(ViewletBase):
+    """ Adds a help panel for the annotator. """
+    index = ViewPageTemplateFile('credits-viewlet.pt')
+
+    @property
+    def credits(self):
+        member = self.context.restrictedTraverse(
+            '@@plone_portal_state').member()
+        return member.getProperty('credits', 0)

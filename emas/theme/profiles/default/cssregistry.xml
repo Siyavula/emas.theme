@@ -55,6 +55,18 @@
         id="tinymce.css"
         />
 
+    <stylesheet
+        expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        id="++resource++emas.theme.resources/credits-viewlet.css"
+        media="screen"
+        rel="stylesheet"
+        rendering="import"
+        title=""
+        />
+
     <!-- register theme CSS -->
     <stylesheet
         cacheable="True"

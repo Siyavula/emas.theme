@@ -1,0 +1,9 @@
+#emas-credits-viewlet {
+    float: right;
+    font-size: 80%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    z-index: 5;
+}

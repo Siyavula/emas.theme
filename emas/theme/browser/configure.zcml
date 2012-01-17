@@ -69,4 +69,12 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:viewlet
+        name="emas-credits"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+        class=".views.CreditsViewlet"
+        permission="cmf.SetOwnProperties"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
 </configure>
