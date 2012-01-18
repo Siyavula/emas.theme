@@ -1,7 +1,4 @@
-import json
-from zope.component import queryUtility, getUtility
-from zope.app.intid.interfaces import IIntIds
-from z3c.relationfield import RelationValue
+from zope.component import queryUtility
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
@@ -10,11 +7,10 @@ from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
-from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
+from Products.statusmessages.interfaces import IStatusMessage
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings
@@ -101,33 +97,34 @@ class CreditsViewlet(ViewletBase):
             '@@plone_portal_state').member()
         return member.getProperty('credits', 0)
 
+class CreditsView(BrowserView):
+    template = ViewPageTemplateFile('credits.pt')
 
-class AddQuestionView(BrowserView):
-    """ Add a question to the questions folder and associate it with the
-        given context.
-    """
-    def addQuestion(self):
-        request = self.request
-        context = self.context
+    def __call__(self):
+        buy = self.request.get('buy', None)
+        if buy is not None:
+            try:
+                buy = int(buy)
+            except ValueError:
+                self.request['error'] = _(u'Please enter an integer value')
+                return self.template()
 
-        portal = context.restrictedTraverse('@@plone_portal_state').portal()
-        questions = portal._getOb('questions')
-        id = questions.generateId('question')
-        questions.invokeFactory('siyavula.what.question', id=id)
-        question = questions._getOb(id)
-        question.question = request.get('question')
-        
-        intids = getUtility(IIntIds)
-        try:
-            new_id = intids.getId(self.context)
-            question.relatedContent = RelationValue(new_id)
-            return question
-        except:
-            raise 'Cannot calculate intid for %s' %self.context.getId()
+            if buy<=0:
+                self.request['error'] = _(u'Please enter a positive integer value')
+                return self.template()
+                
+            # XXX Payment gateway integration here, perhaps some utility we
+            # can look up and delegate to.
 
-    def addQuestionJSON(self):
-        question = self.addQuestion() 
-        message = "Question %s was added" %question.question
-        result = 'success'
-        return json.dumps({result: result,
-                           message: message})
+            member = self.context.restrictedTraverse(
+                '@@plone_portal_state').member()
+            credits = member.getProperty('credits', 0)
+            member.setProperties({'credits': credits + buy})
+            IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
+
+        return self.template()
+
+    @property
+    def cost(self):
+        settings = queryUtility(IRegistry).forInterface(IEmasSettings)
+        return settings.creditcost
