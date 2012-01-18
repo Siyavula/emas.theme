@@ -70,7 +70,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
     <assignment
@@ -80,7 +80,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
     <assignment
@@ -90,7 +90,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
     <assignment
@@ -100,7 +100,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
     <assignment
@@ -110,7 +110,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
     <assignment
@@ -120,7 +120,7 @@
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>
-        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href="annotate"&gt;Annotate this book&lt;/a&gt;</property>
     </assignment>
 
 </portlets>
