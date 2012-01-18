@@ -8,8 +8,7 @@
         category="context"
         key="/maths/grade-10"
         type="plone.portlet.static.Static"
-        name="download"
-        purge="False">
+        name="download">
         <property name="header">Download</property>
         <property name="text">&lt;a href="everything-maths-grade-10.pdf"&gt;Download PDF&lt;/a&gt;</property>
     </assignment>
