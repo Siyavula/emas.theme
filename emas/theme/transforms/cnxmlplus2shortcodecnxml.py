@@ -196,6 +196,14 @@ class cnxmlplus_to_shortcodecnxml:
                     'aside': 'Interesting Fact'}[child.attrib['type']]))
                 childIndex += 1
 
+            elif child.tag == 'math_identity':
+                ruleNode = utils.create_node('rule')
+                ruleNode.attrib['type'] = 'Identity'
+                child.tag = 'statement'
+                ruleNode.append(child)
+                element[childIndex] = ruleNode
+                childIndex += 1
+
             elif (child.tag == 'number') and (child.getparent().tag != 'entry'):
                 coeffNode = child.find('coeff')
                 expNode = child.find('exp')
@@ -415,6 +423,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'activity/title',
                     'math_extension/title',
                     'math_extension/body',
+                    'math_identity',
                     'document/content/title',
                     'document/content/content',
                     'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height', 'simulation/embed',
