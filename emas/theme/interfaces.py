@@ -1,4 +1,4 @@
-from zope.schema import List, TextLine, Bool
+from zope.schema import List, TextLine, Bool, Int
 from zope.interface import Interface
 from emas.theme import MessageFactory as _
 
@@ -19,4 +19,11 @@ class IEmasSettings(Interface):
         title=_(u'Annotator Storage'),
         description=_(u'Define the url where the annotator store can be found.'),
         required=True
+    );
+
+    creditcost = Int(
+        title=_('Credit Cost'),
+        description=_('The cost per credit in cents'),
+        required=False,
+        default=0
     );

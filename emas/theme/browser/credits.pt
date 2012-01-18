@@ -1,0 +1,32 @@
+<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="emas.theme" >
+<body>
+    <div metal:fill-slot="main"
+         tal:define="error request/error|nothing">
+
+        <form method="post"
+              tal:attributes="action string:${context/absolute_url}/@@emas-credits">
+            <table class="credit-purchase-table">
+                <tr>
+                    <th>Credits</th>
+                    <th>Cost per Credit</th>
+                    <th>Total Cost</th>
+                </tr>
+                <tr tal:define="cost view/cost">
+                    <td tal:attributes="class python:error and 'field error' or 'field'">
+                        <input type="text" size="5" name="buy"
+                               tal:attributes="onchange string:jQuery('#total-credit-cost').html('' + (this.value * ${cost}/100.0))" />
+                    </td>
+                    <td>
+                        <span class="credit-cost" tal:content="python:'%.2f' % (float(cost)/100)" />
+                    </td>
+                    <td id="total-credit-cost">0.00</td>
+                </tr>
+            </table>
+            <input type="submit" class="context"
+                   value="Buy" />
+        </form>
+
+    </div>
+</body>
+</html>

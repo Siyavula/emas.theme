@@ -94,3 +94,14 @@ class CreditsViewlet(ViewletBase):
         member = self.context.restrictedTraverse(
             '@@plone_portal_state').member()
         return member.getProperty('credits', 0)
+
+class CreditsView(BrowserView):
+    template = ViewPageTemplateFile('credits.pt')
+
+    def __call__(self):
+        return self.template()
+
+    @property
+    def cost(self):
+        settings = queryUtility(IRegistry).forInterface(IEmasSettings)
+        return settings.creditcost
