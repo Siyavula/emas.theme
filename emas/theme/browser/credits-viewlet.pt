@@ -1,0 +1,5 @@
+<div id="emas-credits-viewlet">
+<span class="credit_heading">Credits:</span>
+<span class="creadit_value"
+      tal:content="view/credits" />
+</div>

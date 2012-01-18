@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
 <registry>
-    <record interface="emas.theme.interfaces.IEmasSettings" field="accountid">
-        <value>0b776919ee56436a11fdd72b3f001a23</value>
-    </record>
-    <record interface="emas.theme.interfaces.IEmasSettings" field="store">
-        <value>http://127.0.0.1:5000/api</value>
-    </record>
+    <records interface="emas.theme.interfaces.IEmasSettings" />
 </registry>

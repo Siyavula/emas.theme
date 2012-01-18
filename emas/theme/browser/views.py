@@ -4,6 +4,7 @@ from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
+from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
 from Acquisition import aq_inner
@@ -12,6 +13,7 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
 
+from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings
 from emas.theme import MessageFactory as _
 
@@ -69,6 +71,9 @@ class AnnotatorEnabledView(BrowserView):
     """ Return true if annotator should be enabled
     """
     def enabled(self):
+        if IAnnotatableContent.providedBy(self.context):
+            return IAnnotatableContent(self.context).enableAnnotations
+            
         if not IBaseContent.providedBy(self.context):
             return False
         enabled = self.context.Schema().getField(
@@ -76,3 +81,18 @@ class AnnotatorEnabledView(BrowserView):
         return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
 
     __call__ = enabled
+
+class EmasUserDataPanel(UserDataPanel):
+    def __init__(self, context, request):
+        super(EmasUserDataPanel, self).__init__(context, request)
+        self.form_fields = self.form_fields.omit('credits')
+
+class CreditsViewlet(ViewletBase):
+    """ Adds a help panel for the annotator. """
+    index = ViewPageTemplateFile('credits-viewlet.pt')
+
+    @property
+    def credits(self):
+        member = self.context.restrictedTraverse(
+            '@@plone_portal_state').member()
+        return member.getProperty('credits', 0)
