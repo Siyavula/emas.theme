@@ -1,0 +1,8 @@
+<div>
+    Submit a question for our subject matter experts.
+    <form id="form.add.question" action="." method="POST">
+        <input id="question" name="question" value="" />
+        <input type="hidden" id="form.submitted" name="form.submitted" value="submitted" />
+        <button type="submit" id="button.add.question">Submit question</button>
+    </form>
+</div>
