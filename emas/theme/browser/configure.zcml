@@ -77,4 +77,28 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:viewlet
+        for="Products.CMFCore.interfaces._content.IContentish"
+        name="question-add"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class=".questionaddviewlet.QuestionAddViewlet"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="add-question"
+        class=".views.AddQuestionView"
+        permission="zope2.View"
+        attribute="addQuestion"
+        />
+
+    <browser:page
+        for="*"
+        name="add-question-json"
+        class=".views.AddQuestionView"
+        attribute="addQuestionJSON"
+        permission="zope2.View"
+        />
+
 </configure>
