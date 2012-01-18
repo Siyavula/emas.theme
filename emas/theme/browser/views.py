@@ -13,6 +13,7 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
 
+from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings
 from emas.theme import MessageFactory as _
 
@@ -70,8 +71,9 @@ class AnnotatorEnabledView(BrowserView):
     """ Return true if annotator should be enabled
     """
     def enabled(self):
-        # XXX: Return true until we have a behaviour for Dexterity Types
-        return True
+        if IAnnotatableContent.providedBy(self.context):
+            return IAnnotatableContent(self.context).enableAnnotations
+            
         if not IBaseContent.providedBy(self.context):
             return False
         enabled = self.context.Schema().getField(
