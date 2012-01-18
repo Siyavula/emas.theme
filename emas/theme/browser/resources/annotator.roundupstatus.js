@@ -35,7 +35,7 @@
       if (annotation.issue_id != null) {
         return field.addClass('annotator-status').html(function() {
           var string;
-          return string = '<a href="http://ewald-laptop.local:8080/siyavulatracker/issue' + annotation.issue_id + '" target="_blank">See comments on Roundup!</a>';
+          return string = '<a href="http://roundup.emas.upfronthosting.co.za/emas/issue' + annotation.issue_id + '" target="_blank">See comments on Roundup!</a>';
         });
       } else {
         return field.remove();
