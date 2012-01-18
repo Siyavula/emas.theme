@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-10"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-maths-grade-10.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-11"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-maths-grade-11.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-12"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-maths-grade-12.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-10"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-science-grade-10.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-11"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-science-grade-11.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-12"
+        type="plone.portlet.static.Static"
+        name="download">
+        <property name="header">Download</property>
+        <property name="text">&lt;a href="everything-science-grade-12.pdf"&gt;Download PDF&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-10"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-11"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/maths/grade-12"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-10"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-11"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+    <assignment
+        manager="plone.rightcolumn"
+        category="context"
+        key="/science/grade-11"
+        type="plone.portlet.static.Static"
+        name="annotate">
+        <property name="header">Annotate</property>
+        <property name="text">Found any errors or have suggestions?&lt;br&gt;&lt;a href=""&gt;Annotate this book&lt;/a&gt;</property>
+    </assignment>
+
+</portlets>
