@@ -21,7 +21,7 @@
             <property
                 name="url_expr">string:${globals_view/navigationRootUrl}/science</property>
             <property name="icon_expr"></property>
-            <property name="available_expr">python:'science' in context.objectIds()</property>
+            <property name="available_expr">python:'science' in context.restrictedTraverse('@@plone_portal_state').navigation_root().objectIds()</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
@@ -33,7 +33,7 @@
             <property
                 name="url_expr">string:${globals_view/navigationRootUrl}/maths</property>
             <property name="icon_expr"></property>
-            <property name="available_expr">python:'maths' in context.objectIds()</property>
+            <property name="available_expr">python:'maths' in context.restrictedTraverse('@@plone_portal_state').navigation_root().objectIds()</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
