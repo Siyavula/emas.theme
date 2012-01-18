@@ -60,7 +60,7 @@
         cacheable="True"
         compression="safe"
         cookable="True"
-        id="++resource++emas.theme.resources/credits-viewlet.css"
+        id="++resource++emas.theme.resources/credits.css"
         media="screen"
         rel="stylesheet"
         rendering="import"
