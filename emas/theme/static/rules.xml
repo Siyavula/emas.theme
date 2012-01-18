@@ -74,6 +74,9 @@
         <replace
             css:theme="h1.documentFirstHeading"
             css:content="h1.documentFirstHeading" />
+        <drop
+            css:theme="h1.documentFirstHeading"
+            css:if="form.searchPage"/>
         <replace
             css:content-children="div.documentDescription"
             css:theme-children="div.documentDescription" />
