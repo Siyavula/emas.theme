@@ -12,6 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
+from Products.statusmessages.interfaces import IStatusMessage
 
 from emas.theme.interfaces import IEmasSettings
 from emas.theme import MessageFactory as _
@@ -99,6 +100,27 @@ class CreditsView(BrowserView):
     template = ViewPageTemplateFile('credits.pt')
 
     def __call__(self):
+        buy = self.request.get('buy', None)
+        if buy is not None:
+            try:
+                buy = int(buy)
+            except ValueError:
+                self.request['error'] = _(u'Please enter an integer value')
+                return self.template()
+
+            if buy<=0:
+                self.request['error'] = _(u'Please enter a positive integer value')
+                return self.template()
+                
+            # XXX Payment gateway integration here, perhaps some utility we
+            # can look up and delegate to.
+
+            member = self.context.restrictedTraverse(
+                '@@plone_portal_state').member()
+            credits = member.getProperty('credits', 0)
+            member.setProperties({'credits': credits + buy})
+            IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
+
         return self.template()
 
     @property
