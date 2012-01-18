@@ -116,7 +116,7 @@
     <assignment
         manager="plone.rightcolumn"
         category="context"
-        key="/science/grade-11"
+        key="/science/grade-12"
         type="plone.portlet.static.Static"
         name="annotate">
         <property name="header">Annotate</property>

@@ -7,13 +7,12 @@ from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
-from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
 from Products.statusmessages.interfaces import IStatusMessage
 
+from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings
 from emas.theme import MessageFactory as _
 
@@ -71,8 +70,9 @@ class AnnotatorEnabledView(BrowserView):
     """ Return true if annotator should be enabled
     """
     def enabled(self):
-        # XXX: Return true until we have a behaviour for Dexterity Types
-        return True
+        if IAnnotatableContent.providedBy(self.context):
+            return IAnnotatableContent(self.context).enableAnnotations
+            
         if not IBaseContent.providedBy(self.context):
             return False
         enabled = self.context.Schema().getField(
@@ -80,6 +80,7 @@ class AnnotatorEnabledView(BrowserView):
         return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
 
     __call__ = enabled
+
 
 class EmasUserDataPanel(UserDataPanel):
     def __init__(self, context, request):

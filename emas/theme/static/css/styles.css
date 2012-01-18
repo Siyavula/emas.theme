@@ -159,6 +159,7 @@ td, th {
 #content {
     margin: 1.5em auto;
     max-width: 780px;
+    min-height: 400px;
 }
 
 #content div.navigation {

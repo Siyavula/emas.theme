@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="rhaptos.xmlfile.xmlfile"
+   meta_type="Dexterity FTI"
+   i18n:domain="rhaptos.xmlfile" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+    <property name="behaviors">
+        <element value="emas.theme.behaviors.annotatable.IAnnotatableContent" />
+    </property>
+
+</object>
