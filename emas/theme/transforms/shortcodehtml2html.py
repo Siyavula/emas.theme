@@ -209,22 +209,27 @@ class shortcodehtml_to_html:
     @ram.cache(cache_key)
     def getURLContent(self, shortURL):
         result = ''
+        todoResult = '<div class="field answer"><label class="formQuestion">Answer:</label><p>To-do.</p></div>'
         if shortURL.lower() == 'todo':
-            result = '<div class="question">\n                \n                    <div class="field ArchetypesField-TextField" id="archetypes-fieldname-question">\n          \n      \n        \n          \n            \n      <label class="formQuestion"><span>Question</span>:</label>\n      \n      <br /><div class="" id="parent-fieldname-question">\n            <p>To-do.</p>\n            \n        </div>\n    \n    \n        \n      \n    \n    </div>\n                \n            </div>\n\n\n            \n                <div class="field answer">\n                    <label class="formQuestion">Answer:</label>\n                    <p>To-do.</p>\n                </div>\n            \n\n            \n\n\n            '
+            result = todoResult
         else:
             LOGGER.info('Fetching url: %s'%shortURL)
-            handle = urllib2.urlopen(shortURL)
-            content = handle.read()
-            element = lxml.html.fromstring(content)
-            element.make_links_absolute(base_url="http://www.fullmarks.org.za")
-            """ # Commented out so that questions are not displayed twice.
-            for question in element.xpath(
-                    '//div[@id="item"]/div[@class="question"]'):
-                result += lxml.html.tostring(question, method='xml')
-            """
-            for answer in element.xpath(
-                    '//div[@id="item"]/div[@class="field answer"]'):
-                result += lxml.html.tostring(answer, method='xml')
+            try:
+                handle = urllib2.urlopen(shortURL)
+                content = handle.read()
+                element = lxml.html.fromstring(content)
+                element.make_links_absolute(base_url="http://www.fullmarks.org.za")
+                """ # Commented out so that questions are not displayed twice.
+                for question in element.xpath(
+                        '//div[@id="item"]/div[@class="question"]'):
+                    result += lxml.html.tostring(question, method='xml')
+                """
+                for answer in element.xpath(
+                        '//div[@id="item"]/div[@class="field answer"]'):
+                    result += lxml.html.tostring(answer, method='xml')
+            except urllib2.HTTPError, msg:
+                LOGGER.info('ERROR: ' + str(msg) + ', URL = ' + shortURL)
+                result = todoResult
         return result
 
 

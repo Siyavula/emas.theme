@@ -65,6 +65,7 @@ class cnxmlplus_to_shortcodecnxml:
         # Build chapter hash from title: for pspictures directory
         import hashlib
         self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
+        #print 'hash:', self.chapterHash
 
         # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
