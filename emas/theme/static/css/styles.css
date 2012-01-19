@@ -159,6 +159,7 @@ td, th {
 #content {
     margin: 1.5em auto;
     max-width: 780px;
+    min-height: 400px;
 }
 
 #content div.navigation {
@@ -197,14 +198,18 @@ td, th {
     background-position: -242px -61px;
 }
 
-#content dl.bookrelated {
+#content dl.portlet {
     float: right;
     font-size: 100%;
     margin: 1em 0 0.5em 1.5em;
     width: 35%;
     clear: both;
+    }
+#content dt.portletHeader {
+    border-bottom: 1px solid #999999;
+    background:#efefef;
 }
-#content dl.bookrelated .portletItem {
+#content dl.portlet .portletItem {
     margin: 0;
     padding: 0 1em;
 }

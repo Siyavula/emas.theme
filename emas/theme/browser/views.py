@@ -7,12 +7,12 @@ from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
-from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
+from Products.statusmessages.interfaces import IStatusMessage
 
+from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings
 from emas.theme import MessageFactory as _
 
@@ -70,8 +70,9 @@ class AnnotatorEnabledView(BrowserView):
     """ Return true if annotator should be enabled
     """
     def enabled(self):
-        # XXX: Return true until we have a behaviour for Dexterity Types
-        return True
+        if IAnnotatableContent.providedBy(self.context):
+            return IAnnotatableContent(self.context).enableAnnotations
+            
         if not IBaseContent.providedBy(self.context):
             return False
         enabled = self.context.Schema().getField(
@@ -79,6 +80,7 @@ class AnnotatorEnabledView(BrowserView):
         return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
 
     __call__ = enabled
+
 
 class EmasUserDataPanel(UserDataPanel):
     def __init__(self, context, request):
@@ -94,3 +96,35 @@ class CreditsViewlet(ViewletBase):
         member = self.context.restrictedTraverse(
             '@@plone_portal_state').member()
         return member.getProperty('credits', 0)
+
+class CreditsView(BrowserView):
+    template = ViewPageTemplateFile('credits.pt')
+
+    def __call__(self):
+        buy = self.request.get('buy', None)
+        if buy is not None:
+            try:
+                buy = int(buy)
+            except ValueError:
+                self.request['error'] = _(u'Please enter an integer value')
+                return self.template()
+
+            if buy<=0:
+                self.request['error'] = _(u'Please enter a positive integer value')
+                return self.template()
+                
+            # XXX Payment gateway integration here, perhaps some utility we
+            # can look up and delegate to.
+
+            member = self.context.restrictedTraverse(
+                '@@plone_portal_state').member()
+            credits = member.getProperty('credits', 0)
+            member.setProperties({'credits': credits + buy})
+            IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
+
+        return self.template()
+
+    @property
+    def cost(self):
+        settings = queryUtility(IRegistry).forInterface(IEmasSettings)
+        return settings.creditcost
