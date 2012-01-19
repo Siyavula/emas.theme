@@ -160,6 +160,11 @@ class shortcodehtml_to_html:
                 LOGGER.info('ERROR: do not know how to handle presentation URL (%s)... deleting.'%params['url'])
                 element.getparent().remove(element)
 
+        # Render boxes (used for calculator buttons)
+        for element in tree.xpath('//todo-box'):
+            element.tag = 'span'
+            element.attrib['style'] = 'border: solid black 1px; padding-left: 2px; padding-right: 2px; margin-left: 2px; margin-right: 2px;'
+
         # Remove to-do notes
         import utils
         dummyNode = utils.create_node('dummy')
