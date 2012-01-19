@@ -3,8 +3,17 @@
 <body tal:define="cost view/cost">
     <div metal:fill-slot="main"
          tal:define="error request/error|nothing">
-
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_buy_credits">
+            Buy Credits
+        </h1>
+        <tal:s condition="request/success|nothing">
+            You have successfully purchased
+            <span tal:content="request/buy">5</span> Credits.
+        </tal:s>
+        <tal:ns condition="not:request/success|nothing">
         <form method="post"
+              id="credit-buy-form"
               tal:define="cost view/cost"
               tal:attributes="action string:${context/absolute_url}/@@emas-credits">
             <table class="credit-purchase-table">
@@ -25,9 +34,12 @@
                     <td id="total-credit-cost">0.00</td>
                 </tr>
             </table>
-            <input type="submit" class="context"
+            <input type="submit" class="context" name="form.button.buy"
                    value="Buy" />
+            <input type="submit" class="context" name="form.button.cancel"
+                   value="Cancel" />
         </form>
+        </tal:ns>
 
     </div>
 </body>

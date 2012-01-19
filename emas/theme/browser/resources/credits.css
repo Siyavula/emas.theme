@@ -7,3 +7,8 @@
     width: auto;
     z-index: 5;
 }
+
+table.credit-purchase-table td,
+table.credit-purchase-table th {
+    padding-right: 0.5em;
+}

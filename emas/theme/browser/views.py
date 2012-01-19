@@ -119,8 +119,9 @@ class CreditsView(BrowserView):
             member = self.context.restrictedTraverse(
                 '@@plone_portal_state').member()
             credits = member.getProperty('credits', 0)
-            member.setProperties({'credits': credits + buy})
+            member.setMemberProperties({'credits': credits + buy})
             IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
+            self.request['success'] = True
 
         return self.template()
 

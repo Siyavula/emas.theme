@@ -114,4 +114,11 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/credits.js"
+                inline="False"/>
+
 </object>
