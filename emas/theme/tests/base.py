@@ -20,6 +20,7 @@ class TestCase(PloneSandboxLayer):
         import rhaptos.compilation
         import upfront.shorturl
         import fullmarks.mathjax
+        import siyavula.what
         import emas.theme
         self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=plone.resource)
@@ -29,6 +30,7 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML(package=rhaptos.compilation)
         self.loadZCML(package=upfront.shorturl)
         self.loadZCML(package=fullmarks.mathjax)
+        self.loadZCML(package=siyavula.what)
         self.loadZCML(package=emas.theme)
         self.loadZCML('overrides.zcml', package=emas.theme)
 

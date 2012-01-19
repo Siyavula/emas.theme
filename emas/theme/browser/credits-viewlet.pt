@@ -1,6 +1,6 @@
 <div id="emas-credits-viewlet">
 <a tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@emas-credits"
-   class="credit_heading">Credits:</a>
-<span class="credit_value"
+   class="credit-overlay credit-heading">Credits:</a>
+<span class="credit-value"
    tal:content="view/credits" />
 </div>
