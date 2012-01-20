@@ -65,6 +65,7 @@ class cnxmlplus_to_shortcodecnxml:
         # Build chapter hash from title: for pspictures directory
         import hashlib
         self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
+        #print 'hash:', self.chapterHash
 
         # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
@@ -104,7 +105,7 @@ class cnxmlplus_to_shortcodecnxml:
         while childIndex < len(element):
             child = element[childIndex]
 
-            if child.tag in ['video', 'simulation', 'presentation']:
+            if child.tag in ['video', 'simulation', 'presentation', 'box']:
                 child.tag = 'todo-' + child.tag
                 childIndex += 1
 
@@ -277,7 +278,8 @@ class cnxmlplus_to_shortcodecnxml:
                 else:
                     if child[-1].tail is not None:
                         child[-1].tail = child[-1].tail.rstrip()
-                if child.getparent().tag == 'unit_number':
+                if (child.getparent().tag == 'unit_number') and (child.text != u'\xb0'):
+                    # Leave space between number and unit, except for degrees
                     child.text = ' ' + child.text
                 for sup in child:
                     assert sup.tag == 'sup'
@@ -428,6 +430,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'document/content/content',
                     'simulation/title', 'simulation/shortcode', 'simulation/url', 'simulation/width', 'simulation/height', 'simulation/embed',
                     'presentation/title', 'presentation/url', 'presentation/shortcode', 'presentation/embed',
+                    'box',
                 ]
                 validSet = set([])
                 for entry in valid:
