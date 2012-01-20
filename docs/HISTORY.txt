@@ -1,6 +1,13 @@
 Changelog
 =========
 
+⒈.1 - unreleased
+----------------
+
+- Added box environment to cnxmlplus transform
+
+- Add base tag to theme to get password reset to work
+
 1.0
 ---
 
