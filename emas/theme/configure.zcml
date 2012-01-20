@@ -25,6 +25,12 @@
 
     <adapter factory=".marshal.CNXMLWriteFile" />
 
+    <adapter
+        provides=".userdataschema.IEmasUserDataSchema"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        factory=".adapters.EmasUserDataPanelAdapter"
+        />
+
     <plone:static type="theme" directory="static" />
 
     <plone:behavior
