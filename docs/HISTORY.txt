@@ -1,6 +1,25 @@
 Changelog
 =========
 
+1.2 - unreleased
+----------------
+
+1.1
+---
+
+- Added box environment to cnxmlplus transform
+
+- Added transform for TikZ pictures.
+
+- Add base tag to theme to get password reset to work
+
+- Hide the dashboard action for users
+
+- Point preference action to @@personal-information
+
+- Register UserDataSchema adapter for INavigationRoot to allow users to
+  change their personal information
+
 1.0
 ---
 
