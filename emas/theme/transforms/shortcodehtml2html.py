@@ -47,7 +47,16 @@ class shortcodehtml_to_html:
             for url in element.findall('.//url'):
                 content.append(self.getURLContent(url.text))
             # build a shortcode tree to contain all the fetched content
-            sctree = lxml.html.fromstring(''.join(content))
+            try:
+                sctree = lxml.html.fromstring(''.join(content))
+            except Exception, msg:
+                # Squash exceptions so that page still renders; log
+                # error and generate empty solution environment
+                from lxml import etree
+                LOGGER.info('ERROR while build FullMarks solutions')
+                LOGGER.info('  element: ' + repr(etree.tostring(element)))
+                LOGGER.info('  content: ' + repr(''.join(content)))
+                sctree = lxml.html.fromstring('<div> </div>')
             sctree.set('class', 'shortcode-content')
             element.getparent().replace(element, sctree)
 
@@ -230,7 +239,7 @@ class shortcodehtml_to_html:
                     result += lxml.html.tostring(question, method='xml')
                 """
                 for answer in element.xpath(
-                        '//div[@id="item"]/div[@class="field answer"]'):
+                    '//div[@id="item"]/div[starts-with(@class,"field answer")]'):
                     result += lxml.html.tostring(answer, method='xml')
             except urllib2.HTTPError, msg:
                 LOGGER.info('ERROR: ' + str(msg) + ', URL = ' + shortURL)
