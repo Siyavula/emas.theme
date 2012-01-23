@@ -1,8 +1,10 @@
 Changelog
 =========
 
-1.2 - unreleased
-----------------
+1.2
+---
+
+- Fixed bug that does not find FullMarks multiple choice answers.
 
 1.1
 ---
