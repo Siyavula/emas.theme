@@ -4,4 +4,13 @@
     <property name="userrole" type="string"></property>
     <property name="school" type="string"></property>
     <property name="province" type="string"></property>
+    <property name="askanexpert_registrationdate" type="date">
+        1970/01/01 00:00:00
+    </property>
+    <property name="answerdatabase_registrationdate" type="date">
+        1970/01/01 00:00:00
+    </property>
+    <property name="moreexcercise_registrationdate" type="date">
+        1970/01/01 00:00:00
+    </property>
 </object>
