@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <object>
   <order manager="plone.belowcontent" skinname="*">
-    <viewlet name="register-to-ask-a-question" insert-after="*"/>
+    <viewlet name="register-to-ask-questions" insert-after="*"/>
+    <viewlet name="register-to-access-answers" insert-after="register-to-ask-questions"/>
   </order>
 </object>

@@ -29,7 +29,7 @@ def find_viewlet(context, request, manager_name, viewlet_name, layer=None):
     return viewlets and viewlets[0] or None
 
 
-class TestRegisterToAskQuestionsViewlet(unittest.TestCase):
+class BaseTestPayserviceViewlet(unittest.TestCase):
     """ Test the pay service viewlets  """
     layer = INTEGRATION_TESTING
 
@@ -37,22 +37,27 @@ class TestRegisterToAskQuestionsViewlet(unittest.TestCase):
         self.portal = self.layer['portal']
         self.context = self.portal
         self.request = self.portal.REQUEST
-    
+        self.manager_name = 'plone.belowcontent'
+        self.themelayer = IEmasThemeLayer 
+
+        self.viewlet_name = None 
+        self.formsubmit_token = None
+        self.formfield = None
+        self.memberproperty = None
+
     def _get_viewlet(self):
-        manager_name = 'plone.belowcontent'
-        viewlet_name = 'register-to-ask-questions'
-        layer = IEmasThemeLayer 
         viewlet = find_viewlet(self.context,
                                self.request,
-                               manager_name,
-                               viewlet_name, layer)
+                               self.manager_name,
+                               self.viewlet_name,
+                               self.themelayer)
         return viewlet
 
-    def test_viewlet_exists(self):
+    def _test_viewlet_exists(self):
         viewlet = self._get_viewlet() 
         self.failUnless(viewlet, 'Viewlet does not exist.')
 
-    def test_has_credits(self):
+    def _test_has_credits(self):
         viewlet = self._get_viewlet() 
 
         self.assertEqual(viewlet.has_credits, False)
@@ -63,34 +68,34 @@ class TestRegisterToAskQuestionsViewlet(unittest.TestCase):
 
         self.assertEqual(viewlet.has_credits, True)
     
-    def test_is_registered(self):
+    def _test_is_registered(self):
         viewlet = self._get_viewlet()
         viewlet.update()
 
         self.assertEqual(
             viewlet.is_registered, False)
         
-        self.request.form["emas.theme.registertoaskquestions.submitted"] = 'submitted'
-        self.request.form["registertoaskquestions"] = "on"
+        self.request.form[self.formsubmit_token] = 'submitted'
+        self.request.form[self.formfield] = "on"
         viewlet.update()
 
         self.assertEqual(
             viewlet.is_registered, True)
 
-    def test_rendering(self):
+    def _test_rendering(self, nocredits_name, register_name):
         viewlet = self._get_viewlet()
         viewlet.update()
 
         html = viewlet.render().encode('utf-8')
         file = open(os.path.join(
-            dirname, 'data', 'no_credits.html'))
+            dirname, 'data', nocredits_name))
         reference_html = file.read()
         file.close()
 
         self.assertEqual(html, reference_html)
         
-        self.request.form["emas.theme.registertoaskquestions.submitted"] = 'submitted'
-        self.request.form["registertoaskquestions"] = "on"
+        self.request.form[self.formsubmit_token] = 'submitted'
+        self.request.form[self.formfield] = "on"
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         member.setMemberProperties({'credits': 100})
@@ -98,8 +103,56 @@ class TestRegisterToAskQuestionsViewlet(unittest.TestCase):
         html = viewlet.render().encode('utf-8')
 
         file = open(os.path.join(
-            dirname, 'data', 'register.html'))
+            dirname, 'data', register_name))
         reference_html = file.read()
         file.close()
 
         self.assertEqual(html, reference_html)
+
+
+class TestRegisterToAskQuestionsViewlet(BaseTestPayserviceViewlet):
+    """ Test the pay service viewlets  """
+
+    def setUp(self):
+        super(TestRegisterToAskQuestionsViewlet, self).setUp()
+        self.viewlet_name = 'register-to-ask-questions'
+        self.formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
+        self.formfield = 'registertoaskquestions'
+        self.memberproperty = 'askanexpert_registrationdate'
+    
+    def test_viewlet_exists(self):
+        self._test_viewlet_exists()
+
+    def test_has_credits(self):
+        self._test_has_credits()
+
+    def test_is_registered(self):
+        self._test_is_registered()
+
+    def test_rendering(self):
+        self._test_rendering(
+            'askquestion_nocredit.html', 'askquestion_register.html')
+
+
+class TestRegisterToAccessAnswerDatabaseViewlet(BaseTestPayserviceViewlet):
+    """ Test the pay service viewlets  """
+
+    def setUp(self):
+        super(TestRegisterToAccessAnswerDatabaseViewlet, self).setUp()
+        self.viewlet_name = 'register-to-access-answers'
+        self.formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
+        self.formfield = 'registertoaccessanswerdatabase'
+        self.memberproperty = 'answerdatabase_registrationdate'
+    
+    def test_viewlet_exists(self):
+        self._test_viewlet_exists()
+
+    def test_has_credits(self):
+        self._test_has_credits()
+
+    def test_is_registered(self):
+        self._test_is_registered()
+
+    def test_rendering(self):
+        self._test_rendering(
+            'accessanswers_nocredit.html', 'accessanswers_register.html')
