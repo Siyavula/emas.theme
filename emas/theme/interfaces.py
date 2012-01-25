@@ -27,3 +27,27 @@ class IEmasSettings(Interface):
         required=False,
         default=0
     );
+
+class IEmasServiceCost(Interface):
+    """
+    """
+    questionCost = Int(
+        title=_('Question Cost'),
+        description=_('The cost in credits to use the service.'),
+        required=False,
+        default=0
+    )
+
+    answerCost = Int(
+        title=_('Answer Cost'),
+        description=_('The cost in credits to use the service.'),
+        required=False,
+        default=0
+    )
+
+    exerciseCost = Int(
+        title=_('Exercise Cost'),
+        description=_('The cost in credits to use the service.'),
+        required=False,
+        default=0
+    )

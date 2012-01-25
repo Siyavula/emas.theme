@@ -108,4 +108,11 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="emas-service-cost"
+        class=".views.EmasServiceCostControlPanel"
+        permission="cmf.ManagePortal"
+        />
+
 </configure>

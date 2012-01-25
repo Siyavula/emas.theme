@@ -13,7 +13,7 @@ from Products.Archetypes.interfaces import IBaseContent
 from Products.statusmessages.interfaces import IStatusMessage
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
-from emas.theme.interfaces import IEmasSettings
+from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
 
 class EmasSettingsForm(RegistryEditForm):
@@ -24,6 +24,22 @@ class EmasSettingsForm(RegistryEditForm):
 
 class EmasControlPanel(ControlPanelFormWrapper):
     form = EmasSettingsForm
+
+
+class EmasServiceCostsForm(RegistryEditForm):
+    schema = IEmasServiceCost
+    label = _(u'EMAS Service Cost')
+    description = _(u"Configure the credit cost"
+                    u" of the pay services.")
+    
+    def updateFields(self):
+        super(EmasServiceCostsForm, self).updateFields()
+    
+    def updateWidgets(self):
+        super(EmasServiceCostsForm, self).updateWidgets()
+
+class EmasServiceCostControlPanel(ControlPanelFormWrapper):
+    form = EmasServiceCostsForm
 
 class AnnotatorConfigViewlet(ViewletBase):
     """ Adds a bit of javascript to the top of the page with details about
