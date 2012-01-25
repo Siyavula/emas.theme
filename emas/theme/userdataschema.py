@@ -64,7 +64,7 @@ class IEmasUserDataSchema(IUserDataSchema):
         required=False,
     )
 
-    moreexcercise_registrationdate = Date(
+    moreexercise_registrationdate = Date(
         title=_(u"label_moreexercise_database",
                 default="More exercise - registration date."),
         required=False,
