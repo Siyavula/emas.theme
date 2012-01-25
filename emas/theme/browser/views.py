@@ -1,3 +1,4 @@
+from DateTime import DateTime
 from zope.component import queryUtility
 
 from plone.app.layout.viewlets.common import ViewletBase
@@ -7,6 +8,7 @@ from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
+from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
@@ -104,7 +106,7 @@ class EmasUserDataPanel(UserDataPanel):
         self.form_fields = self.form_fields.omit('credits')
         self.form_fields = self.form_fields.omit('askanexpert_registrationdate')
         self.form_fields = self.form_fields.omit('answerdatabase_registrationdate')
-        self.form_fields = self.form_fields.omit('moreexcercise_registrationdate')
+        self.form_fields = self.form_fields.omit('moreexercise_registrationdate')
 
 class CreditsViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
@@ -148,3 +150,27 @@ class CreditsView(BrowserView):
     def cost(self):
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         return settings.creditcost
+
+
+class EnabledServicesView(BrowserView):
+    """ Utility view to check and report on enabled pay services.
+    """
+    NULLDATE = DateTime('1970/01/01 00:00:00')
+
+    def is_enabled(self, service):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        regdate = member.getProperty(service)
+        return regdate > self.NULLDATE and True or False
+    
+    @property
+    def ask_expert_enabled(self):
+        return self.is_enabled('askanexpert_registrationdate')
+
+    @property
+    def answer_database_enabled(self):
+        return self.is_enabled('answerdatabase_registrationdate')
+
+    @property
+    def more_exercise_enabled(self):
+        return self.is_enabled('moreexercise_registrationdate')

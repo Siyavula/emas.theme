@@ -115,4 +115,11 @@
         permission="cmf.ManagePortal"
         />
 
+    <browser:page
+        for="*"
+        name="enabled-services"
+        class=".views.EnabledServicesView"
+        permission="zope2.View"
+        />
+
 </configure>
