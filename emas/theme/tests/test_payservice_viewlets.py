@@ -156,3 +156,27 @@ class TestRegisterToAccessAnswerDatabaseViewlet(BaseTestPayserviceViewlet):
     def test_rendering(self):
         self._test_rendering(
             'accessanswers_nocredit.html', 'accessanswers_register.html')
+
+
+class TestRegisterForMoreExerciseViewlet(BaseTestPayserviceViewlet):
+    """ Test the pay service viewlets  """
+
+    def setUp(self):
+        super(TestRegisterForMoreExerciseViewlet, self).setUp()
+        self.viewlet_name = 'register-for-more-exercise'
+        self.formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
+        self.formfield = 'registerformoreexercise'
+        self.memberproperty = 'moreexercise_registrationdate'
+    
+    def test_viewlet_exists(self):
+        self._test_viewlet_exists()
+
+    def test_has_credits(self):
+        self._test_has_credits()
+
+    def test_is_registered(self):
+        self._test_is_registered()
+
+    def test_rendering(self):
+        self._test_rendering(
+            'moreexercise_nocredit.html', 'moreexercise_register.html')

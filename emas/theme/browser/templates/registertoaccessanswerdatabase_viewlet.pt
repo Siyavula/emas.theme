@@ -19,8 +19,10 @@
 </tal:has_credits>
 
 <tal:no_credits condition="not:has_credits">
+<div id="accessanswers-credit-warning">
     Please purchase credits to enable the service:<br/>
     Access answer database.    
+</div>
 </tal:no_credits>
 
 </tal:defs>

@@ -59,3 +59,13 @@ class RegisterToAccessAnswerDatabaseViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
     formfield = 'registertoaccessanswerdatabase'
     memberproperty = 'answerdatabase_registrationdate'
+
+
+class RegisterForMoreExerciseViewlet(BasePayServicesViewlet):
+    """ Help users register to access more exercise content. """
+    index = ViewPageTemplateFile(
+        'templates/registerformoreexercise_viewlet.pt')
+
+    formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
+    formfield = 'registerformoreexercise'
+    memberproperty = 'moreexercise_registrationdate'

@@ -2,26 +2,26 @@
 
 <tal:has_credits condition="has_credits">
 <form action="." method="POST">
-    <input type="hidden" name="emas.theme.registertoaskquestions.submitted"
+    <input type="hidden" name="emas.theme.registerformoreexercise.submitted"
         value="submitted" />
     
-    <label for="registertoaskquestions">
-        <span>I want to register to ask questions.</span>
+    <label for="registerformoreexercise">
+        <span>I want to register for more exercise questions.</span>
     </label>
-    <input id="registertoaskquestions" type="checkbox"
-        name="registertoaskquestions"
+    <input id="registerformoreexercise" type="checkbox"
+        name="registerformoreexercise"
         tal:attributes="checked python:view.is_registered and 'checked' or ''"/>
     
-    <button id="registertoaskquestions-submit-button" value="submit">
+    <button id="registerformoreexercise-submit-button" value="submit">
         Submit
     </button>
 </form>
 </tal:has_credits>
 
 <tal:no_credits condition="not:has_credits">
-<div id="askquestions-credit-warning">
+<div id="more-exercise-credit-warning">
     Please purchase credits to enable the service:<br/>
-    Ask questions.    
+    More exercise questions.    
 </div>
 </tal:no_credits>
 
