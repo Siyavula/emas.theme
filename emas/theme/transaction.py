@@ -6,7 +6,7 @@ class ITransaction(form.Schema):
     """ A transaction, a user either bought credits, or spent credits on a
        service. """
 
-    date = Datetime(
+    time = Datetime(
         title=_(u"The date and time of the transaction")
     )
 
