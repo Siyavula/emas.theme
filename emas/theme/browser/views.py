@@ -1,5 +1,7 @@
+from datetime import datetime
 from DateTime import DateTime
 from zope.component import queryUtility
+from zope.component import createObject
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
@@ -137,10 +139,7 @@ class CreditsView(BrowserView):
             # XXX Payment gateway integration here, perhaps some utility we
             # can look up and delegate to.
 
-            member = self.context.restrictedTraverse(
-                '@@plone_portal_state').member()
-            credits = member.getProperty('credits', 0)
-            member.setMemberProperties({'credits': credits + buy})
+            self.context.restrictedTraverse('@@emas-transaction').buyCredit(buy, "Credits purchased")
             IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
             self.request['success'] = True
 
@@ -174,3 +173,31 @@ class EnabledServicesView(BrowserView):
     @property
     def more_exercise_enabled(self):
         return self.is_enabled('moreexercise_registrationdate')
+
+class EmasTransactionView(BrowserView):
+    def buyCredit(self, credits, description):
+        assert credits > 0
+        return self.createTransaction(credits, description)
+
+    def buyService(self, credits, description):
+        assert credits > 0
+        return self.createTransaction(-credits, description)
+
+    def createTransaction(self, credits, description):
+        portal = self.context.restrictedTraverse(
+            '@@plone_portal_state').portal()
+        member = self.context.restrictedTraverse(
+            '@@plone_portal_state').member()
+
+        # Update our balance
+        balance = member.getProperty('credits', 0)
+        member.setMemberProperties({'credits': balance + credits})
+
+        # Create a transaction entry
+        transactionfolder = portal.transactions._getOb(member.getId())
+        tid = self.context.generateUniqueId(type_name='Transaction')
+        t = createObject('emas.theme.transaction', id=tid)
+        t.description = description
+        t.amount = credits
+        t.time = datetime.now()
+        transactionfolder._setObject(tid, t)

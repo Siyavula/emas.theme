@@ -122,4 +122,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="emas-transaction"
+        class=".views.EmasTransactionView"
+        permission="cmf.SetOwnProperties"
+        />
+
 </configure>
