@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
 <object name="portal_workflow" meta_type="Plone Workflow Tool">
  <object name="transaction_workflow" meta_type="Workflow"/>
+ <bindings>
+  <type type_id="emas.theme.transaction">
+   <bound-workflow workflow_id="transaction_workflow" />
+  </type>
+ </bindings>
 </object>
