@@ -9,6 +9,7 @@ from zope.viewlet.interfaces import IViewletManager
 from zope.component import queryMultiAdapter
 
 from emas.theme.interfaces import IEmasThemeLayer
+from siyavula.what.interfaces import ISiyavulaWhatLayer
 
 dirname = os.path.dirname(__file__)
 
@@ -29,7 +30,7 @@ def find_viewlet(context, request, manager_name, viewlet_name, layer=None):
     return viewlets and viewlets[0] or None
 
 
-class BaseTestPayserviceViewlet(unittest.TestCase):
+class TestPayserviceViewletBase(unittest.TestCase):
     """ Test the pay service viewlets  """
     layer = INTEGRATION_TESTING
 
@@ -110,7 +111,7 @@ class BaseTestPayserviceViewlet(unittest.TestCase):
         self.assertEqual(html, reference_html)
 
 
-class TestRegisterToAskQuestionsViewlet(BaseTestPayserviceViewlet):
+class TestRegisterToAskQuestionsViewlet(TestPayserviceViewletBase):
     """ Test the pay service viewlets  """
 
     def setUp(self):
@@ -134,7 +135,7 @@ class TestRegisterToAskQuestionsViewlet(BaseTestPayserviceViewlet):
             'askquestion_nocredit.html', 'askquestion_register.html')
 
 
-class TestRegisterToAccessAnswerDatabaseViewlet(BaseTestPayserviceViewlet):
+class TestRegisterToAccessAnswerDatabaseViewlet(TestPayserviceViewletBase):
     """ Test the pay service viewlets  """
 
     def setUp(self):
@@ -158,7 +159,7 @@ class TestRegisterToAccessAnswerDatabaseViewlet(BaseTestPayserviceViewlet):
             'accessanswers_nocredit.html', 'accessanswers_register.html')
 
 
-class TestRegisterForMoreExerciseViewlet(BaseTestPayserviceViewlet):
+class TestRegisterForMoreExerciseViewlet(TestPayserviceViewletBase):
     """ Test the pay service viewlets  """
 
     def setUp(self):
@@ -180,3 +181,20 @@ class TestRegisterForMoreExerciseViewlet(BaseTestPayserviceViewlet):
     def test_rendering(self):
         self._test_rendering(
             'moreexercise_nocredit.html', 'moreexercise_register.html')
+
+class TestQuestionAddViewlet(TestPayserviceViewletBase):
+    
+    def setUp(self):
+        super(TestQuestionAddViewlet, self).setUp()
+        self.viewlet_name = 'question-add'
+
+    def test_viewlet_exists(self):
+        context = self.portal.questions
+        manager_name = 'plone.belowcontent'
+        viewlet_name = 'question-add'
+        themelayer = ISiyavulaWhatLayer
+        viewlet = find_viewlet(context,
+                               self.request,
+                               manager_name,
+                               viewlet_name,
+                               themelayer)

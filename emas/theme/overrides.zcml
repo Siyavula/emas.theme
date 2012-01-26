@@ -10,4 +10,14 @@
       factory=".adapters.EmasUserDataPanelAdapter"
       />
 
+    <!-- Question and Answer viewlets -->
+    <browser:viewlet
+        for="Products.CMFCore.interfaces._content.IContentish"
+        name="question-add"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class="emas.theme.browser.questionaddviewlet.QuestionAddViewlet"
+        permission="zope2.View"
+        layer="siyavula.what.interfaces.ISiyavulaWhatLayer"
+        />
+
 </configure>
