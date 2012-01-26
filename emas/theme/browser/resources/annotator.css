@@ -35,7 +35,7 @@
 .annotator-viewer .annotator-controls button,
 .annotator-filter .annotator-filter-navigation button::after,
 .annotator-filter .annotator-filter-property .annotator-filter-clear {
-	background-image: url(++resources++emas.theme.resources/annotator-glyph-sprite.png);
+	background-image: url(++resource++emas.theme.resources/annotator-glyph-sprite.png);
 	background-repeat: no-repeat;
 }
 
