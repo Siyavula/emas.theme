@@ -20,4 +20,13 @@
         layer="siyavula.what.interfaces.ISiyavulaWhatLayer"
         />
 
+    <browser:viewlet
+        for="Products.CMFCore.interfaces._content.IContentish"
+        name="questions-list"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class="emas.theme.browser.questionslistviewlet.QuestionsListViewlet"
+        permission="zope2.View"
+        layer="siyavula.what.interfaces.ISiyavulaWhatLayer"
+        />
+
 </configure>
