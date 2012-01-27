@@ -1,5 +1,5 @@
 from zope.interface import implements
-from zope.schema import Int, Choice, TextLine
+from zope.schema import Int, Choice, TextLine, Date
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.app.users.userdataschema import IUserDataSchemaProvider
 from plone.app.users.userdataschema import IUserDataSchema
@@ -33,21 +33,44 @@ class IEmasUserDataSchema(IUserDataSchema):
                       default=u"Credits a user can use towards paid services."),
         default=0,
         required=False)
+
     userrole = Choice(
         title=_(u"Role"),
         vocabulary=roles,
         required=False,
         )
+
     school = TextLine(
         title=_(u'label_school', default=u'School Name'),
         required=False,
         default=u"",
         )
+
     province = Choice(
         title=_(u"label_province", default=u'Province'),
         vocabulary=provinces,
         required=False,
         )
+
+    askanexpert_registrationdate = Date(
+        title=_(u"label_askanexpert_registrationdate",
+                default="Ask an expert - registration date."),
+        required=False,
+    )
+
+    answerdatabase_registrationdate = Date(
+        title=_(u"label_answerdatebase_registrationdate",
+                default="Answer datebase - registration date."),
+        required=False,
+    )
+
+    moreexercise_registrationdate = Date(
+        title=_(u"label_moreexercise_database",
+                default="More exercise - registration date."),
+        required=False,
+    )
+
+    
 
 class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)

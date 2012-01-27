@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <registry>
     <records interface="emas.theme.interfaces.IEmasSettings" />
+    <records interface="emas.theme.interfaces.IEmasServiceCost" />
 </registry>

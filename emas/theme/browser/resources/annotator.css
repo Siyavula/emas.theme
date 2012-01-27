@@ -1,9 +1,9 @@
 /* Base Reset
 -------------------------------------------------------------------- */
 
-.annotator-notice,
-.annotator-filter *,
-.annotator-widget * {
+#content .annotator-notice,
+#content .annotator-filter *,
+#content .annotator-widget * {
 	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	text-align: left;
@@ -24,18 +24,18 @@
 /* Images
 -------------------------------------------------------------------- */
 
-.annotator-adder {
+#content .annotator-adder {
 	background-image: url(++resource++emas.theme.resources/annotator-icon-sprite.png);
 	background-repeat: no-repeat;
 }
 
-.annotator-resize,
-.annotator-widget::after,
-.annotator-editor a::after,
-.annotator-viewer .annotator-controls button,
-.annotator-filter .annotator-filter-navigation button::after,
-.annotator-filter .annotator-filter-property .annotator-filter-clear {
-	background-image: url(++resources++emas.theme.resources/annotator-glyph-sprite.png);
+#content .annotator-resize,
+#content .annotator-widget::after,
+#content .annotator-editor a::after,
+#content .annotator-viewer .annotator-controls button,
+#content .annotator-filter .annotator-filter-navigation button::after,
+#content .annotator-filter .annotator-filter-property .annotator-filter-clear {
+	background-image: url(++resource++emas.theme.resources/annotator-glyph-sprite.png);
 	background-repeat: no-repeat;
 }
 
@@ -43,49 +43,49 @@
 -------------------------------------------------------------------- */
 
 
-.annotator-hl.annotator-hl-errata {
+#content .annotator-hl.annotator-hl-errata {
     background: rgba(169, 37, 0, 0.4);
     color: black;
 }
 
-.annotator-hl.annotator-hl-comment {
+#content .annotator-hl.annotator-hl-comment {
    color: black;
    background: rgba(46, 169, 0, 0.4);
 }
 
-.annotator-hl.annotator-hl-suggestion {
+#content .annotator-hl.annotator-hl-suggestion {
     color: black;
     background: rgba(0, 131, 169, 0.4);
 }
 
 
-.annotator-hl {
+#content .annotator-hl {
 	background: rgba(255, 255, 10, 0.3);
 }
 
 /* Annotator Wrapper
 -------------------------------------------------------------------- */
 
-.annotator-wrapper {
+#content .annotator-wrapper {
 	position: relative;
 }
 
-.annotator-adder,
-.annotator-outer,
-.annotator-notice {
+#content .annotator-adder,
+#content .annotator-outer,
+#content .annotator-notice {
 	z-index: 9999;
 }
 
-.annotator-adder,
-.annotator-outer,
-.annotator-widget,
-.annotator-notice {
+#content .annotator-adder,
+#content .annotator-outer,
+#content .annotator-widget,
+#content .annotator-notice {
 	position: absolute;
 	font-size: 10px;
 	line-height: 1;
 }
 
-.annotator-hide {
+#content .annotator-hide {
 	display: none;
 	visibility: hidden;
 }
@@ -93,7 +93,7 @@
 /* Annotator Adder
 -------------------------------------------------------------------- */
 
-.annotator-adder {
+#content .annotator-adder {
 	margin-top: -41px;
 	margin-left: -25px;
 	width: 50px;
@@ -101,15 +101,15 @@
 	background-position: left top;
 }
 
-.annotator-adder:hover {
+#content .annotator-adder:hover {
 	background-position: center top;
 }
 
-.annotator-adder:active {
+#content .annotator-adder:active {
 	background-position: center right;
 }
 
-.annotator-adder button {
+#content .annotator-adder button {
 	display: block;
 	width: 36px;
 	height: 41px;
@@ -125,12 +125,12 @@
    This applies to both the Viewer and the Editor
 -------------------------------------------------------------------- */
 
-.annotator-outer {
+#content .annotator-outer {
 	width: 0;
 	height: 0;
 }
 
-.annotator-widget {
+#content .annotator-widget {
 	margin: 0;
 	padding: 0;
 	bottom: 8px;
@@ -147,28 +147,28 @@
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.annotator-invert-x .annotator-widget {
+#content .annotator-invert-x .annotator-widget {
 	left: auto;
 	right: -18px;
 }
 
-.annotator-invert-y .annotator-widget {
+#content .annotator-invert-y .annotator-widget {
 	bottom: auto;
 	top: 8px;
 }
 
-.annotator-widget strong {
+#content .annotator-widget strong {
 	font-weight: bold;
 }
 
-.annotator-widget .annotator-listing,
-.annotator-widget .annotator-item {
+#content .annotator-widget .annotator-listing,
+#content .annotator-widget .annotator-item {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 
-.annotator-widget::after {
+#content .annotator-widget::after {
 	content: "";
 	display: block;
 	width: 18px;
@@ -179,55 +179,55 @@
 	left: 8px;
 }
 
-.annotator-invert-x .annotator-widget::after {
+#content .annotator-invert-x .annotator-widget::after {
 	left: auto;
 	right: 8px;
 }
 
-.annotator-invert-y .annotator-widget::after {
+#content .annotator-invert-y .annotator-widget::after {
 	background-position: 0 -15px;
 	bottom: auto;
 	top: -9px;
 }
 
-.annotator-widget .annotator-item,
-.annotator-editor .annotator-item input,
-.annotator-editor .annotator-item textarea {
+#content .annotator-widget .annotator-item,
+#content .annotator-editor .annotator-item input,
+#content .annotator-editor .annotator-item textarea {
 	position: relative;
 	font-size: 12px;
 }
 
-.annotator-viewer .annotator-item {
+#content .annotator-viewer .annotator-item {
 	border-top: 2px solid rgba(122, 122, 122, 0.2);
 }
 
-.annotator-widget .annotator-item:first-child {
+#content .annotator-widget .annotator-item:first-child {
 	border-top: none;
 }
 
-.annotator-editor .annotator-item,
-.annotator-viewer div {
+#content .annotator-editor .annotator-item,
+#content .annotator-viewer div {
 	border-top: 1px solid rgba(133, 133, 133, 0.11);
 }
 
 /* Annotator Viewer
 -------------------------------------------------------------------- */
 
-.annotator-viewer div {
+#content .annotator-viewer div {
 	padding: 6px 6px;
 }
 
 
-.annotator-viewer .annotator-item ol,
-.annotator-viewer .annotator-item ul {
+#content .annotator-viewer .annotator-item ol,
+#content .annotator-viewer .annotator-item ul {
 	padding: 4px 16px;
 }
 
-.annotator-viewer .annotator-item li {
+#content .annotator-viewer .annotator-item li {
 }
 
-.annotator-viewer div:first-of-type,
-.annotator-editor .annotator-item:first-child textarea {
+#content .annotator-viewer div:first-of-type,
+#content .annotator-editor .annotator-item:first-child textarea {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	color: rgb(60, 60, 60);
@@ -237,7 +237,7 @@
 	border-top: none;
 }
 
-.annotator-viewer .annotator-controls {
+#content .annotator-viewer .annotator-controls {
 	position: relative;
 	top: 5px;
 	right: 5px;
@@ -250,12 +250,12 @@
 	float: right;
 }
 
-.annotator-viewer li:hover .annotator-controls,
-.annotator-viewer li .annotator-controls.annotator-visible {
+#content .annotator-viewer li:hover .annotator-controls,
+#content .annotator-viewer li .annotator-controls.annotator-visible {
 	opacity: 1;
 }
 
-.annotator-viewer .annotator-controls button {
+#content .annotator-viewer .annotator-controls button {
 	cursor: pointer;
 	display: inline-block;
 	width: 13px;
@@ -268,43 +268,43 @@
 	outline: none;
 }
 
-.annotator-viewer .annotator-controls button:hover,
-.annotator-viewer .annotator-controls button:focus {
+#content .annotator-viewer .annotator-controls button:hover,
+#content .annotator-viewer .annotator-controls button:focus {
 	opacity: 0.9;
 }
 
-.annotator-viewer .annotator-controls button:active {
+#content .annotator-viewer .annotator-controls button:active {
 	opacity: 1;
 }
 
-.annotator-viewer .annotator-controls button[disabled] {
+#content .annotator-viewer .annotator-controls button[disabled] {
 	display: none;
 }
 
-.annotator-viewer .annotator-controls .annotator-edit {
+#content .annotator-viewer .annotator-controls .annotator-edit {
 	background-position: 0 -60px;
 }
 
-.annotator-viewer .annotator-controls .annotator-delete {
+#content .annotator-viewer .annotator-controls .annotator-delete {
 	background-position: 0 -75px;
 }
 
 /* Annotator Editor
 -------------------------------------------------------------------- */
 
-.annotator-editor .annotator-item {
+#content .annotator-editor .annotator-item {
 	position: relative;
 }
 
-.annotator-editor .annotator-item label {
+#content .annotator-editor .annotator-item label {
 	top: 0;
 	display: inline;
 	cursor: pointer;
 	font-size: 12px;
 }
 
-.annotator-editor .annotator-item input,
-.annotator-editor .annotator-item textarea {
+#content .annotator-editor .annotator-item input,
+#content .annotator-editor .annotator-item textarea {
 	display: block;
 	min-width: 100%;
 	padding: 10px 8px;
@@ -319,31 +319,31 @@
 	resize: none;
 }
 
-.annotator-editor .annotator-item textarea::-webkit-scrollbar {
+#content .annotator-editor .annotator-item textarea::-webkit-scrollbar {
 	height: 8px;
 	width: 8px;
 }
 
-.annotator-editor .annotator-item textarea::-webkit-scrollbar-track-piece {
+#content .annotator-editor .annotator-item textarea::-webkit-scrollbar-track-piece {
 	margin: 13px 0 3px;
 	background-color: #e5e5e5;
 	-webkit-border-radius: 4px;
 }
 
-.annotator-editor .annotator-item textarea::-webkit-scrollbar-thumb:vertical {
+#content .annotator-editor .annotator-item textarea::-webkit-scrollbar-thumb:vertical {
 	height: 25px;
 	background-color: #ccc;
 	-webkit-border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.annotator-editor .annotator-item textarea::-webkit-scrollbar-thumb:horizontal {
+#content .annotator-editor .annotator-item textarea::-webkit-scrollbar-thumb:horizontal {
 	width: 25px;
 	background-color: #ccc;
 	-webkit-border-radius: 4px;
 }
 
-.annotator-editor .annotator-item:first-child textarea {
+#content .annotator-editor .annotator-item:first-child textarea {
 	min-height: 5.5em;
 	-webkit-border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
@@ -351,14 +351,14 @@
 	border-radius: 5px 5px 0 0;
 }
 
-.annotator-editor .annotator-item input:focus,
-.annotator-editor .annotator-item textarea:focus {
+#content .annotator-editor .annotator-item input:focus,
+#content .annotator-editor .annotator-item textarea:focus {
 	background-color: rgb(243, 243, 243);
 	outline: none;
 }
 
-.annotator-editor .annotator-item input[type=radio],
-.annotator-editor .annotator-item input[type=checkbox] {
+#content .annotator-editor .annotator-item input[type=radio],
+#content .annotator-editor .annotator-item input[type=checkbox] {
 	width: auto;
 	min-width: 0;
 	padding: 0;
@@ -367,13 +367,13 @@
 	cursor: pointer;
 }
 
-.annotator-editor .annotator-checkbox {
+#content .annotator-editor .annotator-checkbox {
 	padding: 8px 6px;
 }
 
-.annotator-filter,
-.annotator-filter .annotator-filter-navigation button,
-.annotator-editor .annotator-controls {
+#content .annotator-filter,
+#content .annotator-filter .annotator-filter-navigation button,
+#content .annotator-editor .annotator-controls {
 	text-align: right;
 	padding: 3px;
 	border-top: 1px solid rgb(212,212,212);
@@ -424,7 +424,7 @@
 	border-radius: 0 0 5px 5px;
 }
 
-.annotator-invert-y .annotator-controls {
+#content .annotator-invert-y .annotator-controls {
 	border-top: none;
 	border-bottom: 1px solid rgb(180, 180, 180);
 	-webkit-border-radius: 5px 5px 0 0;
@@ -433,8 +433,8 @@
 	border-radius: 5px 5px 0 0;
 }
 
-.annotator-editor a,
-.annotator-filter .annotator-filter-property label {
+#content .annotator-editor a,
+#content .annotator-filter .annotator-filter-property label {
 	position: relative;
 	display: inline-block;
 	padding: 0 6px 0 22px;
@@ -492,7 +492,7 @@
 	border-radius: 5px;
 }
 
-.annotator-editor a::after {
+#content .annotator-editor a::after {
 	position: absolute;
 	top: 50%;
 	left: 5px;
@@ -504,11 +504,11 @@
 	background-position: 0 -90px;
 }
 
-.annotator-editor a:hover,
-.annotator-editor a:focus,
-.annotator-editor a.annotator-focus,
-.annotator-filter .annotator-filter-active label,
-.annotator-filter .annotator-filter-navigation button:hover {
+#content .annotator-editor a:hover,
+#content .annotator-editor a:focus,
+#content .annotator-editor a.annotator-focus,
+#content .annotator-filter .annotator-filter-active label,
+#content .annotator-filter .annotator-filter-navigation button:hover {
 	outline: none;
 	border-color: rgb(67, 90, 160);
 	background-color: rgb(56, 101, 249);
@@ -544,14 +544,14 @@
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.42);
 }
 
-.annotator-editor a:hover::after,
-.annotator-editor a:focus::after {
+#content .annotator-editor a:hover::after,
+#content .annotator-editor a:focus::after {
 	margin-top: -8px;
 	background-position: 0 -105px;
 }
 
-.annotator-editor a:active,
-.annotator-filter .annotator-filter-navigation button:active {
+#content .annotator-editor a:active,
+#content .annotator-filter .annotator-filter-navigation button:active {
 	border-color: rgb(112, 12, 73);
 	background-color: rgb(209, 46, 142);
 	background-image: -webkit-gradient(
@@ -584,31 +584,31 @@
 	);
 }
 
-.annotator-editor a.annotator-save::after {
+#content .annotator-editor a.annotator-save::after {
 	background-position: 0 -120px;
 }
 
-.annotator-editor a.annotator-save:hover::after,
-.annotator-editor a.annotator-save:focus::after,
-.annotator-editor a.annotator-save.annotator-focus::after {
+#content .annotator-editor a.annotator-save:hover::after,
+#content .annotator-editor a.annotator-save:focus::after,
+#content .annotator-editor a.annotator-save.annotator-focus::after {
 	margin-top: -8px;
 	background-position: 0 -135px;
 }
 
-.annotator-editor .annotator-widget::after {
+#content .annotator-editor .annotator-widget::after {
 	background-position: 0 -30px;
 }
 
-.annotator-editor.annotator-invert-y .annotator-widget .annotator-controls {
+#content .annotator-editor.annotator-invert-y .annotator-widget .annotator-controls {
 	background-color: #f2f2f2;
 }
 
-.annotator-editor.annotator-invert-y .annotator-widget::after {
+#content .annotator-editor.annotator-invert-y .annotator-widget::after {
 	background-position: 0 -45px;
 	height: 11px;
 }
 
-.annotator-resize {
+#content .annotator-resize {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -617,26 +617,26 @@
 	background-position: 2px -150px;
 }
 
-.annotator-invert-x .annotator-resize {
+#content .annotator-invert-x .annotator-resize {
 	right: auto;
 	left: 0;
 	background-position: 0 -195px;
 }
 
-.annotator-invert-y .annotator-resize {
+#content .annotator-invert-y .annotator-resize {
 	top: auto;
 	bottom: 0;
 	background-position: 2px -165px;
 }
 
-.annotator-invert-y.annotator-invert-x .annotator-resize {
+#content .annotator-invert-y.annotator-invert-x .annotator-resize {
 	background-position: 0 -180px;
 }
 
 /* Annotator Notification
 -------------------------------------------------------------------- */
 
-.annotator-notice {
+#content .annotator-notice {
 	color: #fff;
 	position: absolute;
 	position: fixed;
@@ -659,34 +659,34 @@
 	position: absolute;
 }
 
-.annotator-notice-success {
+#content .annotator-notice-success {
 	border-color: #3665f9;
 }
 
-.annotator-notice-error {
+#content .annotator-notice-error {
 	border-color: #ff7e00;
 }
 
-.annotator-notice p {
+#content .annotator-notice p {
 	margin: 0;
 }
 
-.annotator-notice a {
+#content .annotator-notice a {
 	color: #fff;
 }
 
-.annotator-notice-show {
+#content .annotator-notice-show {
 	top: 0;
 }
 
 /* Annotator Tags Plugin
 -------------------------------------------------------------------- */
 
-.annotator-tags {
+#content .annotator-tags {
 	margin-bottom: -2px;
 }
 
-.annotator-tags .annotator-tag {
+#content .annotator-tags .annotator-tag {
 	display: inline-block;
 	padding: 0 8px;
 	margin-bottom: 2px;
@@ -702,7 +702,7 @@
 /* Annotator Filter Plugin
 -------------------------------------------------------------------- */
 
-.annotator-filter {
+#content .annotator-filter {
 	z-index: 10000;
 	position: fixed;
 	top: 0;
@@ -728,7 +728,7 @@
 		inset 0 -1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.annotator-filter strong {
+#content .annotator-filter strong {
 	font-size: 12px;
 	font-weight: bold;
 	color: #3c3c3c;
@@ -738,8 +738,8 @@
 }
 
 
-.annotator-filter .annotator-filter-property,
-.annotator-filter .annotator-filter-navigation {
+#content .annotator-filter .annotator-filter-property,
+#content .annotator-filter .annotator-filter-navigation {
 	position: relative;
 	display: inline-block;
 	overflow: hidden;
@@ -748,8 +748,8 @@
 	margin-right: 8px;
 }
 
-.annotator-filter .annotator-filter-property label,
-.annotator-filter .annotator-filter-navigation button {
+#content .annotator-filter .annotator-filter-property label,
+#content .annotator-filter .annotator-filter-navigation button {
 	text-align: left;
 	display: block;
 	float: left;
@@ -760,11 +760,11 @@
 	border-radius:  10px 0 0 10px;
 }
 
-.annotator-filter .annotator-filter-property label {
+#content .annotator-filter .annotator-filter-property label {
 	padding-left: 8px;
 }
 
-.annotator-filter .annotator-filter-property input {
+#content .annotator-filter .annotator-filter-property input {
 	display: block;
 	float: right;
 	-webkit-appearance: none;
@@ -793,12 +793,12 @@
 	
 }
 
-.annotator-filter .annotator-filter-property input:focus {
+#content .annotator-filter .annotator-filter-property input:focus {
 	outline: none;
 	background-color: #fff;
 }
 
-.annotator-filter .annotator-filter-clear {
+#content .annotator-filter .annotator-filter-clear {
 	position: absolute;
 	right: 3px;
 	top: 6px;
@@ -810,16 +810,16 @@
 	opacity: 0.4;
 }
 
-.annotator-filter .annotator-filter-clear:hover,
-.annotator-filter .annotator-filter-clear:focus {
+#content .annotator-filter .annotator-filter-clear:hover,
+#content .annotator-filter .annotator-filter-clear:focus {
 	opacity: 0.8;
 }
 
-.annotator-filter .annotator-filter-clear:active {
+#content .annotator-filter .annotator-filter-clear:active {
 	opacity: 1;
 }
 
-.annotator-filter .annotator-filter-navigation button {
+#content .annotator-filter .annotator-filter-navigation button {
 	border: 1px solid rgb(162, 162, 162);
 	padding: 0;
 	text-indent: -900px;
@@ -839,13 +839,13 @@
 		inset 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
-.annotator-filter .annotator-filter-navigation button,
-.annotator-filter .annotator-filter-navigation button:hover,
-.annotator-filter .annotator-filter-navigation button:focus {
+#content .annotator-filter .annotator-filter-navigation button,
+#content .annotator-filter .annotator-filter-navigation button:hover,
+#content .annotator-filter .annotator-filter-navigation button:focus {
 	color: transparent;
 }
 
-.annotator-filter .annotator-filter-navigation button::after {
+#content .annotator-filter .annotator-filter-navigation button::after {
 	position: absolute;
 	top: 9px;
 	left: 8px;
@@ -856,11 +856,11 @@
 	background-position: 0 -210px;
 }
 
-.annotator-filter .annotator-filter-navigation button:hover::after {
+#content .annotator-filter .annotator-filter-navigation button:hover::after {
 	background-position: 0 -225px;
 }
 
-.annotator-filter .annotator-filter-navigation .annotator-filter-next {
+#content .annotator-filter .annotator-filter-navigation .annotator-filter-next {
 	-webkit-border-radius: 0 10px 10px 0;
 	-moz-border-radius: 0 10px 10px 0;
 	-o-border-radius: 0 10px 10px 0;
@@ -868,21 +868,21 @@
 	border-left: none;
 }
 
-.annotator-filter .annotator-filter-navigation .annotator-filter-next::after {
+#content .annotator-filter .annotator-filter-navigation .annotator-filter-next::after {
 	left: auto;
 	right: 9px;
 	background-position: 0 -240px;
 }
 
-.annotator-filter .annotator-filter-navigation .annotator-filter-next:hover::after {
+#content .annotator-filter .annotator-filter-navigation .annotator-filter-next:hover::after {
 	background-position: 0 -256px;
 }
 
-.annotator-hl-active {
+#content .annotator-hl-active {
 	background: rgba(255, 255, 10, 0.8);
 }
 
-.annotator-hl-filtered {
+#content .annotator-hl-filtered {
 	background-color: transparent;
 }
 
@@ -919,7 +919,7 @@ a.active.annotator-help-trigger {
 }
 
 
-.annotator-help-panel {
+#content .annotator-help-panel {
     position: fixed;
     bottom: 30px;
     right: 0;
@@ -937,13 +937,13 @@ a.active.annotator-help-trigger {
     z-index: 10;
 }
 
-.annotator-help-panel p {
+#content .annotator-help-panel p {
     margin: 0 0 15px 0;
     padding: 0;
     color: #000000;
 }
 
-.annotator-help-panel a, .annotator-help-panel a:visited {
+#content .annotator-help-panel a, .annotator-help-panel a:visited {
     margin: 0;
     padding: 0;
     color: #58B91B;
@@ -951,11 +951,11 @@ a.active.annotator-help-trigger {
     border-bottom: 1px solid #9FC54E;
 }
 
-.annotator-help-panel a:hover, .annotator-help-panel a:visited:hover {
+#content .annotator-help-panel a:hover, .annotator-help-panel a:visited:hover {
     color: #64735B;
     border-bottom: 1px solid #ffffff;
 }
 
-.annotator-help-panel li {
+#content .annotator-help-panel li {
     display: list-item;
 }

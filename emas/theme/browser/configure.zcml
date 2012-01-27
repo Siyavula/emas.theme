@@ -84,4 +84,42 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:viewlet
+        name="register-to-ask-questions"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class=".payservice_viewlets.RegisterToAskQuestionsViewlet"
+        permission="cmf.SetOwnProperties"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
+    <browser:viewlet
+        name="register-to-access-answers"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class=".payservice_viewlets.RegisterToAccessAnswerDatabaseViewlet"
+        permission="cmf.SetOwnProperties"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
+    <browser:viewlet
+        name="register-for-more-exercise"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class=".payservice_viewlets.RegisterForMoreExerciseViewlet"
+        permission="cmf.SetOwnProperties"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="emas-service-cost"
+        class=".views.EmasServiceCostControlPanel"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        for="*"
+        name="enabled-services"
+        class=".views.EnabledServicesView"
+        permission="zope2.View"
+        />
+
 </configure>

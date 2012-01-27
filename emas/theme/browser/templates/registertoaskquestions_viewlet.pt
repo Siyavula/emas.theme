@@ -1,0 +1,28 @@
+<tal:defs define="has_credits view/has_credits">
+
+<tal:has_credits condition="has_credits">
+<form action="." method="POST">
+    <input type="hidden" name="emas.theme.registertoaskquestions.submitted"
+        value="submitted" />
+    
+    <label for="registertoaskquestions">
+        <span>I want to register to ask questions.</span>
+    </label>
+    <input id="registertoaskquestions" type="checkbox"
+        name="registertoaskquestions"
+        tal:attributes="checked python:view.is_registered and 'checked' or ''"/>
+    
+    <button id="registertoaskquestions-submit-button" value="submit">
+        Submit
+    </button>
+</form>
+</tal:has_credits>
+
+<tal:no_credits condition="not:has_credits">
+<div id="askquestions-credit-warning">
+    Please purchase credits to enable the service:<br/>
+    Ask questions.    
+</div>
+</tal:no_credits>
+
+</tal:defs>

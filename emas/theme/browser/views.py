@@ -1,3 +1,4 @@
+from DateTime import DateTime
 from zope.component import queryUtility
 
 from plone.app.layout.viewlets.common import ViewletBase
@@ -7,13 +8,14 @@ from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
+from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
 from Products.statusmessages.interfaces import IStatusMessage
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
-from emas.theme.interfaces import IEmasSettings
+from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
 
 class EmasSettingsForm(RegistryEditForm):
@@ -24,6 +26,22 @@ class EmasSettingsForm(RegistryEditForm):
 
 class EmasControlPanel(ControlPanelFormWrapper):
     form = EmasSettingsForm
+
+
+class EmasServiceCostsForm(RegistryEditForm):
+    schema = IEmasServiceCost
+    label = _(u'EMAS Service Cost')
+    description = _(u"Configure the credit cost"
+                    u" of the pay services.")
+    
+    def updateFields(self):
+        super(EmasServiceCostsForm, self).updateFields()
+    
+    def updateWidgets(self):
+        super(EmasServiceCostsForm, self).updateWidgets()
+
+class EmasServiceCostControlPanel(ControlPanelFormWrapper):
+    form = EmasServiceCostsForm
 
 class AnnotatorConfigViewlet(ViewletBase):
     """ Adds a bit of javascript to the top of the page with details about
@@ -86,6 +104,9 @@ class EmasUserDataPanel(UserDataPanel):
     def __init__(self, context, request):
         super(EmasUserDataPanel, self).__init__(context, request)
         self.form_fields = self.form_fields.omit('credits')
+        self.form_fields = self.form_fields.omit('askanexpert_registrationdate')
+        self.form_fields = self.form_fields.omit('answerdatabase_registrationdate')
+        self.form_fields = self.form_fields.omit('moreexercise_registrationdate')
 
 class CreditsViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
@@ -129,3 +150,27 @@ class CreditsView(BrowserView):
     def cost(self):
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         return settings.creditcost
+
+
+class EnabledServicesView(BrowserView):
+    """ Utility view to check and report on enabled pay services.
+    """
+    NULLDATE = DateTime('1970/01/01 00:00:00')
+
+    def is_enabled(self, service):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        regdate = member.getProperty(service)
+        return regdate > self.NULLDATE and True or False
+    
+    @property
+    def ask_expert_enabled(self):
+        return self.is_enabled('askanexpert_registrationdate')
+
+    @property
+    def answer_database_enabled(self):
+        return self.is_enabled('answerdatabase_registrationdate')
+
+    @property
+    def more_exercise_enabled(self):
+        return self.is_enabled('moreexercise_registrationdate')

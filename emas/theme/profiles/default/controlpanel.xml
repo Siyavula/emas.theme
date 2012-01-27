@@ -18,4 +18,17 @@
             <permission>Manage portal</permission>
     </configlet>
     
+    <configlet
+        title="Service Cost Configuration"
+        action_id="emas-service-cost"
+        appId="emas.theme" 
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@@emas-service-cost"
+        icon_expr="string:${portal_url}/maintenance_icon.png"
+        visible="True"    
+        i18n:attributes="title">
+            <permission>Manage portal</permission>
+    </configlet>
+    
 </object>
