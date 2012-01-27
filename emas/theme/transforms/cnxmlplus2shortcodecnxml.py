@@ -101,7 +101,7 @@ class cnxmlplus_to_shortcodecnxml:
             }[element.tag]
             return prefix + 'pictures%s/%03i.png'%(self.chapterHash, count)
         elif self.pspictureGeneratorVersion == '1.1':
-            code = ''.join(element.text.split())
+            code = ''.join(element.find('code').text.split())
             codeHash = hashlib.md5(code).hexdigest()
             return prefix + 'pictures/' + codeHash + '.png'
         else:
