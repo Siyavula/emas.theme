@@ -1,10 +1,12 @@
 Changelog
 =========
 
-1.3 - unreleased
-----------------
+1.3
+---
 
-- ???
+- Fix annotator CSS
+
+- Fix rhaptos.xmlfile behaviours
 
 1.2
 ---
