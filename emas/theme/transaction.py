@@ -7,5 +7,11 @@ class ITransaction(form.Schema):
        service. """
 
     amount = Int(
-        title=_(u"The amount of the transaction")
+        title=_(u"The amount of the transaction"),
+        required=True
+    )
+
+    balance = Int(
+        title=_(u"The total amount of credits after the transaction"),
+        required=True
     )
