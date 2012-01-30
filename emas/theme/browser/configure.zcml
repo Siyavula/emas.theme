@@ -129,4 +129,12 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:page
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        name="emas-transaction-history"
+        class=".views.EmasTransactionView"
+        template="transactions.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
 </configure>
