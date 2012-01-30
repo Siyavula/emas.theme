@@ -1,0 +1,33 @@
+<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="emas.theme" >
+<body>
+    <div metal:fill-slot="main"
+         tal:define="batch view/transactions">
+        <h1>Credits history</h1>
+        <tal:b condition="batch">
+        <table class="listing" id="transaction-history">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Balance</th>
+            </tr>
+            <tr tal:repeat="transaction batch">
+                <td tal:content="transaction/effective">1969-01-01 23:59:59</td>
+                <td tal:content="transaction/Description">Purchase credits</td>
+                <td tal:content="transaction/amount">32768</td>
+                <td tal:content="transaction/balance">32769</td>
+            </tr>
+            <tr class="balance-summary">
+                <th colspan="3">Balance</th>
+                <th tal:content="view/balance"></th>
+            </tr>
+        </table>
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+        </tal:b>
+        <div tal:condition="not:batch" class="emas-no-transactions">
+            No transactions.
+        </div>
+    </div>
+</body>
+</html>
