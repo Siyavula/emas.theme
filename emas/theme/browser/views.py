@@ -1,5 +1,7 @@
+from datetime import datetime
 from DateTime import DateTime
 from zope.component import queryUtility
+from zope.component import createObject
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
@@ -12,6 +14,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
+from Products.CMFPlone.PloneBatch import Batch
 from Products.statusmessages.interfaces import IStatusMessage
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
@@ -137,10 +140,8 @@ class CreditsView(BrowserView):
             # XXX Payment gateway integration here, perhaps some utility we
             # can look up and delegate to.
 
-            member = self.context.restrictedTraverse(
-                '@@plone_portal_state').member()
-            credits = member.getProperty('credits', 0)
-            member.setMemberProperties({'credits': credits + buy})
+            self.context.restrictedTraverse('@@emas-transaction').buyCredit(buy,
+                "Credits purchased")
             IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
             self.request['success'] = True
 
@@ -174,3 +175,57 @@ class EnabledServicesView(BrowserView):
     @property
     def more_exercise_enabled(self):
         return self.is_enabled('moreexercise_registrationdate')
+
+class EmasTransactionView(BrowserView):
+    def buyCredit(self, credits, description):
+        assert credits > 0
+        return self.createTransaction(credits, description)
+
+    def buyService(self, credits, description):
+        assert credits > 0
+        return self.createTransaction(-credits, description)
+
+    def createTransaction(self, credits, description):
+        portal = self.context.restrictedTraverse(
+            '@@plone_portal_state').portal()
+        member = self.context.restrictedTraverse(
+            '@@plone_portal_state').member()
+
+        # Update our balance
+        balance = member.getProperty('credits', 0)
+        balance += credits
+        member.setMemberProperties({'credits': balance})
+
+        # Create a transaction entry
+        transactionfolder = portal.transactions._getOb(member.getId())
+        tid = self.context.generateUniqueId(type_name='Transaction')
+        t = createObject('emas.theme.transaction', id=tid)
+        now = datetime.now()
+        t.title = now.strftime('%Y-%m-%d %H:%M:%S')
+        t.description = description
+        t.amount = credits
+        t.effective = now
+        t.balance = balance
+        transactionfolder._setObject(tid, t)
+
+    def balance(self):
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        member = pps.member()
+        return member.getProperty('credits', 0)
+
+    def transactions(self):
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        portal = pps.portal()
+        member = pps.member()
+        transactionfolder = portal.transactions._getOb(member.getId())
+
+        # This will retrieve a Lazymap, it only fetches the item if it is
+        # actually requested. Also, it retrieves it in tree order, and because
+        # we use the date/time as the id, that means its in chronological
+        # order. Neat, I hope?
+        transactions = transactionfolder.objectValues()
+        if transactions:
+            b_start = self.request.get('b_start', 0)
+            b_size = self.request.get('b_size', 20)
+            return Batch(transactions, b_size, b_start)
+        return None

@@ -6,6 +6,8 @@ from zope.interface import directlyProvides, directlyProvidedBy
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent, AddPortalContent
+from Products.CMFCore.permissions import DeleteObjects
 from Products.MimetypesRegistry.MimeTypeItem import MimeTypeItem
 from Products.PortalTransforms.chain import chain
 
@@ -163,6 +165,18 @@ def setupPortalContent(portal):
     if 'index.cnxmlplus' not in default_pages:
         default_pages.append('index.cnxmlplus')
     pprop.site_properties._updateProperty('default_page', default_pages)
+
+    # Add a folder for transactions
+    if not portal.hasObject('transactions'):
+        portal.invokeFactory(id='transactions', type_name='Folder',
+                             title='Transactions')
+        transactions = portal.transactions
+
+        # Turn off permissions so nobody can add, modify or delete
+        transactions.manage_permission(ModifyPortalContent, roles=[], acquire=0)
+        transactions.manage_permission(AddPortalContent, roles=[], acquire=0)
+        transactions.manage_permission(DeleteObjects, roles=[], acquire=0)
+
 
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:

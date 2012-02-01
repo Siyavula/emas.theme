@@ -122,4 +122,19 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="emas-transaction"
+        class=".views.EmasTransactionView"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        name="emas-transaction-history"
+        class=".views.EmasTransactionView"
+        template="transactions.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
 </configure>
