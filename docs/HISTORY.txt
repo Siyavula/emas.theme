@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.4
+---
+
+- Implemented version 1.1 of pspicture path generator in transform.
+
+- Factored out number formatting in transform.
+
 1.3
 ---
 
