@@ -1,6 +1,10 @@
+import re
 import urllib2
 import os
 import lxml.html
+import HTMLParser
+import asciimathml
+from xml.etree import ElementTree
 
 from zope.interface import implements
 from plone.memoize import ram
@@ -231,13 +235,16 @@ class shortcodehtml_to_html:
             try:
                 handle = urllib2.urlopen(shortURL)
                 content = handle.read()
+
                 element = lxml.html.fromstring(content)
                 element.make_links_absolute(base_url="http://www.fullmarks.org.za")
-                """ # Commented out so that questions are not displayed twice.
-                for question in element.xpath(
-                        '//div[@id="item"]/div[@class="question"]'):
-                    result += lxml.html.tostring(question, method='xml')
-                """
+                for mathnode in element.xpath('//span[@class="AMcontainer"]'):
+                    asciimath = mathnode[0].text
+                    mathml = ElementTree.tostring(asciimathml.parse(asciimath))
+                    mathml = mathml.replace('`', '')
+                    mathml = lxml.html.fromstring(mathml)
+                    mathnode.getparent().replace(mathnode, mathml)
+                    
                 for answer in element.xpath(
                     '//div[@id="item"]/div[starts-with(@class,"field answer")]'):
                     result += lxml.html.tostring(answer, method='xml')
