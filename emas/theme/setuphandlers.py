@@ -146,13 +146,6 @@ def setupPortalContent(portal):
             obj = science[objId]
             obj.setNextPreviousEnabled(True)
 
-    # publish folders
-    plone_utils = getToolByName(portal, 'plone_utils')
-    paths = ['/'.join(portal.maths.getPhysicalPath()),
-             '/'.join(portal.science.getPhysicalPath())]
-    plone_utils.transitionObjectsByPaths('publish', paths,
-                                         include_children=True)
-
     # disable tabs
     pprop = getToolByName(portal, 'portal_properties')
     pprop.site_properties._updateProperty('disable_folder_sections', True)

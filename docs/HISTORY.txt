@@ -6,6 +6,8 @@ Changelog
 
 - Convert ASCIIMath to MathML
 
+- don't publish all folders in setupPortalContent setup handler
+
 1.4
 ---
 
