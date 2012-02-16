@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.6
+---
+
+- Updated transform to embed shortcodes as div ids.
+
 1.5
 ---
 
