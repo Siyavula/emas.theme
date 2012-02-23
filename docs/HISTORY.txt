@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.7 (unreleased)
+----------------
+- Add missing fields to EmasUserDataPanelAdapter.
+
 1.6
 ---
 
