@@ -6,6 +6,9 @@ Changelog
 
 - Updated transform to embed shortcodes as div ids.
 
+- Wrote wrapper for asciimathml.parse method since it does not conform
+  to the ASCIIMathML specification.
+
 1.5
 ---
 
