@@ -601,3 +601,37 @@ def xmlify(latex, singleElement=False):
 
     return xml
 
+def format_number(numString, decimalSeparator=',', thousandsSeparator='&#160;'):
+    """
+    Replace standard decimal point with new decimal separator
+    (default: comma); add thousands and thousandths separators
+    (default: non-breaking space).
+    """
+    if numString[0] in '+-':
+        sign = {'+': '+', '-': '&#8722;'}[numString[0]]
+        numString = numString[1:]
+    else:
+        sign = ''
+    decimalPos = numString.find('.')
+    if decimalPos == -1:
+        intPart = numString
+        fracPart = None
+    else:
+        intPart = numString[:decimalPos]
+        fracPart = numString[decimalPos+1:]
+    # Add thousands separator to integer part
+    if len(intPart) > 4:
+        pos = len(intPart)-3
+        while pos > 0:
+            intPart = intPart[:pos] + thousandsSeparator + intPart[pos:]
+            pos -= 3
+    # Add thousandths separator to fractional part
+    if (fracPart is not None) and (len(fracPart) > 4):
+        pos = 3
+        while pos < len(fracPart):
+            fracPart = fracPart[:pos] + thousandsSeparator + fracPart[pos:]
+            pos += 3 + len(thousandsSeparator)
+    numString = sign + intPart
+    if fracPart is not None:
+        numString += decimalSeparator + fracPart
+    return numString

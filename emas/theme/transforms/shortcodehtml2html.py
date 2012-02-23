@@ -1,6 +1,10 @@
+import re
 import urllib2
 import os
 import lxml.html
+import HTMLParser
+import asciimathml
+from xml.etree import ElementTree
 
 from zope.interface import implements
 from plone.memoize import ram
@@ -44,8 +48,16 @@ class shortcodehtml_to_html:
         for element in tree.xpath('//shortcodes'):
             content = []
             # get all the content from the contained urls
-            for url in element.findall('.//url'):
+            for entry in element.findall('.//entry'):
+                url = entry.find('url')
+                shortcode = entry.find('shortcode').text
                 content.append(self.getURLContent(url.text))
+                if shortcode is not None:
+                    shortcode = 'sc' + shortcode.strip()
+                    if content[-1][:5] == '<div ':
+                        content[-1] = content[-1][:5] + 'id="%s" '%shortcode + content[-1][5:]
+                    else:
+                        print "WARNING: Got FullMarks solution that doesn't start with \"<div \""
             # build a shortcode tree to contain all the fetched content
             try:
                 sctree = lxml.html.fromstring(''.join(content))
@@ -80,14 +92,14 @@ class shortcodehtml_to_html:
                 element.getparent().remove(element)
             elif 'mindset.co.za' in params['url']:
                 # Mindset video
-                embedString = '<div class="video"><embed src="http://www.mindset.co.za/learn/sites/all/modules/mindset_video/mediaplayer/player.swf" width="' + params.get('width', '300') + '" height="' + params.get('height', 245) + '" allowscriptaccess="always" allowfullscreen="true" flashvars="file=' + params['url'] + '"/>'
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="video"><embed src="http://www.mindset.co.za/learn/sites/all/modules/mindset_video/mediaplayer/player.swf" width="' + params.get('width', '300') + '" height="' + params.get('height', 245) + '" allowscriptaccess="always" allowfullscreen="true" flashvars="file=' + params['url'] + '"/>'
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             elif 'youtube.com' in params['url']:
                 # YouTube video
-                embedString = '<div class="video"><iframe width="' + params.get('width', '420') + '" height="' + params.get('height', '315') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="video"><iframe width="' + params.get('width', '420') + '" height="' + params.get('height', '315') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
@@ -116,7 +128,7 @@ class shortcodehtml_to_html:
                 # Verbatim embed code
                 embedNode = element.find('embed')
                 embedString = embedNode.text
-                embedString = '<div class="simulation">' + embedString
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="simulation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
@@ -124,7 +136,7 @@ class shortcodehtml_to_html:
             elif 'phet.colorado.edu' in params['url']:
                 # Phet simulation
                 embedString = '<iframe width="' + params.get('width', '400') + '" height="' + params.get('height', '300') + '" src="' + params.get('url') + '" frameborder="0" allowfullscreen> </iframe>'
-                embedString = '<div class="simulation">' + embedString
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="simulation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
@@ -153,14 +165,14 @@ class shortcodehtml_to_html:
                 # Verbatim embed code
                 embedNode = element.find('embed')
                 embedString = embedNode.text
-                embedString = '<div class="presentation">' + embedString
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="presentation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
                 element.getparent().replace(element, lxml.html.fromstring(embedString))
             elif 'www.slideshare.net' in params['url']:
                 embedString = '<div style="width:' + params.get('width', '425') + 'px"><iframe src="' + params['url'] + '" width="' + params.get('width', '425') + '" height="' + params.get('height', '355') + '" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"> </iframe></div>'
-                embedString = '<div class="presentation">' + embedString
+                embedString = '<div id="sc' + params.get('shortcode', 'NONE') + '" class="presentation">' + embedString
                 if params.get('strong') is not None:
                     embedString += '<p>' + params['strong'] + '</p>'
                 embedString += '</div>'
@@ -231,13 +243,16 @@ class shortcodehtml_to_html:
             try:
                 handle = urllib2.urlopen(shortURL)
                 content = handle.read()
+
                 element = lxml.html.fromstring(content)
                 element.make_links_absolute(base_url="http://www.fullmarks.org.za")
-                """ # Commented out so that questions are not displayed twice.
-                for question in element.xpath(
-                        '//div[@id="item"]/div[@class="question"]'):
-                    result += lxml.html.tostring(question, method='xml')
-                """
+                for mathnode in element.xpath('//span[@class="AMcontainer"]'):
+                    asciimath = mathnode[0].text
+                    mathml = ElementTree.tostring(asciimathml.parse(asciimath))
+                    mathml = mathml.replace('`', '')
+                    mathml = lxml.html.fromstring(mathml)
+                    mathnode.getparent().replace(mathnode, mathml)
+                    
                 for answer in element.xpath(
                     '//div[@id="item"]/div[starts-with(@class,"field answer")]'):
                     result += lxml.html.tostring(answer, method='xml')

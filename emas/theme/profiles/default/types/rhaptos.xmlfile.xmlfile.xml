@@ -4,6 +4,9 @@
    i18n:domain="rhaptos.xmlfile" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
     <property name="behaviors">
+        <element value="plone.app.content.interfaces.INameFromTitle" />
+        <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
+        <element value="plone.app.referenceablebehavior.referenceable.IReferenceable" />
         <element value="emas.theme.behaviors.annotatable.IAnnotatableContent" />
     </property>
 

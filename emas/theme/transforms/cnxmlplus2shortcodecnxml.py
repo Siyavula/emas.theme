@@ -1,6 +1,7 @@
 import os
 from lxml import etree
 import utils
+import hashlib
 
 from zope.interface import implements
 from Products.PortalTransforms.interfaces import ITransform
@@ -48,6 +49,14 @@ class cnxmlplus_to_shortcodecnxml:
 
         dom = etree.fromstring(markup)
 
+        # Check for a pspicture generator version tag
+        metadataNode = dom.find('metadata')
+        self.pspictureGeneratorVersion = '1.0'
+        if metadataNode is not None:
+            generatorNode = metadataNode.find('pspicture-generator-version')
+            if generatorNode is not None:
+                self.pspictureGeneratorVersion = generatorNode.text.strip()
+
         # Strip out <section type="chapter">
         dom = dom.find('content')
         assert len(dom) == 1 # only a single chapter section
@@ -63,7 +72,6 @@ class cnxmlplus_to_shortcodecnxml:
             dom[-1].append(node)
 
         # Build chapter hash from title: for pspictures directory
-        import hashlib
         self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
         #print 'hash:', self.chapterHash
 
@@ -81,11 +89,29 @@ class cnxmlplus_to_shortcodecnxml:
         markup = '<?xml version="1.0"?>\n<document xmlns="http://cnx.rice.edu/cnxml"' + markup[8:-10] + '</document>\n'
         return markup
 
+    def pspicture_path(self, element):
+        prefix = {
+            'pspicture': 'ps',
+            'tikzpicture': 'tikz',
+        }[element.tag]
+        if self.pspictureGeneratorVersion == '1.0':
+            count = {
+                'pspicture': self.psPictureCount,
+                'tikzpicture': self.tikzPictureCount,
+            }[element.tag]
+            return prefix + 'pictures%s/%03i.png'%(self.chapterHash, count)
+        elif self.pspictureGeneratorVersion == '1.1':
+            code = ''.join(element.find('code').text.split())
+            codeHash = hashlib.md5(code).hexdigest()
+            return prefix + 'pictures/' + codeHash + '.png'
+        else:
+            raise ValueError, "Unknown pspicture generator version"
+
     def traverse_dom_for_pspictures(self, element):
         # <pspicture><code>
         if element.tag == 'pspicture':
             self.psPictureCount += 1
-            src = 'pspictures%s/%03i.png'%(self.chapterHash, self.psPictureCount)
+            src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
             mediaNode.attrib['alt'] = 'Image'
@@ -94,7 +120,7 @@ class cnxmlplus_to_shortcodecnxml:
             element.getparent().replace(element, mediaNode)
         elif element.tag == 'tikzpicture':
             self.tikzPictureCount += 1
-            src = 'tikzpictures%s/%03i.png'%(self.chapterHash, self.tikzPictureCount)
+            src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
             mediaNode.attrib['alt'] = 'Image'
@@ -216,66 +242,50 @@ class cnxmlplus_to_shortcodecnxml:
                 childIndex += 1
 
             elif (child.tag == 'number') and (child.getparent().tag != 'entry'):
-                coeffNode = child.find('coeff')
-                expNode = child.find('exp')
-                baseNode = child.find('base')
-                if coeffNode is None:
-                    if baseNode is None:
-                        baseText = '10'
-                    else:
-                        baseText = baseNode.text.strip()
-                    assert expNode is not None, etree.tostring(child)
-                    expText = expNode.text.strip().replace('-','&#8722;')
-                    dummyNode = etree.fromstring('<dummy>' + baseText + '<sup>' + expText + '</sup></dummy>')
+                if len(child) == 0:
+                    # No children, means it's just a plain number
+                    coeffText = utils.format_number(child.text.strip())
+                    try:
+                        dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                    except etree.XMLSyntaxError, msg:
+                        print repr(coeffText)
+                        raise etree.XMLSyntaxError, msg
                 else:
-                    coeffText = coeffNode.text.strip()
-                    if coeffText[0] in '+-':
-                        sign = {'+': '+', '-': '&#8722;'}[coeffText[0]]
-                        coeffText = coeffText[1:]
-                    else:
-                        sign = ''
-                    decimalPos = coeffText.find('.')
-                    if decimalPos == -1:
-                        intPart = coeffText
-                        fracPart = None
-                    else:
-                        intPart = coeffText[:decimalPos]
-                        fracPart = coeffText[decimalPos+1:]
-                    # Add thousands separator to integer part
-                    separator = '&#160;'
-                    if len(intPart) > 4:
-                        pos = len(intPart)-3
-                        while pos > 0:
-                            intPart = intPart[:pos] + separator + intPart[pos:]
-                            pos -= 3
-                    # Add thousandths separator to fractional part
-                    if (fracPart is not None) and (len(fracPart) > 4):
-                        pos = 3
-                        while pos < len(fracPart):
-                            fracPart = fracPart[:pos] + separator + fracPart[pos:]
-                            pos += 3 + len(separator)
-                    coeffText = sign + intPart
-                    if fracPart is not None:
-                        coeffText += ',' + fracPart
-                    if expNode is None:
-                        assert baseNode is None
-                        try:
-                            dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
-                        except etree.XMLSyntaxError, msg:
-                            print repr(coeffText)
-                            raise etree.XMLSyntaxError, msg
-                    else:
+                    # Scientific or exponential notation: parse out coefficient, base and exponent
+                    coeffNode = child.find('coeff')
+                    expNode = child.find('exp')
+                    baseNode = child.find('base')
+                    if coeffNode is None:
+                        # Exponential
                         if baseNode is None:
-                            baseText = '10'
+                            baseText = utils.format_number('10')
                         else:
-                            baseText = baseNode.text.strip()
-                        expText = expNode.text.strip().replace('-','&#8722;')
-                        dummyNode = etree.fromstring('<dummy>' + coeffText + ' &#215; ' + baseText + '<sup>' + expText + '</sup></dummy>')
+                            baseText = utils.format_number(baseNode.text.strip())
+                        assert expNode is not None, etree.tostring(child)
+                        expText = utils.format_number(expNode.text.strip())
+                        dummyNode = etree.fromstring('<dummy>' + baseText + '<sup>' + expText + '</sup></dummy>')
+                    else:
+                        # Scientific notation or plain number (<coeff> only)
+                        coeffText = utils.format_number(coeffNode.text.strip())
+                        if expNode is None:
+                            assert baseNode is None
+                            try:
+                                dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                            except etree.XMLSyntaxError, msg:
+                                print repr(coeffText)
+                                raise etree.XMLSyntaxError, msg
+                        else:
+                            if baseNode is None:
+                                baseText = utils.format_number('10')
+                            else:
+                                baseText = utils.format_number(baseNode.text.strip())
+                            expText = utils.format_number(expNode.text.strip())
+                            dummyNode = etree.fromstring('<dummy>' + coeffText + ' &#215; ' + baseText + '<sup>' + expText + '</sup></dummy>')
                 utils.etree_replace_with_node_list(element, child, dummyNode)
                 childIndex += len(dummyNode)
 
             elif child.tag == 'percentage':
-                dummyNode = etree.fromstring('<dummy>' + child.text.strip().replace('.',',').replace('-','&#8722;') + '%</dummy>')
+                dummyNode = etree.fromstring('<dummy>' + utils.format_number(child.text.strip()) + '%</dummy>')
                 utils.etree_replace_with_node_list(element, child, dummyNode)
                 childIndex += len(dummyNode)
 
