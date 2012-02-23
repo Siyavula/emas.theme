@@ -3,15 +3,16 @@ Changelog
 
 1.7 (unreleased)
 ----------------
+
 - Add missing fields to EmasUserDataPanelAdapter.
+
+- Wrote wrapper for asciimathml.parse method since it does not conform
+  to the ASCIIMathML specification.
 
 1.6
 ---
 
 - Updated transform to embed shortcodes as div ids.
-
-- Wrote wrapper for asciimathml.parse method since it does not conform
-  to the ASCIIMathML specification.
 
 1.5
 ---
