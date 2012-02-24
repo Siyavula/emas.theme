@@ -1,11 +1,15 @@
 from datetime import datetime
 
+from zope.component import queryUtility
+
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.registry.interfaces import IRegistry
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme import MessageFactory as _
+from emas.theme.interfaces import IEmasServiceCost
 from emas.theme.browser.views import NULLDATE
 
 ALLOWED_TYPES = ['Folder',
@@ -29,7 +33,11 @@ class BasePayServicesViewlet(ViewletBase):
     def has_credits(self):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
-        return member.getProperty('credits', 0) and True or False
+        current_credits = member.getProperty('credits', 0)
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        service_cost = getattr(settings, self.creditproperty, 0)
+        return current_credits >= service_cost
     
     @property
     def is_registered(self):
@@ -61,6 +69,7 @@ class RegisterToAskQuestionsViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
     formfield = 'registertoaskquestions'
     memberproperty = 'askanexpert_registrationdate'
+    creditproperty = 'questionCost'
 
 
 class RegisterToAccessAnswerDatabaseViewlet(BasePayServicesViewlet):
@@ -71,6 +80,7 @@ class RegisterToAccessAnswerDatabaseViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
     formfield = 'registertoaccessanswerdatabase'
     memberproperty = 'answerdatabase_registrationdate'
+    creditproperty = 'answerCost'
 
 
 class RegisterForMoreExerciseViewlet(BasePayServicesViewlet):
@@ -81,3 +91,4 @@ class RegisterForMoreExerciseViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
     formfield = 'registerformoreexercise'
     memberproperty = 'moreexercise_registrationdate'
+    creditproperty = 'exerciseCost'
