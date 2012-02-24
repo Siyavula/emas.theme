@@ -1,5 +1,4 @@
 from datetime import datetime
-from DateTime import DateTime
 from zope.component import queryUtility
 from zope.component import createObject
 
@@ -20,6 +19,8 @@ from Products.statusmessages.interfaces import IStatusMessage
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
+
+NULLDATE = datetime.date(datetime(1970, 01, 01))
 
 class EmasSettingsForm(RegistryEditForm):
     schema = IEmasSettings
@@ -156,13 +157,14 @@ class CreditsView(BrowserView):
 class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
-    NULLDATE = DateTime('1970/01/01 00:00:00')
-
     def is_enabled(self, service):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         regdate = member.getProperty(service)
-        return regdate > self.NULLDATE and True or False
+        try:
+            return regdate > NULLDATE and True or False
+        except: 
+            return False
     
     @property
     def ask_expert_enabled(self):

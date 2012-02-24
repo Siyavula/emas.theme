@@ -1,5 +1,7 @@
-<tal:defs define="has_credits view/has_credits">
+<tal:defs define="has_credits view/has_credits;
+                  can_show view/can_show;">
 
+<tal:can_show condition="can_show">
 <tal:has_credits condition="has_credits">
 <form action="." method="POST">
     <input type="hidden" name="emas.theme.registertoaskquestions.submitted"
@@ -20,9 +22,11 @@
 
 <tal:no_credits condition="not:has_credits">
 <div id="askquestions-credit-warning">
-    Please purchase credits to enable the service:<br/>
-    Ask questions.    
+    Please purchase credits to enable the 'Ask questions' service.
+    <a tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@emas-credits"
+       class="credit-overlay"><button>Buy Credits</button></a>
 </div>
 </tal:no_credits>
+</tal:can_show>
 
 </tal:defs>

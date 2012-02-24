@@ -1,4 +1,4 @@
-from DateTime import DateTime
+from datetime import datetime
 
 from plone.app.layout.viewlets.common import ViewletBase
 
@@ -6,7 +6,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme import MessageFactory as _
+from emas.theme.browser.views import NULLDATE
 
+ALLOWED_TYPES = ['Folder',
+                 'rhaptos.xmlfile.xmlfile',
+                 'rhaptos.compilation.section',
+                 'rhaptos.compilation.compilation',
+                ]
 
 class BasePayServicesViewlet(ViewletBase):
     """ Common ancestor for pay services viewlets. """
@@ -14,7 +20,10 @@ class BasePayServicesViewlet(ViewletBase):
     formsubmit_token = None
     formfield = None
     memberproperty = None
-    NULLDATE = DateTime('1970/01/01 00:00:00')
+
+    @property
+    def can_show(self):
+        return self.context.portal_type in ALLOWED_TYPES
 
     @property
     def has_credits(self):
@@ -27,7 +36,10 @@ class BasePayServicesViewlet(ViewletBase):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         regdate = member.getProperty(self.memberproperty)
-        return regdate > self.NULLDATE and True or False
+        try:
+            return regdate > NULLDATE
+        except:
+            return False
 
     def update(self):
         super(BasePayServicesViewlet, self).update()
@@ -35,9 +47,9 @@ class BasePayServicesViewlet(ViewletBase):
             enable_service = self.request.form.get(self.formfield)
             pmt = getToolByName(self.context, 'portal_membership')
             member = pmt.getAuthenticatedMember()
-            regdate = self.NULLDATE
+            regdate = NULLDATE
             if enable_service:
-                regdate = DateTime()
+                regdate = datetime.date(datetime.now())
             member.setMemberProperties({self.memberproperty: regdate})
 
 
