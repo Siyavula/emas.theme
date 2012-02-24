@@ -1,3 +1,8 @@
+<tal:registered condition="view/is_registered">
+    <div>You are registered to access the answers database until: </div>
+</tal:registered>
+
+<tal:not_registered condition="not:view/is_registered">
 <tal:defs define="has_credits view/has_credits;
                   can_show view/can_show;">
 
@@ -30,3 +35,4 @@
 </tal:can_show>
 
 </tal:defs>
+</tal:not_registered>

@@ -48,9 +48,10 @@ class BasePayServicesViewlet(ViewletBase):
     def is_registered(self):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
         regdate = member.getProperty(self.memberproperty)
         try:
-            return regdate > NULLDATE
+            return regdate > NULLDATE and current_credits > 0
         except:
             return False
 
