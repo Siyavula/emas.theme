@@ -1,6 +1,9 @@
+import datetime
 from zope.component import createObject
 from Products.CMFCore.permissions import ModifyPortalContent
 from Products.ATContentTypes.content.folder import ATFolder
+
+from emas.theme.browser.views import NULLDATE
 
 def onMemberJoined(obj, event):
     portal = obj.restrictedTraverse('@@plone_portal_state').portal()
@@ -10,9 +13,17 @@ def onMemberJoined(obj, event):
 
     # Because all permissions have been disabled on transactions, we cannot use
     # invokeFactory
-    folder = ATFolder(memberid)
-    transactions._setObject(memberid, folder)
-    transactions.reindexObject()
+    if not memberid in transactions.objectIds():
+        folder = ATFolder(memberid)
+        transactions._setObject(memberid, folder)
+        transactions.reindexObject()
 
-    # Finally, change its permissions
-    folder.manage_permission(ModifyPortalContent, roles=[], acquire=0)
+        # Finally, change its permissions
+        folder.manage_permission(ModifyPortalContent, roles=[], acquire=0)
+    
+    # Make sure the user's service registration dates are correct
+    properties = {'askanexpert_registrationdate': NULLDATE,
+                  'answerdatabase_registrationdate': NULLDATE,
+                  'moreexercise_registrationdate': NULLDATE,
+                 }
+    obj.setProperties(properties)

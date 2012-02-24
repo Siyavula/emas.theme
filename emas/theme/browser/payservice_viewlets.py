@@ -1,12 +1,22 @@
-from DateTime import DateTime
+from datetime import datetime
+
+from zope.component import queryUtility
 
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.registry.interfaces import IRegistry
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme import MessageFactory as _
+from emas.theme.interfaces import IEmasServiceCost
+from emas.theme.browser.views import NULLDATE
 
+ALLOWED_TYPES = ['Folder',
+                 'rhaptos.xmlfile.xmlfile',
+                 'rhaptos.compilation.section',
+                 'rhaptos.compilation.compilation',
+                ]
 
 class BasePayServicesViewlet(ViewletBase):
     """ Common ancestor for pay services viewlets. """
@@ -14,20 +24,30 @@ class BasePayServicesViewlet(ViewletBase):
     formsubmit_token = None
     formfield = None
     memberproperty = None
-    NULLDATE = DateTime('1970/01/01 00:00:00')
+
+    @property
+    def can_show(self):
+        return self.context.portal_type in ALLOWED_TYPES
 
     @property
     def has_credits(self):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
-        return member.getProperty('credits', 0) and True or False
+        current_credits = member.getProperty('credits', 0)
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        service_cost = getattr(settings, self.creditproperty, 0)
+        return current_credits >= service_cost
     
     @property
     def is_registered(self):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         regdate = member.getProperty(self.memberproperty)
-        return regdate > self.NULLDATE and True or False
+        try:
+            return regdate > NULLDATE
+        except:
+            return False
 
     def update(self):
         super(BasePayServicesViewlet, self).update()
@@ -35,9 +55,9 @@ class BasePayServicesViewlet(ViewletBase):
             enable_service = self.request.form.get(self.formfield)
             pmt = getToolByName(self.context, 'portal_membership')
             member = pmt.getAuthenticatedMember()
-            regdate = self.NULLDATE
+            regdate = NULLDATE
             if enable_service:
-                regdate = DateTime()
+                regdate = datetime.date(datetime.now())
             member.setMemberProperties({self.memberproperty: regdate})
 
 
@@ -49,6 +69,7 @@ class RegisterToAskQuestionsViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
     formfield = 'registertoaskquestions'
     memberproperty = 'askanexpert_registrationdate'
+    creditproperty = 'questionCost'
 
 
 class RegisterToAccessAnswerDatabaseViewlet(BasePayServicesViewlet):
@@ -59,6 +80,7 @@ class RegisterToAccessAnswerDatabaseViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
     formfield = 'registertoaccessanswerdatabase'
     memberproperty = 'answerdatabase_registrationdate'
+    creditproperty = 'answerCost'
 
 
 class RegisterForMoreExerciseViewlet(BasePayServicesViewlet):
@@ -69,3 +91,4 @@ class RegisterForMoreExerciseViewlet(BasePayServicesViewlet):
     formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
     formfield = 'registerformoreexercise'
     memberproperty = 'moreexercise_registrationdate'
+    creditproperty = 'exerciseCost'

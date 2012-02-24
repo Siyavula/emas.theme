@@ -26,3 +26,23 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self.context.setMemberProperties({'province': value})
     province = property(get_province, set_province)
 
+    def get_askanexpert_registrationdate(self):
+        return self.context.getProperty('askanexpert_registrationdate', '')
+    def set_askanexpert_registrationdate(self, value):
+        return self.context.setMemberProperties({'askanexpert_registrationdate': value})
+    askanexpert_registrationdate = property(get_askanexpert_registrationdate,
+                                            set_askanexpert_registrationdate)
+
+    def get_answerdatabase_registrationdate(self):
+        return self.context.getProperty('answerdatabase_registrationdate', '')
+    def set_answerdatabase_registrationdate(self, value):
+        return self.context.setMemberProperties({'answerdatabase_registrationdate': value})
+    answerdatabase_registrationdate = property(get_answerdatabase_registrationdate,
+                                            set_answerdatabase_registrationdate)
+
+    def get_moreexercise_registrationdate(self):
+        return self.context.getProperty('moreexercise_registrationdate', '')
+    def set_moreexercise_registrationdate(self, value):
+        return self.context.setMemberProperties({'moreexercise_registrationdate': value})
+    moreexercise_registrationdate = property(get_moreexercise_registrationdate,
+                                            set_moreexercise_registrationdate)

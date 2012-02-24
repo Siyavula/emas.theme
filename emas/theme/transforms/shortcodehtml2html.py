@@ -3,7 +3,7 @@ import urllib2
 import os
 import lxml.html
 import HTMLParser
-import asciimathml
+from asciimathml_wrapped import asciimathml
 from xml.etree import ElementTree
 
 from zope.interface import implements
@@ -18,8 +18,10 @@ LOGGER = getLogger('%s:' % __name__)
 
 dirname = os.path.dirname(__file__)
 
+
 def cache_key(func, self, shortURL):
     return shortURL
+
 
 class shortcodehtml_to_html:
     """ Convert HTML with embedded shortcodes to HTML with the full dereferenced
