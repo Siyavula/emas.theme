@@ -2,13 +2,14 @@ import os
 import unittest2 as unittest
 from base import INTEGRATION_TESTING
 
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView as View
 from zope.interface import alsoProvides 
 from zope.viewlet.interfaces import IViewletManager
-from zope.component import queryMultiAdapter
+from zope.component import queryMultiAdapter, queryUtility
 
-from emas.theme.interfaces import IEmasThemeLayer
+from emas.theme.interfaces import IEmasThemeLayer, IEmasServiceCost
 from siyavula.what.interfaces import ISiyavulaWhatLayer
 
 dirname = os.path.dirname(__file__)
@@ -36,7 +37,8 @@ class TestPayserviceViewletBase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.context = self.portal
+        self.context = self.portal.maths
+        self.context.allowQuestions = True
         self.request = self.portal.REQUEST
         self.manager_name = 'plone.belowcontent'
         self.themelayer = IEmasThemeLayer 
@@ -45,6 +47,7 @@ class TestPayserviceViewletBase(unittest.TestCase):
         self.formsubmit_token = None
         self.formfield = None
         self.memberproperty = None
+        self.creditproperty = ''
 
     def _get_viewlet(self):
         viewlet = find_viewlet(self.context,
@@ -120,6 +123,10 @@ class TestRegisterToAskQuestionsViewlet(TestPayserviceViewletBase):
         self.formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
         self.formfield = 'registertoaskquestions'
         self.memberproperty = 'askanexpert_registrationdate'
+        self.creditproperty = 'questionCost'
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        setattr(settings, self.creditproperty, 100)
     
     def test_viewlet_exists(self):
         self._test_viewlet_exists()
@@ -144,6 +151,10 @@ class TestRegisterToAccessAnswerDatabaseViewlet(TestPayserviceViewletBase):
         self.formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
         self.formfield = 'registertoaccessanswerdatabase'
         self.memberproperty = 'answerdatabase_registrationdate'
+        self.creditproperty = 'answerCost'
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        setattr(settings, self.creditproperty, 100)
     
     def test_viewlet_exists(self):
         self._test_viewlet_exists()
@@ -168,6 +179,10 @@ class TestRegisterForMoreExerciseViewlet(TestPayserviceViewletBase):
         self.formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
         self.formfield = 'registerformoreexercise'
         self.memberproperty = 'moreexercise_registrationdate'
+        self.creditproperty = 'exerciseCost'
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        setattr(settings, self.creditproperty, 100)
     
     def test_viewlet_exists(self):
         self._test_viewlet_exists()
