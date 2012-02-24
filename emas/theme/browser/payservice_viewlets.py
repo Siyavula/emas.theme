@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from zope.component import queryUtility
+from zope.component import queryUtility, queryAdapter
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.registry.interfaces import IRegistry
@@ -27,7 +27,12 @@ class BasePayServicesViewlet(ViewletBase):
 
     @property
     def can_show(self):
-        return self.context.portal_type in ALLOWED_TYPES
+        context = self.context
+        adapter = queryAdapter(context, name='siyavula.what.allowquestions')
+        # if we cannot adapt it, it won't have the allowQuestions field.
+        if not adapter:
+            return False
+        return context.allowQuestions and context.portal_type in ALLOWED_TYPES
 
     @property
     def has_credits(self):
