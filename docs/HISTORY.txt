@@ -9,6 +9,12 @@ Changelog
 - Wrote wrapper for asciimathml.parse method since it does not conform
   to the ASCIIMathML specification.
 
+- Eventhandler should only create transaction folder if it does not exist.
+
+- Payservice viewlets now pay attention to service costs too.
+
+- Use only datetime.date not DateTime in payservice viewlets.
+
 1.6
 ---
 
