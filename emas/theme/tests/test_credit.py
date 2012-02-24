@@ -3,12 +3,21 @@ import unittest2 as unittest
 from plone.app.testing import TEST_USER_ID
 from base import INTEGRATION_TESTING
 
+from zope.event import notify
+
+from AccessControl import getSecurityManager
+from Products.PluggableAuthService.events import PrincipalCreated
+
 class TestNextPrevious(unittest.TestCase):
     """ Test the nextprevious adapter """
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
+        user = getSecurityManager().getUser()
+        # create transactions folder for test user
+        notify(PrincipalCreated(user))
+
 
     def test_creditload(self):
         # Assert that our user has no credit
