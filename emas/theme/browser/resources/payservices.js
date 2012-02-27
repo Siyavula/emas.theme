@@ -3,6 +3,13 @@ jQuery(function($){
         subtype: 'ajax',
         filter: '#content',
         closeselector: '[name=form.button.cancel]',
+        config: {onClose : function (e) {
+                    var overlay = this.getOverlay();
+                    if (jQuery('div.payservice-form', overlay).length == 0) {
+                        location.reload();
+                    }
+                }
+        }
     });
 });
 
@@ -48,6 +55,41 @@ function errorHandler(jqXHR, textStatus, errorThrown) {
 }
 
 function registerForMoreExercise(event) {
-    //event.preventDefault();
+    return register(event,
+                    '@@json-register-for-more-exercise',
+                    'registerformoreexercise',
+                    'emas.theme.registerformoreexercise.submitted')
+}
 
+function registerToAccessAnswerDatabase(event) {
+    return register(event,
+                    '@@json-register-to-access-answers',
+                    'registertoaccessanswerdatabase',
+                    'emas.theme.registertoaccessanswerdatabase.submitted')
+}
+
+function registerToAskQuestions(event) {
+    return register(event,
+                    '@@json-register-to-ask-questions',
+                    'registertoaskquestions',
+                    'emas.theme.registertoaskquestions.submitted')
+}
+
+function register(event, url, fieldname, formtoken) {
+    event.preventDefault();
+    var data = new Object();
+    data[fieldname] = 'on';
+    data[formtoken] = 'submitted';
+    jQuery.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        success: onServiceRegistered,
+        error: errorHandler,
+    });
+}
+
+function onServiceRegistered(data, textStatus, jqXHR) {
+    jQuery('div.information').html(data.message);
+    jQuery('div.payservice-form').remove();
 }

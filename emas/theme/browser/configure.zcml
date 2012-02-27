@@ -142,6 +142,30 @@
         />
 
     <browser:page
+        for="*"
+        name="json-register-for-more-exercise"
+        class=".views.RegisterForMoreExerciseView"
+        attribute="json_handleRegister"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="*"
+        name="json-register-to-access-answers"
+        class=".views.RegisterToAccessAnswerDatabaseView"
+        attribute="json_handleRegister"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="*"
+        name="json-register-to-ask-questions"
+        class=".views.RegisterToAskQuestionsView"
+        attribute="json_handleRegister"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         name="emas-service-cost"
         class=".views.EmasServiceCostControlPanel"

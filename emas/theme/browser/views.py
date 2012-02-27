@@ -280,10 +280,19 @@ class PayserviceRegistrationBase(BrowserView):
             regdate = NULLDATE
             if enable_service:
                 regdate = date.today()
-            member.setMemberProperties({self.memberproperty: regdate})
-            view = self.context.restrictedTraverse('@@emas-transaction')
-            transaction_message = 'Bought %s on %s' %(self.servicename, date.today())
-            view.buyService(self.servicecost, transaction_message)
+                member.setMemberProperties({self.memberproperty: regdate})
+                view = self.context.restrictedTraverse('@@emas-transaction')
+                transaction_message = 'Bought %s on %s' %(self.servicename, date.today())
+                view.buyService(self.servicecost, transaction_message)
+    
+    def json_handleRegister(self):
+        self.handleRegister()
+        message = '%s was successful.' %self.servicename
+        if not self.is_registered:
+            message = '%s was failed.' %self.servicename
+        return json.dumps({'registered': self.is_registered,
+                           'message': message,
+                           'servicename': self.servicename,})
 
     @property
     def can_show(self):
