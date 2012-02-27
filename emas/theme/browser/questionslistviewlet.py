@@ -21,7 +21,8 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
         # if we cannot adapt it, it won't have the allowQuestions field.
         if not adapter:
             return False
-        return self.context.allowQuestions and view.ask_expert_enabled
+        allowQuestions = getattr(self.context, 'allowQuestions', False)
+        return allowQuestions and view.ask_expert_enabled
 
     def questions(self):
         """ Return all questions that have the current context set

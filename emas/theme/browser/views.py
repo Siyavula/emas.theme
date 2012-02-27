@@ -301,7 +301,8 @@ class PayserviceRegistrationBase(BrowserView):
         # if we cannot adapt it, it won't have the allowQuestions field.
         if not adapter:
             return False
-        return context.allowQuestions and context.portal_type in ALLOWED_TYPES
+        allowQuestions = getattr(context, 'allowQuestions', False)
+        return allowQuestions and context.portal_type in ALLOWED_TYPES
 
     @property
     def has_credits(self):
