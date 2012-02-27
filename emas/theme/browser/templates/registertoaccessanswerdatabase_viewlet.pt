@@ -1,32 +1,12 @@
-<tal:defs define="has_credits view/has_credits;
-                  can_show view/can_show;">
-
-<tal:can_show condition="can_show">
-<tal:has_credits condition="has_credits">
-<form action="." method="POST">
-    <input type="hidden" name="emas.theme.registertoaccessanswerdatabase.submitted"
-        value="submitted" />
-    
-    <label for="registertoaccessanswerdatabase">
-        <span>I want to register to access answer database.</span>
-    </label>
-    <input id="registertoaccessanswerdatabase" type="checkbox"
-        name="registertoaccessanswerdatabase"
-        tal:attributes="checked python:view.is_registered and 'checked' or ''"/>
-    
-    <button id="registertoaccessanswerdatabase-submit-button" value="submit">
-        Submit
-    </button>
-</form>
-</tal:has_credits>
-
-<tal:no_credits condition="not:has_credits">
-<div id="accessanswers-credit-warning">
-    Please purchase credits to enable the 'Access answer database.' service.
-    <a tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@emas-credits"
-       class="credit-overlay"><button>Buy Credits</button></a>
+<div id="register-to-access-answer-database-viewlet-container"
+    tal:condition="view/can_show"
+    tal:define="is_registered view/is_registered">
+    <div tal:condition="is_registered">
+        You are registered to access the answer database until: <span tal:replace="view/expirydate">expirydate</span>
+    </div>
+    <a href="#" class="payservice-overlay"
+        tal:condition="not:is_registered" 
+        tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@register-to-access-answers">
+        Register to access the answer database
+    </a>
 </div>
-</tal:no_credits>
-</tal:can_show>
-
-</tal:defs>

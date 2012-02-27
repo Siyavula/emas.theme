@@ -1,4 +1,4 @@
-from DateTime import DateTime
+from datetime import datetime
 import os
 import unittest2 as unittest
 from base import INTEGRATION_TESTING
@@ -29,7 +29,8 @@ class TestEnabledServices(unittest.TestCase):
             view.ask_expert_enabled == False,
             'The "ask expert" service should not be enabled yet.')
         
-        self.updateProperty('askanexpert_registrationdate', DateTime())
+        self.updateProperty('askanexpert_registrationdate',
+            datetime.date(datetime.now()))
         self.assertTrue(
             view.ask_expert_enabled == True,
             'The "ask expert" service should now be enabled.')
@@ -40,7 +41,8 @@ class TestEnabledServices(unittest.TestCase):
             view.answer_database_enabled == False,
             'The "answer database" service should not be enabled yet.')
         
-        self.updateProperty('answerdatabase_registrationdate', DateTime())
+        self.updateProperty('answerdatabase_registrationdate',
+            datetime.date(datetime.now()))
         self.assertTrue(
             view.answer_database_enabled == True,
             'The "answer database" service should now be enabled.')
@@ -51,7 +53,8 @@ class TestEnabledServices(unittest.TestCase):
             view.more_exercise_enabled == False,
             'The "more exercise" service should not be enabled yet.')
         
-        self.updateProperty('moreexercise_registrationdate', DateTime())
+        self.updateProperty('moreexercise_registrationdate',
+            datetime.date(datetime.now()))
         self.assertTrue(
             view.more_exercise_enabled == True,
             'The "more exercise" service should now be enabled.')

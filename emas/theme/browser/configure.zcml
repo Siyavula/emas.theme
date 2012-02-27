@@ -78,9 +78,18 @@
         />
 
     <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="*"
         name="emas-credits"
         class=".views.CreditsView"
+        template = "credits.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="*"
+        name="json-buycredits"
+        class=".views.CreditsView"
+        attribute="buycredits" 
         permission="cmf.SetOwnProperties"
         />
 
@@ -106,6 +115,30 @@
         class=".payservice_viewlets.RegisterForMoreExerciseViewlet"
         permission="cmf.SetOwnProperties"
         layer="emas.theme.interfaces.IEmasThemeLayer"
+        />
+
+    <browser:page
+        for="*"
+        name="register-to-ask-questions"
+        class=".views.RegisterToAskQuestionsView"
+        template="./templates/registertoaskquestions.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="*"
+        name="register-to-access-answers"
+        class=".views.RegisterToAccessAnswerDatabaseView"
+        template="./templates/registertoaccessanswerdatabase.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
+    <browser:page
+        for="*"
+        name="register-for-more-exercise"
+        class=".views.RegisterForMoreExerciseView"
+        template="./templates/registerformoreexercise.pt"
+        permission="cmf.SetOwnProperties"
         />
 
     <browser:page

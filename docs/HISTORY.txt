@@ -15,6 +15,8 @@ Changelog
 
 - Use only datetime.date not DateTime in payservice viewlets.
 
+- Add overlays and js for payservice registration (remember to run profile).
+
 - Proxy for Monassis practice service
 
 1.6

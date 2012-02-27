@@ -1,5 +1,6 @@
-from datetime import datetime
-from zope.component import queryUtility
+import json
+from datetime import datetime, timedelta, date
+from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 
 from plone.app.layout.viewlets.common import ViewletBase
@@ -20,7 +21,14 @@ from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
 
-NULLDATE = datetime.date(datetime(1970, 01, 01))
+NULLDATE = date(1970, 01, 01)
+
+ALLOWED_TYPES = ['Folder',
+                 'rhaptos.xmlfile.xmlfile',
+                 'rhaptos.compilation.section',
+                 'rhaptos.compilation.compilation',
+                ]
+
 
 class EmasSettingsForm(RegistryEditForm):
     schema = IEmasSettings
@@ -123,30 +131,48 @@ class CreditsViewlet(ViewletBase):
         return member.getProperty('credits', 0)
 
 class CreditsView(BrowserView):
-    template = ViewPageTemplateFile('credits.pt')
-
     def __call__(self):
-        buy = self.request.get('buy', None)
-        if buy is not None:
-            try:
-                buy = int(buy)
-            except ValueError:
-                self.request['error'] = _(u'Please enter an integer value')
-                return self.template()
+        amount = self.request.get('buy', None)
+        if amount is not None:
+            error, amount = self.validate(amount)
+            if error:
+                self.request['error'] = error
+                return self.index()
 
-            if buy<=0:
-                self.request['error'] = _(u'Please enter a positive integer value')
-                return self.template()
-                
             # XXX Payment gateway integration here, perhaps some utility we
             # can look up and delegate to.
 
-            self.context.restrictedTraverse('@@emas-transaction').buyCredit(buy,
+            self.context.restrictedTraverse('@@emas-transaction').buyCredit(amount,
                 "Credits purchased")
             IStatusMessage(self.request).addStatusMessage(_(u'Credit loaded.'))
             self.request['success'] = True
 
-        return self.template()
+        return self.index()
+
+    def buycredits(self):
+        amount = self.request.get('buy', 0)
+        error, amount = self.validate(amount)
+        if error:
+            raise ValueError(error)
+        else:
+            view = self.context.restrictedTraverse('@@emas-transaction')
+            view.buyCredit(amount, "Credits purchased")
+            msg = _(u'Credit loaded.')
+            pps = self.context.restrictedTraverse('@@plone_portal_state')
+            member = pps.member()
+            credits = member.getProperty('credits')
+            return json.dumps({'result': 'success',
+                               'credits':credits,
+                               'message': msg})
+
+    def validate(self, amount):
+        try:
+            amount = int(amount)
+        except ValueError:
+            return _(u'Please enter an integer value'), 0
+        if amount<=0:
+            return _(u'Please enter a positive integer value'), 0
+        return None, amount
 
     @property
     def cost(self):
@@ -231,3 +257,110 @@ class EmasTransactionView(BrowserView):
             b_size = self.request.get('b_size', 20)
             return Batch(transactions, b_size, b_start)
         return None
+
+
+class PayserviceRegistrationBase(BrowserView):
+
+    """ Common ancestor for pay services views. """
+    # these fields must be supplied by the inheriting classes.
+    formsubmit_token = None
+    formfield = None
+    memberproperty = None
+
+    def __call__(self):
+        if self.request.form.get('form.button.submit', '').lower() == 'register':
+            self.handleRegister()
+        return self.index()
+    
+    def handleRegister(self):
+        if self.request.form.get(self.formsubmit_token):
+            enable_service = self.request.form.get(self.formfield)
+            pmt = getToolByName(self.context, 'portal_membership')
+            member = pmt.getAuthenticatedMember()
+            regdate = NULLDATE
+            if enable_service:
+                regdate = date.today()
+            member.setMemberProperties({self.memberproperty: regdate})
+            view = self.context.restrictedTraverse('@@emas-transaction')
+            transaction_message = 'Bought %s on %s' %(self.servicename, date.today())
+            view.buyService(self.servicecost, transaction_message)
+
+    @property
+    def can_show(self):
+        context = self.context
+        adapter = queryAdapter(context, name='siyavula.what.allowquestions')
+        # if we cannot adapt it, it won't have the allowQuestions field.
+        if not adapter:
+            return False
+        return context.allowQuestions and context.portal_type in ALLOWED_TYPES
+
+    @property
+    def has_credits(self):
+        return self.current_credits >= self.servicecost
+    
+    @property
+    def is_registered(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        regdate = member.getProperty(self.memberproperty)
+        try:
+            return regdate > NULLDATE and self.current_credits >= 0
+        except:
+            return False
+    
+    @property
+    def servicecost(self):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasServiceCost)
+        servicecost = getattr(settings, self.creditproperty, 0)
+        return servicecost
+
+    @property
+    def expirydate(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        regdate = member.getProperty(self.memberproperty)
+        if regdate == NULLDATE:
+            regdate = date.today()
+        return regdate + timedelta(30)
+
+    @property
+    def current_credits(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
+        return current_credits
+        
+    @property
+    def cost(self):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IEmasSettings)
+        return settings.creditcost
+
+
+class RegisterForMoreExerciseView(PayserviceRegistrationBase):
+    
+    formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
+    formfield = 'registerformoreexercise'
+    servicename = 'Register for more exercise'
+    memberproperty = 'moreexercise_registrationdate'
+    creditproperty = 'exerciseCost'
+
+
+class RegisterToAskQuestionsView(PayserviceRegistrationBase):
+
+    formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
+    formfield = 'registertoaskquestions'
+    servicename = 'Register to ask questions'
+    memberproperty = 'askanexpert_registrationdate'
+    creditproperty = 'questionCost'
+
+
+class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
+
+    formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
+    formfield = 'registertoaccessanswerdatabase'
+    servicename = 'Register to access answer database'
+    memberproperty = 'answerdatabase_registrationdate'
+    creditproperty = 'answerCost'
+

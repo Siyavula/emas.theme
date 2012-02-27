@@ -1,3 +1,5 @@
+from zope.component import queryAdapter
+
 from siyavula.what.browser.questionaddviewlet \
     import QuestionAddViewlet as BaseQuestionAddViewlet
 
@@ -12,4 +14,8 @@ class QuestionAddViewlet(BaseQuestionAddViewlet):
         """ Check against the members enabled services.
         """
         view = self.context.restrictedTraverse('@@enabled-services')
-        return view.ask_expert_enabled
+        adapter = queryAdapter(self.context, name='siyavula.what.allowquestions')
+        # if we cannot adapt it, it won't have the allowQuestions field.
+        if not adapter:
+            return False
+        return self.context.allowQuestions and view.ask_expert_enabled
