@@ -1,37 +1,12 @@
-<tal:registered condition="view/is_registered">
-    <div>You are registered to for more exercise until: </div>
-</tal:registered>
-
-<tal:not_registered condition="not:view/is_registered">
-<tal:defs define="has_credits view/has_credits;
-                  can_show view/can_show;">
-
-<tal:can_show condition="can_show">
-<tal:has_credits condition="has_credits">
-<form action="." method="POST">
-    <input type="hidden" name="emas.theme.registerformoreexercise.submitted"
-        value="submitted" />
-    
-    <label for="registerformoreexercise">
-        <span>I want to register for more exercise questions.</span>
-    </label>
-    <input id="registerformoreexercise" type="checkbox"
-        name="registerformoreexercise"
-        tal:attributes="checked python:view.is_registered and 'checked' or ''"/>
-    
-    <button id="registerformoreexercise-submit-button" value="submit">
-        Submit
-    </button>
-</form>
-</tal:has_credits>
-
-<tal:no_credits condition="not:has_credits">
-<div id="more-exercise-credit-warning">
-    Please purchase credits to enable the 'More exercise questions.' service.
-    <a tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@emas-credits"
-       class="credit-overlay"><button>Buy Credits</button></a>
+<div id="register-for-more-exercise-viewlet-container"
+    tal:condition="view/can_show"
+    tal:define="is_registered view/is_registered">
+    <div tal:condition="is_registered">
+        You are registered to access more exercise content until: <span tal:replace="view/expirydate">expirydate</span>
+    </div>
+    <a href="#" class="payservice-overlay"
+        tal:condition="not:is_registered" 
+        tal:attributes="href string:${context/@@plone_portal_state/portal_url}/@@register-for-more-exercise">
+        Register for more exercise
+    </a>
 </div>
-</tal:no_credits>
-</tal:can_show>
-</tal:defs>
-</tal:not_registered>
