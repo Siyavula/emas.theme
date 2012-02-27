@@ -137,4 +137,11 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="practice"
+        class=".practice.Practice"
+        permission="zope2.View"
+        />
+
 </configure>

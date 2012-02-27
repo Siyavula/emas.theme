@@ -28,6 +28,11 @@ class IEmasSettings(Interface):
         default=0
     );
 
+    practiceurl = TextLine(
+        title=_('Practice Service URL'),
+        required=False,
+    );
+
 class IEmasServiceCost(Interface):
     """
     """
