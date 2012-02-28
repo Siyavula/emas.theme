@@ -1,0 +1,139 @@
+Testing procedure:
+
+
+Test strategy:
+- Create a new site
+- Publish the content folders
+- Enable user registration
+- Enable 'allow questions' on a folder
+- Add an XML File
+- Enable 'allow questions' on this new file
+- Set service costs
+- Buy credits
+- Enable services
+- Add a question
+- Add an answer to the new question
+
+
+Preperation:
+On an emas theme buildout:
+Add new Plone site (select emas theme)
+- I called it 'test'
+Publish 'Everything Maths' and 'Everthing Science' folders plus all their content.
+Navigate to: Plone control panel -> Users and Groups -> Security
+  - enable self registration
+  - let user select own password
+Disable Diazo theming or setup your hosts file and diazo settings to show you the unthemed site.
+
+Tests:
+Test allow questions + payservice viewlets on Folder:
+    Steps:
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click on 'edit'
+        Click on 'settings'
+        Click 'allow questions' 
+        Save
+
+    Expected result:
+        At the bottom of the page you should see 3 viewlets:
+        - Register to ask questions
+        - Register to access the answer database
+        - Register for more exercise
+    
+    Note: See issue (1) at bottom
+
+Test allow questions + payservice viewlets on XML File:
+    Steps:
+        As 'admin' user
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Add a new XML File (call it 'test file 001')
+        Click on 'settings'
+        Click 'allow questions' 
+        Save
+        Publish the new file
+
+    Expected result:
+        At the bottom of the page you should see 3 viewlets:
+        - Register to ask questions
+        - Register to access the answer database
+        - Register for more exercise
+
+    Note: See issue (1) at bottom
+
+Test set service costs:
+    Steps:
+        As 'admin':
+        Navigate to: http://127.0.0.1:8080/test/@@emas-service-cost
+        Set the cost on each of the services as follows:
+        - Question Cost: 10
+        - Answer Cost: 1000
+        - Exercise Cost: 10000
+        Save
+        Go back to: http://127.0.0.1:8080/test/@@emas-service-cost
+
+    Expected result:
+        Each service now displays the costs as set above.
+
+Create a test user:
+    Steps:
+        Navigate to the test site without logging in
+        Register as 'tester1' password '12345'
+        Login immediately
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+   
+    Expected result:
+        At the bottom of the page you should see 3 viewlets:
+        - Register to ask questions
+        - Register to access the answer database
+        - Register for more exercise
+
+Register for service without having any credits:
+    Steps:
+        As 'tester1'
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click on 'Register to ask questions'
+
+    Expected result:
+        A popup will display form in which you can purchase credits 
+
+Buy credits from registration popup:
+    Steps:
+        As 'tester1'
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click on 'Register to ask questions'
+        In the credit purchase form enter 100
+        Click 'Buy'
+
+    Expected result:
+        You will see a message 'Credit loaded'
+        You will see 2 buttons labelled 'Register' and 'Cancel'
+
+Register directly after buying credits from the popup:
+    Steps:
+        As 'tester1'
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click on 'Register to access the answer database'
+        In the credit purchase form enter 1000
+        Click 'Buy'
+        Click 'Register' 
+
+    Expected result:
+        You will see a message 'Register to ask questions was successful.'
+        Your credits will now be 90
+        You will be presented with a form labelled 'Add a question'
+
+
+
+Issues found:
+
+(1) Plone root instance users (those not in the 'tests' site), do not have the required attributes (mostly the registration dates). This causes exceptions when you click on any of the registration viewlet links.
+
+(2) As a normal user you cannot register for a service with a cost of '0' credits. This is due to a bit of code in emas.theme.browser.views.EmasTransactionView.buyService which asserts that the cost of the transaction is greater than '0'.
+
+(3) After buying directly from the registration popup the service cost is incorrect. Looks like I am showing the wrong service cost.
+
+(4) Questions and Questions container permissions/ workflow needs work.
+
+(5) After service registration the credits only change once the page is reloaded.
+
+(6) Whoever posts an answer needs 'Review portal content' permission on the question while it is in 'submitted' state.
