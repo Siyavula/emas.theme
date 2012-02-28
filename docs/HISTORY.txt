@@ -19,6 +19,9 @@ Changelog
 
 - Proxy for Monassis practice service
 
+- Add siyavulabehavior to aggregate nextprevious, allowquestions and
+  annotations behavior on settings tab
+
 1.6
 ---
 
