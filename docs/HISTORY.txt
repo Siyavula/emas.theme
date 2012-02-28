@@ -19,6 +19,9 @@ Changelog
 
 - Proxy for Monassis practice service
 
+- Set registration dates to 'datetime.date' objects instead of 'DateTime' objects.
+  Editing and saving existing users will set their registration dates correctly too.
+
 1.6
 ---
 
