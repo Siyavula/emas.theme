@@ -26,4 +26,6 @@ def onMemberJoined(obj, event):
                   'answerdatabase_registrationdate': NULLDATE,
                   'moreexercise_registrationdate': NULLDATE,
                  }
-    obj.setProperties(properties)
+    propsheet = obj.getPropertysheet('mutable_properties')
+    for key, value in properties.items():
+        propsheet.setProperty(obj, key, value)

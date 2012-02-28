@@ -1,4 +1,5 @@
 import os
+from datetime import date, timedelta
 import unittest2 as unittest
 from base import INTEGRATION_TESTING
 
@@ -149,6 +150,9 @@ class TestPayserviceViewletBase(unittest.TestCase):
             dirname, 'data', registered_name))
         reference_html = file.read()
         file.close()
+        # currently the expiry date is 30 days from today
+        today = (date.today() + timedelta(30)).strftime('%Y-%m-%d')
+        reference_html = reference_html.replace('EXPIRYDATE', today)
 
         self.assertEqual(html, reference_html)
 

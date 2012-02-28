@@ -14,6 +14,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
+from Products.Archetypes.utils import shasattr
 from Products.CMFPlone.PloneBatch import Batch
 from Products.statusmessages.interfaces import IStatusMessage
 
@@ -297,11 +298,9 @@ class PayserviceRegistrationBase(BrowserView):
     @property
     def can_show(self):
         context = self.context
-        adapter = queryAdapter(context, name='siyavula.what.allowquestions')
-        # if we cannot adapt it, it won't have the allowQuestions field.
-        if not adapter:
-            return False
-        allowQuestions = getattr(context, 'allowQuestions', False)
+        allowQuestions = False
+        if shasattr(context, 'allowQuestions'):
+            allowQuestions = getattr(context, 'allowQuestions')
         return allowQuestions and context.portal_type in ALLOWED_TYPES
 
     @property

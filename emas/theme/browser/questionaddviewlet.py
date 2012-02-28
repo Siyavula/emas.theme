@@ -1,4 +1,4 @@
-from zope.component import queryAdapter
+from Products.Archetypes.utils import shasattr
 
 from siyavula.what.browser.questionaddviewlet \
     import QuestionAddViewlet as BaseQuestionAddViewlet
@@ -13,10 +13,9 @@ class QuestionAddViewlet(BaseQuestionAddViewlet):
     def allowQuestions(self):
         """ Check against the members enabled services.
         """
-        view = self.context.restrictedTraverse('@@enabled-services')
-        adapter = queryAdapter(self.context, name='siyavula.what.allowquestions')
-        # if we cannot adapt it, it won't have the allowQuestions field.
-        if not adapter:
-            return False
-        allowQuestions = getattr(self.context, 'allowQuestions', False)
+        context = self.context
+        view = context.restrictedTraverse('@@enabled-services')
+        allowQuestions = False
+        if shasattr(context, 'allowQuestions'):
+            allowQuestions = getattr(context, 'allowQuestions')
         return allowQuestions and view.ask_expert_enabled
