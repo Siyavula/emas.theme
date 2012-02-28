@@ -23,9 +23,6 @@ Changelog
   'DateTime' objects. Editing and saving existing users will set their
   registration dates correctly too.
 
-- Add siyavulabehavior to aggregate nextprevious, allowquestions and
-  annotations behavior on settings tab
-
 1.6
 ---
 

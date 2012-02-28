@@ -47,13 +47,6 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
-    <plone:behavior
-        title="Siyavula Content"
-        description="Enables annotations, nextprevious and questions on content"
-        provides=".behaviors.siyavulabehavior.ISiyavulaBehavior"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
-
     <subscriber
         for="Products.PluggableAuthService.interfaces.authservice.IPropertiedUser
             Products.PluggableAuthService.interfaces.events.IPrincipalCreatedEvent"
