@@ -10,7 +10,6 @@
         <element value="plone.app.dexterity.behaviors.nextprevious.INextPreviousToggle"/>
         <element value="emas.theme.behaviors.annotatable.IAnnotatableContent" />
         <element value="siyavula.what.behaviors.allowquestionsbehavior.IAllowQuestionsBehavior" />
-        <element value="emas.theme.behaviors.siyavulabehavior.ISiyavulaBehavior" />
 
     </property>
 
