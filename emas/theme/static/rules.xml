@@ -89,6 +89,10 @@
 
         <drop css:content="#table-of-contents img"/>
 
+        <after
+            css:theme-children="#content-core"
+            css:content="#viewlet-below-content"/>
+
         <!-- Copy annotator viewlet -->
         <after css:theme-children="body" css:content="div.annotator-help-panel"/>
         <after css:theme-children="body" css:content="a.annotator-help-trigger"/>
