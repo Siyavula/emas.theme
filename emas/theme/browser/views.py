@@ -351,7 +351,7 @@ class RegisterForMoreExerciseView(PayserviceRegistrationBase):
     
     formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
     formfield = 'registerformoreexercise'
-    servicename = 'Register for more exercise'
+    servicename = 'More exercise'
     memberproperty = 'moreexercise_registrationdate'
     creditproperty = 'exerciseCost'
 
@@ -360,7 +360,7 @@ class RegisterToAskQuestionsView(PayserviceRegistrationBase):
 
     formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
     formfield = 'registertoaskquestions'
-    servicename = 'Register to ask questions'
+    servicename = 'Ask questions'
     memberproperty = 'askanexpert_registrationdate'
     creditproperty = 'questionCost'
 
@@ -369,7 +369,7 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
 
     formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
     formfield = 'registertoaccessanswerdatabase'
-    servicename = 'Register to access answer database'
+    servicename = 'Access answer database'
     memberproperty = 'answerdatabase_registrationdate'
     creditproperty = 'answerCost'
 

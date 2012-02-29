@@ -34,8 +34,9 @@ function buyCredits(event) {
 function onCreditsBought(data, textStatus, jqXHR) {
     jQuery('div#status-message').html(data.message);
     jQuery('span.credit-value').html(data.credits);
+    var url = jQuery('input#view_url').val();
     jQuery.ajax({
-        url: '@@register-for-more-exercise',
+        url: url,
         success: updateOverlay,
         error: errorHandler,
     });
@@ -90,6 +91,6 @@ function register(event, url, fieldname, formtoken) {
 }
 
 function onServiceRegistered(data, textStatus, jqXHR) {
-    jQuery('div.information').html(data.message);
+    jQuery('div#status-message').html(data.message);
     jQuery('div.payservice-form').remove();
 }

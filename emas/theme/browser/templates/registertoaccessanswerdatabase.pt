@@ -9,7 +9,7 @@
         <tal:defs define="has_credits view/has_credits;
                           servicecost view/servicecost">
         <div class="payservice-form-container" tal:condition="has_credits">
-            <h1 tal:content="view/servicename">service name</h1>
+            <h1 tal:content="string:${view/servicename}">service name</h1>
             <div class="information">The service costs <span tal:replace="servicecost">X</span> credits and will expire on <span tal:replace="view/expirydate">expiry date</span>. You currently have <span tal:replace="view/current_credits">Y</span> credits and once you register for this service, you will have <span tal:replace="python:view.current_credits - view.servicecost">Z</span> credits left.
             </div>
             <div class="payservice-form">
@@ -28,6 +28,7 @@
             </div>
         </div>
         <div class="payservice-form" tal:condition="not:has_credits">
+            <h1 tal:content="string:${view/servicename}">service name</h1>
             <div class="information">The service costs <span tal:replace="servicecost">X</span> credits. You only have <span tal:replace="view/current_credits">Y</span> credits and need to buy <span tal:replace="python:servicecost - view.current_credits">Z</span> credits at a cost of <span tal:replace="view/cost">Z</span> sents per credit.
             </div>
             <span metal:use-macro="context/@@emas-credits/index/macros/buy-credits">
@@ -35,6 +36,7 @@
                 <h1>Number of credits to purchase</h1>
                 </metal:heading>
                 <metal:button-slot fill-slot="button-slot">
+                <input type="hidden" id="view_url" name="view_url" value="@@register-to-access-answers" />
                 <button class="context" name="form.button.buy"
                     value="Buy" onclick="buyCredits(event);">
                     Buy
