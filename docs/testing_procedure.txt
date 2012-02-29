@@ -179,8 +179,3 @@ Issues found:
 
 (3) After buying directly from the registration popup the service cost is incorrect. Looks like I am showing the wrong service cost.
 
-(4) Questions and Questions container permissions/ workflow needs work.
-
-(5) After service registration the credits only change once the page is reloaded.
-
-(6) Whoever posts an answer needs 'Review portal content' permission on the question while it is in 'submitted' state.

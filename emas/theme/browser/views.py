@@ -288,7 +288,7 @@ class PayserviceRegistrationBase(BrowserView):
     
     def json_handleRegister(self):
         self.handleRegister()
-        message = '%s was successful.' %self.servicename
+        message = 'You successfully regsitered to %s.' %self.servicename.lower()
         if not self.is_registered:
             message = '%s was failed.' %self.servicename
         return json.dumps({'registered': self.is_registered,
@@ -351,7 +351,7 @@ class RegisterForMoreExerciseView(PayserviceRegistrationBase):
     
     formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
     formfield = 'registerformoreexercise'
-    servicename = 'More exercise'
+    servicename = 'Access exercise content'
     memberproperty = 'moreexercise_registrationdate'
     creditproperty = 'exerciseCost'
 
