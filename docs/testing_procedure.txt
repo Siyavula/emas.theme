@@ -170,6 +170,48 @@ Delete a question as Member:
     Expected result:
         The question is deleted.
 
+Register for more exercise content:
+    Steps:
+        Log in as a user with the site wide role 'Member'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/@@register-for-more-exercise
+        Click on 'Register'
+
+    Expected result:
+        The page refreshes and shows the text,
+        'You successfully regsitered to access exercise content.'
+        Register to access exercise content
+        The service costs 10000 credits and will expire on 2012-03-30.
+        You currently have 10000 credits and once you register for this service,
+        you will have 0 credits left.
+
+Register to ask questions:
+    Steps:
+        Log in as a user with the site wide role 'Member'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/@@register-to-ask-questions
+        Click on 'Register'
+
+    Expected result:
+        The page refreshes and shows the text,
+        You successfully regsitered to ask questions.
+        Register to ask questions
+        The service costs 10 credits and will expire on 2012-03-30.
+        You currently have 100 credits and once you register for this service,
+        you will have 90 credits left.
+
+Register to access answers:
+    Steps:
+        Log in as a user with the site wide role 'Member'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/@@register-to-access-answers
+        Click on 'Register'
+
+    Expected result:
+        The page refreshes and shows the text,
+        You successfully regsitered to access answer database.
+        Register to access answer database
+        The service costs 1000 credits and will expire on 2012-03-30.
+        You currently have 10090 credits and once you register for this service,
+        you will have 9090 credits left.
+
 
 Issues found:
 
