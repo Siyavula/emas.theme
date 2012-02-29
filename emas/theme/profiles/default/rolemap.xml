@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<rolemap>
+
+   <permissions>
+         <permission
+         name="Siyavula What: Add Question"
+         acquire="True">
+         <role name="Member" />
+         </permission>
+         <permission
+         name="Siyavula What: Add Answer"
+         acquire="True">
+         <role name="Editor" />
+         </permission>
+  </permissions>
+
+</rolemap>
