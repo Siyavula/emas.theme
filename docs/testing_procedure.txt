@@ -53,10 +53,7 @@ Test allow questions + payservice viewlets on XML File:
         Publish the new file
 
     Expected result:
-        At the bottom of the page you should see 3 viewlets:
-        - Register to ask questions
-        - Register to access the answer database
-        - Register for more exercise
+        The file is 'published'
 
     Note: See issue (1) at bottom
 
@@ -122,6 +119,56 @@ Register directly after buying credits from the popup:
         Your credits will now be 90
         You will be presented with a form labelled 'Add a question'
 
+Ask a question as a 'Member':
+    Steps:
+        As 'tester1'
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        In the text input area below the label 'Question' enter 'My first question.'
+        Click 'Submit'
+
+    Expected result:
+        The entered text appears below the submit button, with a 'Delete'
+        button next to it.
+        An area for submitting an answer appears below the newly added
+        question.
+
+Answer a question as an Editor:
+    Steps:
+        Log in as a user with the site wide role 'Editor'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Enter text in the text area below the question 'My first question.'
+        Click 'Answer'
+
+    Expected result:
+        The text you entered is displayed below the question.
+
+Delete an answer as an Editor:
+    Steps:
+        Log in as a user with the site wide role 'Editor'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click 'Delete' to the right of the text 'first answer'
+
+    Expected result:
+        The answer is deleted.
+
+Delete a question as Editor:
+    Steps:
+        Log in as a user with the site wide role 'Editor'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Click 'Delete' to the right of the text 'My first question'
+
+    Expected result:
+        The question is deleted.
+
+Delete a question as Member:
+    Steps:
+        Log in as a user with the site wide role 'Editor'.
+        Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
+        Add a question
+        Click 'Delete' to the right of the text 'My first question'
+
+    Expected result:
+        The question is deleted.
 
 
 Issues found:
