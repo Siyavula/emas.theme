@@ -23,6 +23,8 @@ Changelog
   'DateTime' objects. Editing and saving existing users will set their
   registration dates correctly too.
 
+- Disable annotator roundup store
+
 1.6
 ---
 

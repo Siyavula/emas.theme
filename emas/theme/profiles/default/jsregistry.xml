@@ -18,7 +18,7 @@
     <javascript cacheable="True"
                 compression="safe"
                 cookable="True"
-                enabled="True"
+                enabled="False"
                 id="++resource++emas.theme.resources/annotator.roundupstatus.js"
                 expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
