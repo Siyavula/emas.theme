@@ -23,6 +23,11 @@ Changelog
   'DateTime' objects. Editing and saving existing users will set their
   registration dates correctly too.
 
+- Added rolemap.xml to give correct roles 'Question' and 'Answer' create permissions.
+  Rebuild the instance and then reinstall to get the functionality working.
+
+- Disable annotator roundup store
+
 1.6
 ---
 

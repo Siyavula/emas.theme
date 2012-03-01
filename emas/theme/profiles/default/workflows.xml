@@ -6,4 +6,9 @@
    <bound-workflow workflow_id="transaction_workflow" />
   </type>
  </bindings>
+ <bindings>
+  <type type_id="siyavula.what.question">
+   <bound-workflow workflow_id="question_workflow"/>
+  </type>
+ </bindings>
 </object>
