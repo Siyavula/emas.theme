@@ -7,7 +7,8 @@
         <metal:register-macro define-macro="register-macro">
         <div id="status-message"></div>
         <tal:defs define="has_credits view/has_credits;
-                          servicecost view/servicecost">
+                          servicecost view/servicecost;
+                          dummy python:request.response.setHeader('X-Theme-Disabled', 'True')">
         <div class="payservice-form-container" tal:condition="has_credits">
             <h1 tal:content="string:Register to ${view/servicename/lower}">service name</h1>
             <div class="information">The service costs <span tal:replace="servicecost">X</span> credits and will expire on <span tal:replace="view/expirydate">expiry date</span>. You currently have <span tal:replace="view/current_credits">Y</span> credits and once you register for this service, you will have <span tal:replace="python:view.current_credits - view.servicecost">Z</span> credits left.
