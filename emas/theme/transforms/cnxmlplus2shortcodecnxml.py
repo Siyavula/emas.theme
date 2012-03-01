@@ -72,7 +72,11 @@ class cnxmlplus_to_shortcodecnxml:
             dom[-1].append(node)
 
         # Build chapter hash from title: for pspictures directory
-        self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
+        if titleNode.text is None:
+            chapterTitle = ''
+        else:
+            chapterTitle = titleNode.text
+        self.chapterHash = hashlib.md5(chapterTitle).hexdigest()
         #print 'hash:', self.chapterHash
 
         # Hack to replace shortcode content with todo-content.
