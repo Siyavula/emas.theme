@@ -5,6 +5,7 @@ from plone.uuid.interfaces import IUUID
 
 from siyavula.what.browser.questionslistviewlet \
     import QuestionsListViewlet as BaseQuestionsListViewlet
+from emas.theme.browser.views import is_expert
 
 from emas.theme import MessageFactory as _
 
@@ -27,7 +28,6 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
         """ Return all questions that have the current context set
             as 'relatedContent'.
         """
-        view = self.context.restrictedTraverse('@@enabled-services')
         context = self.context
         uuid = IUUID(context)
         pc = getToolByName(context, 'portal_catalog')
@@ -35,6 +35,11 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
                  'relatedContentUID': uuid,
                  'sort_on': 'created',
                 }
+        if is_expert(self.context):
+            brains = pc(query)
+            return brains and [b.getObject() for b in brains] or []
+
+        view = self.context.restrictedTraverse('@@enabled-services')
         if not view.answer_database_enabled:
             pmt = getToolByName(self.context, 'portal_membership')
             member = pmt.getAuthenticatedMember()

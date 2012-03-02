@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta, date
+from zope.security import checkPermission
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 
@@ -29,6 +30,13 @@ ALLOWED_TYPES = ['Folder',
                  'rhaptos.compilation.section',
                  'rhaptos.compilation.compilation',
                 ]
+
+def is_expert(context):
+    # If the current user has 'siyavula.what.AddAnswer' permission
+    # on the current they are considered experts and don't have to
+    # register to use the payservices.
+    permission = 'siyavula.what.AddAnswer'
+    return checkPermission(permission, context)
 
 
 class EmasSettingsForm(RegistryEditForm):
@@ -184,7 +192,10 @@ class CreditsView(BrowserView):
 class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
+    
     def is_enabled(self, service):
+        if is_expert(self.context): return True
+
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         regdate = member.getProperty(service)
@@ -309,6 +320,8 @@ class PayserviceRegistrationBase(BrowserView):
     
     @property
     def is_registered(self):
+        if self.is_expert: return True
+
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
         regdate = member.getProperty(self.memberproperty)
@@ -317,6 +330,10 @@ class PayserviceRegistrationBase(BrowserView):
         except:
             return False
     
+    @property
+    def is_expert(self):
+        return is_expert(self.context)
+
     @property
     def servicecost(self):
         registry = queryUtility(IRegistry)
@@ -345,7 +362,7 @@ class PayserviceRegistrationBase(BrowserView):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IEmasSettings)
         return settings.creditcost
-
+    
 
 class RegisterForMoreExerciseView(PayserviceRegistrationBase):
     

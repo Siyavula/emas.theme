@@ -10,7 +10,7 @@
          <permission
          name="Siyavula What: Add Answer"
          acquire="True">
-         <role name="Editor" />
+         <role name="Site Administrator" />
          </permission>
   </permissions>
 
