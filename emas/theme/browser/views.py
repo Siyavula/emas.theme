@@ -1,6 +1,5 @@
 import json
 from datetime import datetime, timedelta, date
-from zope.security import checkPermission
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 
@@ -36,7 +35,8 @@ def is_expert(context):
     # on the current they are considered experts and don't have to
     # register to use the payservices.
     permission = 'siyavula.what.AddAnswer'
-    return checkPermission(permission, context)
+    pmt = getToolByName(context, 'portal_membership')
+    return pmt.checkPermission(permission, context) and True or False
 
 
 class EmasSettingsForm(RegistryEditForm):
