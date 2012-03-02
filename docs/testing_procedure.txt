@@ -23,6 +23,7 @@ Publish 'Everything Maths' and 'Everthing Science' folders plus all their conten
 Navigate to: Plone control panel -> Users and Groups -> Security
   - enable self registration
   - let user select own password
+Create a user called 'editor1' and give him the 'Site Administrator' role.
 Disable Diazo theming or setup your hosts file and diazo settings to show you the unthemed site.
 
 Tests:
@@ -35,10 +36,8 @@ Test allow questions + payservice viewlets on Folder:
         Save
 
     Expected result:
-        At the bottom of the page you should see 3 viewlets:
-        - Register to ask questions
-        - Register to access the answer database
-        - Register for more exercise
+        At the bottom of the page you will see a text input area where you can
+        add a question.
     
     Note: See issue (1) at bottom
 
@@ -113,10 +112,11 @@ Register directly after buying credits from the popup:
         In the credit purchase form enter 1000
         Click 'Buy'
         Click 'Register' 
+        Close the pop-up overlay
 
     Expected result:
         You will see a message 'Register to ask questions was successful.'
-        Your credits will now be 90
+        Your credits will now be 990
         You will be presented with a form labelled 'Add a question'
 
 Ask a question as a 'Member':
@@ -134,9 +134,9 @@ Ask a question as a 'Member':
 
 Answer a question as an Editor:
     Steps:
-        Log in as a user with the site wide role 'Editor'.
+        Log in as a user with the site wide role 'Site Administrator'.
         Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
-        Enter text in the text area below the question 'My first question.'
+        Enter answer text in the text area below the question 'My first question.'
         Click 'Answer'
 
     Expected result:
@@ -144,7 +144,7 @@ Answer a question as an Editor:
 
 Delete an answer as an Editor:
     Steps:
-        Log in as a user with the site wide role 'Editor'.
+        Log in as a user with the site wide role 'Site Administrator'.
         Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
         Click 'Delete' to the right of the text 'first answer'
 
@@ -153,7 +153,7 @@ Delete an answer as an Editor:
 
 Delete a question as Editor:
     Steps:
-        Log in as a user with the site wide role 'Editor'.
+        Log in as a user with the site wide role 'Site Administrator'.
         Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
         Click 'Delete' to the right of the text 'My first question'
 
@@ -162,7 +162,7 @@ Delete a question as Editor:
 
 Delete a question as Member:
     Steps:
-        Log in as a user with the site wide role 'Editor'.
+        Log in as a user with the site wide role 'Site Administrator'.
         Navigate to: http://127.0.0.1:8080/test/maths/grade-10/
         Add a question
         Click 'Delete' to the right of the text 'My first question'
