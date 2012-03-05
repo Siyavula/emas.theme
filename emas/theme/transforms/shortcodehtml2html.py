@@ -253,6 +253,7 @@ class shortcodehtml_to_html:
                     mathml = ElementTree.tostring(asciimathml.parse(asciimath))
                     mathml = mathml.replace('`', '')
                     mathml = lxml.html.fromstring(mathml)
+                    mathml.tail = mathnode.tail
                     mathnode.getparent().replace(mathnode, mathml)
                     
                 for answer in element.xpath(
