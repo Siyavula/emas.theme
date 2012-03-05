@@ -5,10 +5,10 @@
     <adapter factory=".browser.nextprevious.NextPrevious" />
 
     <adapter
-      provides=".userdataschema.IEmasUserDataSchema"
-      for="Products.CMFCore.interfaces.ISiteRoot"
-      factory=".adapters.EmasUserDataPanelAdapter"
-      />
+        provides=".userdataschema.IEmasUserDataSchema"
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        factory=".adapters.EmasUserDataPanelAdapter"
+        />
 
     <!-- Question and Answer viewlets -->
     <browser:viewlet

@@ -7,17 +7,17 @@
     xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="emas.theme">
 
-  <five:registerPackage package="." initialize=".initialize" />
+    <five:registerPackage package="." initialize=".initialize" />
 
-  <grok:grok package="." />
+    <grok:grok package="." />
 
-  <genericsetup:registerProfile
-      name="default"
-      title="emas.theme"
-      directory="profiles/default"
-      description="Installs the emas.theme package"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
+    <genericsetup:registerProfile
+        name="default"
+        title="emas.theme"
+        directory="profiles/default"
+        description="Installs the emas.theme package"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
   
     <include package="plone.app.registry" />
     <include package=".browser" />
