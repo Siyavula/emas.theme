@@ -1,8 +1,9 @@
 <div id="register-to-access-answer-database-viewlet-container"
     tal:condition="view/can_show|nothing"
-    tal:define="is_registered view/is_registered">
-    <div tal:condition="is_registered">
-        You are registered to access the answer database until: <span tal:replace="view/expirydate">expirydate</span>
+    tal:define="is_registered view/is_registered;
+                is_expert view/is_expert;">
+    <div tal:condition="python:is_registered and not is_expert">
+        You are registered to access the answer database until: <span tal:replace="view/expirydate|nothing">expirydate</span>
     </div>
     <a href="#" class="payservice-overlay"
         tal:condition="not:is_registered" 

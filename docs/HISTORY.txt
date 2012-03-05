@@ -28,6 +28,12 @@ Changelog
 
 - Disable annotator roundup store
 
+- Don't show payservice viewlets to 'expert' members.
+
+- Update payservice browser view templates in order to handle different:
+  scenarios of:
+  - credits vs registration vs roles
+
 1.6
 ---
 

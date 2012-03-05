@@ -360,3 +360,23 @@ h3.section-header .title
    border: 5px solid #ccc;
 }
 
+#content .discussion,
+#content .commentDate,
+#content .discussion .documentByLine {
+    margin: 0;
+    color: #333;
+}
+
+#content .comment {
+    color: #333 !important;
+    font-size: 100%;
+    margin-top: 1.5em;
+}
+
+#content .commentImage {
+    margin: 0 0.5em 0 0;
+}
+
+#content .commentBody {
+    margin: 1em 0;
+}

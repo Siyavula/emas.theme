@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <dc-workflow workflow_id="question_workflow" title="Simple Publication Workflow" description="Helps us keep manage questions." state_variable="review_state" initial_state="submitted" manager_bypass="False">
  <permission>Access contents information</permission>
- <permission>Change portal events</permission>
- <permission>Modify portal content</permission>
- <permission>View</permission>
  <permission>Delete objects</permission>
  <permission>List folder contents</permission>
+ <permission>Modify portal content</permission>
  <permission>Review portal content</permission>
+ <permission>View</permission>
  <state state_id="answered" title="Answered">
   <description>A subject matter expert provided an answer.</description>
   <exit-transition transition_id="submit"/>
@@ -15,10 +14,7 @@
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Change portal events" acquired="True">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Delete objects" acquired="True">
+  <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="List folder contents" acquired="True">
@@ -26,7 +22,7 @@
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content" acquired="True">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
@@ -42,11 +38,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Change portal events" acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-  </permission-map>
-  <permission-map name="Delete objects" acquired="True">
+  <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -54,7 +46,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content" acquired="True">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -70,20 +62,23 @@
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="Change portal events" acquired="True">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Delete objects" acquired="True">
+  <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="List folder contents" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
+   <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content" acquired="True">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Review portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
@@ -92,7 +87,7 @@
   </permission-map>
   <permission-map name="Review portal content" acquired="True">
    <permission-role>Manager</permission-role>
-   <permission-role>Editor</permission-role>
+   <permission-role>Site Administrator</permission-role>
   </permission-map>
  </state>
  <transition transition_id="answer" title="An answer was provided" new_state="answered" trigger="USER" before_script="" after_script="">

@@ -6,9 +6,17 @@
 
         <metal:register-macro define-macro="register-macro">
         <div id="status-message"></div>
-        <tal:defs define="has_credits view/has_credits;
-                          servicecost view/servicecost">
-        <div class="payservice-form-container" tal:condition="has_credits">
+        <tal:defs define="dummy python:request.response.setHeader('X-Theme-Disabled', 'True');
+                          has_credits view/has_credits;
+                          servicecost view/servicecost;
+                          is_registered view/is_registered;
+                          is_expert view/is_expert;">
+                          
+        <div class="registeration-message" tal:condition="python:is_registered and not is_expert">
+            You are registered to access more exercise content until: <span tal:replace="view/expirydate|nothing">expirydate</span>
+        </div>
+
+        <div class="payservice-form-container" tal:condition="python:has_credits and not is_registered">
             <h1 tal:content="string:Register to ${view/servicename/lower}">service name</h1>
             <div class="information">The service costs <span tal:replace="servicecost">X</span> credits and will expire on <span tal:replace="view/expirydate">expiry date</span>. You currently have <span tal:replace="view/current_credits">Y</span> credits and once you register for this service, you will have <span tal:replace="python:view.current_credits - view.servicecost">Z</span> credits left.
             </div>
@@ -27,7 +35,7 @@
                 </form>
             </div>
         </div>
-        <div class="payservice-form" tal:condition="not:has_credits">
+        <div class="payservice-form" tal:condition="python:not has_credits and not is_registered">
             <h1 tal:content="string:Register to ${view/servicename/lower}">service name</h1>
             <div class="information">The service costs <span tal:replace="servicecost">X</span> credits. You only have <span tal:replace="view/current_credits">Y</span> credits and need to buy <span tal:replace="python:servicecost - view.current_credits">Z</span> credits at a cost of <span tal:replace="view/cost">Z</span> sents per credit.
             </div>
