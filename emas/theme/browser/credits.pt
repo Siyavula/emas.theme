@@ -8,13 +8,13 @@
         <metal:heading define-slot="heading">
         <h1 class="documentFirstHeading"
             i18n:translate="heading_buy_credits">
-            Buy Credits
+            Buy Questions
         </h1>
         </metal:heading>
 
         <tal:s condition="request/success|nothing">
             You have successfully purchased
-            <span tal:content="request/buy">5</span> Credits.
+            <span tal:content="request/buy">5</span> Questions.
         </tal:s>
         <tal:ns condition="not:request/success|nothing">
         <form method="post"
@@ -23,8 +23,8 @@
               tal:attributes="action string:${context/absolute_url}/@@emas-credits">
             <table class="credit-purchase-table">
                 <tr>
-                    <th>Credits</th>
-                    <th>Cost per Credit</th>
+                    <th>Questions</th>
+                    <th>Cost per Question</th>
                     <th>Total Cost</th>
                 </tr>
                 <tr>
