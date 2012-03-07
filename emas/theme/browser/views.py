@@ -192,7 +192,7 @@ class CreditsView(BrowserView):
 class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
-    
+
     def is_enabled(self, service):
         if is_expert(self.context): return True
 
@@ -206,11 +206,16 @@ class EnabledServicesView(BrowserView):
     
     @property
     def ask_expert_enabled(self):
-        return self.is_enabled('askanexpert_registrationdate')
+        if is_expert(self.context): return True
+
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
+        return current_credits > 0
 
     @property
     def answer_database_enabled(self):
-        return self.is_enabled('answerdatabase_registrationdate')
+        return self.ask_expert_enabled
 
     @property
     def more_exercise_enabled(self):
@@ -362,7 +367,7 @@ class PayserviceRegistrationBase(BrowserView):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IEmasSettings)
         return settings.creditcost
-    
+
 
 class RegisterForMoreExerciseView(PayserviceRegistrationBase):
     
@@ -381,6 +386,38 @@ class RegisterToAskQuestionsView(PayserviceRegistrationBase):
     memberproperty = 'askanexpert_registrationdate'
     creditproperty = 'questionCost'
 
+    def buyquestions(self):
+        amount = self.request.get('buy', 0)
+        error, amount = self.validate(amount)
+        if error:
+            raise ValueError(error)
+        else:
+            view = self.context.restrictedTraverse('@@emas-transaction')
+            view.buyCredit(amount, "Questions purchased")
+            msg = _(u'Payment successful and service activated.')
+            pps = self.context.restrictedTraverse('@@plone_portal_state')
+            member = pps.member()
+            credits = member.getProperty('credits')
+            return json.dumps({'result': 'success',
+                               'credits':credits,
+                               'message': msg})
+
+    def validate(self, amount):
+        try:
+            amount = int(amount)
+        except ValueError:
+            return _(u'Please enter an integer value'), 0
+        if amount<=0:
+            return _(u'Please enter a positive integer value'), 0
+        return None, amount
+
+    @property
+    def is_registered(self):
+        if self.is_expert:
+            return True
+
+        return self.current_credits > 0
+    
 
 class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
 
@@ -390,3 +427,9 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
     memberproperty = 'answerdatabase_registrationdate'
     creditproperty = 'answerCost'
 
+    @property
+    def is_registered(self):
+        if self.is_expert:
+            return True
+
+        return self.current_credits > 0
