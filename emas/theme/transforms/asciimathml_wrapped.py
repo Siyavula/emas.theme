@@ -59,6 +59,7 @@ latexSubstitutions = {
     r'\succ': '>-',
     r'\supset': 'sup',
     r'\supseteq': 'supe',
+    r'\therefore': ':.',
     r'\times': 'xx',
     r'\to': 'rarr',
     r'\top': 'TT',
