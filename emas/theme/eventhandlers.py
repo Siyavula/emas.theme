@@ -3,6 +3,7 @@ from zope.component import createObject
 from Products.CMFCore.permissions import ModifyPortalContent
 from Products.ATContentTypes.content.folder import ATFolder
 
+from emas.theme.browser.views import is_expert
 from emas.theme.browser.views import NULLDATE
 
 def onMemberJoined(obj, event):
@@ -29,3 +30,13 @@ def onMemberJoined(obj, event):
     propsheet = obj.getPropertysheet('mutable_properties')
     for key, value in properties.items():
         propsheet.setProperty(obj, key, value)
+
+def questionAsked(obj, event):
+    """ Deduct a credit when a question is asked
+    """
+    if is_expert(obj):
+        return
+
+    member = obj.restrictedTraverse('@@plone_portal_state').member()
+    credits = member.getProperty('credits') - 1
+    member.setMemberProperties({'credits': credits})
