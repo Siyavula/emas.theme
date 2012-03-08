@@ -39,6 +39,8 @@ Changelog
 - Refactor "Ask an expert" service so that questions are purchased
   directly without have to buy credits and then subscribe.
 
+- Added <latex> element to CNXML+ to CNXML transform.
+
 1.6
 ---
 
