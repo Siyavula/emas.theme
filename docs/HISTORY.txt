@@ -41,6 +41,9 @@ Changelog
 
 - Added <latex> element to CNXML+ to CNXML transform.
 
+- Specialise the siyavula.what viewlet to check if the service is
+  enabled and to deduct a credit for each question asked.
+
 1.6
 ---
 
