@@ -110,14 +110,6 @@
         />
 
     <browser:viewlet
-        name="register-to-access-answers"
-        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
-        class=".payservice_viewlets.RegisterToAccessAnswerDatabaseViewlet"
-        permission="cmf.SetOwnProperties"
-        layer="emas.theme.interfaces.IEmasThemeLayer"
-        />
-
-    <browser:viewlet
         name="register-for-more-exercise"
         manager="plone.app.layout.viewlets.interfaces.IBelowContent"
         class=".payservice_viewlets.RegisterForMoreExerciseViewlet"

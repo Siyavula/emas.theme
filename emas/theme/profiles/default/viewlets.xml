@@ -3,7 +3,6 @@
   <order manager="plone.belowcontent" skinname="*">
     <viewlet name="question-add" insert-after="plone.nextprevious"/>
     <viewlet name="register-to-ask-questions" insert-after="questions-add"/>
-    <viewlet name="register-to-access-answers" insert-after="register-to-ask-questions"/>
     <viewlet name="register-for-more-exercise" insert-after="register-to-access-answers"/>
   </order>
 </object>
