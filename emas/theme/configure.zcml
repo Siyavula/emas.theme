@@ -53,4 +53,10 @@
         handler=".eventhandlers.onMemberJoined"
         />
 
+    <subscriber
+        for="siyavula.what.question.IQuestion
+             zope.lifecycleevent.IObjectAddedEvent"
+        handler=".eventhandlers.questionAsked"
+        />
+
 </configure>
