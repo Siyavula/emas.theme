@@ -1,14 +1,19 @@
 from Products.Archetypes.utils import shasattr
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from siyavula.what.browser.questionaddviewlet \
     import QuestionAddViewlet as BaseQuestionAddViewlet
 
+from emas.theme.browser.views import is_expert
 from emas.theme import MessageFactory as _
 
 
 class QuestionAddViewlet(BaseQuestionAddViewlet):
-    """ Specialise the siyavula.what viewlet to check if the service is enabled.
+    """ Specialise the siyavula.what viewlet to check if the service is
+        enabled and to deduct a credit for each question asked.
     """
+
+    index = ViewPageTemplateFile('templates/addquestion.pt')
 
     def allowQuestions(self):
         """ Check against the members enabled services.
