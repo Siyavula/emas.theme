@@ -376,13 +376,20 @@ class cnxmlplus_to_shortcodecnxml:
                 childIndex += 1
 
             elif child.tag == 'latex':
-                assert len(child) == 0, "<latex> element not expected to have sub-elements."
+                if child.attrib.get('display', 'inline') == 'block':
+                    delimiters = '[]'
+                else:
+                    delimiters = '()'
                 if child.text is None:
                     child.text = ''
-                child.text = child.text.strip()
-                mathml = utils.xmlify(r'\(' + child.text + r'\)')
-                compoundDom = etree.fromstring(mathml[mathml.find('<formula '):mathml.rfind('\n</p>')])
-                utils.etree_replace_with_node_list(element, child, compoundDom)
+                child.text = '\\' + delimiters[0] + child.text
+                if len(child) > 0:
+                    if child[-1].text is None:
+                        child[-1].tail = ''
+                    child[-1].tail += '\\' + delimiters[1]
+                else:
+                    child.text += '\\' + delimiters[1]
+                utils.etree_replace_with_node_list(element, child, child)
                 childIndex += len(child)
 
             elif child.tag in ['chem_compound', 'spec_note']:
