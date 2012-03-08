@@ -93,6 +93,14 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:page
+        for="*"
+        name="json-buyquestions"
+        class=".views.RegisterToAskQuestionsView"
+        attribute="buyquestions" 
+        permission="cmf.SetOwnProperties"
+        />
+
     <browser:viewlet
         name="register-to-ask-questions"
         manager="plone.app.layout.viewlets.interfaces.IBelowContent"

@@ -36,6 +36,9 @@ Changelog
 
 - Bugfix to shortcodehtml2html.py that leaves out math node tail.
 
+- Refactor "Ask an expert" service so that questions are purchased
+  directly without have to buy credits and then subscribe.
+
 1.6
 ---
 

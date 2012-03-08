@@ -2,7 +2,7 @@ jQuery(function($){
     $('a.payservice-overlay').prepOverlay({
         subtype: 'ajax',
         filter: '#content',
-        closeselector: '[name=form.button.cancel]',
+        closeselector: '[name=form.button.cancel],[name=form.button.continue]',
         config: {onClose : function (e) {
                     var overlay = this.getOverlay();
                     if (jQuery('div.payservice-form', overlay).length == 0) {
@@ -13,7 +13,7 @@ jQuery(function($){
     });
 });
 
-function buyCredits(event) {
+function buyQuestions(event) {
     event.preventDefault();
     element = jQuery('input#credits-to-buy');
     var amount = parseInt(jq(element).attr('value'));
@@ -23,30 +23,18 @@ function buyCredits(event) {
         return false;
     }
     jQuery.ajax({
-        url: '@@json-buycredits',
+        url: '@@json-buyquestions',
         dataType: 'json',
         data: {'buy': amount},
-        success: onCreditsBought,
+        success: onQuestionsBought,
         error: errorHandler,
     });
 }
 
-function onCreditsBought(data, textStatus, jqXHR) {
+function onQuestionsBought(data, textStatus, jqXHR) {
     jQuery('div#status-message').html(data.message);
-    jQuery('span.credit-value').html(data.credits);
-    var url = jQuery('input#view_url').val();
-    jQuery.ajax({
-        url: url,
-        success: updateOverlay,
-        error: errorHandler,
-    });
-}
-
-function updateOverlay(data, textStatus, jqXHR) {
-    var element = jQuery('div.payservice-form');
-    var doc = jQuery(data);
-    var content = jQuery(doc).find('div.payservice-form');
-    jQuery(element).replaceWith(content);
+    jQuery('div.payservice-form').remove()
+    jQuery('div#pay-success').show();
 }
 
 function errorHandler(jqXHR, textStatus, errorThrown) {
@@ -74,20 +62,6 @@ function registerToAskQuestions(event) {
                     '@@json-register-to-ask-questions',
                     'registertoaskquestions',
                     'emas.theme.registertoaskquestions.submitted')
-}
-
-function register(event, url, fieldname, formtoken) {
-    event.preventDefault();
-    var data = new Object();
-    data[fieldname] = 'on';
-    data[formtoken] = 'submitted';
-    jQuery.ajax({
-        url: url,
-        dataType: 'json',
-        data: data,
-        success: onServiceRegistered,
-        error: errorHandler,
-    });
 }
 
 function onServiceRegistered(data, textStatus, jqXHR) {
