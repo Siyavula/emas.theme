@@ -64,7 +64,7 @@
         <after
             css:theme="#topnav"
             css:content="#portal-column-two .portlet"
-            />
+            css:if="#table-of-contents"/>
 
         <!-- Content -->
         <replace
