@@ -36,7 +36,7 @@ newSecurityManager(None, user.__of__(app.acl_users))
 for brain in portal.portal_catalog(portal_type='rhaptos.xmlfile.xmlfile',
                                    review_state='private'):
     obj = brain.getObject()
-    IAnnotableContent(obj).enableAnnotations = True
+    IAnnotatableContent(obj).enableAnnotations = True
     print "Enable annotations on ", brain.getPath()
 
 transaction.commit()
