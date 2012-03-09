@@ -1,4 +1,7 @@
 import asciimathml
+from logging import getLogger
+
+LOGGER = getLogger('%s:' % __name__)
 
 latexSubstitutions = {
     r'\approx': '~~',
