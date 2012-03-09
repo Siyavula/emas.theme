@@ -66,12 +66,10 @@
             css:content=".portlet-static-download"
             css:if="#table-of-contents"/>
 
-        <!--
         <after
             css:theme="#topnav"
             css:content=".portlet-static-annotate"
             css:if="#table-of-contents"/>
-        -->
 
         <!-- Content -->
         <replace
