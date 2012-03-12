@@ -63,15 +63,8 @@
         <!-- portlets -->
         <after
             css:theme="#topnav"
-            css:content=".portlet-static-download"
+            css:content="#portal-column-two .portlet"
             css:if="#table-of-contents"/>
-
-        <!--
-        <after
-            css:theme="#topnav"
-            css:content=".portlet-static-annotate"
-            css:if="#table-of-contents"/>
-        -->
 
         <!-- Content -->
         <replace

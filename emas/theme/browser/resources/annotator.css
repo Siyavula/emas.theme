@@ -919,7 +919,7 @@ a.active.annotator-help-trigger {
 }
 
 
-#content .annotator-help-panel {
+.annotator-help-panel {
     position: fixed;
     bottom: 30px;
     right: 0;
@@ -937,13 +937,13 @@ a.active.annotator-help-trigger {
     z-index: 10;
 }
 
-#content .annotator-help-panel p {
+.annotator-help-panel p {
     margin: 0 0 15px 0;
     padding: 0;
     color: #000000;
 }
 
-#content .annotator-help-panel a, .annotator-help-panel a:visited {
+.annotator-help-panel a, .annotator-help-panel a:visited {
     margin: 0;
     padding: 0;
     color: #58B91B;
@@ -951,11 +951,11 @@ a.active.annotator-help-trigger {
     border-bottom: 1px solid #9FC54E;
 }
 
-#content .annotator-help-panel a:hover, .annotator-help-panel a:visited:hover {
+.annotator-help-panel a:hover, .annotator-help-panel a:visited:hover {
     color: #64735B;
     border-bottom: 1px solid #ffffff;
 }
 
-#content .annotator-help-panel li {
+.annotator-help-panel li {
     display: list-item;
 }

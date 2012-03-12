@@ -1,0 +1,36 @@
+<div class="reply" id="commenting">
+    <fieldset>
+        <legend>Ask an expert a question</legend>
+        <p>You can ask a question by filling out the form below.</p>
+
+        <form enctype="multipart/form-data" method="post" class="rowlike"
+            action="." tal:attributes="action context/absolute_url">
+
+            <input type="hidden" id="siyavula.what.questionadd.form.submitted"
+                name="siyavula.what.questionadd.form.submitted" value="submitted" />
+            <input type="hidden" value="add-question" name="action">
+            <input type="hidden" value="content_uuid" name="content_uuid"
+                tal:attributes="value view/getUUID">
+            <input type="hidden" value="context_url" name="context_url" id="context_url"
+                tal:attributes="value context/absolute_url">
+
+            <div id="question-container" class="field">
+                <label class="horizontal" for="form-widgets-text">
+                    Question 
+                </label>
+                <span style="color: red" title="Required" class="required horizontal">
+                    ■
+                </span>
+                <div class="fieldErrorBox"></div>
+                <textarea class="textarea-widget required text-field autoresize"
+                    name="question" id="question"></textarea>
+            </div>
+
+            <div class="formControls">
+                <input type="submit" value="Submit" 
+                    class="submit-widget button-field context allowMultiSubmit"
+                    name="button.submit" id="siyavula-what-question-add-button">
+            </div>
+        </form>
+    </fieldset>
+</div>

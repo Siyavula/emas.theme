@@ -219,6 +219,7 @@ td, th {
     clear: both;
     margin: 4px 0 0;
     line-height: 125%;
+    padding-right: 2.5em;
 }
 
 #content p, #content div, #content dd, #content dt {
