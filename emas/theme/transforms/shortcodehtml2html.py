@@ -249,6 +249,9 @@ class shortcodehtml_to_html:
                 element = lxml.html.fromstring(content)
                 element.make_links_absolute(base_url="http://www.fullmarks.org.za")
                 for mathnode in element.xpath('//span[@class="AMcontainer"]'):
+                    if len(mathnode) == 0:
+                        # Guard against <span class="AMcontainer"></span> that sometimes appears
+                        continue
                     asciimath = mathnode[0].text
                     mathml = ElementTree.tostring(asciimathml.parse(asciimath))
                     mathml = mathml.replace('`', '')

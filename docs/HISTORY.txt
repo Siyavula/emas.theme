@@ -36,6 +36,9 @@ Changelog
 
 - Bugfix to shortcodehtml2html.py that leaves out math node tail.
 
+- Bugfix to shortcodehtml2html.py fails on empty span:
+  <span class="AMcontainer"></span>
+
 - Refactor "Ask an expert" service so that questions are purchased
   directly without have to buy credits and then subscribe.
 
