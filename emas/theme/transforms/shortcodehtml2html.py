@@ -51,9 +51,19 @@ class shortcodehtml_to_html:
             content = []
             # get all the content from the contained urls
             for entry in element.findall('.//entry'):
-                url = entry.find('url')
                 shortcode = entry.find('shortcode').text
-                content.append(self.getURLContent(url.text))
+                contentNode = entry.find('todo-content')
+                if contentNode is not None:
+                    contentNode.tag = 'div'
+                    contentNode.attrib['class'] = "field answer"
+                    contentNode.insert(0, lxml.html.Element("label", {"class": "formQuestion"}))
+                    contentNode[0].text = 'Answer:'
+                    contentNode[0].tail = contentNode.text
+                    contentNode.text = ''
+                    content.append(lxml.html.tostring(contentNode))
+                else:
+                    url = entry.find('url')
+                    content.append(self.getURLContent(url.text))
                 if shortcode is not None:
                     shortcode = 'sc' + shortcode.strip()
                     if content[-1][:5] == '<div ':
