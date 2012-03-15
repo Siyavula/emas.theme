@@ -75,6 +75,12 @@ class cnxmlplus_to_shortcodecnxml:
         self.chapterHash = hashlib.md5(titleNode.text).hexdigest()
         #print 'hash:', self.chapterHash
 
+        # Hack to replace shortcode content with todo-content.
+        # traverse_dom_for_cnxml() needs to change eventually to use
+        # xpath rather than a recursive function.
+        for contentNode in dom.xpath('//shortcodes/entry/content'):
+            contentNode.tag = 'todo-content'
+
         # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
 
