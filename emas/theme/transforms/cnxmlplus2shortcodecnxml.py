@@ -443,7 +443,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'para',
                     'figure/type',
                     'exercise/problem', 'exercise/title',
-                    'exercise/shortcodes/entry/number', 'exercise/shortcodes/entry/shortcode', 'exercise/shortcodes/entry/url',
+                    'exercise/shortcodes/entry/number', 'exercise/shortcodes/entry/shortcode', 'exercise/shortcodes/entry/url', 'exercise/shortcodes/entry/todo-content',
                     'list/item/label',
                     'table/tgroup/tbody/row/entry',
                     'table/tgroup/colspec',
