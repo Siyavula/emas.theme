@@ -3,6 +3,13 @@ from logging import getLogger
 
 LOGGER = getLogger('%s:' % __name__)
 
+# These non-LaTeX commands do not exist in the ASCIIMathML spec, but
+# are somehow rendered on FullMarks
+bogusAsciimathmlCommands = {
+    'cdot': '*',
+}
+
+# LaTeX commands with ASCIIMathML equivalents
 latexSubstitutions = {
     r'\approx': '~~',
     r'\backslash': r'\\',
@@ -83,7 +90,7 @@ def __asciimathml_parse_modified__(s, *args, **kwargs):
             if start == -1:
                 break
             stop = s.find('"', start+1)
-            s = s[:start] + 'text{' + s[start+1:stop] + '}' + s[stop+1:]
+            s = s[:start] + ' text{' + s[start+1:stop] + '}' + s[stop+1:]
             stop += 4
     else:
         LOGGER.info('ERROR: ASCIIMathML wrapper refused to remove quotes since there were an odd number of them.')
@@ -106,12 +113,26 @@ def __asciimathml_parse_modified__(s, *args, **kwargs):
             while (pos < len(s)) and s[pos].isalpha():
                 pos += 1
             command = s[start:pos]
-            command = latexSubstitutions.get(command, command[1:])
+            command = ' ' + latexSubstitutions.get(command, command[1:]) + ' '
             s = s[:start] + command + s[pos:]
             pos = start + len(command)
         else:
             # Assume that the backslash is meant to be there
             pos += 1
+    # Replace bogus ASCIIMathML commands
+    for command in bogusAsciimathmlCommands:
+        start = 0
+        while True:
+            start = s.find(command, start)
+            if start == -1:
+                break
+            stop = start + len(command)
+            if ((start == 0) or (s[start-1].lower() < 'a') or (s[start-1].lower() > 'z')) and ((stop == len(s)) or (s[stop].lower() < 'a') or (s[stop].lower() > 'z')):
+                replacement = ' ' + bogusAsciimathmlCommands[command] + ' '
+                s = s[:start] + replacement + s[stop:]
+                start += len(replacement)
+            else:
+                start = stop
     # Pass string to asciimathml.parse
     return __asciimathml_parse_original__(s, *args, **kwargs)
 asciimathml.parse = __asciimathml_parse_modified__
