@@ -19,9 +19,9 @@
                         </metal:heading>
                         <metal:button-slot fill-slot="button-slot">
                         <input type="hidden" id="view_url" name="view_url" value="@@register-to-ask-questions" />
-                        <button class="context" name="form.button.buy"
-                            value="Buy" onclick="buyQuestions(event);">
-                            Buy
+                        <button class="context" name="form.button.continue"
+                            value="Continue" onclick="startTransaction(event);">
+                            Continue
                         </button>
                         <button type="cancel" class="context" name="form.button.cancel"
                             value="Cancel">
@@ -31,11 +31,20 @@
                     </span>
                 </div>
 
-                <div id="pay-success" style="display:none">
-                    <button type="continue" class="context"
-                        name="form.button.continue"
-                        value="Continue">Continue
-                    </button>
+                <div id="vcs-purchase-form" style="display:none">
+                    You are about to purchase <span id="qty">10</span>
+                    questions. Click on "Buy" below to pay with credit
+                    card.
+                    <form action="https://www.vcs.co.za/vvonline/ccform.asp" method="POST">
+                        <input type="hidden" name="p1" value=""/>
+                        <input type="hidden" name="p2" value=""/>
+                        <input type="hidden" name="p3" value=""/>
+                        <input type="hidden" name="p4" value=""/>
+                        <input type="hidden" name="Hash" value=""/>
+                        <input type="submit" class="context"
+                            name="form.button.buy"
+                            value="Buy"/>
+                    </form>
                 </div>
             </tal:defs>        
         </metal:register-macro>

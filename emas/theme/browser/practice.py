@@ -42,6 +42,7 @@ class Practice(BrowserView):
                                                  ).member() 
         request = urllib2.Request(url)
         userpw = base64.encodestring('%s:%s' % (member.getId(), 'none'))
+        userpw = userpw.rstrip('\n')
         request.add_header('Authorization', 'Basic %s' % userpw)
 
         # Pyramid specific header for Virtual Root

@@ -101,6 +101,14 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:page
+        for="*"
+        name="json-start-transaction"
+        class=".views.RegisterToAskQuestionsView"
+        attribute="startTransaction" 
+        permission="cmf.SetOwnProperties"
+        />
+
     <browser:viewlet
         name="register-to-ask-questions"
         manager="plone.app.layout.viewlets.interfaces.IBelowContent"
