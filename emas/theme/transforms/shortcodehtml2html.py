@@ -56,10 +56,11 @@ class shortcodehtml_to_html:
                 if contentNode is not None:
                     contentNode.tag = 'div'
                     contentNode.attrib['class'] = "field answer"
-                    contentNode.insert(0, lxml.html.Element("label", {"class": "formQuestion"}))
-                    contentNode[0].text = 'Answer:'
-                    contentNode[0].tail = contentNode.text
-                    contentNode.text = ''
+                    if (len(contentNode) > 0) or (contentNode.text is not None):
+                        contentNode.insert(0, lxml.html.Element("label", {"class": "formQuestion"}))
+                        contentNode[0].text = 'Answer:'
+                        contentNode[0].tail = contentNode.text
+                        contentNode.text = ''
                     content.append(lxml.html.tostring(contentNode))
                 else:
                     url = entry.find('url')
@@ -70,6 +71,7 @@ class shortcodehtml_to_html:
                         content[-1] = content[-1][:5] + 'id="%s" '%shortcode + content[-1][5:]
                     else:
                         print "WARNING: Got FullMarks solution that doesn't start with \"<div \""
+                        print content
             # build a shortcode tree to contain all the fetched content
             try:
                 sctree = lxml.html.fromstring(''.join(content))
