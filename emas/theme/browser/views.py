@@ -1,4 +1,5 @@
 import json
+import hashlib
 from datetime import datetime, timedelta, date
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
@@ -401,6 +402,30 @@ class RegisterToAskQuestionsView(PayserviceRegistrationBase):
             return json.dumps({'result': 'success',
                                'credits':credits,
                                'message': msg})
+
+    def startTransaction(self):
+        amount = self.request.get('amount', 0)
+        error, amount = self.validate(amount)
+        if error:
+            raise ValueError(error)
+        else:
+            tid = self.context.generateUniqueId(type_name='Transaction')
+            pps = self.context.restrictedTraverse('@@plone_portal_state')
+            description = _(u'%s Practise' % pps.navigation_root_title())
+            member = pps.member()
+            settings = queryUtility(IRegistry).forInterface(IEmasSettings)
+            vcs_terminal_id = settings.vcs_terminal_id
+            md5key = settings.vcs_md5_key
+            m = hashlib.md5()
+            m.update('%s%s%s%s%s' % (vcs_terminal_id, tid, description,
+                                     amount, md5key))
+            md5hash = m.hexdigest()
+            return json.dumps({'vcs_terminal_id': vcs_terminal_id,
+                               'transaction_id': tid,
+                               'description': description,
+                               'amount': amount,
+                               'hash': md5hash})
+
 
     def validate(self, amount):
         try:
