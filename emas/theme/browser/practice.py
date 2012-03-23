@@ -41,13 +41,12 @@ class Practice(BrowserView):
         hostroot = path.split(self.__name__)[0] + self.__name__
         path = path.split(self.__name__)[-1]
         url = "%s%s" % (practiceserver, path)
-        authstring = '%s:none' % member.getId()
 
         headers = {
             "Accept-Encoding": "identity",
             "Host": self.request.HTTP_HOST,
             "Connection": "close",
-            "Authorization": 'Basic ' + base64.b64encode(authstring),
+            "Authorization": 'Basic ' + member.getId(),
         }
 
         # Forward GET and POST requests; complain for all other request types
