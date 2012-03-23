@@ -206,7 +206,7 @@
         for="*"
         name="practice"
         class=".practice.Practice"
-        permission="zope2.View"
+        permission="cmf.SetOwnProperties"
         />
 
 </configure>
