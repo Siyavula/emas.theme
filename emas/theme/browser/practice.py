@@ -46,7 +46,7 @@ class Practice(BrowserView):
             "Accept-Encoding": "identity",
             "Host": self.request.HTTP_HOST,
             "Connection": "close",
-            "Authorization": 'Basic ' + member.getId(),
+            "Authorization": 'Basic ' + base64.b64encode(member.getId()),
         }
 
         # Forward GET and POST requests; complain for all other request types
