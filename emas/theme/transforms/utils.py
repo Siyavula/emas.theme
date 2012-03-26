@@ -482,6 +482,15 @@ def match_dom_pattern(instance, template, varDict={}):
     return True
 
 
+def etree_in_context(iNode, iContext):
+    parent = iNode.getparent()
+    while parent is not None:
+        if parent.tag == iContext:
+            return True
+        parent = parent.getparent()
+    return False
+
+
 def etree_replace_with_node_list(parent, child, dummyNode, keepTail=True):
     index = parent.index(child)
     if keepTail and (child.tail is not None):

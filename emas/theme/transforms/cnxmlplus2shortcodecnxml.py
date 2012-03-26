@@ -85,6 +85,10 @@ class cnxmlplus_to_shortcodecnxml:
         for contentNode in dom.xpath('//shortcodes/entry/content'):
             contentNode.tag = 'todo-content'
 
+        # Transform using new-style (xpath-based) transform
+        self.transform(dom)
+
+        # TOFIX: Remaining elements using old-style transform
         # Transform all elements in document, except pspictures
         self.traverse_dom_for_cnxml(dom)
 
@@ -116,6 +120,36 @@ class cnxmlplus_to_shortcodecnxml:
             return prefix + 'pictures/' + codeHash + '.png'
         else:
             raise ValueError, "Unknown pspicture generator version"
+
+    def transform(self, dom):
+        # Currency
+        for currencyNode in dom.xpath('//currency'):
+            latexMode = utils.etree_in_context(currencyNode, 'latex')
+            currencyPrecision = int(currencyNode.attrib.get('precision', '2'))
+            symbolNode = currencyNode.find('symbol')
+            if symbolNode is None:
+                symbol = 'R'
+                symbolLocation = 'front'
+            else:
+                symbol = symbolNode.text.strip()
+                symbolLocation = symbolNode.attrib.get('location', 'front')
+            numberNode = currencyNode.find('number')
+            numberNode.text = ("%%.%if"%currencyPrecision)%float(numberNode.text.strip())
+
+            replacementNode = etree.Element('dummy')
+            if symbolLocation == 'front':
+                if latexMode:
+                    replacementNode.text = r'\text{' + symbol + ' }'
+                else:
+                    replacementNode.text = symbol + u'\u00a0'
+                replacementNode.append(numberNode)
+            else:
+                replacementNode.append(numberNode)
+                if latexMode:
+                    replacementNode.tail = r'\text{ ' + symbol + '}'
+                else:
+                    replacementNode.tail = u'\u00a0' + symbol
+            utils.etree_replace_with_node_list(currencyNode.getparent(), currencyNode, replacementNode)
 
     def traverse_dom_for_pspictures(self, element):
         # <pspicture><code>
