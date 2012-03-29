@@ -78,6 +78,15 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
+     <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/annotator.comment.min.js"
+                expression="context/@@annotator-enabled | nothing"
+                insert-after="jquery.js"
+                inline="False"/>
+
     <javascript cacheable="True"
                 compression="none"
                 cookable="True"
@@ -86,6 +95,7 @@
                 expression="context/@@annotator-enabled | nothing"
                 insert-after="jquery.js"
                 inline="False"/>
+            
 
     <javascript cacheable="True"
                 compression="none"

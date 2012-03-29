@@ -32,7 +32,7 @@
 #content .annotator-resize,
 #content .annotator-widget::after,
 #content .annotator-editor a::after,
-#content .annotator-viewer .annotator-controls button,
+#content .annotator-reply-controls a::after,
 #content .annotator-filter .annotator-filter-navigation button::after,
 #content .annotator-filter .annotator-filter-property .annotator-filter-clear {
 	background-image: url(++resource++emas.theme.resources/annotator-glyph-sprite.png);
@@ -238,9 +238,11 @@
 }
 
 #content .annotator-viewer .annotator-controls {
+        width: 95%;
 	position: relative;
 	top: 5px;
 	right: 5px;
+        padding-bottom:10px;
 	padding-left: 5px;
 	opacity: 0;
 	-webkit-transition: opacity 0.2s ease-in;
@@ -255,7 +257,26 @@
 	opacity: 1;
 }
 
+
 #content .annotator-viewer .annotator-controls button {
+    display: inline-block;
+    position:relative;
+    margin:0 7px 0 0;
+    background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+    float:right;
+    font-size:10px;
+    line-height:130%;
+    text-decoration:none;
+    font-weight:bold;
+    color:#565656;
+    cursor:pointer;
+    padding:5px 10px 6px 7px; /* Links */
+}
+
+.annotator-viewer .annotator-controls a {
 	cursor: pointer;
 	display: inline-block;
 	width: 13px;
@@ -289,6 +310,38 @@
 	background-position: 0 -75px;
 }
 
+
+#content .replybox {
+        position: relative;
+        float:bottom;
+}
+
+
+#content #Replies {
+        position: relative;
+        float:bottom;
+        overflow:auto;
+        height:100px;
+        background: white;
+        border: solid;
+        border-width: 0px;
+        border-radius:5px;
+        padding:3px;
+
+}
+
+#content .Replies {
+    padding:5px;
+}
+
+
+
+
+#content .annotator-viewer .annotator-controls .annotator-link {
+	background-position: 0 -270px;
+}
+
+
 /* Annotator Editor
 -------------------------------------------------------------------- */
 
@@ -303,6 +356,7 @@
 	font-size: 12px;
 }
 
+#content .replybox textarea,
 #content .annotator-editor .annotator-item input,
 #content .annotator-editor .annotator-item textarea {
 	display: block;
@@ -426,7 +480,7 @@
 
 #content .annotator-invert-y .annotator-controls {
 	border-top: none;
-	border-bottom: 1px solid rgb(180, 180, 180);
+	border-bottom: none;
 	-webkit-border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
 	-o-border-radius: 5px 5px 0 0;
@@ -434,6 +488,7 @@
 }
 
 #content .annotator-editor a,
+#content .annotator-reply-controls a,
 #content .annotator-filter .annotator-filter-property label {
 	position: relative;
 	display: inline-block;
@@ -504,6 +559,8 @@
 	background-position: 0 -90px;
 }
 
+#content .annotator-reply-controls a:hover,
+#content .annotator-reply-controls a:focus,
 #content .annotator-editor a:hover,
 #content .annotator-editor a:focus,
 #content .annotator-editor a.annotator-focus,
@@ -550,6 +607,7 @@
 	background-position: 0 -105px;
 }
 
+#content .annotator-reply-controls a:active,
 #content .annotator-editor a:active,
 #content .annotator-filter .annotator-filter-navigation button:active {
 	border-color: rgb(112, 12, 73);
@@ -582,6 +640,10 @@
 	    rgb(209, 46, 142) 50%,
 	    rgb(255, 0, 156)
 	);
+}
+
+#content .annotator-controls span {
+    width:90%
 }
 
 #content .annotator-editor a.annotator-save::after {
@@ -889,7 +951,7 @@
 a.annotator-help-trigger {
     position: fixed;
     text-decoration: none;
-    bottom: 0px;
+    bottom: 350px;
     right: 0;
     font-size: 14px;
     letter-spacing:-1px;
@@ -920,6 +982,7 @@ a.active.annotator-help-trigger {
 
 
 .annotator-help-panel {
+    font-size: 14px;
     position: fixed;
     bottom: 30px;
     right: 0;
