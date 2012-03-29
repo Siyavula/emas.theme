@@ -125,7 +125,6 @@ class cnxmlplus_to_shortcodecnxml:
         # Currency
         for currencyNode in dom.xpath('//currency'):
             latexMode = utils.etree_in_context(currencyNode, 'latex')
-            currencyPrecision = int(currencyNode.attrib.get('precision', '2'))
             symbolNode = currencyNode.find('symbol')
             if symbolNode is None:
                 symbol = 'R'
@@ -134,6 +133,15 @@ class cnxmlplus_to_shortcodecnxml:
                 symbol = symbolNode.text.strip()
                 symbolLocation = symbolNode.attrib.get('location', 'front')
             numberNode = currencyNode.find('number')
+            if numberNode.text is None:
+                numberNode.text = ''
+            # Set default precision to 0 if number is an int, and to 2 if it is a float
+            try:
+                int(numberNode.text.strip())
+                defaultPrecision = 0
+            except ValueError:
+                defaultPrecision = 2
+            currencyPrecision = int(currencyNode.attrib.get('precision', defaultPrecision))
             numberNode.text = ("%%.%if"%currencyPrecision)%float(numberNode.text.strip())
 
             replacementNode = etree.Element('dummy')
