@@ -80,8 +80,8 @@ jQuery(function ($) {
         };
         annotator.addPlugin('Permissions', options.permissions);
         annotator.addPlugin('Categories', options.categories);
-        annotator.addPlugin('RoundupStatus');
         annotator.addPlugin('Markdown');
+        annotator.addPlugin('Comment');
     }
   });
 
