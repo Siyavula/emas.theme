@@ -7,7 +7,7 @@ LOGGER = getLogger('%s:' % __name__)
 # are somehow rendered on FullMarks
 bogusAsciimathmlCommands = {
     'cdot': '*',
-    'circ': '*',
+    'circ': '@',
 }
 
 # LaTeX commands with ASCIIMathML equivalents
