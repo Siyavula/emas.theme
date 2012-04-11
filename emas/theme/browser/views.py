@@ -217,9 +217,9 @@ class EnabledServicesView(BrowserView):
 
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
-        regdate = member.getProperty(service)
+        now = datetime.now()
         try:
-            return regdate > NULLDATE and True or False
+            return now <= self.expirydate and True or False
         except: 
             return False
     
@@ -476,7 +476,8 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
         if self.is_expert:
             return True
 
-        return self.current_credits > 0
+        now = datetime.now()
+        return 
 
 
 class PurchaseApproved(BrowserView):
@@ -516,7 +517,6 @@ class PurchaseApproved(BrowserView):
         return SERVICE_MEMBER_PROP_MAP[self.servicename]
 
 
-<<<<<<< HEAD
 class AddQuestionView(AddQuestionBaseView):
     """ Specialise in order to enchance the JSON return.
     """
@@ -541,7 +541,6 @@ class AddQuestionView(AddQuestionBaseView):
         return current_credits
 
 
-=======
 class RequireLogin(BrowserView):
     """ Override Plone's require_login script to traverse from
         NavigationRoot, not portal
@@ -562,4 +561,3 @@ class RequireLogin(BrowserView):
             return root.restrictedTraverse(login)()
         else:
             return root.restrictedTraverse('insufficient_privileges')()
->>>>>>> d3ac04524fbe420c6e0c29dd42b684a4322b3ca2
