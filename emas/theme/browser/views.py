@@ -5,6 +5,7 @@ from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.registry.interfaces import IRegistry
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
@@ -515,6 +516,7 @@ class PurchaseApproved(BrowserView):
         return SERVICE_MEMBER_PROP_MAP[self.servicename]
 
 
+<<<<<<< HEAD
 class AddQuestionView(AddQuestionBaseView):
     """ Specialise in order to enchance the JSON return.
     """
@@ -539,3 +541,25 @@ class AddQuestionView(AddQuestionBaseView):
         return current_credits
 
 
+=======
+class RequireLogin(BrowserView):
+    """ Override Plone's require_login script to traverse from
+        NavigationRoot, not portal
+    """
+
+    def __call__(self):
+        login = 'login'
+
+        state = self.context.restrictedTraverse('@@plone_portal_state')
+        portal = state.portal()
+        root = portal
+        for parent in self.context.aq_chain:
+            if INavigationRoot.providedBy(parent):
+                root = parent
+                break
+
+        if portal.portal_membership.isAnonymousUser():
+            return root.restrictedTraverse(login)()
+        else:
+            return root.restrictedTraverse('insufficient_privileges')()
+>>>>>>> d3ac04524fbe420c6e0c29dd42b684a4322b3ca2
