@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+<body>
+
+    <metal:core fill-slot="main">
+        <div id="content-core">
+
+            <section class="packages">
+
+                <h2>Intelligent Practice</h2>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong> Subject
+                                <span>1 year subscription to either Maths or
+                                Science</span>
+                            </td>
+                            <td class="price">R150<span>/year</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>1</strong> Subject + <strong>1</strong> Textbook
+                                <span>1 year subscription to either Maths or Science. Includes the printed textbook
+                                </span>
+                            </td>
+                            <td class="price">R200<span>/year</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong> Subjects
+                                <span>1 year subscription to both Maths and Science</span>
+                            </td>
+                            <td class="price">R250<span>/year</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong> Subject + <strong>2</strong> Textbooks
+                                <span>1 year subscription to both Maths and Science. Includes the printed textbook for both subjects
+                                </span>
+                            </td>
+                            <td class="price">R350<span>/year</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Expert Answers</h2>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>10</strong> questions about any
+                                book content on the site
+                            </td>
+                            <td class="price">R25<span></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Included in the free trial:</strong>
+                Access to the Intelligent Pratice System for both Maths and
+                Science as well as 2 question sessions with an expert.</p>
+
+                <h2><a class="register" href="register">Get started today with a 30-day free trial</a></h2>
+
+            </section>
+
+    </metal:core>
+
+</body>
+</html>

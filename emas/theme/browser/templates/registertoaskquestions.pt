@@ -32,14 +32,22 @@
                 </div>
 
                 <div id="vcs-purchase-form" style="display:none">
+                    <p>
                     You are about to purchase <span id="qty">10</span>
                     questions. Click on "Buy" below to pay with credit
                     card.
+                    </p>
+                    <p>
+                    You will be redirected to Virtual Card Services
+                    (VCS) for payment, an online payment gateway
+                    supported by all major banks in South Africa.
+                    </p>
                     <form action="https://www.vcs.co.za/vvonline/ccform.asp" method="POST">
                         <input type="hidden" name="p1" value=""/>
                         <input type="hidden" name="p2" value=""/>
                         <input type="hidden" name="p3" value=""/>
                         <input type="hidden" name="p4" value=""/>
+                        <input type="hidden" name="m1" value=""/>
                         <input type="hidden" name="Hash" value=""/>
                         <input type="submit" class="context"
                             name="form.button.buy"

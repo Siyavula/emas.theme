@@ -41,8 +41,8 @@ function onQuestionsBought(data, textStatus, jqXHR) {
 function startTransaction(event) {
     event.preventDefault();
     element = jQuery('input#credits-to-buy');
-    var amount = parseInt(jq(element).attr('value'));
-    if (isNaN(amount)) {
+    var qty = parseInt(jq(element).attr('value'));
+    if (isNaN(qty)) {
         alert("'" + jq(element).attr('value') + "' is not a valid number!");
         jq(element).attr('value', 0);
         return false;
@@ -50,14 +50,15 @@ function startTransaction(event) {
     jQuery.ajax({
         url: '@@json-start-transaction',
         dataType: 'json',
-        data: {'amount': amount},
+        data: {'quantity': qty},
         success: function(data, textStatus, jqXHR) {
             jQuery('div#status-message').html(data.message);
             jQuery('div.payservice-form').remove();
             jQuery('input[name=p1]').attr('value', data.vcs_terminal_id);
             jQuery('input[name=p2]').attr('value', data.transaction_id);
             jQuery('input[name=p3]').attr('value', data.description);
-            jQuery('input[name=p4]').attr('value', data.amount);
+            jQuery('input[name=p4]').attr('value', data.totalcost);
+            jQuery('input[name=m1]').attr('value', data.quantity);
             jQuery('input[name=Hash]').attr('value', data.hash);
             jQuery('div#vcs-purchase-form').show();
         },

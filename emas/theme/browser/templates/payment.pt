@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+<body>
+
+    <metal:core fill-slot="main">
+        <div id="content-core">
+            <!--
+            <p>Payment for Premium Services can be made using an Electronic
+            Funds Transfer (EFT). Click the checkbox next to each serivce that
+            you want to enable.
+            </p>
+            -->
+
+            <section class="packages">
+
+                <h2>Intelligent Practice Premium Service</h2>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>1 Subject</strong>
+                                <span>1 year subscription to either Maths or
+                                Science</span>
+                            </td>
+                            <td class="price">R150<span>/year</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>1 Subject + 1 Textbook</strong>
+                                <span>1 year subscription to either Maths or Science. Includes the printed textbook.
+                                </span>
+                            </td>
+                            <td class="price">R150<span>/month</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2 Subjects</strong>
+                                <span>1 year subscription to both Maths and Science</span>
+                            </td>
+                            <td class="price">R250<span>/year</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2 Subject + 2 Textbooks</strong>
+                                <span>1 year subscription to both Maths and Science. Includes the printed textbook for both subjects.
+                                </span>
+                            </td>
+                            <td class="price">R150<span>/month</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2><a href="register">Get started today with a 30-day free trial</a></h2>
+
+            </section>
+
+    </metal:core>
+
+</body>
+</html>
