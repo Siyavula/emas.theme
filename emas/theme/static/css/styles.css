@@ -381,3 +381,91 @@ h3.section-header .title
 #content .commentBody {
     margin: 1em 0;
 }
+
+table.pricing {
+    width: 100%;
+}
+
+#content-core .plan {
+    border-bottom: 1px solid #EDEDED;
+    color: #555555;
+    margin: 0 30px 0 0;
+    overflow: hidden;
+    padding: 10px 5px 13px 20px;
+    position: relative;
+}
+
+#content-core .plan h3 {
+    color: #555555;
+    font-size: 20px;
+}
+
+#content-core .plan p {
+    font-size: 14px;
+    line-height: 1.2em;
+}
+
+#content-core .column.plans p {
+    font-size: 16px;
+    margin-right: 25px;
+}
+
+#content-core .intelligentpractice {
+    border-bottom: 1px solid #CACACA;
+    height: 44px;
+    margin: 40px 30px 5px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+section.packages {
+    background-color: #FFFFCC;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 50px auto;
+    padding: 30px;
+    width: 450px;
+}
+
+section.packages a.register {
+    text-decoration: underline;
+}
+
+section.packages table {
+    border-collapse: collapse;
+    border-top: 1px solid #E3C27C;
+    margin: 0 auto;
+    width: auto;
+}
+
+section.packages table td {
+    border-bottom: 1px solid #E3C27C;
+    font-size: 20px;
+    padding: 15px 0;
+}
+
+section.packages table td strong {
+    color: #CC0000;
+}
+
+section.packages table td span {
+    display: block;
+    font-size: 14px;
+    padding-top: 7px;
+}
+
+section.packages table td span.questions {
+    white-space: nowrap;
+}
+
+section.packages table td.price {
+    border-left: 1px solid #E3C27C;
+    font-weight: normal;
+    padding: 15px;
+    width: 25%;
+}
+
+section.packages table td.price span {
+    color: #000000;
+    display: inline;
+    font-size: 16px;
+}
