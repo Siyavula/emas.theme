@@ -209,4 +209,18 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="pricing"
+        template="templates/pricing.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="payment"
+        template="templates/payment.pt"
+        permission="zope2.View"
+        />
+
 </configure>
