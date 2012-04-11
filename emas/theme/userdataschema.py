@@ -28,9 +28,9 @@ provinces = SimpleVocabulary([
 class IEmasUserDataSchema(IUserDataSchema):
     # Credits stored as an integer
     credits = Int(
-        title=_(u'credits', default=u'Credits'),
-        description=_(u'help_company',
-                      default=u"Credits a user can use towards paid services."),
+        title=_(u'questions', default=u'Questions'),
+        description=_(u'help_questions',
+                      default=u"Question balance for Expert Answers service"),
         default=0,
         required=False)
 
