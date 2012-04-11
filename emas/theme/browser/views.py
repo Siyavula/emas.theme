@@ -31,6 +31,16 @@ ALLOWED_TYPES = ['Folder',
                  'rhaptos.compilation.compilation',
                 ]
 
+ANSWER_DATABASE =  'Access answer database'
+PRACTICE_SYSTEM = 'Access exercise content'
+ASK_QUESTIONS = 'Ask questions'
+
+SERVICE_MEMBER_PROP_MAP = {
+    ANSWER_DATABASE: 'answerdatabase_registrationdate',
+    PRACTICE_SYSTEM: 'moreexercise_registrationdate',
+    ASK_QUESTIONS: 'askanexpert_registrationdate'
+}
+
 def is_expert(context):
     # If the current user has 'siyavula.what.AddAnswer' permission
     # on the current they are considered experts and don't have to
@@ -39,6 +49,11 @@ def is_expert(context):
     pmt = getToolByName(context, 'portal_membership')
     return pmt.checkPermission(permission, context) and True or False
 
+
+def vcs_hash(s):
+    m = hashlib.md5()
+    m.update(s)
+    return m.hexdigest()
 
 class EmasSettingsForm(RegistryEditForm):
     schema = IEmasSettings
@@ -231,7 +246,7 @@ class EmasTransactionView(BrowserView):
         assert credits > 0
         return self.createTransaction(-credits, description)
 
-    def createTransaction(self, credits, description):
+    def createTransaction(self, credits, description, tid=None):
         portal = self.context.restrictedTraverse(
             '@@plone_portal_state').portal()
         member = self.context.restrictedTraverse(
@@ -244,7 +259,8 @@ class EmasTransactionView(BrowserView):
 
         # Create a transaction entry
         transactionfolder = portal.transactions._getOb(member.getId())
-        tid = self.context.generateUniqueId(type_name='Transaction')
+        if tid is None:
+            tid = self.context.generateUniqueId(type_name='Transaction')
         t = createObject('emas.theme.transaction', id=tid)
         now = datetime.now()
         t.title = now.strftime('%Y-%m-%d %H:%M:%S')
@@ -369,13 +385,15 @@ class PayserviceRegistrationBase(BrowserView):
         settings = registry.forInterface(IEmasSettings)
         return settings.creditcost
 
+    @property
+    def memberproperty(self):
+        return SERVICE_MEMBER_PROP_MAP[self.servicename]
 
 class RegisterForMoreExerciseView(PayserviceRegistrationBase):
     
     formsubmit_token = 'emas.theme.registerformoreexercise.submitted'
     formfield = 'registerformoreexercise'
-    servicename = 'Access exercise content'
-    memberproperty = 'moreexercise_registrationdate'
+    servicename = PRACTICE_SYSTEM
     creditproperty = 'exerciseCost'
 
 
@@ -383,8 +401,7 @@ class RegisterToAskQuestionsView(PayserviceRegistrationBase):
 
     formsubmit_token = 'emas.theme.registertoaskquestions.submitted'
     formfield = 'registertoaskquestions'
-    servicename = 'Ask questions'
-    memberproperty = 'askanexpert_registrationdate'
+    servicename = ASK_QUESTIONS
     creditproperty = 'questionCost'
 
     def buyquestions(self):
@@ -404,26 +421,26 @@ class RegisterToAskQuestionsView(PayserviceRegistrationBase):
                                'message': msg})
 
     def startTransaction(self):
-        amount = self.request.get('amount', 0)
-        error, amount = self.validate(amount)
+        quantity = self.request.get('quantity')
+        error, quantity = self.validate(quantity)
         if error:
             raise ValueError(error)
         else:
             tid = self.context.generateUniqueId(type_name='Transaction')
+            totalcost = self.servicecost * quantity
             pps = self.context.restrictedTraverse('@@plone_portal_state')
-            description = _(u'%s Practise' % pps.navigation_root_title())
+            description = self.servicename
             member = pps.member()
             settings = queryUtility(IRegistry).forInterface(IEmasSettings)
             vcs_terminal_id = settings.vcs_terminal_id
             md5key = settings.vcs_md5_key
-            m = hashlib.md5()
-            m.update('%s%s%s%s%s' % (vcs_terminal_id, tid, description,
-                                     amount, md5key))
-            md5hash = m.hexdigest()
+            md5hash = vcs_hash(vcs_terminal_id + tid + description +
+                               str(totalcost) + str(quantity) + md5key)
             return json.dumps({'vcs_terminal_id': vcs_terminal_id,
                                'transaction_id': tid,
                                'description': description,
-                               'amount': amount,
+                               'quantity': quantity,
+                               'totalcost': totalcost,
                                'hash': md5hash})
 
 
@@ -448,8 +465,7 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
 
     formsubmit_token = 'emas.theme.registertoaccessanswerdatabase.submitted'
     formfield = 'registertoaccessanswerdatabase'
-    servicename = 'Access answer database'
-    memberproperty = 'answerdatabase_registrationdate'
+    servicename = ANSWER_DATABASE
     creditproperty = 'answerCost'
 
     @property
@@ -458,3 +474,40 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
             return True
 
         return self.current_credits > 0
+
+
+class PurchaseApproved(BrowserView):
+    """ A credit card transaction was approved
+    """
+
+    def __call__(self):
+        settings = queryUtility(IRegistry).forInterface(IEmasSettings)
+        vcs_terminal_id = settings.vcs_terminal_id
+        md5key = settings.vcs_md5_key
+
+        vcsid = self.request.get('p1')
+        assert vcsid == vcs_terminal_id
+
+        tid = self.request.get('p2')
+        servicename = self.request.get('p3')
+        totalcost = self.request.get('p4')
+        quantity = self.request.get('m1')
+
+        md5hash = vcs_hash(vcsid + tid + servicename +
+                           totalcost + quantity + md5key)
+
+        pmt = getToolByName(self.context, 'portal_membership')
+        regdate = date.today()
+        member = pmt.getAuthenticatedMember()
+        member.setMemberProperties({self.memberproperty: regdate})
+        view = self.context.restrictedTraverse('@@emas-transaction')
+        transaction_message = 'Bought %s on %s' %(servicename, regdate)
+        view.createTransaction(quantity, description, tid)
+
+        self.servicename = servicename
+
+        return self.index()
+
+    @property
+    def memberproperty(self):
+        return SERVICE_MEMBER_PROP_MAP[self.servicename]
