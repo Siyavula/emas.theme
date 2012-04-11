@@ -19,6 +19,8 @@ from Products.Archetypes.utils import shasattr
 from Products.CMFPlone.PloneBatch import Batch
 from Products.statusmessages.interfaces import IStatusMessage
 
+from siyavula.what.browser.views import AddQuestionView as AddQuestionBaseView
+
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
@@ -511,3 +513,29 @@ class PurchaseApproved(BrowserView):
     @property
     def memberproperty(self):
         return SERVICE_MEMBER_PROP_MAP[self.servicename]
+
+
+class AddQuestionView(AddQuestionBaseView):
+    """ Specialise in order to enchance the JSON return.
+    """
+
+    def addQuestionJSON(self):
+        self.request.response.setHeader('X-Theme-Disabled', 'True')
+        question = self.addQuestion() 
+        message = "Question %s was added" %question.text
+        view = question.restrictedTraverse('@@render-question')
+        html = view()
+        result = 'success'
+        credits = self.getCredits()
+        return json.dumps({'result' : result,
+                           'message': message,
+                           'credits': credits,
+                           'html'   : html})
+
+    def getCredits(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
+        return current_credits
+
+
