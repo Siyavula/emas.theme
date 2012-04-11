@@ -223,4 +223,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="require_login"
+        class=".views.RequireLogin"
+        permission="zope2.View"
+        />
+
 </configure>
