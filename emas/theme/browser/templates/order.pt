@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+<body>
+
+    <metal:core fill-slot="main">
+        <h1 class="documentFirstHeading">Place your Order</h1>
+
+        <div id="content-core">
+            <div id="selectpackage">
+                <form name="orderform" method="POST">
+
+                    <h3>Intelligent Practice</h3>
+
+                    <fieldset>
+                        <legend>
+                            What subjects do you want to subscribe to?
+                        </legend>
+
+                        <p>
+                            <input type="checkbox" name="practice_subjects" value="maths"/> Maths
+                            <input type="checkbox" name="practice_subjects" value="science"/> Science
+                        </p>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>What grade?</legend>
+
+                        <p>
+                            <input type="radio" name="practice_grade" value="grade10"/> Grade 10
+                            <input type="radio" name="practice_grade" value="grade11"/> Grade 11
+                            <input type="radio" name="practice_grade" value="grade12"/> Grade 12
+                        </p>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Do you want a printed textbook for the selected subjects?</legend>
+
+                        <p>
+
+                            <input type="radio" name="include_textbook" value="yes"/> Yes
+                            <input type="radio" name="include_textbook" value="No"/> No
+
+                        </p>
+                    </fieldset>
+
+                    <h3>Expert Answers</h3>
+
+                    <fieldset>
+                        <legend>Do you want to subscribe to the Expert Answers service?</legend>
+                        <p>
+                            <input type="radio" name="add_expert_answers" value="yes"/> Yes
+                            <input type="radio" name="add_expert_answers" value="no"/> No
+                        </p>
+                    </fieldset>
+
+
+                    <button type="submit" class="button generic no-icon small-caps" name="form-create-site" value="1">Place Order
+                    </button>
+                </form>
+            </div>
+
+    </metal:core>
+
+</body>
+</html>

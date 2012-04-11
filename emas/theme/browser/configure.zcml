@@ -218,9 +218,17 @@
 
     <browser:page
         for="*"
+        name="order"
+        template="templates/order.pt"
+        permission="cmf.SetOwnProperties"
+        />
+
+
+    <browser:page
+        for="*"
         name="payment"
         template="templates/payment.pt"
-        permission="zope2.View"
+        permission="cmf.SetOwnProperties"
         />
 
     <browser:page
