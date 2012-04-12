@@ -47,7 +47,7 @@ class OrderForm(BrowserView):
                     totalcost = 350
                 
             if include_expert_answers:
-                packages.append(u'Expert answers 10 of your questions')
+                packages.append(u'Expert answers to 10 of your questions')
                 totalcost += 25
 
             self.totalcost = totalcost
