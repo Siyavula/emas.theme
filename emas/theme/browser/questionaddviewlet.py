@@ -9,8 +9,8 @@ from emas.theme import MessageFactory as _
 
 
 class QuestionAddViewlet(BaseQuestionAddViewlet):
-    """ Specialise the siyavula.what viewlet to check if the service is
-        enabled and to deduct a credit for each question asked.
+    """ A little safer way to see if questions are allowed on
+        the given context.
     """
 
     index = ViewPageTemplateFile('templates/addquestion.pt')
@@ -19,8 +19,24 @@ class QuestionAddViewlet(BaseQuestionAddViewlet):
         """ Check against the members enabled services.
         """
         context = self.context
-        view = context.restrictedTraverse('@@enabled-services')
         allowQuestions = False
         if shasattr(context, 'allowQuestions'):
             allowQuestions = getattr(context, 'allowQuestions')
-        return allowQuestions and view.ask_expert_enabled
+        return allowQuestions
+
+    def is_enabled(self):
+        """
+        """
+        context = self.context
+        view = context.restrictedTraverse('@@enabled-services')
+        return view.ask_expert_enabled
+
+    def render(self):
+        """ We render an empty string when a specific piece of content
+            does not allow questions.
+        """
+        if self.allowQuestions() and self.is_enabled():
+            return super(QuestionAddViewlet, self).render()
+        else:
+            return ""
+    
