@@ -399,7 +399,7 @@ section.packages {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     margin: 50px auto;
     padding: 30px;
-    width: 450px;
+    width: 700px;
 }
 
 section.packages a.register {
@@ -410,7 +410,7 @@ section.packages table {
     border-collapse: collapse;
     border-top: 1px solid #E3C27C;
     margin: 0 auto;
-    width: auto;
+    width: 100%;
 }
 
 section.packages table td {
@@ -448,18 +448,39 @@ section.packages table td.price span {
 
 #selectpackage {
     font-size: 100%;
+    background-color: #FFFFCC;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 50px auto;
+    padding: 30px;
+    width: 700px;
+}
+
+#selectpackage h2 {
+    border-bottom: 1px solid #E3C27C;
+}
+
+#selectpackage .pricinginfo {
+    float: right;
+    margin: 0;
+    clear: both;
 }
 
 #selectpackage fieldset {
-    padding: 0 1em;
-    border-color: #ccc;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 #selectpackage legend {
     font-size: 100%;
+    font-weight: bold;
 }
 #selectpackage fieldset p {
     padding: 0em;
     margin: 0.5em 0;
+}
+
+#selectpackage strong {
+    color: #CC0000;
 }
 
 #selectpackage input {
@@ -511,4 +532,21 @@ button.generic, a.generic {
     text-decoration: none;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
     vertical-align: middle;
+}
+
+#content-core div.ordertotal {
+    margin: 0;
+    font-size: 25pt;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+#content-core div.ordertotal div {
+    margin: 0;
+}
+
+div.ordertotal span.amount {
+    text-align: right;
+    color: #008FB4;
 }
