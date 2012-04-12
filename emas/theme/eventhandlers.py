@@ -4,7 +4,6 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from Products.ATContentTypes.content.folder import ATFolder
 
 from emas.theme.browser.views import is_expert
-from emas.theme.browser.views import NULLDATE
 
 def onMemberJoined(obj, event):
     portal = obj.restrictedTraverse('@@plone_portal_state').portal()
@@ -24,12 +23,15 @@ def onMemberJoined(obj, event):
     
 
     # 30 days free trial with 2 questions
-    trialend = datetime.date.today() + datetime.timedelta(days=30)
+    today = datetime.date.today()
+    trialend = today + datetime.timedelta(days=30)
 
     # Make sure the user's service registration dates are correct
-    properties = {'askanexpert_registrationdate': trialend,
-                  'answerdatabase_registrationdate': trialend,
-                  'moreexercise_registrationdate': trialend,
+    properties = {'askanexpert_registrationdate': today,
+                  'answerdatabase_registrationdate': today,
+                  'moreexercise_registrationdate': today,
+                  'answerdatabase_expirydate': trialend,
+                  'moreexercise_expirydate': trialend,
                   'credits': 2,
                  }
     propsheet = obj.getPropertysheet('mutable_properties')
