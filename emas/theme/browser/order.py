@@ -80,13 +80,12 @@ class OrderForm(BrowserView):
         send_to_address = formataddr((member.getProperty('fullname'),
                                       member.getProperty('email')))
 
-        subject = 'Order from Everything %s Website' % \
-            state.navigation_root_title()
+        subject = 'Order from %s Website' % state.navigation_root_title()
 
         # Generate message and attach to mail message
         message = self.ordertemplate(
             fullname=member.getProperty('fullname'),
-            sitename='Everything %s' % state.navigation_root_title(),
+            sitename=state.navigation_root_title(),
             packages=self.packages,
             totalcost=self.totalcost,
             username=member.getId(),
