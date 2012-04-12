@@ -8,22 +8,30 @@
 <body>
 
     <metal:core fill-slot="main">
-        <h1 class="documentFirstHeading">Place your Order</h1>
+        <h1 class="documentFirstHeading">Place Order</h1>
 
         <div id="content-core">
-            <div id="selectpackage">
-                <form name="orderform" method="POST">
 
-                    <h3>Intelligent Practice</h3>
+            <div id="selectpackage">
+                <form name="orderform" method="POST" tal:attributes="action string:${context/absolute_url}/${view/__name__}">
+
+                    <h2>Intelligent Practice</h2>
 
                     <fieldset>
                         <legend>
                             What subjects do you want to subscribe to?
                         </legend>
 
+                        <div class="pricinginfo">
+                            <strong>1</strong> subject @ <strong>R150</strong>/year
+                        </div>
+                        <div class="pricinginfo">
+                            <strong>2</strong> subjects @ <strong>R200</strong>/year
+                        </div>
                         <p>
-                            <input type="checkbox" name="practice_subjects" value="maths"/> Maths
-                            <input type="checkbox" name="practice_subjects" value="science"/> Science
+                            <input type="radio" name="practice_subjects" value="Maths"/> Maths
+                            <input type="radio" name="practice_subjects" value="Science"/> Science
+                            <input type="radio" name="practice_subjects" value="Maths,Science"/> Both Maths &amp; Science
                         </p>
                     </fieldset>
 
@@ -37,30 +45,51 @@
                         </p>
                     </fieldset>
 
+                    <h2>Textbooks</h2>
+
+
                     <fieldset>
                         <legend>Do you want a printed textbook for the selected subjects?</legend>
 
+                        <div class="pricinginfo">
+                            <strong>1st</strong> textbook @ <strong>R100</strong>
+                        </div>
+                        <div class="pricinginfo">
+                            <strong>2nd</strong> textbook for <strong>FREE</strong>
+                        </div>
                         <p>
 
                             <input type="radio" name="include_textbook" value="yes"/> Yes
-                            <input type="radio" name="include_textbook" value="No"/> No
+                            <input type="radio" name="include_textbook" value="no"/> No
 
                         </p>
                     </fieldset>
 
-                    <h3>Expert Answers</h3>
+                    <h2>Expert Answers</h2>
 
                     <fieldset>
-                        <legend>Do you want to subscribe to the Expert Answers service?</legend>
+                        <legend>Do you want to ask experts questions
+                        about the content in our books?</legend>
+                        <div class="pricinginfo">
+                            <strong>10</strong> questions @
+                            <strong>R25</strong>
+                        </div>
                         <p>
-                            <input type="radio" name="add_expert_answers" value="yes"/> Yes
-                            <input type="radio" name="add_expert_answers" value="no"/> No
+                            <input type="radio" name="include_expert_answers" value="yes"/> Yes
+                            <input type="radio" name="include_expert_answers" value="no"/> No
                         </p>
                     </fieldset>
 
+                    <div class="ordertotal">
+                        <div>
+                        Total = <span class="amount">R275.00</span>
+                        </div>
 
-                    <button type="submit" class="button generic no-icon small-caps" name="form-create-site" value="1">Place Order
-                    </button>
+                        <button type="submit" class="button generic no-icon small-caps" name="submit" value="1">Submit
+                        </button>
+                    </div>
+
+
                 </form>
             </div>
 
