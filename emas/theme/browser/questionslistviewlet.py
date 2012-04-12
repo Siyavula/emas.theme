@@ -14,19 +14,14 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
     """ Specialise the siyavula.what viewlet to check if the service is enabled.
     """
 
-    def allowQuestions(self):
-        """ Check against the members enabled services.
-        """
-        context = self.context
-        view = context.restrictedTraverse('@@enabled-services')
-        allowQuestions = False
-        if shasattr(context, 'allowQuestions'):
-            allowQuestions = getattr(context, 'allowQuestions')
-        return allowQuestions and view.answer_database_enabled
-
     def questions(self):
         """ Return all questions that have the current context set
             as 'relatedContent'.
+            If the user is not registered for the service, we still
+            return all the questions (and answers) that he owns.
+            That way, eventhough the service subscription has expired,
+            the user still has access to the questions and answers
+            for which he paid.
         """
         context = self.context
         uuid = IUUID(context)

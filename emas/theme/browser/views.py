@@ -34,7 +34,7 @@ ALLOWED_TYPES = ['Folder',
                  'rhaptos.compilation.compilation',
                 ]
 
-ANSWER_DATABASE =  'Access answer database'
+ANSWER_DATABASE = 'Access answer database'
 PRACTICE_SYSTEM = 'Access exercise content'
 ASK_QUESTIONS = 'Ask questions'
 SUBSCRIPTION_PERIOD = 30        #this value is specified in days
@@ -219,15 +219,18 @@ class EnabledServicesView(BrowserView):
         now = date.today()
         try:
             memberprop = SERVICE_MEMBER_PROP_MAP.get(service)
-            return now <= self.expirydate(memberprop) and True or False
+            expirydate = self.expirydate(memberprop)
+            # if there is no expiry date, the service has never been activated
+            if not expirydate:
+                return False 
+            return now <= expirydate and True or False
         except: 
             return False
 
     def expirydate(self, memberprop):
         pmt = getToolByName(self.context, 'portal_membership')
         member = pmt.getAuthenticatedMember()
-        regdate = member.getProperty(memberprop)
-        return regdate + timedelta(SUBSCRIPTION_PERIOD)
+        return member.getProperty(memberprop)
     
     @property
     def ask_expert_enabled(self):
