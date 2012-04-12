@@ -26,7 +26,7 @@
                             <strong>1</strong> subject @ <strong>R150</strong>/year
                         </div>
                         <div class="pricinginfo">
-                            <strong>2</strong> subjects @ <strong>R200</strong>/year
+                            <strong>2</strong> subjects @ <strong>R250</strong>/year
                         </div>
                         <p>
                             <input type="radio" name="practice_subjects" value="Maths"/> Maths
@@ -52,10 +52,10 @@
                         <legend>Do you want a printed textbook for the selected subjects?</legend>
 
                         <div class="pricinginfo">
-                            <strong>1st</strong> textbook @ <strong>R100</strong>
+                            <strong>1</strong> textbook @ <strong>R50</strong>
                         </div>
                         <div class="pricinginfo">
-                            <strong>2nd</strong> textbook for <strong>FREE</strong>
+                            <strong>2</strong> textbooks @ <strong>R100</strong>
                         </div>
                         <p>
 
@@ -82,7 +82,7 @@
 
                     <div class="ordertotal">
                         <div>
-                        Total = <span class="amount">R275.00</span>
+                        Total = <span id="totalcost" class="amount">R0.00</span>
                         </div>
 
                         <button type="submit" class="button generic no-icon small-caps" name="submit" value="1">Submit
