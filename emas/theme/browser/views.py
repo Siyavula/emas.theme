@@ -40,9 +40,9 @@ ASK_QUESTIONS = 'Ask questions'
 SUBSCRIPTION_PERIOD = 30        #this value is specified in days
 
 SERVICE_MEMBER_PROP_MAP = {
-    ANSWER_DATABASE: 'answerdatabase_registrationdate',
-    PRACTICE_SYSTEM: 'moreexercise_registrationdate',
-    ASK_QUESTIONS: 'askanexpert_registrationdate'
+    ANSWER_DATABASE: 'answerdatabase_expirydate',
+    PRACTICE_SYSTEM: 'moreexercise_expirydate',
+    ASK_QUESTIONS: 'askanexpert_expirydate'
 }
 
 def is_expert(context):
