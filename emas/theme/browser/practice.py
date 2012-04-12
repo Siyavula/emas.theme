@@ -28,10 +28,12 @@ class Practice(BrowserView):
 
     def __call__(self, *args, **kw):
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        if portal_state.anonymous():
+        if portal_state.anonymous() and \
+                self.request.REMOTE_ADDR not in ('127.0.0.1', 'localhost'):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
+        memberid = member.getId() or 'Anonymous'
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         urlparts = urlparse(settings.practiceurl)
@@ -46,7 +48,8 @@ class Practice(BrowserView):
             "Accept-Encoding": "identity",
             "Host": self.request.HTTP_HOST,
             "Connection": "close",
-            "Authorization": 'Basic ' + base64.b64encode(member.getId()),
+            "Authorization": 'Basic ' + base64.b64encode(memberid),
+            "Cookie": self.request.HTTP_COOKIE,
         }
 
         # Forward GET and POST requests; complain for all other request types

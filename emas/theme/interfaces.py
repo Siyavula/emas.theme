@@ -10,7 +10,7 @@ class IEmasSettings(Interface):
         annotator.
     """
 
-    order_email_addres = TextLine(
+    order_email_address = TextLine(
         title=_(u'Order Email Address'),
         description=_(u'The addres orders should be emailed to.'),
         required=True

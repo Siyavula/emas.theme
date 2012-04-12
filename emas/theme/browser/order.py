@@ -47,15 +47,20 @@ class OrderForm(BrowserView):
                     totalcost = 350
                 
             if include_expert_answers:
-                packages.append(u'Expert answers 10 of your questions')
+                packages.append(u'Expert answers to 10 of your questions')
                 totalcost += 25
 
             self.totalcost = totalcost
             self.packages = packages
+            state = self.context.restrictedTraverse('@@plone_portal_state')
+            self.username = state.member().getId()
+            self.send()
 
-        else:
-            return self.index()
-            
+        return self.index()
+
+    def ordersubmitted(self):
+        return self.request.has_key('ordersubmitted')
+
     def send(self): 
         """ Send Invoice to recipients
         """
@@ -72,22 +77,22 @@ class OrderForm(BrowserView):
             ( 'Siyavula Education', self.settings.order_email_address )
         )
 
-        send_to_address = formataddr((member.fullname, member.email))
+        send_to_address = formataddr((member.getProperty('fullname'),
+                                      member.getProperty('email')))
 
-        subject = 'Order from Everything %s Website' % \
-            state.navigation_root_title()
+        subject = 'Order from %s Website' % state.navigation_root_title()
 
         # Generate message and attach to mail message
         message = self.ordertemplate(
-            fullname=member.fullname,
-            sitename='Everything %s' % state.navigation_root_title(),
+            fullname=member.getProperty('fullname'),
+            sitename=state.navigation_root_title(),
             packages=self.packages,
-            cost=self.totalcost,
+            totalcost=self.totalcost,
             username=member.getId(),
             email=self.settings.order_email_address,
             phone=self.settings.order_phone_number
         )
 
-        portal.MailHost.send(message, send_from_address, send_to_address,
+        portal.MailHost.send(message, send_to_address, send_from_address,
                              subject)
 
