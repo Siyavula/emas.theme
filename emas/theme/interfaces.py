@@ -9,6 +9,20 @@ class IEmasSettings(Interface):
     """ So we can store some settings related to this product and the
         annotator.
     """
+
+    order_email_addres = TextLine(
+        title=_(u'Order Email Address'),
+        description=_(u'The addres orders should be emailed to.'),
+        required=True
+    )
+
+    order_phone_number = TextLine(
+        title=_(u'Order Phone Number'),
+        description=_(u'The number customers should phone if they have '
+                       'queries'),
+        required=True
+    )
+
     accountid = TextLine(
         title=_(u'Account ID'),
         description=_(u'Define the account it to use with the annotator.'),
