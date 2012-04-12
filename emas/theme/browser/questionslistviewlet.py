@@ -17,6 +17,7 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
     def questions(self):
         """ Return all questions that have the current context set
             as 'relatedContent'.
+
             If the user is not registered for the service, we still
             return all the questions (and answers) that he owns.
             That way, eventhough the service subscription has expired,
