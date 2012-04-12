@@ -22,7 +22,7 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
         allowQuestions = False
         if shasattr(context, 'allowQuestions'):
             allowQuestions = getattr(context, 'allowQuestions')
-        return allowQuestions and view.ask_expert_enabled
+        return allowQuestions and view.answer_database_enabled
 
     def questions(self):
         """ Return all questions that have the current context set

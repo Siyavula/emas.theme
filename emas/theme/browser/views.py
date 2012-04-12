@@ -37,6 +37,7 @@ ALLOWED_TYPES = ['Folder',
 ANSWER_DATABASE =  'Access answer database'
 PRACTICE_SYSTEM = 'Access exercise content'
 ASK_QUESTIONS = 'Ask questions'
+SUBSCRIPTION_PERIOD = 30        #this value is specified in days
 
 SERVICE_MEMBER_PROP_MAP = {
     ANSWER_DATABASE: 'answerdatabase_registrationdate',
@@ -215,13 +216,18 @@ class EnabledServicesView(BrowserView):
     def is_enabled(self, service):
         if is_expert(self.context): return True
 
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        now = datetime.now()
+        now = date.today()
         try:
-            return now <= self.expirydate and True or False
+            memberprop = SERVICE_MEMBER_PROP_MAP.get(service)
+            return now <= self.expirydate(memberprop) and True or False
         except: 
             return False
+
+    def expirydate(self, memberprop):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        regdate = member.getProperty(memberprop)
+        return regdate + timedelta(SUBSCRIPTION_PERIOD)
     
     @property
     def ask_expert_enabled(self):
@@ -234,11 +240,11 @@ class EnabledServicesView(BrowserView):
 
     @property
     def answer_database_enabled(self):
-        return self.ask_expert_enabled
+        return self.is_enabled(ANSWER_DATABASE)
 
     @property
     def more_exercise_enabled(self):
-        return self.is_enabled('moreexercise_registrationdate')
+        return self.is_enabled(PRACTICE_SYSTEM)
 
 class EmasTransactionView(BrowserView):
     def buyCredit(self, credits, description):
@@ -347,11 +353,9 @@ class PayserviceRegistrationBase(BrowserView):
     def is_registered(self):
         if self.is_expert: return True
 
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        regdate = member.getProperty(self.memberproperty)
+        now = datetime.now()
         try:
-            return regdate > NULLDATE and self.current_credits >= 0
+            return now <= self.expirydate and self.current_credits > 0
         except:
             return False
     
@@ -373,7 +377,7 @@ class PayserviceRegistrationBase(BrowserView):
         regdate = member.getProperty(self.memberproperty)
         if regdate == NULLDATE:
             regdate = date.today()
-        return regdate + timedelta(30)
+        return regdate + timedelta(SUBSCRIPTION_PERIOD)
 
     @property
     def current_credits(self):
@@ -477,7 +481,10 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
             return True
 
         now = datetime.now()
-        return 
+        try:
+            return now <= self.expirydate
+        except:
+            return False
 
 
 class PurchaseApproved(BrowserView):
