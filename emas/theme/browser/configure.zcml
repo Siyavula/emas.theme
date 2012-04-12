@@ -219,7 +219,7 @@
     <browser:page
         for="*"
         name="order"
-        template="templates/order.pt"
+        class=".order.OrderForm"
         permission="cmf.SetOwnProperties"
         />
 
