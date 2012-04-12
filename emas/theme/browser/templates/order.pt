@@ -22,7 +22,7 @@
 
                     <fieldset>
                         <legend>
-                            What subjects do you want to subscribe to?
+                            To which subjects would you like to subscribe?
                         </legend>
 
                         <div class="pricinginfo">
@@ -39,7 +39,7 @@
                     </fieldset>
 
                     <fieldset>
-                        <legend>What grade?</legend>
+                        <legend>Which grade?</legend>
 
                         <p>
                             <input type="radio" name="practice_grade" value="grade10"/> Grade 10
