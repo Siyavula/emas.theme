@@ -38,11 +38,26 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
     def set_answerdatabase_registrationdate(self, value):
         return self.context.setMemberProperties({'answerdatabase_registrationdate': value})
     answerdatabase_registrationdate = property(get_answerdatabase_registrationdate,
-                                            set_answerdatabase_registrationdate)
+                                               set_answerdatabase_registrationdate)
 
     def get_moreexercise_registrationdate(self):
         return self.context.getProperty('moreexercise_registrationdate', '')
     def set_moreexercise_registrationdate(self, value):
         return self.context.setMemberProperties({'moreexercise_registrationdate': value})
     moreexercise_registrationdate = property(get_moreexercise_registrationdate,
-                                            set_moreexercise_registrationdate)
+                                             set_moreexercise_registrationdate)
+
+    def get_moreexercise_expirydate(self):
+        return self.context.getProperty('moreexercise_expirydate', '')
+    def set_moreexercise_expirydate(self, value):
+        return self.context.setMemberProperties({'moreexercise_expirydate': value})
+    moreexercise_expirydate = property(get_moreexercise_expirydate,
+                                       set_moreexercise_expirydate)
+
+    def get_answerdatabase_expirydate(self):
+        return self.context.getProperty('answerdatabase_expirydate', '')
+    def set_answerdatabase_expirydate(self, value):
+        return self.context.setMemberProperties({'answerdatabase_expirydate': value})
+    answerdatabase_expirydate = property(get_answerdatabase_expirydate,
+                                         set_answerdatabase_expirydate)
+
