@@ -20,6 +20,8 @@ from Products.Archetypes.utils import shasattr
 from Products.CMFPlone.PloneBatch import Batch
 from Products.statusmessages.interfaces import IStatusMessage
 
+from siyavula.what.browser.views import AddQuestionView as AddQuestionBaseView
+
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme import MessageFactory as _
@@ -32,9 +34,10 @@ ALLOWED_TYPES = ['Folder',
                  'rhaptos.compilation.compilation',
                 ]
 
-ANSWER_DATABASE =  'Access answer database'
+ANSWER_DATABASE = 'Access answer database'
 PRACTICE_SYSTEM = 'Access exercise content'
 ASK_QUESTIONS = 'Ask questions'
+SUBSCRIPTION_PERIOD = 30        #this value is specified in days
 
 SERVICE_MEMBER_PROP_MAP = {
     ANSWER_DATABASE: 'answerdatabase_registrationdate',
@@ -213,13 +216,21 @@ class EnabledServicesView(BrowserView):
     def is_enabled(self, service):
         if is_expert(self.context): return True
 
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        regdate = member.getProperty(service)
+        now = date.today()
         try:
-            return regdate > NULLDATE and True or False
+            memberprop = SERVICE_MEMBER_PROP_MAP.get(service)
+            expirydate = self.expirydate(memberprop)
+            # if there is no expiry date, the service has never been activated
+            if not expirydate:
+                return False 
+            return now <= expirydate and True or False
         except: 
             return False
+
+    def expirydate(self, memberprop):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        return member.getProperty(memberprop)
     
     @property
     def ask_expert_enabled(self):
@@ -232,11 +243,11 @@ class EnabledServicesView(BrowserView):
 
     @property
     def answer_database_enabled(self):
-        return self.ask_expert_enabled
+        return self.is_enabled(ANSWER_DATABASE)
 
     @property
     def more_exercise_enabled(self):
-        return self.is_enabled('moreexercise_registrationdate')
+        return self.is_enabled(PRACTICE_SYSTEM)
 
 class EmasTransactionView(BrowserView):
     def buyCredit(self, credits, description):
@@ -345,11 +356,9 @@ class PayserviceRegistrationBase(BrowserView):
     def is_registered(self):
         if self.is_expert: return True
 
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        regdate = member.getProperty(self.memberproperty)
+        now = datetime.now()
         try:
-            return regdate > NULLDATE and self.current_credits >= 0
+            return now <= self.expirydate and self.current_credits > 0
         except:
             return False
     
@@ -371,7 +380,7 @@ class PayserviceRegistrationBase(BrowserView):
         regdate = member.getProperty(self.memberproperty)
         if regdate == NULLDATE:
             regdate = date.today()
-        return regdate + timedelta(30)
+        return regdate + timedelta(SUBSCRIPTION_PERIOD)
 
     @property
     def current_credits(self):
@@ -474,7 +483,11 @@ class RegisterToAccessAnswerDatabaseView(PayserviceRegistrationBase):
         if self.is_expert:
             return True
 
-        return self.current_credits > 0
+        now = datetime.now()
+        try:
+            return now <= self.expirydate
+        except:
+            return False
 
 
 class PurchaseApproved(BrowserView):
@@ -512,6 +525,30 @@ class PurchaseApproved(BrowserView):
     @property
     def memberproperty(self):
         return SERVICE_MEMBER_PROP_MAP[self.servicename]
+
+
+class AddQuestionView(AddQuestionBaseView):
+    """ Specialise in order to enchance the JSON return.
+    """
+
+    def addQuestionJSON(self):
+        self.request.response.setHeader('X-Theme-Disabled', 'True')
+        question = self.addQuestion() 
+        message = "Question %s was added" %question.text
+        view = question.restrictedTraverse('@@render-question')
+        html = view()
+        result = 'success'
+        credits = self.getCredits()
+        return json.dumps({'result' : result,
+                           'message': message,
+                           'credits': credits,
+                           'html'   : html})
+
+    def getCredits(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
+        return current_credits
 
 
 class RequireLogin(BrowserView):

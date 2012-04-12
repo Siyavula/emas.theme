@@ -65,11 +65,22 @@ class IEmasUserDataSchema(IUserDataSchema):
     )
 
     moreexercise_registrationdate = Date(
-        title=_(u"label_moreexercise_database",
+        title=_(u"label_moreexercise_registrationdate",
                 default="More exercise - registration date."),
         required=False,
     )
 
+    answerdatabase_expirydate = Date(
+        title=_(u"label_answerdatebase_expirydate",
+                default="Answer datebase - expiry date."),
+        required=False,
+    )
+
+    moreexercise_expirydate = Date(
+        title=_(u"label_moreexercise_expirydate",
+                default="More exercise - expiry date."),
+        required=False,
+    )
     
 
 class UserDataSchemaProvider(object):

@@ -34,6 +34,8 @@ newSecurityManager(None, user.__of__(app.acl_users))
 properties = {'askanexpert_registrationdate': NULLDATE,
               'answerdatabase_registrationdate': NULLDATE,
               'moreexercise_registrationdate': NULLDATE,
+              'moreexercise_expirydate': NULLDATE,
+              'answerdatabase_expirydate': NULLDATE,
               }
 
 for member in portal.portal_membership.listMembers():
