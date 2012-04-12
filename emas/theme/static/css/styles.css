@@ -482,6 +482,9 @@ section.packages table td.price span {
 #selectpackage strong {
     color: #CC0000;
 }
+#selectpackage li {
+    font-weight: bold;
+}
 
 #selectpackage input {
     margin-left: 1em;
@@ -550,3 +553,10 @@ div.ordertotal span.amount {
     text-align: right;
     color: #008FB4;
 }
+
+#content pre.bankdetails {
+    background-color: transparent;
+    color: black;
+    font-size: 100%;
+}
+
