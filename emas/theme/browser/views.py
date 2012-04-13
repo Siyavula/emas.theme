@@ -47,9 +47,9 @@ SERVICE_MEMBER_PROP_MAP = {
 
 def is_expert(context):
     # If the current user has 'siyavula.what.AddAnswer' permission
-    # on the current they are considered experts and don't have to
+    # on the context they are considered experts and don't have to
     # register to use the payservices.
-    permission = 'siyavula.what.AddAnswer'
+    permission = 'Siyavula What: Add Answer'
     pmt = getToolByName(context, 'portal_membership')
     return pmt.checkPermission(permission, context) and True or False
 
