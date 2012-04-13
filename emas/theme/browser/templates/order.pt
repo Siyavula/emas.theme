@@ -85,10 +85,10 @@
 
                     <div class="ordertotal">
                         <div>
-                        Total = <span id="totalcost" class="amount">R0.00</span>
+                        Total = <span id="totalcost" class="amount">R0</span>
                         </div>
 
-                        <button type="submit" class="button generic no-icon small-caps" name="submit" value="1">Submit
+                        <button type="submit" class="button generic no-icon small-caps allowMultiSubmit" name="submit" value="1">Submit
                         </button>
                     </div>
 
@@ -105,7 +105,7 @@
                 </ol>
 
                 <p>
-                The total cost of your order is: <strong>R<tal:cost tal:replace="view/totalcost"/>.00</strong>
+                The total cost of your order is: <strong>R<tal:cost tal:replace="view/totalcost"/></strong>
                 </p>
 
                 <p>You will receive an email to confirm your order. The
