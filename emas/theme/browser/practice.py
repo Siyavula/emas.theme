@@ -90,6 +90,8 @@ class Practice(BrowserView):
         elif response.status == 302: # Found
             urlparts = urlparse(response.msg.get('location'))
             redirto = '%s%s' % (self.context.absolute_url(), urlparts.path)
+            if urlparts.fragment:
+                redirto += '#%s' % urlparts.fragment
             return self.request.RESPONSE.redirect(redirto)
         else:
             return self.request.RESPONSE.unauthorized()
