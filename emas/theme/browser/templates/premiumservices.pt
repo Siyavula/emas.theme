@@ -16,7 +16,7 @@
 
         <p>
             <a tal:condition="view/trialuser" tal:attributes="href string:${portalstate/portal_url}/order">Order</a>
-            <a tal:condition="not:view/trialuser" tal:attributes="href string:${portalstate/portal_url}">Top-up</a>
+            <a tal:condition="not:view/trialuser" tal:attributes="href string:${portalstate/portal_url}/order">Top-up</a>
         </p>
     </tal:anonymous>
     <tal:anonymous tal:condition="portalstate/anonymous">
