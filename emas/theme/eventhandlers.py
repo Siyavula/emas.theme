@@ -25,6 +25,14 @@ def onMemberJoined(obj, event):
     # 30 days free trial with 2 questions
     today = datetime.date.today()
     trialend = today + datetime.timedelta(days=30)
+    intelligent_practice_access = (
+        'maths grade 10',
+        'maths grade 11',
+        'maths grade 12',
+        'science grade 10',
+        'science grade 11',
+        'science grade 12',
+    )
 
     # Make sure the user's service registration dates are correct
     properties = {'askanexpert_registrationdate': today,
@@ -33,6 +41,7 @@ def onMemberJoined(obj, event):
                   'answerdatabase_expirydate': trialend,
                   'moreexercise_expirydate': trialend,
                   'credits': 2,
+                  'intelligent_practice_access': intelligent_practice_access,
                  }
     propsheet = obj.getPropertysheet('mutable_properties')
     for key, value in properties.items():
