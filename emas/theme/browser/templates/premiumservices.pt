@@ -3,7 +3,7 @@
     <tal:anonymous tal:condition="not:portalstate/anonymous">
         <p tal:condition="view/practice_enabled">
             <a tal:attributes="href string:${context/absolute_url}/@@practice">Intelligent Practice</a><br/>
-            (Expires on <span tal:replace="view/practice_expirydate">12 Jan 2013</span>)
+            (<span tal:condition="view/trialuser">Free trial:</span> Expires on <span tal:replace="view/practice_expirydate">12 Jan 2013</span>)
         </p>
 
         <p tal:condition="view/askquestions_enabled">
@@ -15,7 +15,8 @@
         </p>
 
         <p>
-            <a tal:attributes="href string:${context/absolute_url}/order">Top-up</a>
+            <a tal:condition="view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Order</a>
+            <a tal:condition="not:view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Top-up</a>
         </p>
     </tal:anonymous>
     <tal:anonymous tal:condition="portalstate/anonymous">

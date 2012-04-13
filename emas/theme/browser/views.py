@@ -122,6 +122,8 @@ class PremiumServicesViewlet(ViewletBase):
         self.askquestions_enabled = services.ask_expert_enabled
         self.questions_left = services.questions_left
         self.context_allows_questions = services.context_allows_questions
+        portalstate = self.context.restrictedTraverse('@@plone_portal_state')
+        self.trialuser = portalstate.member().getProperty('trialuser')
 
 class SearchView(BrowserView):
     """ Combine searching for shortcode and searchabletext
