@@ -10,6 +10,13 @@ class IEmasSettings(Interface):
         annotator.
     """
 
+    order_sequence_number = Int(
+        title=_(u'Order sequence number'),
+        description=_(u'Order sequence number.'),
+        default=0,
+        required=True
+    )
+
     order_email_address = TextLine(
         title=_(u'Order Email Address'),
         description=_(u'The addres orders should be emailed to.'),
