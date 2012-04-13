@@ -21,4 +21,7 @@
     </property>
     <property name="intelligent_practice_access" type="lines">
     </property>
+    <property name="trialuser" type="boolean">
+        True
+    </property>
 </object>

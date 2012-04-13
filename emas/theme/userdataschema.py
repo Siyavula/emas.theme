@@ -1,5 +1,5 @@
 from zope.interface import implements
-from zope.schema import Int, Choice, TextLine, Date, List
+from zope.schema import Int, Choice, TextLine, Date, List, Bool
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.app.users.userdataschema import IUserDataSchemaProvider
 from plone.app.users.userdataschema import IUserDataSchema
@@ -60,6 +60,12 @@ class IEmasUserDataSchema(IUserDataSchema):
         vocabulary=provinces,
         required=False,
         )
+
+    trialuser = Bool(
+        title=_(u'label_trialuser', default=u'Trial User'),
+        required=True,
+        default=True,
+    )
 
     askanexpert_registrationdate = Date(
         title=_(u"label_askanexpert_registrationdate",
