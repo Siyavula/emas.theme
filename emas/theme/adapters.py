@@ -67,3 +67,10 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self.context.setMemberProperties({'intelligent_practice_access': value})
     intelligent_practice_access = property(get_intelligent_practice_access,
                                            set_intelligent_practice_access)
+
+    def get_trialuser(self):
+        return self.context.getProperty('trialuser', '')
+    def set_trialuser(self, value):
+        return self.context.setMemberProperties({'trialuser': value})
+    trialuser = property(get_trialuser, set_trialuser)
+

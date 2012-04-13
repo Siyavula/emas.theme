@@ -1,0 +1,36 @@
+<div class="premiumservices-panel"
+    tal:define="portalstate context/@@plone_portal_state">
+    <tal:anonymous tal:condition="not:portalstate/anonymous">
+        <p tal:condition="view/practice_enabled">
+            <a tal:attributes="href string:${portalstate/portal_url}/@@practice">Intelligent Practice</a><br/>
+            (<span tal:condition="view/trialuser">Free trial:</span> Expires on <span tal:replace="view/practice_expirydate">12 Jan 2013</span>)
+        </p>
+
+        <p tal:condition="view/askquestions_enabled">
+            <span tal:condition="not:view/context_allows_questions">Ask
+            a question <em>is only enabled inside a chapter</em>
+            </span>
+            <a tal:condition="view/context_allows_questions" tal:attributes="href string:${context/absolute_url}#commenting">Ask a question</a><br/>
+            (<span tal:replace="view/questions_left">10</span> questions left)
+        </p>
+
+        <p>
+            <a tal:condition="view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Order</a>
+            <a tal:condition="not:view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Top-up</a>
+        </p>
+    </tal:anonymous>
+    <tal:anonymous tal:condition="portalstate/anonymous">
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/pricing">Pricing</a>
+        </p>
+
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/register">Sign
+            up for a free trial</a>
+        </p>
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/login">Already signed up? Log in</a>
+        </p>
+    </tal:anonymous>
+</div>
+<a class="premiumservices-trigger" href="#">Premium Services</a>

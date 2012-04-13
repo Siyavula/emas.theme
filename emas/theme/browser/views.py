@@ -107,6 +107,23 @@ class AnnotatorHelpViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
     index = ViewPageTemplateFile('annotatorhelp.pt')
 
+class PremiumServicesViewlet(ViewletBase):
+    """ Adds a panel for premium services. """
+    index = ViewPageTemplateFile('templates/premiumservices.pt')
+
+    def update(self):
+        super(PremiumServicesViewlet, self).update()
+        services = self.context.restrictedTraverse('@@enabled-services')
+        self.practice_enabled = services.is_enabled(PRACTICE_SYSTEM)
+        memberprop = SERVICE_MEMBER_PROP_MAP.get(PRACTICE_SYSTEM)
+        d = services.expirydate(memberprop)
+        if d is not None:
+            self.practice_expirydate = d.strftime('%d %B %Y')
+        self.askquestions_enabled = services.ask_expert_enabled
+        self.questions_left = services.questions_left
+        self.context_allows_questions = services.context_allows_questions
+        portalstate = self.context.restrictedTraverse('@@plone_portal_state')
+        self.trialuser = portalstate.member().getProperty('trialuser')
 
 class SearchView(BrowserView):
     """ Combine searching for shortcode and searchabletext
@@ -242,12 +259,28 @@ class EnabledServicesView(BrowserView):
         return current_credits > 0
 
     @property
+    def questions_left(self):
+        pmt = getToolByName(self.context, 'portal_membership')
+        member = pmt.getAuthenticatedMember()
+        current_credits = member.getProperty('credits', 0)
+        return current_credits
+
+    @property
     def answer_database_enabled(self):
         return self.is_enabled(ANSWER_DATABASE)
 
     @property
     def more_exercise_enabled(self):
         return self.is_enabled(PRACTICE_SYSTEM)
+
+    @property
+    def context_allows_questions(self):
+        context = self.context
+        allowQuestions = False
+        if shasattr(context, 'allowQuestions'):
+            allowQuestions = getattr(context, 'allowQuestions')
+        return allowQuestions and context.portal_type in ALLOWED_TYPES
+
 
 class EmasTransactionView(BrowserView):
     def buyCredit(self, credits, description):

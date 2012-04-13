@@ -1,5 +1,5 @@
 from zope.interface import implements
-from zope.schema import Int, Choice, TextLine, Date, List
+from zope.schema import Int, Choice, TextLine, Date, List, Bool
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.app.users.userdataschema import IUserDataSchemaProvider
 from plone.app.users.userdataschema import IUserDataSchema
@@ -26,12 +26,12 @@ provinces = SimpleVocabulary([
     ])
 
 access_types = SimpleVocabulary([
-    SimpleTerm(value=u'maths grade 10', title=_(u'Maths grade 10')),
-    SimpleTerm(value=u'maths grade 11', title=_(u'Maths grade 11')),
-    SimpleTerm(value=u'maths grade 12', title=_(u'Maths grade 12')),
-    SimpleTerm(value=u'science grade 10', title=_(u'Science grade 10')),
-    SimpleTerm(value=u'science grade 11', title=_(u'Science grade 11')),
-    SimpleTerm(value=u'science grade 12', title=_(u'Science grade 12')),
+    SimpleTerm(value=u'maths-grade-10', title=_(u'Maths grade 10')),
+    SimpleTerm(value=u'maths-grade-11', title=_(u'Maths grade 11')),
+    SimpleTerm(value=u'maths-grade-12', title=_(u'Maths grade 12')),
+    SimpleTerm(value=u'science-grade-10', title=_(u'Science grade 10')),
+    SimpleTerm(value=u'science-grade-11', title=_(u'Science grade 11')),
+    SimpleTerm(value=u'science-grade-12', title=_(u'Science grade 12')),
     ])
 
 class IEmasUserDataSchema(IUserDataSchema):
@@ -60,6 +60,12 @@ class IEmasUserDataSchema(IUserDataSchema):
         vocabulary=provinces,
         required=False,
         )
+
+    trialuser = Bool(
+        title=_(u'label_trialuser', default=u'Trial User'),
+        required=True,
+        default=True,
+    )
 
     askanexpert_registrationdate = Date(
         title=_(u"label_askanexpert_registrationdate",

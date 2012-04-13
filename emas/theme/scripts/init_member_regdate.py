@@ -3,6 +3,7 @@
 """
 import os
 import sys
+import datetime
 import transaction
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
@@ -31,11 +32,27 @@ app = makerequest.makerequest(app)
 user = app.acl_users.getUser('admin')
 newSecurityManager(None, user.__of__(app.acl_users))
 
-properties = {'askanexpert_registrationdate': NULLDATE,
-              'answerdatabase_registrationdate': NULLDATE,
-              'moreexercise_registrationdate': NULLDATE,
-              'moreexercise_expirydate': NULLDATE,
-              'answerdatabase_expirydate': NULLDATE,
+# 30 days free trial with 2 questions
+today = datetime.date.today()
+trialend = today + datetime.timedelta(days=30)
+
+intelligent_practice_access = (
+    'maths-grade-10',
+    'maths-grade-11',
+    'maths-grade-12',
+    'science-grade-10',
+    'science-grade-11',
+    'science-grade-12',
+)
+
+properties = {'askanexpert_registrationdate': today,
+              'answerdatabase_registrationdate': today,
+              'moreexercise_registrationdate': today,
+              'moreexercise_expirydate': trialend,
+              'answerdatabase_expirydate': trialend,
+              'credits': 2,
+              'intelligent_practice_access': intelligent_practice_access,
+              'trialuser': True,
               }
 
 for member in portal.portal_membership.listMembers():

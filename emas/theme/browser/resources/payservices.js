@@ -97,3 +97,11 @@ function onServiceRegistered(data, textStatus, jqXHR) {
     jQuery('div#status-message').html(data.message);
     jQuery('div.payservice-form').remove();
 }
+
+$(function($) {
+    $(".premiumservices-trigger").click(function(){
+        $(".premiumservices-panel").toggle("fast");
+        $(this).toggleClass("active");
+        return false;
+    });
+});
