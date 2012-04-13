@@ -54,6 +54,12 @@ class OrderForm(BrowserView):
             self.packages = packages
             state = self.context.restrictedTraverse('@@plone_portal_state')
             self.username = state.member().getId()
+            registry = queryUtility(IRegistry)
+            self.settings = registry.forInterface(IEmasSettings)
+            ordernumber = self.settings.order_sequence_number + 1
+            self.settings.order_sequence_number = ordernumber
+            self.ordernumber = '%04d' % ordernumber
+
             self.send()
 
         return self.index()
@@ -70,16 +76,10 @@ class OrderForm(BrowserView):
         host = portal.MailHost
         encoding = portal.getProperty('email_charset')
 
-        registry = queryUtility(IRegistry)
-        self.settings = registry.forInterface(IEmasSettings)
-
         send_from_address = formataddr(
             ( 'Siyavula Education', self.settings.order_email_address )
         )
         
-        ordernumber = self.settings.order_sequence_number + 1
-        self.settings.order_sequence_number = ordernumber
-
         send_to_address = formataddr((member.getProperty('fullname'),
                                       member.getProperty('email')))
 
@@ -92,7 +92,7 @@ class OrderForm(BrowserView):
             packages=self.packages,
             totalcost=self.totalcost,
             username=member.getId(),
-            ordernumber=ordernumber,
+            ordernumber=self.ordernumber,
             email=self.settings.order_email_address,
             phone=self.settings.order_phone_number
         )
@@ -100,3 +100,6 @@ class OrderForm(BrowserView):
         portal.MailHost.send(message, send_to_address, send_from_address,
                              subject)
 
+        # Siyavula's copy
+        portal.MailHost.send(message, send_from_address, send_from_address,
+                             subject)

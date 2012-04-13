@@ -97,6 +97,7 @@
             </div>
 
             <div id="selectpackage" tal:condition="view/ordersubmitted">
+                <h3>Order Number: <span tal:replace="view/ordernumber">1000</span></h3>
                 <p>Thanks for your order!</p>
 
                 <p>You have ordered the following:
@@ -125,7 +126,7 @@ Account name:   Siyavula Education
 Bank:           Nedbank
 Account number: 1018177434
 Branch code:    198765
-Reference:      <tal:username tal:replace="view/username"/>
+Reference:      <tal:username tal:replace="view/ordernumber"/>
                 </pre>
 
             </div>
