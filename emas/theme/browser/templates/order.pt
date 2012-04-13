@@ -14,7 +14,7 @@
         <div id="content-core">
 
             <div id="selectpackage" tal:condition="not:view/ordersubmitted">
-                <form name="orderform" method="POST" tal:attributes="action string:${context/absolute_url}/${view/__name__}">
+                <form id="orderform" name="orderform" method="POST" tal:attributes="action string:${context/absolute_url}/${view/__name__}">
 
                     <input type="hidden" name="ordersubmitted" value="true"/>
 
