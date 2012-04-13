@@ -26,12 +26,12 @@ provinces = SimpleVocabulary([
     ])
 
 access_types = SimpleVocabulary([
-    SimpleTerm(value=u'maths grade 10', title=_(u'Maths grade 10')),
-    SimpleTerm(value=u'maths grade 11', title=_(u'Maths grade 11')),
-    SimpleTerm(value=u'maths grade 12', title=_(u'Maths grade 12')),
-    SimpleTerm(value=u'science grade 10', title=_(u'Science grade 10')),
-    SimpleTerm(value=u'science grade 11', title=_(u'Science grade 11')),
-    SimpleTerm(value=u'science grade 12', title=_(u'Science grade 12')),
+    SimpleTerm(value=u'maths-grade-10', title=_(u'Maths grade 10')),
+    SimpleTerm(value=u'maths-grade-11', title=_(u'Maths grade 11')),
+    SimpleTerm(value=u'maths-grade-12', title=_(u'Maths grade 12')),
+    SimpleTerm(value=u'science-grade-10', title=_(u'Science grade 10')),
+    SimpleTerm(value=u'science-grade-11', title=_(u'Science grade 11')),
+    SimpleTerm(value=u'science-grade-12', title=_(u'Science grade 12')),
     ])
 
 class IEmasUserDataSchema(IUserDataSchema):

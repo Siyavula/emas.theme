@@ -26,12 +26,12 @@ def onMemberJoined(obj, event):
     today = datetime.date.today()
     trialend = today + datetime.timedelta(days=30)
     intelligent_practice_access = (
-        'maths grade 10',
-        'maths grade 11',
-        'maths grade 12',
-        'science grade 10',
-        'science grade 11',
-        'science grade 12',
+        'maths-grade-10',
+        'maths-grade-11',
+        'maths-grade-12',
+        'science-grade-10',
+        'science-grade-11',
+        'science-grade-12',
     )
 
     # Make sure the user's service registration dates are correct
