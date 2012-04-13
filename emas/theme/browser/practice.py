@@ -33,6 +33,11 @@ class Practice(BrowserView):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
+        if member:
+            accessto = ','.join(
+                member.getProperty('intelligent_practice_access'))
+        else:
+            accessto = ''
         memberid = member.getId() or 'Anonymous'
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
@@ -50,6 +55,7 @@ class Practice(BrowserView):
             "Connection": "close",
             "Authorization": 'Basic ' + base64.b64encode(memberid),
             "Cookie": self.request.HTTP_COOKIE,
+            "X-Access-To": accessto,
         }
 
         # Forward GET and POST requests; complain for all other request types
