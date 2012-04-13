@@ -61,3 +61,9 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
     answerdatabase_expirydate = property(get_answerdatabase_expirydate,
                                          set_answerdatabase_expirydate)
 
+    def get_intelligent_practice_access(self):
+        return self.context.getProperty('intelligent_practice_access', '')
+    def set_intelligent_practice_access(self, value):
+        return self.context.setMemberProperties({'intelligent_practice_access': value})
+    intelligent_practice_access = property(get_intelligent_practice_access,
+                                           set_intelligent_practice_access)

@@ -1,5 +1,5 @@
 from zope.interface import implements
-from zope.schema import Int, Choice, TextLine, Date
+from zope.schema import Int, Choice, TextLine, Date, List
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.app.users.userdataschema import IUserDataSchemaProvider
 from plone.app.users.userdataschema import IUserDataSchema
@@ -23,6 +23,15 @@ provinces = SimpleVocabulary([
     SimpleTerm(value=u'Northern Cape', title=_(u'Northern Cape')),
     SimpleTerm(value=u'North West', title=_(u'North West')),
     SimpleTerm(value=u'Western Cape', title=_(u'Western Cape')),
+    ])
+
+access_types = SimpleVocabulary([
+    SimpleTerm(value=u'maths grade 10', title=_(u'Maths grade 10')),
+    SimpleTerm(value=u'maths grade 11', title=_(u'Maths grade 11')),
+    SimpleTerm(value=u'maths grade 12', title=_(u'Maths grade 12')),
+    SimpleTerm(value=u'science grade 10', title=_(u'Science grade 10')),
+    SimpleTerm(value=u'science grade 11', title=_(u'Science grade 11')),
+    SimpleTerm(value=u'science grade 12', title=_(u'Science grade 12')),
     ])
 
 class IEmasUserDataSchema(IUserDataSchema):
@@ -79,6 +88,13 @@ class IEmasUserDataSchema(IUserDataSchema):
     moreexercise_expirydate = Date(
         title=_(u"label_moreexercise_expirydate",
                 default="More exercise - expiry date."),
+        required=False,
+    )
+
+    intelligent_practice_access = List(
+        title=_(u"label_intelligent_practice_access",
+                default="Intelligent practice access."),
+        value_type = Choice(vocabulary=access_types),
         required=False,
     )
     

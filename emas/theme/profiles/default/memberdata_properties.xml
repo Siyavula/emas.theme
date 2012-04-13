@@ -19,4 +19,6 @@
     <property name="moreexercise_expirydate" type="date">
         1970/01/01
     </property>
+    <property name="intelligent_practice_access" type="lines">
+    </property>
 </object>
