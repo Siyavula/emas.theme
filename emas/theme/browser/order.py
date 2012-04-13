@@ -19,6 +19,7 @@ class OrderForm(BrowserView):
 
     index = ViewPageTemplateFile('templates/order.pt')
     ordertemplate = ViewPageTemplateFile('templates/ordermailtemplate.pt')
+    ordernotification = ViewPageTemplateFile('templates/ordernotification.pt')
 
     def __call__(self):
         if self.request.has_key('submit'):
@@ -99,6 +100,21 @@ class OrderForm(BrowserView):
 
         portal.MailHost.send(message, send_to_address, send_from_address,
                              subject)
+
+        subject = 'New Order placed on %s Website' % \
+            state.navigation_root_title()
+
+        # Generate order notification
+        message = self.ordernotification(
+            fullname=member.getProperty('fullname'),
+            sitename=state.navigation_root_title(),
+            packages=self.packages,
+            totalcost=self.totalcost,
+            username=member.getId(),
+            ordernumber=self.ordernumber,
+            email=self.settings.order_email_address,
+            phone=self.settings.order_phone_number
+        )
 
         # Siyavula's copy
         portal.MailHost.send(message, send_from_address, send_from_address,
