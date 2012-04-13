@@ -42,6 +42,7 @@ def onMemberJoined(obj, event):
                   'moreexercise_expirydate': trialend,
                   'credits': 2,
                   'intelligent_practice_access': intelligent_practice_access,
+                  'trialuser': True, 
                  }
     propsheet = obj.getPropertysheet('mutable_properties')
     for key, value in properties.items():
