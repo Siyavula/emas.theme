@@ -18,7 +18,7 @@ function ordertotal() {
     if (include_expert_answers) {
         totalcost += 25;
     }
-    $('#totalcost').html(totalcost.toFixed(2));
+    $('#totalcost').html("R"+totalcost);
 }
 
 $(function($) {
@@ -44,7 +44,7 @@ $(function($) {
             alert('You have to specify which subjects and which grade you would like to subscribe to before you can continue');
             result = false;
         }
-        if (result == true && parseInt($('#totalcost').html()) == 0) {
+        if (result == true && $('#totalcost').html() == "R0") {
             alert('You have to order something before you can continue');
             result = false;
         }
