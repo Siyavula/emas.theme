@@ -2,11 +2,16 @@
     tal:define="portalstate context/@@plone_portal_state">
     <tal:anonymous tal:condition="not:portalstate/anonymous">
         <p tal:condition="view/practice_enabled">
-            <a tal:attributes="href string:${context/absolute_url}/@@practice">Intelligent Practice</a>
+            <a tal:attributes="href string:${context/absolute_url}/@@practice">Intelligent Practice</a><br/>
+            (Expires on <span tal:replace="view/practice_expirydate">12 Jan 2013</span>)
         </p>
 
         <p tal:condition="view/askquestions_enabled">
-            <a tal:attributes="href string:${request/URL}#commenting">Ask a question</a>
+            <span tal:condition="not:view/context_allows_questions">Ask
+            a question <em>is only enabled inside a chapter</em>
+            </span>
+            <a tal:condition="view/context_allows_questions" tal:attributes="href string:${context/absolute_url}#commenting">Ask a question</a><br/>
+            (<span tal:replace="view/questions_left">10</span> questions left)
         </p>
 
         <p>
