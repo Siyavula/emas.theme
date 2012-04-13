@@ -99,7 +99,7 @@ class OrderForm(BrowserView):
         )
 
         portal.MailHost.send(message, send_to_address, send_from_address,
-                             subject)
+                             subject, charset=encoding)
 
         subject = 'New Order placed on %s Website' % \
             state.navigation_root_title()
@@ -118,4 +118,4 @@ class OrderForm(BrowserView):
 
         # Siyavula's copy
         portal.MailHost.send(message, send_from_address, send_from_address,
-                             subject)
+                             subject, charset=encoding)
