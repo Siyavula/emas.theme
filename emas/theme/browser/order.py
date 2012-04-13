@@ -76,6 +76,9 @@ class OrderForm(BrowserView):
         send_from_address = formataddr(
             ( 'Siyavula Education', self.settings.order_email_address )
         )
+        
+        ordernumber = self.settings.order_sequence_number + 1
+        self.settings.order_sequence_number = ordernumber
 
         send_to_address = formataddr((member.getProperty('fullname'),
                                       member.getProperty('email')))
@@ -89,6 +92,7 @@ class OrderForm(BrowserView):
             packages=self.packages,
             totalcost=self.totalcost,
             username=member.getId(),
+            ordernumber=ordernumber,
             email=self.settings.order_email_address,
             phone=self.settings.order_phone_number
         )

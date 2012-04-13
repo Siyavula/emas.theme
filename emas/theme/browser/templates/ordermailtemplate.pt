@@ -15,7 +15,7 @@ Account name: Siyavula Education
 Bank: Nedbank
 Account number: 1018177434
 Branch code:198765
-Reference: <tal:username tal:replace="options/username"/>
+Reference: <tal:username tal:replace="python:'%05d' %options['ordernumber']"/>
 
 Please email proof of payment to <tal:email tal:replace="options/email"/>
 
