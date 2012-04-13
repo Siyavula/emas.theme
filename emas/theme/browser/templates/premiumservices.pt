@@ -11,7 +11,7 @@
             a question <em>is only enabled inside a chapter</em>
             </span>
             <a tal:condition="view/context_allows_questions" tal:attributes="href string:${context/absolute_url}#commenting">Ask a question</a><br/>
-            (<span tal:replace="view/questions_left">10</span> questions left)
+            (<span id="number-of-questions-left" tal:content="view/questions_left">10</span> questions left)
         </p>
 
         <p>
