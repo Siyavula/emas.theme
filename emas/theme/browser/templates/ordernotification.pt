@@ -1,0 +1,19 @@
+A new order was just placed by <span tal:replace="options/fullname">John</span>
+
+Order Number:  <tal:ordernumber tal:replace="options/ordernumber"/>
+Username: <tal:username tal:replace="options/username"/>
+
+The following packages was ordered <span tal:replace="options/sitename">Everything Maths</span> website:
+<tal:packages tal:repeat="package options/packages">-  <tal:package tal:replace="package"/></tal:packages>
+
+The total cost of the order is: R<tal:cost tal:replace="options/totalcost"/>.00
+
+To activate this user's services once payment has been made, simply
+update the fields on the user's profile:
+
+    "Questions"
+    "More exercise - expiry date" 
+    "Intelligent practice access"
+
+Link to user's profile:
+http://emas.siyavula.com/@@user-information?userid=<tal:username tal:replace="options/username"/>
