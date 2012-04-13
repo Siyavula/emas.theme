@@ -56,6 +56,7 @@ class Practice(BrowserView):
             "Authorization": 'Basic ' + base64.b64encode(memberid),
             "Cookie": self.request.HTTP_COOKIE,
             "X-Access-To": accessto,
+            "Referer": self.request.HTTP_REFERER,
         }
 
         # Forward GET and POST requests; complain for all other request types
