@@ -561,7 +561,7 @@ div.ordertotal span.amount {
 }
 
 .premiumservices-panel {
-    font-size: 14px;
+    font-size: 0.8em;
     position: fixed;
     top: 330px;
     right: 0;
@@ -581,9 +581,7 @@ div.ordertotal span.amount {
 
 .premiumservices-panel p {
     margin: 0 0 15px 0;
-    padding: 0.5em;
     color: #000000;
-    font-size: 120%;
 }
 
 .premiumservices-panel a, .premiumservices-panel a:visited {
