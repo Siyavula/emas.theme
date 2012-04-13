@@ -560,3 +560,78 @@ div.ordertotal span.amount {
     font-size: 100%;
 }
 
+.premiumservices-panel {
+    font-size: 14px;
+    position: fixed;
+    top: 330px;
+    right: 0;
+    display: none;
+    background: #FFFFFF;
+    border: 1px solid #111111;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    width: 200px;
+    height: auto;
+    padding: 60px 30px 30px 30px;
+    opacity: 0.95;
+    z-index: 10;
+}
+
+.premiumservices-panel p {
+    margin: 0 0 15px 0;
+    padding: 0.5em;
+    color: #000000;
+    font-size: 120%;
+}
+
+.premiumservices-panel a, .premiumservices-panel a:visited {
+    margin: 0;
+    padding: 0;
+    border-bottom: 0.1em solid #CCCCCC;
+    color: #205C90;
+    white-space: nowrap;
+}
+
+.premiumservices-panel a:hover, .premiumservices-panel a:visited:hover {
+    color: #64735B;
+    border-bottom: 1px solid #ffffff;
+}
+
+.premiumservices-panel li {
+    display: list-item;
+}
+
+a.premiumservices-trigger {
+    position: fixed;
+    text-decoration: none;
+    top: 300px;
+    right: 0;
+    font-size: 14px;
+    letter-spacing:-1px;
+    font-family: verdana, helvetica, arial, sans-serif;
+    color:#fff;
+    padding: 20px 50px 20px 25px;
+    font-weight: 700;
+    background: #008FB4 url(++resource++emas.theme.resources/plus.png) 90% 50% no-repeat;
+    border:1px solid #444444;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    display: block;
+    z-index: 20;
+}
+
+a.premiumservices-trigger:hover {
+    padding: 20px 50px 20px 25px;
+    background: #3096D3 url(++resource++emas.theme.resources/plus.png) 90% 50% no-repeat;
+}
+
+a.active.premiumservices-trigger {
+    background: #3096D3 url(++resource++emas.theme.resources/minus.png) 90% 50% no-repeat;
+}
+

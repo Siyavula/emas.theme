@@ -1,0 +1,30 @@
+<div class="premiumservices-panel"
+    tal:define="portalstate context/@@plone_portal_state">
+    <tal:anonymous tal:condition="not:portalstate/anonymous">
+        <p tal:condition="view/practice_enabled">
+            <a tal:attributes="href string:${context/absolute_url}/@@practice">Intelligent Practice</a>
+        </p>
+
+        <p tal:condition="view/askquestions_enabled">
+            <a tal:attributes="href string:${request/URL}#commenting">Ask a question</a>
+        </p>
+
+        <p>
+            <a tal:attributes="href string:${context/absolute_url}/order">Top-up</a>
+        </p>
+    </tal:anonymous>
+    <tal:anonymous tal:condition="portalstate/anonymous">
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/pricing">Pricing</a>
+        </p>
+
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/register">Sign
+            up for a free trial</a>
+        </p>
+        <p>
+            <a tal:attributes="href string:${portalstate/portal_url}/login">Already signed up? Log in</a>
+        </p>
+    </tal:anonymous>
+</div>
+<a class="premiumservices-trigger" href="#">Premium Services</a>

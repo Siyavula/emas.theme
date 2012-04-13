@@ -107,6 +107,15 @@ class AnnotatorHelpViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
     index = ViewPageTemplateFile('annotatorhelp.pt')
 
+class PremiumServicesViewlet(ViewletBase):
+    """ Adds a panel for premium services. """
+    index = ViewPageTemplateFile('templates/premiumservices.pt')
+
+    def update(self):
+        super(PremiumServicesViewlet, self).update()
+        services = self.context.restrictedTraverse('@@enabled-services')
+        self.practice_enabled = services.is_enabled(PRACTICE_SYSTEM)
+        self.askquestions_enabled = services.ask_expert_enabled
 
 class SearchView(BrowserView):
     """ Combine searching for shortcode and searchabletext

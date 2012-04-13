@@ -87,6 +87,10 @@
             css:content="#viewlet-below-content"/>
 
         <!-- Copy annotator viewlet -->
+        <after css:theme-children="body" css:content="div.premiumservices-panel"/>
+        <after css:theme-children="body" css:content="a.premiumservices-trigger"/>
+
+        <!-- Copy annotator viewlet -->
         <after css:theme-children="body" css:content="div.annotator-help-panel"/>
         <after css:theme-children="body" css:content="a.annotator-help-trigger"/>
         <after
