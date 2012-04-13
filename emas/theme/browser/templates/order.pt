@@ -42,9 +42,9 @@
                         <legend>Which grade?</legend>
 
                         <p>
-                            <input type="radio" name="practice_grade" value="grade10"/> Grade 10
-                            <input type="radio" name="practice_grade" value="grade11"/> Grade 11
-                            <input type="radio" name="practice_grade" value="grade12"/> Grade 12
+                            <input type="radio" name="practice_grade" value="Grade 10"/> Grade 10
+                            <input type="radio" name="practice_grade" value="Grade 11"/> Grade 11
+                            <input type="radio" name="practice_grade" value="Grade 12"/> Grade 12
                         </p>
                     </fieldset>
 
