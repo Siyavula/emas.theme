@@ -1,0 +1,18 @@
+<tal:defines tal:define="plone_view context/@@plone;
+                         question nocall:context;
+                         relatedcontent view/related_content">
+On <span tal:replace="python:plone_view.toLocalizedTime(question.created())"></span> you asked the question below on the page titled "<span tal:replace="relatedcontent/Title"></span>":
+
+    <span tal:replace="question/Title">Title</span>
+
+The answer to your question is:
+
+    <tal:answers tal:repeat="answer question/answers">
+    <span tal:replace="answer/text">Answer text</span>
+    </tal:answers>
+
+You can also see the answer to your question by following the link below:
+
+    <span tal:replace="python:view.get_content_url(relatedcontent)"/>
+
+</tal:defines>

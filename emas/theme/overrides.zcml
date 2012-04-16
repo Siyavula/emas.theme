@@ -49,4 +49,12 @@
 
     <adapter factory=".exportimport.TopicIndexNodeAdapter"/>
 
+    <browser:page
+        for="*"
+        name="answered-message"
+        class="emas.theme.browser.views.AnsweredMessageView"
+        template="browser/templates/answered_question_email.pt"
+        permission="zope2.View"
+        />
+
 </configure>

@@ -11,12 +11,12 @@
             a question <em>is only enabled inside a chapter</em>
             </span>
             <a tal:condition="view/context_allows_questions" tal:attributes="href string:${context/absolute_url}#commenting">Ask a question</a><br/>
-            (<span tal:replace="view/questions_left">10</span> questions left)
+            (<span id="number-of-questions-left" tal:content="view/questions_left">10</span> questions left)
         </p>
 
         <p>
-            <a tal:condition="view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Order</a>
-            <a tal:condition="not:view/trialuser" tal:attributes="href string:${context/absolute_url}/order">Top-up</a>
+            <a tal:condition="view/trialuser" tal:attributes="href string:${portalstate/portal_url}/order">Order</a>
+            <a tal:condition="not:view/trialuser" tal:attributes="href string:${portalstate/portal_url}/order">Top-up</a>
         </p>
     </tal:anonymous>
     <tal:anonymous tal:condition="portalstate/anonymous">

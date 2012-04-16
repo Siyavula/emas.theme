@@ -45,6 +45,11 @@ SERVICE_MEMBER_PROP_MAP = {
     ASK_QUESTIONS: 'askanexpert_expirydate'
 }
 
+HOST_NAME_MAP = {'maths'  : 'everythingmaths.co.za',
+                 'science': 'everythingscience.co.za',
+                }
+
+
 def is_expert(context):
     # If the current user has 'siyavula.what.AddAnswer' permission
     # on the context they are considered experts and don't have to
@@ -604,3 +609,24 @@ class RequireLogin(BrowserView):
             return root.restrictedTraverse(login)()
         else:
             return root.restrictedTraverse('insufficient_privileges')()
+
+
+class AnsweredMessageView(BrowserView):
+    
+    def related_content(self):
+        return self.context.relatedContent.to_object
+
+    def get_content_url(self, content):
+        """ We try to use the correct domain based on the folder in which
+            the content resides.
+            We use the navigation root of the content passed in and the 
+            constant HOST_NAME_MAP above to build the url.
+            If we cannot match any entry in HOST_NAME_MAP we use the 
+            HTTP_HOST value of the current request.
+        """
+        pps = content.restrictedTraverse('@@plone_portal_state')
+        default_host = self.request.HTTP_HOST
+        navroot = pps.navigation_root()
+        host = HOST_NAME_MAP.get(navroot.getId(), default_host)
+        path = '/'.join(content.getPhysicalPath()[3:])
+        return 'http://%s/%s' %(host, path)
