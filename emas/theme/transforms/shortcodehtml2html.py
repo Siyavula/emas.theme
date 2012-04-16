@@ -71,7 +71,8 @@ class shortcodehtml_to_html:
                         content[-1] = content[-1][:5] + 'id="%s" '%shortcode + content[-1][5:]
                     else:
                         print "WARNING: Got FullMarks solution that doesn't start with \"<div \""
-                        print content
+                        print shortcode
+                        print repr(content[-1])
             # build a shortcode tree to contain all the fetched content
             try:
                 sctree = lxml.html.fromstring(''.join(content))
