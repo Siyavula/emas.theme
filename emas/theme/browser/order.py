@@ -32,19 +32,23 @@ class OrderForm(BrowserView):
             packages = []
             if practice_subjects in ('Maths', 'Science'):
                 packages.append(u'1 year subscription to Intelligent '
-                                    'Practice for %s' % practice_subjects)
+                                  'Practice for %s %s' % (
+                                practice_subjects, practice_grade))
                 totalcost = 150
                 if include_textbook:
                     packages.append(u'Printed textbook '
-                                        'for %s' % practice_subjects)
+                                     'for %s %s' % (
+                                     practice_subjects, practice_grade))
                     totalcost = 200
 
             elif practice_subjects == 'Maths,Science':
                 packages.append(u'1 year subscription to Intelligent '
-                                    'Practice for Maths and Science')
+                                 'Practice for Maths and Science %s' % 
+                                 practice_grade)
                 totalcost = 250
                 if include_textbook:
-                    packages.append(u'Printed textbook for Maths and Science')
+                    packages.append(u'Printed textbook for Maths and '
+                                     'Science %s' % practice_grade)
                     totalcost = 350
                 
             if include_expert_answers:
@@ -99,7 +103,7 @@ class OrderForm(BrowserView):
         )
 
         portal.MailHost.send(message, send_to_address, send_from_address,
-                             subject)
+                             subject, charset=encoding)
 
         subject = 'New Order placed on %s Website' % \
             state.navigation_root_title()
@@ -118,4 +122,4 @@ class OrderForm(BrowserView):
 
         # Siyavula's copy
         portal.MailHost.send(message, send_from_address, send_from_address,
-                             subject)
+                             subject, charset=encoding)

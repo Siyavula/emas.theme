@@ -33,7 +33,7 @@ class Practice(BrowserView):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
-        if member:
+        if member.getId():
             accessto = ','.join(
                 member.getProperty('intelligent_practice_access'))
         else:
