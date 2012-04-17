@@ -286,11 +286,12 @@ class cnxmlplus_to_shortcodecnxml:
                 childIndex += 1
 
             elif child.tag == 'math_identity':
+                del element[childIndex] # Remove math_identity from DOM, still available as child
                 ruleNode = utils.create_node('rule')
                 ruleNode.attrib['type'] = 'Identity'
                 child.tag = 'statement'
                 ruleNode.append(child)
-                element[childIndex] = ruleNode
+                element.insert(childIndex, ruleNode)
                 childIndex += 1
 
             elif (child.tag == 'number') and (child.getparent().tag != 'entry'):
