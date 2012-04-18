@@ -33,8 +33,6 @@ class cnxmlplus_to_shortcodecnxml:
         return data
 
     def process(self, markup):
-        # Convert down to CNXML
-
         # Strip comments
         pos = 0
         while True:
@@ -47,7 +45,53 @@ class cnxmlplus_to_shortcodecnxml:
             markup = markup[:start] + markup[stop:]
             pos = start
 
+        # Convert XML to DOM
         dom = etree.fromstring(markup)
+
+        # Get CNXML+ version number
+        versionNodeList = dom.xpath('/document/metadata/cnxml-version')
+        if len(versionNodeList) == 0:
+            # Insert version number into DOM
+            version = '0.0'
+        else:
+            if len(versionNodeList) != 1:
+                raise ValueError, "More than one cnxml-version node found in metadata section."
+            version = versionNodeList[0].text.strip()
+
+        # Convert v0.1 down to v0.0, if necessary
+        if version == '0.1':
+            for oldExercisesNode in dom.xpath('//exercises'):
+                newExerciseNode = etree.Element('exercise')
+                titleNode = oldExercisesNode.find('title')
+                if titleNode is None:
+                    titleNode = etree.Element('title')
+                newExerciseNode.append(titleNode)
+                
+                for oldEntryNode in oldExercisesNode.xpath('./entry'):
+                    shortcodeNode = oldEntryNode.find('shortcode')
+                    if shortcodeNode is None:
+                        shortcodeNode = etree.Element('shortcode')
+                    problemNode = oldEntryNode.find('problem')
+                    assert problemNode is not None
+                    solutionNode = oldEntryNode.find('solution')
+                    assert solutionNode is not None
+                    newExerciseNode.append(problemNode)
+                    newExerciseNode.append(etree.Element('shortcodes'))
+                    newExerciseNode[-1].append(etree.Element('entry'))
+                    newExerciseNode[-1][-1].append(shortcodeNode)
+                    if not ((solutionNode.text is None) and (len(solutionNode) == 0)):
+                        newExerciseNode[-1][-1].append(solutionNode)
+                        solutionNode.tag = 'content'
+                    if solutionNode.attrib.get('url') is not None:
+                        newExerciseNode[-1][-1].append(etree.Element('url'))
+                        newExerciseNode[-1][-1][-1].text = solutionNode.attrib['url']
+                        del solutionNode.attrib['url']
+                newExerciseNode.tail = oldExercisesNode.tail
+                oldExercisesNode.getparent().replace(oldExercisesNode, newExerciseNode)
+        elif version != '0.0':
+            raise ValueError, "Don't know how to handle CNXML+ version " + version
+
+        # Convert down to CNXML
 
         # Check for a pspicture generator version tag
         metadataNode = dom.find('metadata')
