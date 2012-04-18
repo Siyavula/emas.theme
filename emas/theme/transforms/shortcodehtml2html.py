@@ -243,8 +243,12 @@ class shortcodehtml_to_html:
             for child in node:
                 traverse(child)
         traverse(dom)
-        html = etree.tostring(dom)
 
+        # Remove Answer labels and let CSS do the auto-numbering work
+        for node in dom.xpath('//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            node.text = ''
+
+        html = etree.tostring(dom)
         return html
    
     @ram.cache(cache_key)
