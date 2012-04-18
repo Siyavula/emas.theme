@@ -41,7 +41,7 @@ class cnxmlplus_to_shortcodecnxml:
             start = markup.find('<!--', pos)
             if start == -1:
                 break
-            stop = markup.find('-->', start)
+            stop = markup.find('-->', start+4)
             assert stop != -1
             stop += 3
             markup = markup[:start] + markup[stop:]
