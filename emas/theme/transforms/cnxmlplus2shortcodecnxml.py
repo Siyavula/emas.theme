@@ -99,7 +99,7 @@ class cnxmlplus_to_shortcodecnxml:
             if generatorNode is not None:
                 self.pspictureGeneratorVersion = generatorNode.text.strip()
         if self.pspictureGeneratorVersion == '1.0':
-            LOGGER('Deprecation warning: pspicture-generator-version 1.0 is deprecated, please upgrade to 1.1')
+            LOGGER.info('Deprecation warning: pspicture-generator-version 1.0 is deprecated, please upgrade to 1.1')
 
         # Convert down to CNXML
 
