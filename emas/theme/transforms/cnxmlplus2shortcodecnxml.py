@@ -33,8 +33,6 @@ class cnxmlplus_to_shortcodecnxml:
         return data
 
     def process(self, markup):
-        # Convert down to CNXML
-
         # Strip comments
         pos = 0
         while True:
@@ -47,6 +45,7 @@ class cnxmlplus_to_shortcodecnxml:
             markup = markup[:start] + markup[stop:]
             pos = start
 
+        # Convert XML to DOM
         dom = etree.fromstring(markup)
 
         # Check for a pspicture generator version tag
@@ -56,6 +55,10 @@ class cnxmlplus_to_shortcodecnxml:
             generatorNode = metadataNode.find('pspicture-generator-version')
             if generatorNode is not None:
                 self.pspictureGeneratorVersion = generatorNode.text.strip()
+        if self.pspictureGeneratorVersion == '1.0':
+            LOGGER('Deprecation warning: pspicture-generator-version 1.0 is deprecated, please upgrade to 1.1')
+
+        # Convert down to CNXML
 
         # Strip out <section type="chapter">
         dom = dom.find('content')
@@ -76,8 +79,8 @@ class cnxmlplus_to_shortcodecnxml:
             chapterTitle = ''
         else:
             chapterTitle = titleNode.text
-        self.chapterHash = hashlib.md5(chapterTitle).hexdigest()
-        #print 'hash:', self.chapterHash
+        if self.pspictureGeneratorVersion == '1.0':
+            self.chapterHash = hashlib.md5(chapterTitle.encode('utf-8')).hexdigest()
 
         # Hack to replace shortcode content with todo-content.
         # traverse_dom_for_cnxml() needs to change eventually to use
@@ -93,8 +96,9 @@ class cnxmlplus_to_shortcodecnxml:
         self.traverse_dom_for_cnxml(dom)
 
         # Transform pspictures
-        self.psPictureCount = 0
-        self.tikzPictureCount = 0
+        if self.pspictureGeneratorVersion == '1.0':
+            self.psPictureCount = 0
+            self.tikzPictureCount = 0
         self.traverse_dom_for_pspictures(dom)
 
         markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
@@ -162,7 +166,8 @@ class cnxmlplus_to_shortcodecnxml:
     def traverse_dom_for_pspictures(self, element):
         # <pspicture><code>
         if element.tag == 'pspicture':
-            self.psPictureCount += 1
+            if self.pspictureGeneratorVersion == '1.0':
+                self.psPictureCount += 1
             src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
@@ -171,7 +176,8 @@ class cnxmlplus_to_shortcodecnxml:
             mediaNode.tail = element.tail
             element.getparent().replace(element, mediaNode)
         elif element.tag == 'tikzpicture':
-            self.tikzPictureCount += 1
+            if self.pspictureGeneratorVersion == '1.0':
+                self.tikzPictureCount += 1
             src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
