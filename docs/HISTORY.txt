@@ -49,6 +49,8 @@ Changelog
 
 - Fix annotator help panel CSS.
 
+- Bugfix to pspicture generator hash, and deprecated v1.0.
+
 1.6
 ---
 
