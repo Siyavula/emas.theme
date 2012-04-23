@@ -331,7 +331,7 @@ class cnxmlplus_to_shortcodecnxml:
                     'warning': 'Warning',
                     'tip': 'Tip',
                     'note': 'Note',
-                    'aside': 'Interesting Fact'}[child.attrib['type']]))
+                    'aside': 'Interesting Fact'}.get(child.attrib['type'], child.attrib['type'])))
                 childIndex += 1
 
             elif child.tag == 'math_identity':
