@@ -244,9 +244,19 @@ class shortcodehtml_to_html:
                 traverse(child)
         traverse(dom)
 
-        # Remove Answer labels and let CSS do the auto-numbering work
-        for node in dom.xpath('//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
-            node.text = ''
+        # Set problem and answer labels
+        for exerciseNode in dom.xpath('//x:div[@class="exercise"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            problemCounter = 0
+            for problemNode in exerciseNode.xpath('.//x:div[@class="problem"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                problemCounter += 1
+                problemNode.insert(0, etree.Element('label', {'class': 'problemLabel'}))
+                problemNode[0].text = 'Problem %i:'%problemCounter
+            answerCounter = 0
+            for answerNode in exerciseNode.xpath('.//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                answerCounter += 1
+                answerNode.text = 'Answer %i:'%answerCounter
+            if problemCounter != answerCounter:
+                LOGGER.info('ERROR: mismatch between problem and answer counters in exercise')
 
         html = etree.tostring(dom)
         return html
