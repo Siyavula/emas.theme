@@ -168,6 +168,19 @@ td, th {
     text-align: center;
 }
 
+#content div.presentation {
+    width: 100%;
+    text-align: center;
+}
+
+#content div.presentation div {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 #content div.navigation {
     margin: -2.8em 0 0;
     max-width: 800px;
@@ -279,18 +292,11 @@ td, th {
 }
 
 
-#content div.exercise
-{
-    counter-reset: exercise-problem exercise-answer;
+.exercise label.problemLabel {
+    font-weight: bold;
 }
 
 .shortcode-content {
-}
-
-.shortcode-content label.formQuestion:before {
-    counter-increment: exercise-answer;
-    content: "Answer " counter(exercise-answer) ":";
-    font-weight: bold;
 }
 
 .shortcode-content label.formQuestion {
@@ -336,12 +342,6 @@ table.plain th, table.plain td {
     text-align: left;
     line-height: normal;
     padding-top: .3em;
-}
-
-#content div.problem:before {
-    counter-increment: exercise-problem;
-    content: "Problem " counter(exercise-problem) ":";
-    font-weight: bold;
 }
 
 #content div.solution h3.solution-header {

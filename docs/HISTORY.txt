@@ -54,6 +54,11 @@ Changelog
 
 - Fix annotator help panel CSS.
 
+- Bugfix to pspicture generator hash, and deprecated v1.0.
+
+- Updated transform to number problems and answers in exercises and to
+  support CNXML+ v0.1.
+
 1.6
 ---
 
