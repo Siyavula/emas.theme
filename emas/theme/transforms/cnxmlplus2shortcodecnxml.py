@@ -33,21 +33,63 @@ class cnxmlplus_to_shortcodecnxml:
         return data
 
     def process(self, markup):
-        # Convert down to CNXML
-
         # Strip comments
         pos = 0
         while True:
             start = markup.find('<!--', pos)
             if start == -1:
                 break
-            stop = markup.find('-->', start)
+            stop = markup.find('-->', start+4)
             assert stop != -1
             stop += 3
             markup = markup[:start] + markup[stop:]
             pos = start
 
+        # Convert XML to DOM
         dom = etree.fromstring(markup)
+
+        # Get CNXML+ version number
+        versionNodeList = dom.xpath('/document/metadata/cnxml-version')
+        if len(versionNodeList) == 0:
+            # Insert version number into DOM
+            version = '0.0'
+        else:
+            if len(versionNodeList) != 1:
+                raise ValueError, "More than one cnxml-version node found in metadata section."
+            version = versionNodeList[0].text.strip()
+
+        # Convert v0.1 down to v0.0, if necessary
+        if version == '0.1':
+            for oldExercisesNode in dom.xpath('//exercises'):
+                newExerciseNode = etree.Element('exercise')
+                titleNode = oldExercisesNode.find('title')
+                if titleNode is None:
+                    titleNode = etree.Element('title')
+                newExerciseNode.append(titleNode)
+                
+                for oldEntryNode in oldExercisesNode.xpath('./entry'):
+                    shortcodeNode = oldEntryNode.find('shortcode')
+                    if shortcodeNode is None:
+                        shortcodeNode = etree.Element('shortcode')
+                    problemNode = oldEntryNode.find('problem')
+                    assert problemNode is not None
+                    solutionNode = oldEntryNode.find('solution')
+                    assert solutionNode is not None
+                    newExerciseNode.append(problemNode)
+                    newExerciseNode.append(etree.Element('shortcodes'))
+                    newExerciseNode[-1].append(etree.Element('entry'))
+                    newExerciseNode[-1][-1].append(shortcodeNode)
+                    if not ((solutionNode.text is None) and (len(solutionNode) == 0)):
+                        newExerciseNode[-1][-1].append(solutionNode)
+                        solutionNode.tag = 'content'
+                    if solutionNode.attrib.get('url') is not None:
+                        newExerciseNode[-1][-1].append(etree.Element('url'))
+                        newExerciseNode[-1][-1][-1].text = solutionNode.attrib['url']
+                        del solutionNode.attrib['url']
+                newExerciseNode.tail = oldExercisesNode.tail
+                oldExercisesNode.getparent().replace(oldExercisesNode, newExerciseNode)
+        elif version != '0.0':
+            raise ValueError, "Don't know how to handle CNXML+ version " + version
 
         # Check for a pspicture generator version tag
         metadataNode = dom.find('metadata')
@@ -56,6 +98,10 @@ class cnxmlplus_to_shortcodecnxml:
             generatorNode = metadataNode.find('pspicture-generator-version')
             if generatorNode is not None:
                 self.pspictureGeneratorVersion = generatorNode.text.strip()
+        if self.pspictureGeneratorVersion == '1.0':
+            LOGGER.info('Deprecation warning: pspicture-generator-version 1.0 is deprecated, please upgrade to 1.1')
+
+        # Convert down to CNXML
 
         # Strip out <section type="chapter">
         dom = dom.find('content')
@@ -76,8 +122,8 @@ class cnxmlplus_to_shortcodecnxml:
             chapterTitle = ''
         else:
             chapterTitle = titleNode.text
-        self.chapterHash = hashlib.md5(chapterTitle).hexdigest()
-        #print 'hash:', self.chapterHash
+        if self.pspictureGeneratorVersion == '1.0':
+            self.chapterHash = hashlib.md5(chapterTitle.encode('utf-8')).hexdigest()
 
         # Hack to replace shortcode content with todo-content.
         # traverse_dom_for_cnxml() needs to change eventually to use
@@ -93,8 +139,9 @@ class cnxmlplus_to_shortcodecnxml:
         self.traverse_dom_for_cnxml(dom)
 
         # Transform pspictures
-        self.psPictureCount = 0
-        self.tikzPictureCount = 0
+        if self.pspictureGeneratorVersion == '1.0':
+            self.psPictureCount = 0
+            self.tikzPictureCount = 0
         self.traverse_dom_for_pspictures(dom)
 
         markup = utils.declutter_latex_tags(etree.tostring(dom)).strip()
@@ -162,7 +209,8 @@ class cnxmlplus_to_shortcodecnxml:
     def traverse_dom_for_pspictures(self, element):
         # <pspicture><code>
         if element.tag == 'pspicture':
-            self.psPictureCount += 1
+            if self.pspictureGeneratorVersion == '1.0':
+                self.psPictureCount += 1
             src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
@@ -171,7 +219,8 @@ class cnxmlplus_to_shortcodecnxml:
             mediaNode.tail = element.tail
             element.getparent().replace(element, mediaNode)
         elif element.tag == 'tikzpicture':
-            self.tikzPictureCount += 1
+            if self.pspictureGeneratorVersion == '1.0':
+                self.tikzPictureCount += 1
             src = self.pspicture_path(element)
             mediaNode = utils.create_node('media')
             mediaNode.append(utils.create_node('image'))
@@ -282,15 +331,16 @@ class cnxmlplus_to_shortcodecnxml:
                     'warning': 'Warning',
                     'tip': 'Tip',
                     'note': 'Note',
-                    'aside': 'Interesting Fact'}[child.attrib['type']]))
+                    'aside': 'Interesting Fact'}.get(child.attrib['type'], child.attrib['type'])))
                 childIndex += 1
 
             elif child.tag == 'math_identity':
+                del element[childIndex] # Remove math_identity from DOM, still available as child
                 ruleNode = utils.create_node('rule')
                 ruleNode.attrib['type'] = 'Identity'
                 child.tag = 'statement'
                 ruleNode.append(child)
-                element[childIndex] = ruleNode
+                element.insert(childIndex, ruleNode)
                 childIndex += 1
 
             elif (child.tag == 'number') and (child.getparent().tag != 'entry'):

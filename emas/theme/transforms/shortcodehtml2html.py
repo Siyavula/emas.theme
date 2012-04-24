@@ -71,7 +71,8 @@ class shortcodehtml_to_html:
                         content[-1] = content[-1][:5] + 'id="%s" '%shortcode + content[-1][5:]
                     else:
                         print "WARNING: Got FullMarks solution that doesn't start with \"<div \""
-                        print content
+                        print shortcode
+                        print repr(content[-1])
             # build a shortcode tree to contain all the fetched content
             try:
                 sctree = lxml.html.fromstring(''.join(content))
@@ -242,8 +243,22 @@ class shortcodehtml_to_html:
             for child in node:
                 traverse(child)
         traverse(dom)
-        html = etree.tostring(dom)
 
+        # Set problem and answer labels
+        for exerciseNode in dom.xpath('//x:div[@class="exercise"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            problemCounter = 0
+            for problemNode in exerciseNode.xpath('.//x:div[@class="problem"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                problemCounter += 1
+                problemNode.insert(0, etree.Element('label', {'class': 'problemLabel'}))
+                problemNode[0].text = 'Problem %i:'%problemCounter
+            answerCounter = 0
+            for answerNode in exerciseNode.xpath('.//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                answerCounter += 1
+                answerNode.text = 'Answer %i:'%answerCounter
+            if problemCounter != answerCounter:
+                LOGGER.info('ERROR: mismatch between problem and answer counters in exercise')
+
+        html = etree.tostring(dom)
         return html
    
     @ram.cache(cache_key)
