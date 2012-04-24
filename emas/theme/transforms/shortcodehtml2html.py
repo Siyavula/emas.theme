@@ -243,8 +243,22 @@ class shortcodehtml_to_html:
             for child in node:
                 traverse(child)
         traverse(dom)
-        html = etree.tostring(dom)
 
+        # Set problem and answer labels
+        for exerciseNode in dom.xpath('//x:div[@class="exercise"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            problemCounter = 0
+            for problemNode in exerciseNode.xpath('.//x:div[@class="problem"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                problemCounter += 1
+                problemNode.insert(0, etree.Element('label', {'class': 'problemLabel'}))
+                problemNode[0].text = 'Problem %i:'%problemCounter
+            answerCounter = 0
+            for answerNode in exerciseNode.xpath('.//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+                answerCounter += 1
+                answerNode.text = 'Answer %i:'%answerCounter
+            if problemCounter != answerCounter:
+                LOGGER.info('ERROR: mismatch between problem and answer counters in exercise')
+
+        html = etree.tostring(dom)
         return html
    
     @ram.cache(cache_key)

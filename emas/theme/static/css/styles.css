@@ -162,6 +162,12 @@ td, th {
     min-height: 400px;
 }
 
+#content div.video {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
 #content div.navigation {
     margin: -2.8em 0 0;
     max-width: 800px;
@@ -273,8 +279,11 @@ td, th {
 }
 
 
+.exercise label.problemLabel {
+    font-weight: bold;
+}
+
 .shortcode-content {
-    padding: 1em 2em;
 }
 
 .shortcode-content label.formQuestion {
@@ -322,8 +331,13 @@ table.plain th, table.plain td {
     padding-top: .3em;
 }
 
-#content .solution {
-    margin: .5em 0 .5em 3em;
+#content div.solution h3.solution-header {
+    display: none;
+}
+
+#content .solution:before {
+    content: "Solution:";
+    font-weight: bold;
 }
 
 #content .definition
