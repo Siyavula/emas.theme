@@ -88,6 +88,11 @@ class cnxmlplus_to_shortcodecnxml:
                         del solutionNode.attrib['url']
                 newExerciseNode.tail = oldExercisesNode.tail
                 oldExercisesNode.getparent().replace(oldExercisesNode, newExerciseNode)
+            contentNode = dom.find('content')
+            # Check if it's an end of chapter exercise block
+            if (len(contentNode) == 1) and (contentNode[0].tag == 'exercise'):
+                contentNode[0].tag = 'section'
+                contentNode[0].attrib['type'] = 'chapter'
         elif version != '0.0':
             raise ValueError, "Don't know how to handle CNXML+ version " + version
 
