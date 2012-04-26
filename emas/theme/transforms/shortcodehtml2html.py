@@ -244,15 +244,23 @@ class shortcodehtml_to_html:
                 traverse(child)
         traverse(dom)
 
+        namespace = 'http://www.w3.org/1999/xhtml'
         # Set problem and answer labels
-        for exerciseNode in dom.xpath('//x:div[@class="exercise"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+        mainNode = dom.xpath('//x:div[@id="cnx_main"]', namespaces={'x': namespace})[0]
+        if (mainNode[0].tag == '{%s}div'%namespace) and (mainNode[0].attrib['class'] == 'problem'):
+            # End of chapter exercises section
+            exerciseNodes = [mainNode]
+        else:
+            exerciseNodes = dom.xpath('//x:div[@class="exercise"]', namespaces={'x': namespace})
+
+        for exerciseNode in exerciseNodes:
             problemCounter = 0
-            for problemNode in exerciseNode.xpath('.//x:div[@class="problem"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            for problemNode in exerciseNode.xpath('.//x:div[@class="problem"]', namespaces={'x': namespace}):
                 problemCounter += 1
                 problemNode.insert(0, etree.Element('label', {'class': 'problemLabel'}))
                 problemNode[0].text = 'Problem %i:'%problemCounter
             answerCounter = 0
-            for answerNode in exerciseNode.xpath('.//x:label[@class="formQuestion"]', namespaces={'x': 'http://www.w3.org/1999/xhtml'}):
+            for answerNode in exerciseNode.xpath('.//x:label[@class="formQuestion"]', namespaces={'x': namespace}):
                 answerCounter += 1
                 answerNode.text = 'Answer %i:'%answerCounter
             if problemCounter != answerCounter:
