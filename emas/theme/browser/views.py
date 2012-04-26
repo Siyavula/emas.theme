@@ -135,9 +135,9 @@ class SearchView(BrowserView):
     """
 
     def __call__(self):
-        searchtext = self.request.get('SearchableText')
+        searchtext = self.request.get('SearchableText', '')
         shortcodeview = RedirectView(self.context, self.request)
-        target = shortcodeview.lookup(searchtext)
+        target = shortcodeview.lookup(searchtext.strip())
         if target:
             self.request.response.redirect(target)
         else:
