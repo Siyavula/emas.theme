@@ -8,7 +8,7 @@ On <span tal:replace="python:plone_view.toLocalizedTime(question.created())"></s
 The answer to your question is:
 
     <tal:answers tal:repeat="answer question/answers">
-    <span tal:replace="answer/text">Answer text</span>
+    <span tal:replace="structure answer/text/output|nothing">Answer text</span>
     </tal:answers>
 
 You can also see the answer to your question by following the link below:
