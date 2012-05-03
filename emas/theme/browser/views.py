@@ -612,9 +612,13 @@ class RequireLogin(BrowserView):
 
 
 class AnsweredMessageView(BrowserView):
+
+    @property
+    def question(self):
+        return self.context.aq_parent
     
     def related_content(self):
-        return self.context.relatedContent.to_object
+        return self.question.relatedContent.to_object
 
     def get_content_url(self, content):
         """ We try to use the correct domain based on the folder in which
