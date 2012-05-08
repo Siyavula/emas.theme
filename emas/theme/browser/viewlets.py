@@ -12,7 +12,6 @@ from emas.theme import MessageFactory as _
 class QAViewlet(BaseQAViewlet):
     """ Specialise the siyavula.what viewlet to check if the service is enabled.
     """
-    index = ViewPageTemplateFile('templates/addquestion.pt')
 
     def questions(self):
         """ Return all questions that have the current context set
@@ -64,6 +63,6 @@ class QAViewlet(BaseQAViewlet):
             does not allow questions.
         """
         if self.allowQuestions() and self.is_enabled():
-            return super(QuestionAddViewlet, self).render()
+            return super(QAViewlet, self).render()
         else:
             return ""
