@@ -211,6 +211,132 @@ class cnxmlplus_to_shortcodecnxml:
                     replacementNode.tail = u'\u00a0' + symbol
             utils.etree_replace_with_node_list(currencyNode.getparent(), currencyNode, replacementNode)
 
+        # Percentage
+        for percentageNode in dom.xpath('//percentage'):
+            latexMode = utils.etree_in_context(percentageNode, 'latex')
+            percentageNode.tag = 'number'
+            if percentageNode.tail is None:
+                percentageNode.tail = ''
+            if latexMode:
+                percentageNode.tail = r'\%' + percentageNode.tail
+            else:
+                percentageNode.tail = '%' + percentageNode.tail
+
+        # United numbers: ensure that units follow numbers
+        for node in dom.xpath('//unit_number'):
+            if (len(node) == 2) and (node[0].tag == 'unit') and (node[1].tag == 'number'):
+                unitNode = node[0]
+                numberNode = node[1]
+                del node[0]
+                del node[0]
+                node.append(numberNode)
+                node.append(unitNode)
+
+        # Numbers
+        for numberNode in dom.xpath('//number'):
+            latexMode = utils.etree_in_context(numberNode, 'latex')
+            if (len(numberNode) == 0) and ('e' in numberNode.text):
+                # Number in exponential notation: convert to <coeff> and <exp>
+                numberText = numberNode.text
+                float(numberText) # Check that it is really a float
+                numberNode.text = None
+                numberNode.append(etree.Element('coeff'))
+                pos = numberText.find('e')
+                numberNode[-1].text = numberText[:pos]
+                numberNode.append(etree.Element('exp'))
+                numberNode[-1].text = str(int(numberText[pos+1:]))
+
+            if len(numberNode) == 0:
+                # No children, means it's just a plain number
+                coeffText = utils.format_number(numberNode.text.strip())
+                try:
+                    if latexMode:
+                        dummyNode = etree.fromstring(r'<dummy>\text{' + coeffText + '}</dummy>')
+                    else:
+                        dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                except etree.XMLSyntaxError, msg:
+                    print repr(coeffText)
+                    raise etree.XMLSyntaxError, msg
+            else:
+                # Scientific or exponential notation: parse out coefficient, base and exponent
+                coeffNode = numberNode.find('coeff')
+                expNode = numberNode.find('exp')
+                baseNode = numberNode.find('base')
+                if coeffNode is None:
+                    # Exponential
+                    if baseNode is None:
+                        baseText = utils.format_number('10')
+                    else:
+                        baseText = utils.format_number(baseNode.text.strip())
+                    assert expNode is not None, etree.tostring(numberNode)
+                    expText = utils.format_number(expNode.text.strip())
+                    if latexMode:
+                        dummyNode = etree.fromstring(r'<dummy>\text{' + baseText + r'}^{\text{' + expText + r'}}</dummy>')
+                    else:
+                        dummyNode = etree.fromstring('<dummy>' + baseText + '<sup>' + expText + '</sup></dummy>')
+                else:
+                    # Scientific notation or plain number (<coeff> only)
+                    coeffText = utils.format_number(coeffNode.text.strip())
+                    if expNode is None:
+                        assert baseNode is None
+                        try:
+                            if latexMode:
+                                dummyNode = etree.fromstring(r'<dummy>\text{' + coeffText + '}</dummy>')
+                            else:
+                                dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
+                        except etree.XMLSyntaxError, msg:
+                            print repr(coeffText)
+                            raise etree.XMLSyntaxError, msg
+                    else:
+                        if baseNode is None:
+                            baseText = utils.format_number('10')
+                        else:
+                            baseText = utils.format_number(baseNode.text.strip())
+                        expText = utils.format_number(expNode.text.strip())
+                        if latexMode:
+                            dummyNode = etree.fromstring(r'<dummy>\text{' + coeffText + r' } &#215; \text{ ' + baseText + r'}^{\text{' + expText + r'}}</dummy>')
+                        else:
+                            dummyNode = etree.fromstring('<dummy>' + coeffText + ' &#215; ' + baseText + '<sup>' + expText + '</sup></dummy>')
+            utils.etree_replace_with_node_list(numberNode.getparent(), numberNode, dummyNode)
+
+        # Units
+        for unitNode in dom.xpath('//unit'):
+            latexMode = utils.etree_in_context(unitNode, 'latex')
+            if unitNode.text is None:
+                unitNode.text = ''
+            unitNode.text = unitNode.text.lstrip()
+            if latexMode:
+                unitNode.text = r'\text{' + unitNode.text
+            if len(unitNode) == 0:
+                unitNode.text = unitNode.text.rstrip()
+                if latexMode:
+                    unitNode.text += '}'
+            else:
+                if unitNode[-1].tail is None:
+                    unitNode[-1].tail = ''
+                unitNode[-1].tail = unitNode[-1].tail.rstrip()
+                if latexMode:
+                    unitNode[-1].tail += '}'
+            if (unitNode.getparent().tag == 'unit_number') and (unitNode.text[0] != u'\xb0'):
+                # Leave space between number and unit, except for degrees
+                if latexMode:
+                    unitNode.text = r'\ ' + unitNode.text
+                else:
+                    unitNode.text = ' ' + unitNode.text
+            for sup in unitNode:
+                assert sup.tag == 'sup'
+                if latexMode:
+                    sup.text = '$^{' + sup.text.strip() + '}$'
+                    utils.etree_replace_with_node_list(unitNode, sup, sup)
+                else:
+                    sup.text = sup.text.strip().replace('-', u'\u2212')
+            utils.etree_replace_with_node_list(unitNode.getparent(), unitNode, unitNode)
+
+        # United numbers
+        for node in dom.xpath('//unit_number'):
+            utils.etree_replace_with_node_list(node.getparent(), node, node)
+
+
     def traverse_dom_for_pspictures(self, element):
         # <pspicture><code>
         if element.tag == 'pspicture':
@@ -347,78 +473,6 @@ class cnxmlplus_to_shortcodecnxml:
                 ruleNode.append(child)
                 element.insert(childIndex, ruleNode)
                 childIndex += 1
-
-            elif (child.tag == 'number') and (child.getparent().tag != 'entry'):
-                if len(child) == 0:
-                    # No children, means it's just a plain number
-                    coeffText = utils.format_number(child.text.strip())
-                    try:
-                        dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
-                    except etree.XMLSyntaxError, msg:
-                        print repr(coeffText)
-                        raise etree.XMLSyntaxError, msg
-                else:
-                    # Scientific or exponential notation: parse out coefficient, base and exponent
-                    coeffNode = child.find('coeff')
-                    expNode = child.find('exp')
-                    baseNode = child.find('base')
-                    if coeffNode is None:
-                        # Exponential
-                        if baseNode is None:
-                            baseText = utils.format_number('10')
-                        else:
-                            baseText = utils.format_number(baseNode.text.strip())
-                        assert expNode is not None, etree.tostring(child)
-                        expText = utils.format_number(expNode.text.strip())
-                        dummyNode = etree.fromstring('<dummy>' + baseText + '<sup>' + expText + '</sup></dummy>')
-                    else:
-                        # Scientific notation or plain number (<coeff> only)
-                        coeffText = utils.format_number(coeffNode.text.strip())
-                        if expNode is None:
-                            assert baseNode is None
-                            try:
-                                dummyNode = etree.fromstring('<dummy>' + coeffText + '</dummy>')
-                            except etree.XMLSyntaxError, msg:
-                                print repr(coeffText)
-                                raise etree.XMLSyntaxError, msg
-                        else:
-                            if baseNode is None:
-                                baseText = utils.format_number('10')
-                            else:
-                                baseText = utils.format_number(baseNode.text.strip())
-                            expText = utils.format_number(expNode.text.strip())
-                            dummyNode = etree.fromstring('<dummy>' + coeffText + ' &#215; ' + baseText + '<sup>' + expText + '</sup></dummy>')
-                utils.etree_replace_with_node_list(element, child, dummyNode)
-                childIndex += len(dummyNode)
-
-            elif child.tag == 'percentage':
-                dummyNode = etree.fromstring('<dummy>' + utils.format_number(child.text.strip()) + '%</dummy>')
-                utils.etree_replace_with_node_list(element, child, dummyNode)
-                childIndex += len(dummyNode)
-
-            elif child.tag == 'unit':
-                if child.text is None:
-                    child.text = ''
-                child.text = child.text.lstrip()
-                if len(child) == 0:
-                    child.text = child.text.rstrip()
-                else:
-                    if child[-1].tail is not None:
-                        child[-1].tail = child[-1].tail.rstrip()
-                if (child.getparent().tag == 'unit_number') and (child.text != u'\xb0'):
-                    # Leave space between number and unit, except for degrees
-                    child.text = ' ' + child.text
-                for sup in child:
-                    assert sup.tag == 'sup'
-                    sup.text = sup.text.strip().replace('-', u'\u2212')
-                utils.etree_replace_with_node_list(element, child, child)
-                childIndex += len(child)
-
-            elif child.tag == 'unit_number':
-                childIndex += len(child)
-                if child.tail not in [None, '']:
-                    pass
-                utils.etree_replace_with_node_list(element, child, child)
 
             elif child.tag == 'nuclear_notation':
                 namespace = 'http://www.w3.org/1998/Math/MathML'
