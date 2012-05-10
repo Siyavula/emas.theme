@@ -230,7 +230,7 @@ class shortcodehtml_to_html:
             orig = orig[:start] + orig[stop:]
             pos = start
 
-        # Remove the annoying "Media file:" labels.
+        # Remove the annoying "Media file:" labels and <object> parent elements.
         nsPrefix = "{http://www.w3.org/1999/xhtml}"
         dom = etree.fromstring(orig)
         def traverse(node):
@@ -240,6 +240,9 @@ class shortcodehtml_to_html:
                     if (len(objectNode) > 2) and (objectNode[0].tag == nsPrefix + 'span') and (objectNode[0].attrib.get('class') == 'cnx_label') and (objectNode[1].tag == nsPrefix + 'a') and (objectNode[1].attrib.get('href') == ''):
                         del objectNode[0]
                         del objectNode[0]
+                        # Put remaining children of objectNode into node
+                        import utils
+                        utils.etree_replace_with_node_list(node, objectNode, objectNode)
             for child in node:
                 traverse(child)
         traverse(dom)

@@ -162,6 +162,11 @@ td, th {
     min-height: 400px;
 }
 
+#content div.media {
+    width: 100%;
+    text-align: center;
+}
+
 #content div.video {
     width: 100%;
     margin: 0;

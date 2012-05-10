@@ -6,6 +6,9 @@ Changelog
 
 - Strip searchtext before trying to lookup short code
 
+- Post-process CNXML+ to HTML transform to lift img elements out of
+  object elements and changed CSS to center-align.
+
 1.7
 ---
 
