@@ -11,6 +11,9 @@ Changelog
 
 - Unifyied qaviewlet in theme too.
 
+- Migration steps:
+  Re-install the product to update the viewlet registrations.
+
 1.7
 ---
 
