@@ -11,5 +11,6 @@
         <dependency>profile-upfront.shorturl:default</dependency>
         <dependency>profile-fullmarks.mathjax:default</dependency>
         <dependency>profile-siyavula.what:default</dependency>
+        <dependency>profile-emas.transforms:default</dependency>
     </dependencies>
 </metadata>
