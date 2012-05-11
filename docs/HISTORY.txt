@@ -9,6 +9,8 @@ Changelog
 - Post-process CNXML+ to HTML transform to lift img elements out of
   object elements and changed CSS to center-align.
 
+- Unifyied qaviewlet in theme too.
+
 1.7
 ---
 
