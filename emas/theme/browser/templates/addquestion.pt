@@ -3,8 +3,8 @@
         <legend>Ask an expert a question</legend>
         <p>You can ask a question by filling out the form below.</p>
 
-        <form enctype="multipart/form-data" method="post" class="rowlike"
-            action="." tal:attributes="action context/absolute_url">
+        <form enctype="multipart/form-data" method="post" class="rowlike" action="." 
+            tal:attributes="action string:${context/absolute_url}/@@add-question">
 
             <input type="hidden" id="siyavula.what.questionadd.form.submitted"
                 name="siyavula.what.questionadd.form.submitted" value="submitted" />

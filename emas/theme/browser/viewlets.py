@@ -2,15 +2,14 @@ from Products.Archetypes.utils import shasattr
 
 from Products.CMFCore.utils import getToolByName
 from plone.uuid.interfaces import IUUID
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from siyavula.what.browser.questionslistviewlet \
-    import QuestionsListViewlet as BaseQuestionsListViewlet
+from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from emas.theme.browser.views import is_expert
-
 from emas.theme import MessageFactory as _
 
 
-class QuestionsListViewlet(BaseQuestionsListViewlet):
+class QAViewlet(BaseQAViewlet):
     """ Specialise the siyavula.what viewlet to check if the service is enabled.
     """
 
@@ -42,3 +41,28 @@ class QuestionsListViewlet(BaseQuestionsListViewlet):
             query['Creator'] = member.getId()
         brains = pc(query)
         return brains and [b.getObject() for b in brains] or []
+
+    def allowQuestions(self):
+        """ Check against the members enabled services.
+        """
+        context = self.context
+        allowQuestions = False
+        if shasattr(context, 'allowQuestions'):
+            allowQuestions = getattr(context, 'allowQuestions')
+        return allowQuestions
+
+    def is_enabled(self):
+        """
+        """
+        context = self.context
+        view = context.restrictedTraverse('@@enabled-services')
+        return view.ask_expert_enabled
+
+    def render(self):
+        """ We render an empty string when a specific piece of content
+            does not allow questions.
+        """
+        if self.allowQuestions() and self.is_enabled():
+            return super(QAViewlet, self).render()
+        else:
+            return ""
