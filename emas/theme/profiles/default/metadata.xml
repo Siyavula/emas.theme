@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-    <version>1.7</version>
+    <version>1.8</version>
     <dependencies>
         <dependency>profile-plone.app.registry:default</dependency>
         <dependency>profile-plone.app.theming:default</dependency>
@@ -11,5 +11,6 @@
         <dependency>profile-upfront.shorturl:default</dependency>
         <dependency>profile-fullmarks.mathjax:default</dependency>
         <dependency>profile-siyavula.what:default</dependency>
+        <dependency>profile-emas.transforms:default</dependency>
     </dependencies>
 </metadata>

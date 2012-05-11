@@ -15,13 +15,13 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
     userrole = property(get_userrole, set_userrole)
 
     def get_school(self):
-        return self.context.getProperty('school', '')
+        return self._getProperty('school')
     def set_school(self, value):
         return self.context.setMemberProperties({'school': value})
     school = property(get_school, set_school)
 
     def get_province(self):
-        return self.context.getProperty('province', '')
+        return self._getProperty('province')
     def set_province(self, value):
         return self.context.setMemberProperties({'province': value})
     province = property(get_province, set_province)
