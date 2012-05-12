@@ -66,6 +66,7 @@
   </permission-map>
   <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="List folder contents" acquired="True">
    <permission-role>Manager</permission-role>
