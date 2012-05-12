@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.8 (unreleased)
-----------------
+1.8
+---
 
 - Strip searchtext before trying to lookup short code
 
