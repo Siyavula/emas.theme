@@ -577,10 +577,11 @@ class AddQuestionView(AddQuestionBaseView):
         html = view()
         result = 'success'
         credits = self.getCredits()
-        return json.dumps({'result' : result,
-                           'message': message,
-                           'credits': credits,
-                           'html'   : html})
+        return json.dumps({'result'    : result,
+                           'message'   : message,
+                           'questionid': question.getId(),
+                           'credits'   : credits,
+                           'html'      : html})
 
     def getCredits(self):
         pmt = getToolByName(self.context, 'portal_membership')

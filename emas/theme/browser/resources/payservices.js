@@ -120,5 +120,11 @@ function updateQuestions(data, textStatus, jqXHR) {
         jq('div#commenting').remove();
         jq('span#number-of-questions-left').html(credits);
     }
+
+    // find delete button in returned html
+    var container = jq('div#' + data.questionid +"'");
+    var button = jq(container).find('input@[name="action.button"]');
+    // add delete click eventhandler
+    jq(button).bind('click', deleteQuestion);
 }
 
