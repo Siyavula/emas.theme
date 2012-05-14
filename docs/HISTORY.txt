@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.8 (unreleased)
-----------------
+1.8
+---
 
 - Strip searchtext before trying to lookup short code
 
@@ -12,7 +12,9 @@ Changelog
 - Unifyied qaviewlet in theme too.
 
 - Migration steps:
-  Re-install the product to update the viewlet registrations.
+  Via portal quickinstaller, uninstall both emas.theme and siyavula.what.
+  Then install emas.theme again. This should register all the necessary content
+  types again and make sure the rolemap gets applied.
 
 1.7
 ---
