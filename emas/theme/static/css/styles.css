@@ -285,6 +285,12 @@ td, th {
     margin: 0;
 }
 
+#content div.listingBar a.next:hover,
+#content div.listingBar a.previous:hover {
+    color: white !important;
+}
+
+
 #footer {
     color: #000000;
     border-top: 1px solid #ccc;
