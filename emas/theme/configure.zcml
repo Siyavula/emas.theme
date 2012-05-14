@@ -59,4 +59,10 @@
         handler=".eventhandlers.questionAsked"
         />
 
+    <subscriber
+        for="siyavula.what.question.IQuestion
+             zope.app.container.interfaces.IObjectRemovedEvent"
+        handler=".eventhandlers.questionDeleted"
+        />
+
 </configure>

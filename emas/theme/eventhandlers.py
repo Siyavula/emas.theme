@@ -1,6 +1,7 @@
 import datetime
 from zope.component import createObject
 from Products.CMFCore.permissions import ModifyPortalContent
+from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.content.folder import ATFolder
 
 from emas.theme.browser.views import is_expert
@@ -58,4 +59,14 @@ def questionAsked(obj, event):
     credits = member.getProperty('credits') - 1
     if credits < 0:
         raise RuntimeError("Credits can't be less than zero")
+    member.setMemberProperties({'credits': credits})
+
+def questionDeleted(obj, event):
+    """ Add a credit when a question is deleted.
+    """
+    if is_expert(obj):
+        return
+    pmt = getToolByName(obj, 'portal_membership')
+    member = pmt.getMemberById(obj.Creator())
+    credits = member.getProperty('credits') + 1
     member.setMemberProperties({'credits': credits})
