@@ -117,6 +117,14 @@
         permission="cmf.SetOwnProperties"
         />
 
+    <browser:page
+        for="*"
+        name="json-authenticated-member-creditbalance"
+        class=".views.CreditView"
+        attribute="getAuthedMemberCreditsJSON"
+        permission="zope2.View"
+        />
+
     <browser:viewlet
         name="register-to-ask-questions"
         manager="plone.app.layout.viewlets.interfaces.IBelowContent"

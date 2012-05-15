@@ -21,9 +21,12 @@ from Products.CMFPlone.PloneBatch import Batch
 from Products.statusmessages.interfaces import IStatusMessage
 
 from siyavula.what.browser.views import AddQuestionView as AddQuestionBaseView
+from siyavula.what.browser.views import DeleteQuestionView as \
+    DeleteQuestionBaseView 
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
+from emas.theme.browser.utils import getAuthedMemberCredits
 from emas.theme import MessageFactory as _
 
 NULLDATE = date(1970, 01, 01)
@@ -576,18 +579,16 @@ class AddQuestionView(AddQuestionBaseView):
         view = question.restrictedTraverse('@@render-question')
         html = view()
         result = 'success'
-        credits = self.getCredits()
         return json.dumps({'result'    : result,
                            'message'   : message,
                            'questionid': question.getId(),
-                           'credits'   : credits,
                            'html'      : html})
 
-    def getCredits(self):
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        current_credits = member.getProperty('credits', 0)
-        return current_credits
+
+class CreditView(BrowserView):
+    def getAuthedMemberCreditsJSON(self):
+        credits = getAuthedMemberCredits(self.context)
+        return json.dumps({'credits': credits})
 
 
 class RequireLogin(BrowserView):

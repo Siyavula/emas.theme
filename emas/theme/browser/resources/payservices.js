@@ -109,22 +109,45 @@ $(function($) {
 function updateQuestions(data, textStatus, jqXHR) {
     var result = data.result;
     var html = data.html;
-    credits = data.credits;
     if (result == 'failure') {
         alert(data.message);
         return;
     }
     jq('div#what-container').append(html);
     jq("textarea#question").attr('value', "");
-    if (credits < 1) {
-        jq('div#commenting').remove();
-        jq('span#number-of-questions-left').html(credits);
-    }
 
     // find delete button in returned html
     var container = jq('div#' + data.questionid +"'");
     var button = jq(container).find('input@[name="action.button"]');
     // add delete click eventhandler
     jq(button).bind('click', deleteQuestion);
+    updateQuestionTextArea();
 }
 
+function removeQuestion(data, textStatus, jqXHR) {
+    var result = data.result;
+    if (result == 'failure') {
+        alert(data.message);
+        return;
+    }
+    element = jq('div#'+data.questionid).remove();
+    updateQuestionTextArea();
+}
+
+function updateQuestionTextArea() {
+    jq.ajax({
+        url: portal_url + "/@@json-authenticated-member-creditbalance",
+        success: toggleQuestionTextArea,
+        dataType: "json",
+    });
+}
+
+function toggleQuestionTextArea(data, textStatus, jqXHR) {
+    credits = data.credits;
+    jq('span#number-of-questions-left').html(credits);
+    if (credits < 1) {
+        jq('div#commenting').hide();
+    } else {
+        jq('div#commenting').show();
+    }
+}
