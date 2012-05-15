@@ -62,7 +62,7 @@ class QAViewlet(BaseQAViewlet):
         """ We render an empty string when a specific piece of content
             does not allow questions.
         """
-        if self.allowQuestions() and self.is_enabled():
+        if self.allowQuestions():
             return super(QAViewlet, self).render()
         else:
             return ""
