@@ -568,23 +568,6 @@ class PurchaseApproved(BrowserView):
         return SERVICE_MEMBER_PROP_MAP[self.servicename]
 
 
-class AddQuestionView(AddQuestionBaseView):
-    """ Specialise in order to enchance the JSON return.
-    """
-
-    def addQuestionJSON(self):
-        self.request.response.setHeader('X-Theme-Disabled', 'True')
-        question = self.addQuestion() 
-        message = "Question %s was added" %question.text
-        view = question.restrictedTraverse('@@render-question')
-        html = view()
-        result = 'success'
-        return json.dumps({'result'    : result,
-                           'message'   : message,
-                           'questionid': question.getId(),
-                           'html'      : html})
-
-
 class CreditView(BrowserView):
     def getAuthedMemberCreditsJSON(self):
         credits = getAuthedMemberCredits(self.context)

@@ -20,14 +20,6 @@
         layer="siyavula.what.interfaces.ISiyavulaWhatLayer"
         />
 
-    <browser:page
-        for="*"
-        name="add-question-json"
-        class="emas.theme.browser.views.AddQuestionView"
-        attribute="addQuestionJSON"
-        permission="zope2.View"
-        />
-
     <adapter factory=".exportimport.PluggableIndexNodeAdapter"/>
 
     <adapter factory=".exportimport.DateIndexNodeAdapter"/>
