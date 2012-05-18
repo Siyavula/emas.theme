@@ -133,6 +133,13 @@ class PremiumServicesViewlet(ViewletBase):
         portalstate = self.context.restrictedTraverse('@@plone_portal_state')
         self.trialuser = portalstate.member().getProperty('trialuser')
 
+    def render(self):
+        #only render this viewlet if the diazo theme is enabled
+        theme_enabled = self.request.getHeader('HTTP_X_THEME_ENABLED', False)
+        if theme_enabled:
+            return super(PremiumServicesViewlet, self).render()
+        return ''
+
 class SearchView(BrowserView):
     """ Combine searching for shortcode and searchabletext
     """
