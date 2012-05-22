@@ -23,7 +23,7 @@ class TestNextPrevious(unittest.TestCase):
         # Assert that our user has no credit
         member = self.portal.restrictedTraverse(
             '@@plone_portal_state').member()
-        self.assertEqual(member.getProperty('credits'), 0)
+        self.assertEqual(member.getProperty('credits'), 2)
 
         # Test that we have a browser view for adding credits
         view = self.portal.restrictedTraverse('@@emas-credits')
@@ -39,4 +39,4 @@ class TestNextPrevious(unittest.TestCase):
         # Assert that this worked
         member = self.portal.restrictedTraverse(
             '@@plone_portal_state').member()
-        self.assertEqual(member.getProperty('credits'), 31415)
+        self.assertEqual(member.getProperty('credits'), 31417)
