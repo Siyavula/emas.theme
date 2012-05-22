@@ -106,14 +106,6 @@
                 insert-after="jquery.js"
                 inline="False"/>
 
-    <javascript cacheable="True"
-                compression="none"
-                cookable="True"
-                enabled="True"
-                id="++resource++emas.theme.resources/ASCIIMathML.js"
-                insert-after="jquery.js"
-                inline="False"/>
-
     <!-- bleeding edge version of jquery, only include if theme is active -->
     <javascript cacheable="True"
                 compression="none"

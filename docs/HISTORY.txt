@@ -6,7 +6,7 @@ Changelog
 
 - Only render premium services viewlet in theme
 
-- Disable loading of 
+- Remove ASCIIMathML.js in jsregistry.xml
 
 1.8
 ---
