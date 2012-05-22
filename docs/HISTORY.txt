@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.9
+---
+
+- Only render premium services viewlet in theme
+
+- Disable loading of 
+
 1.8
 ---
 
@@ -10,11 +17,6 @@ Changelog
   object elements and changed CSS to center-align.
 
 - Unifyied qaviewlet in theme too.
-
-- Migration steps:
-  Via portal quickinstaller, uninstall both emas.theme and siyavula.what.
-  Then install emas.theme again. This should register all the necessary content
-  types again and make sure the rolemap gets applied.
 
 1.7
 ---
