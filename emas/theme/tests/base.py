@@ -16,6 +16,7 @@ class TestCase(PloneSandboxLayer):
         import plone.app.theming
         import plone.app.folder
         import rhaptos.xmlfile
+        import emas.transforms
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
         import upfront.shorturl
@@ -26,6 +27,7 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML(package=plone.resource)
         self.loadZCML(package=plone.app.theming)
         self.loadZCML(package=rhaptos.xmlfile)
+        self.loadZCML(package=emas.transforms)
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)
         self.loadZCML(package=upfront.shorturl)
