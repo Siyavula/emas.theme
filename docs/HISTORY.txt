@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.10
+----
+
+Add portal-siteactions to theme
+
+Modify site actions to render theme specific actions
+
+Add links to online practice information, FAQ and Contact us.
+
 1.9
 ---
 

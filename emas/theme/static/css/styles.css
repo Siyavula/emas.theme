@@ -76,6 +76,17 @@ td, th {
     max-width: 800px;
 }
 
+#portal-siteactions {
+    clear: none;
+    float: left;
+    text-align: left;
+    font-size: 70%;
+    padding: 0.5em 0 0 4px;
+}
+#portal-siteactions li a:hover {
+    color: #205C90;
+}
+
 #personalbar {
     background-color: #ddd;
     height: 30px;

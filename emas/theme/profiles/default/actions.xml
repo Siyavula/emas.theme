@@ -75,6 +75,18 @@
             </property>
             <property name="visible">True</property>
         </object>
+        <object name="practice" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Practice</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${globals_view/navigationRootUrl}/online-practice-information</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
     </object>
     <object name="user" meta_type="CMF Action Category">
         <property name="title"></property>
@@ -105,6 +117,55 @@
         </object>
         <object name="dashboard" meta_type="CMF Action" i18n:domain="plone">
             <property name="visible">False</property>
+        </object>
+    </object>
+
+    <object name="site_actions" meta_type="CMF Action Category">
+        <property name="title"></property>
+        <object name="sitemap" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Site Map</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${globals_view/navigationRootUrl}/sitemap</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">not:request/HTTP_X_THEME_ENABLED | nothing</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="accessibility" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Accessibility</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${globals_view/navigationRootUrl}/accessibility-info</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">not:request/HTTP_X_THEME_ENABLED | nothing</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="faq" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">FAQ</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${globals_view/navigationRootUrl}/frequently-asked-questions</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').navigation_root().getId() in ['maths', 'science']</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
+        <object name="contact" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Contact us</property>
+            <property name="description" i18n:translate=""></property>
+            <property name="url_expr">string:${globals_view/navigationRootUrl}/contact-info</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr"></property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
         </object>
     </object>
 

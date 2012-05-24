@@ -24,6 +24,13 @@
         <drop theme="/html/head/style" />
         <drop theme="/html/head/script" />
 
+        <drop css:content="#portal-personaltools-wrapper .hiddenStructure"/>
+    
+        <replace
+            css:content="#portal-siteactions"
+            css:theme="#portal-siteactions"
+            />
+
         <replace
             css:content="#portal-personaltools-wrapper"
             css:theme="#personaltools"
