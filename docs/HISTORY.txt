@@ -8,6 +8,8 @@ Fix collective.topictree profile id in metadata.xml
 
 Create folder for community site in setuphandler
 
+Add link to to community site
+
 1.11
 ----
 

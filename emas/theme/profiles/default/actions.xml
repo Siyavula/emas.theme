@@ -39,6 +39,18 @@
             </property>
             <property name="visible">True</property>
         </object>
+        <object name="maths" meta_type="CMF Action" i18n:domain="plone">
+            <property name="title" i18n:translate="">Community Site</property>
+            <property name="description" i18n:translate=""></property>
+            <property
+                name="url_expr">string:${globals_view/navigationRootUrl}/community</property>
+            <property name="icon_expr"></property>
+            <property name="available_expr">python:'community' in context.restrictedTraverse('@@plone_portal_state').navigation_root().objectIds()</property>
+            <property name="permissions">
+                <element value="View"/>
+            </property>
+            <property name="visible">True</property>
+        </object>
         <object name="grade10" meta_type="CMF Action" i18n:domain="plone">
             <property name="title" i18n:translate="">Grade 10</property>
             <property name="description" i18n:translate=""></property>
