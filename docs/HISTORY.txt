@@ -10,6 +10,8 @@ Create folder for community site in setuphandler
 
 Add link to to community site
 
+Add community portal actions
+
 1.11
 ----
 
