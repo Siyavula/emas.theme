@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.11
+----
+
+Add collective.topictree as dependency
+
+Add script to import topic trees
+
 1.10
 ----
 
