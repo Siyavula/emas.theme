@@ -53,6 +53,14 @@ def setupPortalContent(portal):
             obj = science[objId]
             obj.setNextPreviousEnabled(True)
 
+    # add folder for community site
+    if not portal.hasObject('community'):
+        portal.invokeFactory(id='community', type_name='Folder',
+                             title='Siyavula Community')
+
+        community = portal.community
+        directlyProvides(maths, directlyProvidedBy(maths), INavigationRoot)
+
     # disable tabs
     pprop = getToolByName(portal, 'portal_properties')
     pprop.site_properties._updateProperty('disable_folder_sections', True)
