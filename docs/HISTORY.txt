@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.12
+----
+
+Fix collective.topictree profile id in metadata.xml
+
 1.11
 ----
 
