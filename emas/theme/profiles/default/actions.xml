@@ -39,7 +39,7 @@
             </property>
             <property name="visible">True</property>
         </object>
-        <object name="maths" meta_type="CMF Action" i18n:domain="plone">
+        <object name="community" meta_type="CMF Action" i18n:domain="plone">
             <property name="title" i18n:translate="">Community Site</property>
             <property name="description" i18n:translate=""></property>
             <property
