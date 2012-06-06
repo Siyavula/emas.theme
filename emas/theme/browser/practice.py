@@ -45,8 +45,9 @@ class Practice(BrowserView):
         practiceserver = urlparts.netloc
         
         path = self.request.get_header('PATH_INFO')
-        hostroot = path.split(self.__name__)[0] + self.__name__
-        path = path.split(self.__name__)[-1]
+        startpos = path.find(self.__name__)
+        # strip the view name from the path
+        path = path[startpos+len(self.__name__):]
         url = "%s%s" % (practiceserver, path)
 
         headers = {
