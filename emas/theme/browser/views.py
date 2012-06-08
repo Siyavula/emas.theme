@@ -56,6 +56,10 @@ HOST_NAME_MAP = {'maths'  : 'everythingmaths.co.za',
                 }
 
 
+SERVICE_SELECTION      = 'service_selection'
+SELECTION_CONFIRMATION = 'selection_confirmation'
+ORDER_SUBMITTED        = 'order_submitted'
+
 def is_expert(context):
     # If the current user has 'siyavula.what.AddAnswer' permission
     # on the context they are considered experts and don't have to
@@ -657,6 +661,15 @@ class PurchaseView(BrowserView):
     
     def __call__(self):
         if self.request.get('purchase.form.submitted'):
+            order_items = self.request.form.get('order')
+            if order_items is None or len(order_items) < 1:
+                return self.index(mode=SERVICE_SELECTION)
+            
+            return self.index(mode=SELECTION_CONFIRMATION,
+                              selected_services = order_items)
+            
+        elif self.request.get('purchase.confirmed'):
+            # create member service objects
             portal_state = self.context.restrictedTraverse('@@plone_portal_state')
             portal = portal_state.portal()
 
@@ -672,7 +685,7 @@ class PurchaseView(BrowserView):
         
             order_items = self.request.form.get('order')
             if order_items is None or len(order_items) < 1:
-                return self.index()
+                return self.index(mode=SERVICE_SELECTION)
 
             oid = order_folder.generateUniqueId(type_name='order')
             order_folder.invokeFactory(
@@ -693,11 +706,8 @@ class PurchaseView(BrowserView):
                 )
                 order_item = order[item_id]
                 order_item.quantity = quantity
-        elif self.request.get('purchase.confirmed'):
-            # create member service objects
-            pass
         
-        return self.index()
+        return self.index(mode=SERVICE_SELECTION)
     
     def products_and_services(self):
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
