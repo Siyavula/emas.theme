@@ -137,5 +137,11 @@
                 id="++resource++emas.theme.resources/order.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/purchase.js"
+                inline="False"/>
 
 </object>
