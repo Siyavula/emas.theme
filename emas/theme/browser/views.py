@@ -706,6 +706,8 @@ class PurchaseView(BrowserView):
                 )
                 order_item = order[item_id]
                 order_item.quantity = quantity
+
+            self.request.response.redirect(self.context.absolute_url())
         
         return self.index(mode=SERVICE_SELECTION)
     
