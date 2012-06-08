@@ -6,6 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from emas.theme.browser.views import is_expert
+from emas.theme.browser.utils import getSubjectAndGrade 
 from emas.theme import MessageFactory as _
 
 
@@ -56,7 +57,8 @@ class QAViewlet(BaseQAViewlet):
         """
         context = self.context
         view = context.restrictedTraverse('@@enabled-services')
-        return view.ask_expert_enabled
+        subject, grade = getSubjectAndGrade(self.context)
+        return view.ask_expert_enabled(subject, grade)
 
     def render(self):
         """ We render an empty string when a specific piece of content

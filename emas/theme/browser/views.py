@@ -3,6 +3,7 @@ import hashlib
 from datetime import datetime, timedelta, date
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
+from z3c.relationfield.relation import create_relation
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -26,7 +27,9 @@ from siyavula.what.browser.views import DeleteQuestionView as \
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
-from emas.theme.browser.utils import getAuthedMemberCredits
+from emas.theme.browser.utils import getMemberCredits
+from emas.theme.browser.utils import getMemberServiceExpiryDate
+from emas.theme.browser.utils import getSubjectAndGrade
 from emas.theme import MessageFactory as _
 
 NULLDATE = date(1970, 01, 01)
@@ -121,13 +124,15 @@ class PremiumServicesViewlet(ViewletBase):
 
     def update(self):
         super(PremiumServicesViewlet, self).update()
+        subject, grade = getSubjectAndGrade(self.context)
+
         services = self.context.restrictedTraverse('@@enabled-services')
-        self.practice_enabled = services.is_enabled(PRACTICE_SYSTEM)
-        memberprop = SERVICE_MEMBER_PROP_MAP.get(PRACTICE_SYSTEM)
-        d = services.expirydate(memberprop)
+        self.practice_enabled = services.more_exercise_enabled(subject, grade)
+        self.practice_expirydate = NULLDATE
+        d = getMemberServiceExpiryDate(self.context)
         if d is not None:
             self.practice_expirydate = d.strftime('%d %B %Y')
-        self.askquestions_enabled = services.ask_expert_enabled
+        self.askquestions_enabled = services.ask_expert_enabled(subject, grade)
         self.questions_left = services.questions_left
         self.context_allows_questions = services.context_allows_questions
         portalstate = self.context.restrictedTraverse('@@plone_portal_state')
@@ -244,6 +249,32 @@ class CreditsView(BrowserView):
 class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
+    
+    def member_services(self, memberid=None):
+        services = {}
+        if memberid is None or len(memberid) < 1:
+            raise AttributeError('You must supply a valid memberid.')
+        
+        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+        ms_folder = portal_state.portal()._getOb('memberservices')
+        if ms_folder is None:
+            raise AttributeError('No memberservices folder found.')
+        
+        pc = getToolByName(self.context, 'portal_catalog')
+        query = {'portal_type': 'emas.app.memberservice',
+                 'memberid': memberid,
+                 'path': '/'.join(ms_folder.getPhysicalPath())}
+        
+        for brain in pc(query):
+            ms = brain.getObject()
+            service = ms.related_service.to_object
+            details = {'service_title': service.Title(),
+                       'enabled': ms.is_enabled(),
+                       'service_type': ms.service_type(),
+                       'expiry_date': ms.expiry_date,
+                       'credits': ms.credits,}
+            services[service.getId()] = details
+        return services
 
     def is_enabled(self, service):
         if is_expert(self.context): return True
@@ -260,32 +291,27 @@ class EnabledServicesView(BrowserView):
             return False
 
     def expirydate(self, memberprop):
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        return member.getProperty(memberprop)
+        return getMemberServiceExpiryDate(self.context) 
     
-    @property
-    def ask_expert_enabled(self):
+    def ask_expert_enabled(self, subject, grade):
         if is_expert(self.context): return True
-
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        current_credits = member.getProperty('credits', 0)
+        
+        current_credits = getMemberCredits(self.context)
         return current_credits > 0
 
-    @property
     def questions_left(self):
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        current_credits = member.getProperty('credits', 0)
-        return current_credits
+        return getMemberCredits(self.context)
 
-    @property
-    def answer_database_enabled(self):
+    def answer_database_enabled(self, subject, grade):
+        if grade is None or subject is None:
+            raise AttributeError('You must supply a grade and subject.')
+
+        ps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = ps.member().getId()
+            
         return self.is_enabled(ANSWER_DATABASE)
 
-    @property
-    def more_exercise_enabled(self):
+    def more_exercise_enabled(self, grade, subject):
         return self.is_enabled(PRACTICE_SYSTEM)
 
     @property
@@ -577,7 +603,7 @@ class PurchaseApproved(BrowserView):
 
 class CreditView(BrowserView):
     def getAuthedMemberCreditsJSON(self):
-        credits = getAuthedMemberCredits(self.context)
+        credits = getMemberCredits(self.context)
         return json.dumps({'credits': credits})
 
 
@@ -626,3 +652,58 @@ class AnsweredMessageView(BrowserView):
         host = HOST_NAME_MAP.get(navroot.getId(), default_host)
         path = '/'.join(content.getPhysicalPath()[3:])
         return 'http://%s/%s' %(host, path)
+
+class PurchaseView(BrowserView):
+    
+    def __call__(self):
+        if self.request.get('purchase.form.submitted'):
+            portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+            portal = portal_state.portal()
+
+            order_folder = portal_state.portal()._getOb('orders')
+            if order_folder is None:
+                raise AttributeError('No orders folder found.')
+
+            products_and_services = portal_state.portal()._getOb('products_and_services')
+            if products_and_services is None:
+                raise AttributeError('No products_and_services folder found.')
+
+            memberid = portal_state.member().getId()
+        
+            order_items = self.request.form.get('order')
+            if order_items is None or len(order_items) < 1:
+                return self.index()
+
+            oid = order_folder.generateUniqueId(type_name='order')
+            order_folder.invokeFactory(
+                type_name='emas.app.order',
+                id=oid,
+                userid=memberid,
+            )
+            order = order_folder[oid]
+            for sid, quantity in order_items.items():
+                service = products_and_services[sid]
+                relation = create_relation(service.getPhysicalPath())
+                item_id = order.generateUniqueId(type_name='orderitem')
+                order.invokeFactory(
+                    type_name='emas.app.orderitem',
+                    id=item_id,
+                    related_item=relation,
+                    quantity=quantity
+                )
+                order_item = order[item_id]
+                order_item.quantity = quantity
+        elif self.request.get('purchase.confirmed'):
+            # create member service objects
+            pass
+        
+        return self.index()
+    
+    def products_and_services(self):
+        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+        # get the services and products folder
+        items_folder = portal_state.portal()._getOb('products_and_services')
+        if items_folder is None:
+            raise AttributeError('No products_and_services folder found.')
+        return items_folder.getFolderContents(full_objects=True)
+

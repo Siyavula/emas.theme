@@ -254,4 +254,20 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="member-services"
+        class=".views.EnabledServicesView"
+        attribute="member_services"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="purchase"
+        class=".views.PurchaseView"
+        template="templates/purchase.pt"
+        permission="zope2.View"
+        />
+
 </configure>
