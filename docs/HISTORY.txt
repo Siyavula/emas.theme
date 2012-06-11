@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.14
+----
+
+Hide premium services viewlet in the context of the practice service.
+
 1.13
 ----
 
