@@ -27,6 +27,7 @@ from siyavula.what.browser.views import DeleteQuestionView as \
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme.browser.utils import getAuthedMemberCredits
+from emas.theme.browser.practice import IPracticeLayer
 from emas.theme import MessageFactory as _
 
 NULLDATE = date(1970, 01, 01)
@@ -134,9 +135,12 @@ class PremiumServicesViewlet(ViewletBase):
         self.trialuser = portalstate.member().getProperty('trialuser')
 
     def render(self):
-        #only render this viewlet if the diazo theme is enabled
+        """ only render this viewlet if the diazo theme is enabled and 
+            we are not in the context of the practise service
+        """
         theme_enabled = self.request.getHeader('HTTP_X_THEME_ENABLED', False)
-        if theme_enabled:
+        practising = IPracticeLayer.providedBy(self.request)
+        if theme_enabled and not practising:
             return super(PremiumServicesViewlet, self).render()
         return ''
 
