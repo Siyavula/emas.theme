@@ -184,6 +184,11 @@ class EmasUserDataPanel(UserDataPanel):
         self.form_fields = self.form_fields.omit('askanexpert_registrationdate')
         self.form_fields = self.form_fields.omit('answerdatabase_registrationdate')
         self.form_fields = self.form_fields.omit('moreexercise_registrationdate')
+        self.form_fields = self.form_fields.omit('askanexpert_expirydate')
+        self.form_fields = self.form_fields.omit('answerdatabase_expirydate')
+        self.form_fields = self.form_fields.omit('moreexercise_expirydate')
+        self.form_fields = self.form_fields.omit('intelligent_practice_access')
+        self.form_fields = self.form_fields.omit('trialuser')
 
 class CreditsViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """

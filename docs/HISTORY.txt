@@ -6,6 +6,8 @@ Changelog
 
 Hide premium services viewlet in the context of the practice service.
 
+Hide private fields on personal information view.
+
 1.13
 ----
 
