@@ -41,9 +41,6 @@ class Practice(BrowserView):
                 self.request.REMOTE_ADDR not in ('127.0.0.1', 'localhost'):
             return self.request.RESPONSE.unauthorized()
 
-        self.html = 'test'
-        return self.index()
-
         member = portal_state.member()
         if member.getId():
             accessto = ','.join(
