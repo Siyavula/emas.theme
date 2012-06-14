@@ -14,6 +14,7 @@ from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
@@ -55,10 +56,6 @@ HOST_NAME_MAP = {'maths'  : 'everythingmaths.co.za',
                  'science': 'everythingscience.co.za',
                 }
 
-
-SERVICE_SELECTION      = 'service_selection'
-SELECTION_CONFIRMATION = 'selection_confirmation'
-ORDER_SUBMITTED        = 'order_submitted'
 
 def is_expert(context):
     # If the current user has 'siyavula.what.AddAnswer' permission
@@ -263,7 +260,10 @@ class EnabledServicesView(BrowserView):
         ms_folder = portal_state.portal()._getOb('memberservices')
         if ms_folder is None:
             raise AttributeError('No memberservices folder found.')
-        
+        if not hasattr(memberid, ms_folder):
+            return False
+
+        member_services = ms_folder._getOb(memberid) 
         pc = getToolByName(self.context, 'portal_catalog')
         query = {'portal_type': 'emas.app.memberservice',
                  'memberid': memberid,
@@ -656,66 +656,3 @@ class AnsweredMessageView(BrowserView):
         host = HOST_NAME_MAP.get(navroot.getId(), default_host)
         path = '/'.join(content.getPhysicalPath()[3:])
         return 'http://%s/%s' %(host, path)
-
-class PurchaseView(BrowserView):
-    
-    def __call__(self):
-        if self.request.get('purchase.form.submitted'):
-            order_items = self.request.form.get('order')
-            if order_items is None or len(order_items) < 1:
-                return self.index(mode=SERVICE_SELECTION)
-            
-            return self.index(mode=SELECTION_CONFIRMATION,
-                              selected_services = order_items)
-            
-        elif self.request.get('purchase.confirmed'):
-            # create member service objects
-            portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-            portal = portal_state.portal()
-
-            order_folder = portal_state.portal()._getOb('orders')
-            if order_folder is None:
-                raise AttributeError('No orders folder found.')
-
-            products_and_services = portal_state.portal()._getOb('products_and_services')
-            if products_and_services is None:
-                raise AttributeError('No products_and_services folder found.')
-
-            memberid = portal_state.member().getId()
-        
-            order_items = self.request.form.get('order')
-            if order_items is None or len(order_items) < 1:
-                return self.index(mode=SERVICE_SELECTION)
-
-            oid = order_folder.generateUniqueId(type_name='order')
-            order_folder.invokeFactory(
-                type_name='emas.app.order',
-                id=oid,
-                userid=memberid,
-            )
-            order = order_folder[oid]
-            for sid, quantity in order_items.items():
-                service = products_and_services[sid]
-                relation = create_relation(service.getPhysicalPath())
-                item_id = order.generateUniqueId(type_name='orderitem')
-                order.invokeFactory(
-                    type_name='emas.app.orderitem',
-                    id=item_id,
-                    related_item=relation,
-                    quantity=quantity
-                )
-                order_item = order[item_id]
-                order_item.quantity = quantity
-
-            self.request.response.redirect(self.context.absolute_url())
-        
-        return self.index(mode=SERVICE_SELECTION)
-    
-    def products_and_services(self):
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        # get the services and products folder
-        items_folder = portal_state.portal()._getOb('products_and_services')
-        if items_folder is None:
-            raise AttributeError('No products_and_services folder found.')
-        return items_folder.getFolderContents(full_objects=True)
-
