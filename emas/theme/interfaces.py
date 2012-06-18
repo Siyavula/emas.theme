@@ -54,6 +54,11 @@ class IEmasSettings(Interface):
         required=False,
     )
 
+    vcs_url = TextLine(
+        title=_('VCS URL'),
+        required=False,
+    )
+
     vcs_terminal_id = TextLine(
         title=_('VCS Terminal ID'),
         required=False,

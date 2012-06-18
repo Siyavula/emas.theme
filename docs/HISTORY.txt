@@ -1,6 +1,19 @@
 Changelog
 =========
 
+1.15 (unrelease)
+----
+
+Add VCS integration
+
+Add emas.app dependency
+
+1.14
+----
+
+1.13
+----
+
 1.12
 ----
 
