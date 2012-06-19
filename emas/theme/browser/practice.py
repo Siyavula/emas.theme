@@ -5,8 +5,9 @@ import lxml
 from urllib import urlencode
 from urlparse import urlparse
 
-from zope.interface import Interface, implements
+from zope.interface import Interface, implements, alsoProvides
 from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.component import queryUtility
 from plone.registry.interfaces import IRegistry
 
@@ -18,6 +19,12 @@ from emas.theme.interfaces import IEmasSettings
 class IPractice(Interface):
     """ Marker interface for IPractice """
 
+class IPracticeLayer(IBrowserRequest):
+    """ Applied to HTTP request object to customise layout e.g. the
+        premium services viewlet should be hidden when we are
+        practising.
+    """
+
 class Practice(BrowserView):
     """ Proxy for practice in Monassis
     """
@@ -27,6 +34,8 @@ class Practice(BrowserView):
     index = ViewPageTemplateFile('templates/practice.pt')
 
     def __call__(self, *args, **kw):
+        alsoProvides(self.request, IPracticeLayer)
+
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
         if portal_state.anonymous() and \
                 self.request.REMOTE_ADDR not in ('127.0.0.1', 'localhost'):
@@ -45,8 +54,9 @@ class Practice(BrowserView):
         practiceserver = urlparts.netloc
         
         path = self.request.get_header('PATH_INFO')
-        hostroot = path.split(self.__name__)[0] + self.__name__
-        path = path.split(self.__name__)[-1]
+        startpos = path.find(self.__name__)
+        # strip the view name from the path
+        path = path[startpos+len(self.__name__):]
         url = "%s%s" % (practiceserver, path)
 
         headers = {
