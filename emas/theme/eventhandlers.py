@@ -76,7 +76,16 @@ def questionDeleted(obj, event):
     """
     if is_expert(obj):
         return
-    pmt = getToolByName(obj, 'portal_membership')
-    member = pmt.getMemberById(obj.Creator())
-    credits = member.getProperty('credits') + 1
-    member.setMemberProperties({'credits': credits})
+
+    context = obj.relatedContent.to_object
+
+    service_uids = getServiceUUIDs(context)
+    if service_uids is None or len(service_uids) < 1:
+        return
+
+    memberservices = getMemberServices(context, service_uids)
+    if len(memberservices) < 1:
+        raise RuntimeError("The user has no credits.")
+    else:
+        credits = memberservices[0].credits + 1
+        memberservices[0].credits = credits
