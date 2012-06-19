@@ -42,6 +42,13 @@ class IEmasSettings(Interface):
         required=True
     )
 
+    bcc_address = TextLine(
+        title=_(u'Annotator Notifier BCC address'),
+        description=_(u"Define the email address that get's bcc'd when notification emails are sent."),
+        required=True,
+        default=u'info@siyavula.com'
+    )
+
     creditcost = Int(
         title=_('Credit Cost'),
         description=_('The cost per credit in cents'),

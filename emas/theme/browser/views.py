@@ -114,6 +114,9 @@ class AnnotatorConfigViewlet(ViewletBase):
     def annotatorStore(self):
         return self.settings.store
 
+    def bccAddress(self):
+        return self.settings.bcc_address
+    
     def userId(self):
         return self.portal_state.member().getId()
 
