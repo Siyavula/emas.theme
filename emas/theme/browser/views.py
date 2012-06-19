@@ -31,6 +31,8 @@ from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme.browser.utils import getMemberCredits
 from emas.theme.browser.utils import getMemberServiceExpiryDate
 from emas.theme.browser.utils import getSubjectAndGrade
+from emas.theme.browser.practice import IPracticeLayer
+
 from emas.theme import MessageFactory as _
 
 NULLDATE = date(1970, 01, 01)
@@ -140,9 +142,12 @@ class PremiumServicesViewlet(ViewletBase):
         self.trialuser = portalstate.member().getProperty('trialuser')
 
     def render(self):
-        #only render this viewlet if the diazo theme is enabled
+        """ only render this viewlet if the diazo theme is enabled and 
+            we are not in the context of the practise service
+        """
         theme_enabled = self.request.getHeader('HTTP_X_THEME_ENABLED', False)
-        if theme_enabled:
+        practising = IPracticeLayer.providedBy(self.request)
+        if theme_enabled and not practising:
             return super(PremiumServicesViewlet, self).render()
         return ''
 
@@ -186,6 +191,11 @@ class EmasUserDataPanel(UserDataPanel):
         self.form_fields = self.form_fields.omit('askanexpert_registrationdate')
         self.form_fields = self.form_fields.omit('answerdatabase_registrationdate')
         self.form_fields = self.form_fields.omit('moreexercise_registrationdate')
+        self.form_fields = self.form_fields.omit('askanexpert_expirydate')
+        self.form_fields = self.form_fields.omit('answerdatabase_expirydate')
+        self.form_fields = self.form_fields.omit('moreexercise_expirydate')
+        self.form_fields = self.form_fields.omit('intelligent_practice_access')
+        self.form_fields = self.form_fields.omit('trialuser')
 
 class CreditsViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
