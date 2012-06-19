@@ -22,9 +22,9 @@ def getSubjectAndGrade(context):
 def getServiceUUIDs(context):
     subject, grade = getSubjectAndGrade(context)
     pc = getToolByName(context, 'portal_catalog')
-    query = ({'portal_type': 'service',
-              'subject': subject,
-              'grade': grade})
+    query = {'portal_type': 'emas.app.service',
+             'subject': subject,
+             'grade': grade}
     service_uids = [IUUID(b.getObject()) for b in pc(query)]
     return service_uids
 
@@ -32,10 +32,11 @@ def getServiceUUIDs(context):
 def getMemberServices(context, service_uids):
     pmt = getToolByName(context, 'portal_membership')
     member = pmt.getAuthenticatedMember()
-    query({'portal_type': 'memberservice',
-           'memberid': member.getId(),
-           'serviceuid': service_uids,
-           'sort_on': 'expiry_date'})
+    query = {'portal_type': 'emas.app.memberservice',
+             'memberid': member.getId(),
+             'serviceuid': service_uids,
+             'sort_on': 'expiry_date'
+            }
     pc = getToolByName(context, 'portal_catalog')
     memberservices = [b.getObject() for b in pc(query)]
     return memberservices
