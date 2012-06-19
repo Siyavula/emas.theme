@@ -4,6 +4,8 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.content.folder import ATFolder
 
+from emas.theme.browser.utils import getMemberServices
+from emas.theme.browser.utils import getServiceUUIDs
 from emas.theme.browser.views import is_expert
 
 def onMemberJoined(obj, event):
@@ -55,11 +57,19 @@ def questionAsked(obj, event):
     if is_expert(obj):
         return
 
-    member = obj.restrictedTraverse('@@plone_portal_state').member()
-    credits = member.getProperty('credits') - 1
-    if credits < 0:
-        raise RuntimeError("Credits can't be less than zero")
-    member.setMemberProperties({'credits': credits})
+    context = obj.relatedContent.to_object
+
+    service_uids = getServiceUUIDs(context)
+    # there are no services so the user cannot pay for any.
+    if service_uids is None or len(service_uids) < 1:
+        return
+
+    memberservices = getMemberServices(context, service_uids)
+    if len(memberservices) < 1:
+        raise RuntimeError("The user has no credits.")
+    else:
+        credits = memberservices[0].credits - 1
+        memberservices[0].credits = credits
 
 def questionDeleted(obj, event):
     """ Add a credit when a question is deleted.

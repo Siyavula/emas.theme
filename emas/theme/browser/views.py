@@ -203,9 +203,7 @@ class CreditsViewlet(ViewletBase):
 
     @property
     def credits(self):
-        member = self.context.restrictedTraverse(
-            '@@plone_portal_state').member()
-        return member.getProperty('credits', 0)
+        return getMemberCredits()
 
 class CreditsView(BrowserView):
     def __call__(self):
