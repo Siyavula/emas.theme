@@ -327,7 +327,13 @@ class EnabledServicesView(BrowserView):
         return self.is_enabled(ANSWER_DATABASE)
 
     def more_exercise_enabled(self, grade, subject):
-        return self.is_enabled(PRACTICE_SYSTEM)
+        now = date.today()
+        expiry_date = getMemberServiceExpiryDate(self.context) 
+        # if we cannot find an expiry_date, there is no memberservice for this
+        # context and thus exercise should not be available.
+        if expiry_date is None:
+            return False
+        return expiry_date > now
 
     @property
     def context_allows_questions(self):
