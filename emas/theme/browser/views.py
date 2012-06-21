@@ -26,11 +26,14 @@ from siyavula.what.browser.views import AddQuestionView as AddQuestionBaseView
 from siyavula.what.browser.views import DeleteQuestionView as \
     DeleteQuestionBaseView 
 
+from emas.app.browser.utils import member_credits
+from emas.app.browser.utils import practice_service_expirydate
+from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import subject_and_grade
+from emas.app.browser.utils import member_services 
+
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
-from emas.theme.browser.utils import getMemberCredits
-from emas.theme.browser.utils import getPracticeServiceExpiryDate
-from emas.theme.browser.utils import getSubjectAndGrade
 from emas.theme.browser.practice import IPracticeLayer
 
 from emas.theme import MessageFactory as _
@@ -130,12 +133,12 @@ class PremiumServicesViewlet(ViewletBase):
 
     def update(self):
         super(PremiumServicesViewlet, self).update()
-        subject, grade = getSubjectAndGrade(self.context)
+        subject, grade = subject_and_grade(self.context)
 
         services = self.context.restrictedTraverse('@@enabled-services')
         self.practice_enabled = services.more_exercise_enabled(self.context)
         self.practice_expirydate = NULLDATE
-        d = getPracticeServiceExpiryDate(self.context)
+        d = practice_service_expirydate(self.context)
         if d is not None:
             self.practice_expirydate = d.strftime('%d %B %Y')
         self.askquestions_enabled = services.ask_expert_enabled(self.context)
@@ -206,7 +209,7 @@ class CreditsViewlet(ViewletBase):
 
     @property
     def credits(self):
-        return getMemberCredits()
+        return member_credits()
 
 class CreditsView(BrowserView):
     def __call__(self):
@@ -306,20 +309,21 @@ class EnabledServicesView(BrowserView):
             return False
 
     def expirydate(self, memberprop):
-        return getMemberServiceExpiryDate(self.context) 
+        return memberservice_expiry_date(self.context) 
     
     def ask_expert_enabled(self, context=None):
         context = context or self.context
 
-        if is_expert(context): return True
+        if is_expert(context):
+            return True
         
-        current_credits = getMemberCredits(context)
+        current_credits = member_credits(context)
         return current_credits > 0
 
     def questions_left(self, context=None):
         context = context or self.context
 
-        return getMemberCredits(context)
+        return member_credits(context)
 
     def answer_database_enabled(self, context=None):
         context = context or self.context
@@ -339,14 +343,20 @@ class EnabledServicesView(BrowserView):
         pmt = getToolByName(context, 'portal_membership')
         if pmt.checkPermission(permission, context):
             return True
+        
+        service_uuids = practice_service_uuids(context)
+        memberservices = member_services(context, service_uuids)
+        # if we cannot find any memberservices the exercise link should not be
+        # available.
+        if memberservices is None or len(memberservices) < 1:
+            return False
 
         now = date.today()
-        expiry_date = getPracticeServiceExpiryDate(context) 
-        # if we cannot find an expiry_date, there is no memberservice for this
-        # context and thus exercise should not be available.
-        if expiry_date is None:
-            return False
-        return expiry_date > now
+        for ms in memberservices:
+            if ms.expirydate > now:
+                return True
+        
+        return False
 
     @property
     def context_allows_questions(self):
@@ -637,7 +647,7 @@ class PurchaseApproved(BrowserView):
 
 class CreditView(BrowserView):
     def getAuthedMemberCreditsJSON(self):
-        credits = getMemberCredits(self.context)
+        credits = member_credits(self.context)
         return json.dumps({'credits': credits})
 
 
