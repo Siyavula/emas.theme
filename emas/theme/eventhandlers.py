@@ -4,10 +4,6 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.content.folder import ATFolder
 
-from emas.theme.browser.utils import getMemberServices
-from emas.theme.browser.utils import getServiceUUIDs
-from emas.theme.browser.views import is_expert
-
 def onMemberJoined(obj, event):
     portal = obj.restrictedTraverse('@@plone_portal_state').portal()
     transactions = portal.transactions
@@ -50,42 +46,3 @@ def onMemberJoined(obj, event):
     propsheet = obj.getPropertysheet('mutable_properties')
     for key, value in properties.items():
         propsheet.setProperty(obj, key, value)
-
-def questionAsked(obj, event):
-    """ Deduct a credit when a question is asked
-    """
-    if is_expert(obj):
-        return
-
-    context = obj.relatedContent.to_object
-
-    service_uids = getServiceUUIDs(context)
-    # there are no services so the user cannot pay for any.
-    if service_uids is None or len(service_uids) < 1:
-        return
-
-    memberservices = getMemberServices(context, service_uids)
-    if len(memberservices) < 1:
-        raise RuntimeError("The user has no credits.")
-    else:
-        credits = memberservices[0].credits - 1
-        memberservices[0].credits = credits
-
-def questionDeleted(obj, event):
-    """ Add a credit when a question is deleted.
-    """
-    if is_expert(obj):
-        return
-
-    context = obj.relatedContent.to_object
-
-    service_uids = getServiceUUIDs(context)
-    if service_uids is None or len(service_uids) < 1:
-        return
-
-    memberservices = getMemberServices(context, service_uids)
-    if len(memberservices) < 1:
-        raise RuntimeError("The user has no credits.")
-    else:
-        credits = memberservices[0].credits + 1
-        memberservices[0].credits = credits
