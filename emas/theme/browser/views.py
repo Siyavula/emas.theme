@@ -29,7 +29,7 @@ from siyavula.what.browser.views import DeleteQuestionView as \
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
 from emas.theme.browser.utils import getMemberCredits
-from emas.theme.browser.utils import getMemberServiceExpiryDate
+from emas.theme.browser.utils import getPracticeServiceExpiryDate
 from emas.theme.browser.utils import getSubjectAndGrade
 from emas.theme.browser.practice import IPracticeLayer
 
@@ -133,12 +133,12 @@ class PremiumServicesViewlet(ViewletBase):
         subject, grade = getSubjectAndGrade(self.context)
 
         services = self.context.restrictedTraverse('@@enabled-services')
-        self.practice_enabled = services.more_exercise_enabled(subject, grade)
+        self.practice_enabled = services.more_exercise_enabled(self.context)
         self.practice_expirydate = NULLDATE
-        d = getMemberServiceExpiryDate(self.context)
+        d = getPracticeServiceExpiryDate(self.context)
         if d is not None:
             self.practice_expirydate = d.strftime('%d %B %Y')
-        self.askquestions_enabled = services.ask_expert_enabled(subject, grade)
+        self.askquestions_enabled = services.ask_expert_enabled(self.context)
         self.questions_left = services.questions_left
         self.context_allows_questions = services.context_allows_questions
         portalstate = self.context.restrictedTraverse('@@plone_portal_state')
@@ -308,16 +308,22 @@ class EnabledServicesView(BrowserView):
     def expirydate(self, memberprop):
         return getMemberServiceExpiryDate(self.context) 
     
-    def ask_expert_enabled(self, subject, grade):
-        if is_expert(self.context): return True
+    def ask_expert_enabled(self, context=None):
+        context = context or self.context
+
+        if is_expert(context): return True
         
-        current_credits = getMemberCredits(self.context)
+        current_credits = getMemberCredits(context)
         return current_credits > 0
 
-    def questions_left(self):
-        return getMemberCredits(self.context)
+    def questions_left(self, context=None):
+        context = context or self.context
 
-    def answer_database_enabled(self, subject, grade):
+        return getMemberCredits(context)
+
+    def answer_database_enabled(self, context=None):
+        context = context or self.context
+
         if grade is None or subject is None:
             raise AttributeError('You must supply a grade and subject.')
 
@@ -326,9 +332,16 @@ class EnabledServicesView(BrowserView):
             
         return self.is_enabled(ANSWER_DATABASE)
 
-    def more_exercise_enabled(self, grade, subject):
+    def more_exercise_enabled(self, context=None):
+        context = context or self.context
+
+        permission = 'Manage portal'
+        pmt = getToolByName(context, 'portal_membership')
+        if pmt.checkPermission(permission, context):
+            return True
+
         now = date.today()
-        expiry_date = getMemberServiceExpiryDate(self.context) 
+        expiry_date = getPracticeServiceExpiryDate(context) 
         # if we cannot find an expiry_date, there is no memberservice for this
         # context and thus exercise should not be available.
         if expiry_date is None:

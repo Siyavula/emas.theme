@@ -29,6 +29,17 @@ def getServiceUUIDs(context):
     return service_uids
 
 
+def getPracticeServiceUUIDS(context):
+    subject, grade = getSubjectAndGrade(context)
+    pc = getToolByName(context, 'portal_catalog')
+    query = {'portal_type': 'emas.app.service',
+             'subject': subject,
+             'grade': grade,
+             'Title': 'practice'}
+    service_uids = [IUUID(b.getObject()) for b in pc(query)]
+    return service_uids
+
+
 def getMemberServices(context, service_uids):
     pmt = getToolByName(context, 'portal_membership')
     member = pmt.getAuthenticatedMember()
@@ -60,7 +71,6 @@ def getMemberCredits(context):
 
 def getMemberServiceExpiryDate(context):
     expiry_date = None
-    now = date.today()
 
     service_uids = getServiceUUIDs(context)
     if service_uids is None or len(service_uids) < 1:
@@ -74,3 +84,15 @@ def getMemberServiceExpiryDate(context):
         expiry_date = ms.expiry_date
 
     return expiry_date
+
+def getPracticeServiceExpiryDate(context):
+    service_uids = getPracticeServiceUUIDS(context)
+
+    if service_uids is None or len(service_uids) < 1:
+        return None
+    
+    memberservices = getMemberServices(context, service_uids)
+    if len(memberservices) < 1:
+        return  None
+    
+    return memberservices[0].expiry_date
