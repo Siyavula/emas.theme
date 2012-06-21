@@ -6,7 +6,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from emas.theme.browser.views import is_expert
-from emas.theme.browser.utils import getSubjectAndGrade 
 from emas.theme import MessageFactory as _
 
 
