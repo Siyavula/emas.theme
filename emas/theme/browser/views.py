@@ -353,7 +353,7 @@ class EnabledServicesView(BrowserView):
 
         now = date.today()
         for ms in memberservices:
-            if ms.expirydate > now:
+            if ms.expiry_date > now:
                 return True
         
         return False
