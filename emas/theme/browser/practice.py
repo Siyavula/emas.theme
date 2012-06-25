@@ -14,6 +14,9 @@ from plone.registry.interfaces import IRegistry
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import member_services 
+
 from emas.theme.interfaces import IEmasSettings
 
 class IPractice(Interface):
@@ -43,8 +46,12 @@ class Practice(BrowserView):
 
         member = portal_state.member()
         if member.getId():
+            service_uuids = practice_service_uuids(self.context)
+            memberservices = member_services(self.context, service_uuids)
+            services = [ms.related_service.to_object for ms in memberservices]
             accessto = ','.join(
-                member.getProperty('intelligent_practice_access'))
+                ['%s-%s' %(s.subject, s.grade) for s in services]
+            )
         else:
             accessto = ''
         memberid = member.getId() or 'Anonymous'
