@@ -20,7 +20,7 @@ Learner may not submit questions
 
     Goal
         
-        Verify a learner without credits or with a service expiry date in the past cannot submit questions.
+        Verify a learner without credits or cannot submit questions.
 
     Prerequisites
         
@@ -86,7 +86,7 @@ Learner buys credits via EFT
 
         Find the relevant new order.
 
-        Change the selected order's state to 'paid' via the state drop-down.
+        Change the selected order's state to 'paid' via the state drop-down, by selecting 'pay' from the state drop-down.
 
         Navigate to the 'Member services' folder.
 
@@ -322,31 +322,41 @@ Learner has access to answers
         Validate the you can still see the questions and answers you previously entered for this learner.
 
 
-
-
-
-TO BE DONE:
-
-
-Learner cannot access answers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Goal
-
-        Validate that a learner has no access to his questions once his service subscription has expired.
-
-    Prerequisites
-
-    Steps
-
 Learner has access to intelligent exercise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Goal
 
+        Validate a learner has access to the intelligent practice service on those subjects that he jas paid for.
+
     Prerequisites
 
+        The learner has no valid, non-expired services for intelligent practice.
+
     Steps
+
+        Navigate to: http://qa.everythingmaths.co.za/grade-10/01-algebraic-expressions/01-algebraic-expressions-01.cnxmlplus
+
+        Click on the blue area labelled 'Premium services'.
+
+        Validate that there is no link to 'Intelligent Practice'.
+
+        Order and pay for access to 'Maths Grade 10 Practice' service.
+        - refer to the test cases above for instructions.
+
+        Refresh the page.
+
+        Click on the blue area labelled 'Premium services'.
+
+        Validate that there now is a link to 'Intelligent Practice'.
+
+        Click on the link.
+
+        Validate that you are taken to a page that displays practice options for grade 10 maths.
+
+
+TO BE DONE:
+
 
 Learner cannot access intelligent exercise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -356,6 +366,8 @@ Learner cannot access intelligent exercise
     Prerequisites
 
     Steps
+
+
 
 Learner has restricted access to intelligent exercise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
