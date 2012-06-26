@@ -59,7 +59,8 @@ def setupPortalContent(portal):
                              title='Siyavula Community')
 
         community = portal.community
-        directlyProvides(maths, directlyProvidedBy(maths), INavigationRoot)
+        directlyProvides(community, directlyProvidedBy(community),
+                         INavigationRoot)
 
     # disable tabs
     pprop = getToolByName(portal, 'portal_properties')
