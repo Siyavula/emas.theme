@@ -209,7 +209,7 @@ class CreditsViewlet(ViewletBase):
 
     @property
     def credits(self):
-        return member_credits()
+        return member_credits(self.context)
 
 class CreditsView(BrowserView):
     def __call__(self):
