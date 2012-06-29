@@ -133,9 +133,11 @@ class PremiumServicesViewlet(ViewletBase):
 
     def update(self):
         super(PremiumServicesViewlet, self).update()
-        subject, grade = subject_and_grade(self.context)
+        self.subject, self.grade = subject_and_grade(self.context)
 
         services = self.context.restrictedTraverse('@@enabled-services')
+        self.memberservices = services.get_member_services_for_subject(
+            self.subject)
         self.practice_enabled = services.more_exercise_enabled(self.context)
         self.practice_expirydate = NULLDATE
         d = practice_service_expirydate(self.context)
@@ -265,33 +267,36 @@ class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
     
-    def member_services(self, memberid=None):
+    def get_member_services_for_subject(self, subject, memberid=None):
+        """ This method probably needs caching since it is called a lot during
+            the rendering of all pages which have the PremiumServicesViewlet.
+        """
         services = {}
-        if memberid is None or len(memberid) < 1:
-            raise AttributeError('You must supply a valid memberid.')
-        
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+        if memberid is None:
+            memberid = portal_state.member().getId()
+        
         ms_folder = portal_state.portal()._getOb('memberservices')
         if ms_folder is None:
             raise AttributeError('No memberservices folder found.')
-        if not hasattr(memberid, ms_folder):
-            return False
 
-        member_services = ms_folder._getOb(memberid) 
         pc = getToolByName(self.context, 'portal_catalog')
         query = {'portal_type': 'emas.app.memberservice',
                  'memberid': memberid,
+                 'subject': subject,
                  'path': '/'.join(ms_folder.getPhysicalPath())}
         
         for brain in pc(query):
             ms = brain.getObject()
             service = ms.related_service.to_object
+            st = service.service_type
             details = {'service_title': service.Title(),
-                       'enabled': ms.is_enabled(),
-                       'service_type': ms.service_type(),
+                       'grade': service.grade,
                        'expiry_date': ms.expiry_date,
                        'credits': ms.credits,}
-            services[service.getId()] = details
+            tmp_list = services.get(st, [])
+            tmp_list.append(details)
+            services[st] = tmp_list
         return services
 
     def is_enabled(self, service):

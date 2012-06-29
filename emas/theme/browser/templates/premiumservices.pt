@@ -11,7 +11,15 @@
             a question <em>is only enabled inside a chapter</em>
             </span>
             <a tal:condition="view/context_allows_questions" tal:attributes="href string:${context/absolute_url}#commenting">Ask a question</a><br/>
-            (<span id="number-of-questions-left" tal:content="view/questions_left">10</span> questions left)
+            <tal:show_memberservice_types define="memberservices view/memberservices">
+
+            <tal:show_creditservice_details repeat="service python:memberservices.get('credit', [])">
+            (<span id="element_id"
+                tal:attributes="id python:service['grade'] == view.grade and 'number-of-questions-left' or ''"
+                tal:content="service/credits">10</span> questions left for <span tal:content="service/grade">service title</span>)<br/>
+            </tal:show_creditservice_details>
+
+            </tal:show_memberservice_types>
         </p>
 
         <p>
