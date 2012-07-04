@@ -277,8 +277,6 @@ class EnabledServicesView(BrowserView):
             memberid = portal_state.member().getId()
         
         ms_folder = portal_state.portal()._getOb('memberservices')
-        if ms_folder is None:
-            raise AttributeError('No memberservices folder found.')
 
         pc = getToolByName(self.context, 'portal_catalog')
         query = {'portal_type': 'emas.app.memberservice',
