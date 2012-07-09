@@ -254,4 +254,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="manage_debug_threads"
+        for="*"
+        permission="cmf.ManagePortal"
+        class="z3c.deadlockdebugger.threads.View"
+        />
+
 </configure>
