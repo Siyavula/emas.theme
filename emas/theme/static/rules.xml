@@ -137,6 +137,23 @@ _gaq.push(['_trackPageview']);
 </script>
         </after>
 
+        <replace css:theme="#copyright-image"
+            css:if-not-content="#practice-content">
+            <a id="copyright-link-ccby" href="#">
+                <img id="copyright-image-ccby"
+                    src="++theme++emas.theme/images/cc_by.png"
+                    alt="cc-by copyright logo" />
+            </a>
+        </replace>
+
+        <replace css:theme="#copyright-image"
+            css:if-content="#practice-content">
+            <a id="copyright-link-c" href="#">
+                <img id="copyright-image-c"
+                    src="++theme++emas.theme/images/copyright.png"
+                    alt="copyright logo" />
+            </a>
+        </replace>
 
     </rules>
 
