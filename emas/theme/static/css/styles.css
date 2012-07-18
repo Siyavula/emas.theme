@@ -727,6 +727,6 @@ div#copyright {
     display: none;
 }
 
-#footer img#copyright-image-c {
+#footer div#copyright-image-container img#copyright-image-c {
     width: 44px;
 }
