@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+    <body>
+        <metal:core fill-slot="content">
+            <div id="content-core">
+                <iframe src="https://docs.google.com/a/siyavula.com/spreadsheet/embeddedform?formkey=dHJsZ1FienlPSUhtOTVsaElTXzJDMlE6MQ" width="760" height="3136" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+            </div>
+        </metal:core>
+    </body>
+</html>
