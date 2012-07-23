@@ -13,7 +13,9 @@ from emas.theme.interfaces import IEmasSettings
 from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
-   
+
+
+EXAM_PAPERS_GROUP = "ExamPapers"
 
 MXIT_MESSAGES = {
     '0':
@@ -74,8 +76,14 @@ class MxitPaymentRequest(grok.View):
         self.moola_amount = 1
         self.currency_amount = 1
 
-        # check if the current authenticated member belongs to the ExamPapers
-        # group
+        # check if the current mxit member belongs to the ExamPapers group
+        memberid = member_id(self.request.get(USER_ID_TOKEN))
+        gt = getToolByName(context, 'portal_groups')
+        group = gt.getGroupById(EXAM_PAPERS_GROUP)
+        if memberid in group.getMemberIds():
+            self.request.response.redirect('/papers')
+        else:
+            return self.render()
 
     def get_url(self):
         query_dict = {
@@ -128,8 +136,7 @@ class MxitPaymentResponse(grok.View):
             
             # now add the member to the correct group
             gt = getToolByName(context, 'portal_groups')
-            gt.addPrincipalToGroup(member.getId(), 'ExamPapers')
-
+            gt.addPrincipalToGroup(member.getId(), EXAM_PAPERS_GROUP)
 
     def get_url(self):
         return self.base_url + '/papers'
