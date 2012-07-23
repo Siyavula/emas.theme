@@ -11,6 +11,7 @@
             <element value="school" />
             <element value="province" />
         </property>
+        <property name="mxit_secret" type="string">12345</property>
     </object>
 </object>
 
