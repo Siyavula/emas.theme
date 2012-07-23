@@ -495,7 +495,8 @@ section.packages table td.price span {
     font-size: 16px;
 }
 
-#selectpackage {
+#selectpackage,
+#selectitems {
     font-size: 100%;
     background-color: #FFFFCC;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -504,42 +505,51 @@ section.packages table td.price span {
     width: 700px;
 }
 
-#selectpackage h2 {
+#selectpackage h2,
+#selectitems h2 {
     border-bottom: 1px solid #E3C27C;
 }
 
-#selectpackage .pricinginfo {
+#selectpackage .pricinginfo,
+#selectitems .pricinginfo {
     float: right;
     margin: 0;
     clear: both;
 }
 
-#selectpackage fieldset {
+#selectpackage fieldset,
+#selectitems fieldset {
     padding: 0;
     margin: 0;
     border: none;
 }
-#selectpackage legend {
+#selectpackage legend,
+#selectitems legend {
     font-size: 100%;
     font-weight: bold;
 }
-#selectpackage fieldset p {
+#selectpackage fieldset p,
+#selectitems fieldset p {
     padding: 0em;
     margin: 0.5em 0;
 }
 
-#selectpackage strong {
+#selectpackage strong,
+#selectitems strong {
     color: #CC0000;
 }
-#selectpackage li {
+#selectpackage li,
+#selectitems li {
     font-weight: bold;
 }
 
-#selectpackage input {
+#selectpackage input,
+#selectitems input {
     margin-left: 1em;
 }
 
-#selectpackage input[type="submit"] {
+#selectpackage input[type="submit"],
+#selectitems input[type="submit"] {
     margin-left: 0em;
 }
 
@@ -684,3 +694,39 @@ a.active.premiumservices-trigger {
     background: #3096D3 url(++resource++emas.theme.resources/minus.png) 90% 50% no-repeat;
 }
 
+.clear {
+    clear: both;
+}
+
+div#copyright {
+    border: 1px solid #999;
+    background-color: #efefef;
+    white-space: normal;
+    text-align: center;
+    font-size: small;
+    margin-bottom:7px;
+}
+
+#footer div#copyright-image-container {
+    margin-top: 7px;
+    margin-left: 7px;
+    margin-right: 0;
+    margin-bottom: 7px;
+}
+
+#footer div#copyright-image-container img {
+    width: 170px;
+}
+
+#footer div#copyright-text {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.hidden {
+    display: none;
+}
+
+#footer img#copyright-image-c {
+    width: 44px;
+}
