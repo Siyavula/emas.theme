@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.15
+----
+
+Add copyright to footer
+
+Add schoolorders template
+
 1.14
 ----
 
