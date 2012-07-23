@@ -74,6 +74,9 @@ class MxitPaymentRequest(grok.View):
         self.moola_amount = 1
         self.currency_amount = 1
 
+        # check if the current authenticated member belongs to the ExamPapers
+        # group
+
     def get_url(self):
         query_dict = {
             "VendorId": self.vendor_id,
@@ -121,8 +124,11 @@ class MxitPaymentResponse(grok.View):
             member = pmt.getMemberById(memberid)
             if not member:
                 member = pmt.addMember(memberid, password, 'Member', '')
+                member = pmt.getMemberById(memberid)
             
             # now add the member to the correct group
+            gt = getToolByName(context, 'portal_groups')
+            gt.addPrincipalToGroup(member.getId(), 'ExamPapers')
 
 
     def get_url(self):
