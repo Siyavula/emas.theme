@@ -38,3 +38,8 @@ class TableOfContents(BrowserView):
         """ If it does not have its own title, we fall back to id.
         """
         return item.Title() or item.getId()
+
+    def examzone_url(self):
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        navroot = pps.navigation_root()
+        return '%s/exam-zone/@@mxitpaymentrequest' %navroot
