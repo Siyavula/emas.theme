@@ -41,5 +41,5 @@ class TableOfContents(BrowserView):
 
     def examzone_url(self):
         pps = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot = pps.navigation_root()
+        navroot = pps.navigation_root().absolute_url()
         return '%s/exam-zone/@@mxitpaymentrequest' %navroot
