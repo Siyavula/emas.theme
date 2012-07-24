@@ -78,7 +78,9 @@ class MxitPaymentRequest(grok.View):
 
         # check if the current mxit member belongs to the ExamPapers group
         memberid = member_id(self.request.get(USER_ID_TOKEN))
-        gt = getToolByName(context, 'portal_groups')
+        if not memberid:
+            return self.render()
+        gt = getToolByName(self.context, 'portal_groups')
         group = gt.getGroupById(EXAM_PAPERS_GROUP)
         if memberid in group.getMemberIds():
             self.request.response.redirect('/papers')
