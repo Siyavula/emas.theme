@@ -117,7 +117,10 @@ class MxitPaymentResponse(grok.View):
 
         self.base_url = context.absolute_url()
         self.response_code = request.get('mxit_transaction_res', None)
-        self.message = MXIT_MESSAGES.get(self.response_code, '')
+        # we try to interpret the response, if that fails we use the response
+        # code itself as the message. That way we can at least see what we did
+        # not understand :)
+        self.message = MXIT_MESSAGES.get(self.response_code, self.response_code)
 
         # check response code
         if not self.response_code:

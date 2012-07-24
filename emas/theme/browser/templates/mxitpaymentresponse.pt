@@ -13,7 +13,8 @@
         <div id="content-core">
             
             <div id="mxitdetails">
-                <h3>Mxit responded...</h3>
+                <h3>Mxit replied:</h3>
+                <span tal:content="view/message">mxit message</span>
             </div>
             <a href="#" tal:attributes="href view/get_url">
                 Return to exam papers.
