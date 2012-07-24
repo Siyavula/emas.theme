@@ -85,7 +85,9 @@ class MxitPaymentRequest(grok.View):
         gt = getToolByName(self.context, 'portal_groups')
         group = gt.getGroupById(EXAM_PAPERS_GROUP)
         if memberid in group.getMemberIds():
-            self.request.response.redirect('/%s' %EXAM_PAPERS_URL)
+            pps = content.restrictedTraverse('@@plone_portal_state')
+            navroot = pps.navigation_root().absolute_url()
+            self.request.response.redirect('%s/%s' %(navroot, EXAM_PAPERS_URL))
         else:
             return self.render()
 
