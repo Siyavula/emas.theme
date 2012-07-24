@@ -15,7 +15,7 @@ from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 
-EXAM_PAPERS_URL = "exam-zone"
+EXAM_PAPERS_URL = "maths/exam-zone"
 
 EXAM_PAPERS_GROUP = "MXitExamZone"
 
@@ -85,7 +85,7 @@ class MxitPaymentRequest(grok.View):
         gt = getToolByName(self.context, 'portal_groups')
         group = gt.getGroupById(EXAM_PAPERS_GROUP)
         if memberid in group.getMemberIds():
-            pps = content.restrictedTraverse('@@plone_portal_state')
+            pps = self.context.restrictedTraverse('@@plone_portal_state')
             navroot = pps.navigation_root().absolute_url()
             self.request.response.redirect('%s/%s' %(navroot, EXAM_PAPERS_URL))
         else:
@@ -148,6 +148,6 @@ class MxitPaymentResponse(grok.View):
             gt.addPrincipalToGroup(member.getId(), EXAM_PAPERS_GROUP)
 
     def get_url(self):
-        pps = content.restrictedTraverse('@@plone_portal_state')
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
         navroot = pps.navigation_root().absolute_url()
         return '%s/%s' %(navroot, EXAM_PAPERS_URL)
