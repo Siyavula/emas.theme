@@ -15,7 +15,7 @@ from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 
-EXAM_PAPERS_GROUP = "ExamPapers"
+EXAM_PAPERS_GROUP = "MXitExamZone"
 
 MXIT_MESSAGES = {
     '0':

@@ -88,9 +88,9 @@ def setupPortalContent(portal):
 
 def addGroups(portal):
     groups = {
-        'ExamPapers': {'roles': [],
-                       'props': {'title': 'Exam Papers'},
-                      },
+        'MXitExamZone': {'roles': [],
+                         'props': {'title': 'MXit exam zone'},
+                        },
     }
     gt = getToolByName(portal, 'portal_groups')
     for id, details in groups.items():
