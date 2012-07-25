@@ -4,7 +4,13 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from plone.app.folder.folder import IATUnifiedFolder
 
+from pas.plugins.mxit.plugin import member_id
+from pas.plugins.mxit.plugin import USER_ID_TOKEN
+
+from emas.theme.browser.mxitpayment import EXAM_PAPERS_URL
+
 from emas.theme import MessageFactory as _
+
 
 class TableOfContents(BrowserView):
     """ Helper methods and a template that renders only the table of contents.
@@ -40,6 +46,14 @@ class TableOfContents(BrowserView):
         return item.Title() or item.getId()
 
     def examzone_url(self):
+        memberid = member_id(self.request.get(USER_ID_TOKEN))
+        gt = getToolByName(self.context, 'portal_groups')
+        group = gt.getGroupById(EXAM_PAPERS_GROUP)
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         navroot = pps.navigation_root().absolute_url()
-        return '%s/exam-zone/@@mxitpaymentrequest' %navroot
+
+        # check if the current mxit member belongs to the ExamPapers group
+        if memberid in group.getMemberIds():
+            return '%s/%s' %(navroot, EXAM_PAPERS_URL)
+        else:
+            return '%s/%s/@@mxitpaymentrequest' %(navroot, EXAM_PAPERS_URL)
