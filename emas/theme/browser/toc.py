@@ -8,6 +8,7 @@ from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 from emas.theme.browser.mxitpayment import EXAM_PAPERS_URL
+from emas.theme.browser.mxitpayment import EXAM_PAPERS_GROUP
 
 from emas.theme import MessageFactory as _
 
