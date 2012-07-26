@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.15 (unreleased)
+----
+
+MXit exam zone payment integration.
+
 1.14
 ----
 
