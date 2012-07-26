@@ -9,6 +9,8 @@
 
     <metal:core fill-slot="content">
 
+        <div id="practice-content"></div>
+
         <div id="content-core" tal:content="structure view/html"></div>
 
     </metal:core>
