@@ -57,4 +57,4 @@ class TableOfContents(BrowserView):
         if memberid in group.getMemberIds():
             return '%s/%s' %(navroot, EXAM_PAPERS_URL)
         else:
-            return '%s/%s/@@mxitpaymentrequest' %(navroot, EXAM_PAPERS_URL)
+            return '%s/@@mxitpaymentrequest' %navroot
