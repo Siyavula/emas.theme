@@ -261,11 +261,4 @@
         class="z3c.deadlockdebugger.threads.View"
         />
 
-    <browser:page
-        for="*"
-        name="schoolorders"
-        permission="zope.Public"
-        template="templates/schoolorders.pt"
-        />
-
 </configure>

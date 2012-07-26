@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.16
+----
+
+Remove schoolorders template.
+
+Update theme rules to incorporate PloneFormGen forms.
+
 1.15
 ----
 
