@@ -89,7 +89,7 @@ class MxitPaymentRequest(grok.View):
 
         registry = queryUtility(IRegistry)
         self.settings = registry.forInterface(IEmasSettings)
-        self.vendor_id = settings.MXitVendorId
+        self.vendor_id = self.settings.MXitVendorId
         self.transaction_reference = self.settings.order_sequence_number + 1
         self.settings.order_sequence_number = self.transaction_reference
         self.transaction_reference = '%04d' % self.transaction_reference
