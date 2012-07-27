@@ -9,6 +9,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent, AddPortalContent
 from Products.CMFCore.permissions import DeleteObjects
 
+from emas.theme.browser.mxitpayment import SUBJECT_MAP
+
 log = logging.getLogger('emas.theme-setuphandlers')
 
 def reorder_contenttype_registry(portal):
@@ -88,9 +90,14 @@ def setupPortalContent(portal):
 
 def addGroups(portal):
     groups = {
-        'PastExamPapers': {'roles': [],
-                           'props': {'title': 'Past Exam Papers'},
-                          },
+        SUBJECT_MAP['maths']: 
+            {'roles': [],
+             'props': {'title': 'Past Maths Exam Papers'},
+            },
+        SUBJECT_MAP['science']:
+            {'roles': [],
+             'props': {'title': 'Past Science Exam Papers'},
+            },
     }
     gt = getToolByName(portal, 'portal_groups')
     for id, details in groups.items():
