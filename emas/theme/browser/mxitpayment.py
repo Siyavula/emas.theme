@@ -104,7 +104,12 @@ class MxitPaymentRequest(grok.View):
 
         self.cost_settings = registry.forInterface(IEmasServiceCost)
         self.vendor_id = self.cost_settings.MXitVendorId
-        self.moola_amount = self.cost_settings.get(self.product_id + 'Cost')
+        # get the schema for this record
+        schema = self.cost_settings.__schema__
+        # the the field by name from the schema
+        field = schema[self.product_id + 'Cost']
+        # get the value from the object 'cost_settings' via the field
+        self.moola_amount = field.get(self.cost_settings)
         self.currency_amount = 1
 
         # check if the current mxit member belongs to the ExamPapers group
