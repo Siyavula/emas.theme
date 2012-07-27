@@ -8,7 +8,7 @@ from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 from emas.theme.browser.mxitpayment import EXAM_PAPERS_URL
-from emas.theme.browser.mxitpayment import EXAM_PAPERS_GROUP
+from emas.theme.browser.mxitpayment import getGroupName
 
 from emas.theme import MessageFactory as _
 
@@ -48,16 +48,18 @@ class TableOfContents(BrowserView):
 
     def past_exam_papers_url(self):
         memberid = member_id(self.request.get(USER_ID_TOKEN))
-        gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(EXAM_PAPERS_GROUP)
         pps = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot = pps.navigation_root().absolute_url()
+        navroot = pps.navigation_root()
+
+        groupname = getGroupName(navroot)
+        gt = getToolByName(self.context, 'portal_groups')
+        group = gt.getGroupById(groupname)
 
         # check if the current mxit member belongs to the ExamPapers group
         if memberid in group.getMemberIds():
-            return '%s/%s' %(navroot, EXAM_PAPERS_URL)
+            return '%s/%s' %(navroot.absolute_url() , EXAM_PAPERS_URL)
         else:
-            return '%s/@@mxitpaymentrequest' %navroot
+            return '%s/@@mxitpaymentrequest' %navroot.absolute_url()
     
     def isPastExamPapers(self):
         """
