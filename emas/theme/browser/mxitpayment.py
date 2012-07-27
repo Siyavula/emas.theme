@@ -9,6 +9,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme.interfaces import IEmasSettings
+from emas.theme.interfaces import IEmasServiceCost
 
 from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import password_hash
@@ -88,10 +89,9 @@ class MxitPaymentRequest(grok.View):
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
 
         registry = queryUtility(IRegistry)
-        self.settings = registry.forInterface(IEmasSettings)
-        self.vendor_id = self.settings.MXitVendorId
-        self.transaction_reference = self.settings.order_sequence_number + 1
-        self.settings.order_sequence_number = self.transaction_reference
+        self.emas_settings = registry.forInterface(IEmasSettings)
+        self.transaction_reference = self.emas_settings.order_sequence_number +1
+        self.emas_settings.order_sequence_number = self.transaction_reference
         self.transaction_reference = '%04d' % self.transaction_reference
 
         self.product_id = self.request.get('productId')
@@ -102,7 +102,9 @@ class MxitPaymentRequest(grok.View):
             self.product_id
         )
 
-        self.moola_amount = self.settings.get(self.product_id + 'Cost')
+        self.cost_settings = registry.forInterface(IEmasServiceCost)
+        self.vendor_id = self.cost_settings.MXitVendorId
+        self.moola_amount = self.cost_settings.get(self.product_id + 'Cost')
         self.currency_amount = 1
 
         # check if the current mxit member belongs to the ExamPapers group
