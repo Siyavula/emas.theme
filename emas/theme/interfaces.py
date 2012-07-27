@@ -87,3 +87,17 @@ class IEmasServiceCost(Interface):
         required=False,
         default=0
     )
+
+    PastMathExamPapersCost = Int(
+        title=_('Past Maths Exam Papers Cost'),
+        description=_('The cost in moola to access past maths exam papers.'),
+        required=False,
+        default=200
+    )
+
+    PastScienceExamPapersCost = Int(
+        title=_('Past Science Exam Papers Cost'),
+        description=_('The cost in moola to access past science exam papers.'),
+        required=False,
+        default=200
+    )
