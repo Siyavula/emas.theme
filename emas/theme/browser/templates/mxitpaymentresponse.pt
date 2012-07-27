@@ -17,7 +17,7 @@
                 <span tal:content="view/message">mxit message</span>
             </div>
             <a href="#" tal:attributes="href view/get_url">
-                Return to exam papers.
+                Return to Past Exam Papers.
             </a>
 
         </div>

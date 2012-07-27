@@ -15,9 +15,9 @@ from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 
-EXAM_PAPERS_URL = "maths/exam-zone"
+EXAM_PAPERS_URL = "past-exam-papers"
 
-EXAM_PAPERS_GROUP = "MXitExamZone"
+EXAM_PAPERS_GROUP = "PastExamPapers"
 
 MXIT_MESSAGES = {
     '0':

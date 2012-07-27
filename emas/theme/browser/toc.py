@@ -46,7 +46,7 @@ class TableOfContents(BrowserView):
         """
         return item.Title() or item.getId()
 
-    def examzone_url(self):
+    def past_exam_papers_url(self):
         memberid = member_id(self.request.get(USER_ID_TOKEN))
         gt = getToolByName(self.context, 'portal_groups')
         group = gt.getGroupById(EXAM_PAPERS_GROUP)
@@ -59,7 +59,7 @@ class TableOfContents(BrowserView):
         else:
             return '%s/@@mxitpaymentrequest' %navroot
     
-    def isExamZone(self):
+    def isPastExamPapers(self):
         """
             Testing for some interface would be better, but for the moment
             we check the last path segment.
