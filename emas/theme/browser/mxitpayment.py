@@ -17,7 +17,13 @@ from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 EXAM_PAPERS_URL = "past-exam-papers"
 
-EXAM_PAPERS_GROUP = "PastExamPapers"
+MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
+SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
+
+SUBJECT_MAP = {
+    'maths': MATHS_EXAM_PAPERS_GROUP,
+    'science': SCIENCE_EXAM_PAPERS_GROUP,
+}
 
 MXIT_MESSAGES = {
     '0':
@@ -48,6 +54,21 @@ MXIT_MESSAGES = {
         u'Technical system error occurred.',
 }
 
+
+def getGroupName(navroot):
+    subject = getSubject(navroot)
+    return SUBJECT_MAP[subject]
+
+
+def getProductId(navroot):
+    subject = getSubject(navroot)
+    return SUBJECT_MAP[subject]
+
+
+def getSubject(navroot):
+    return navroot.getId()
+
+
 grok.templatedir('templates')
 
 
@@ -59,8 +80,10 @@ class MxitPaymentRequest(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('mxitpaymentrequest')
-    
+     
     def update(self):
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
         self.vendor_id = '1'
@@ -72,10 +95,10 @@ class MxitPaymentRequest(grok.View):
         self.transaction_reference = '%04d' % self.transaction_reference
 
         self.callback_url = self.context.absolute_url() + '/mxitpaymentresponse'
-        self.product_id = 'test product'
-        self.product_name = 'test product'
-        self.product_description = 'test description'
-        self.moola_amount = 1
+        self.product_id = self.getProductId(self.navroot)
+        self.product_name = self.product_id
+        self.product_description = self.product_id
+        self.moola_amount = self.settings.get(self.product_id + 'Cost')
         self.currency_amount = 1
 
         # check if the current mxit member belongs to the ExamPapers group
@@ -83,11 +106,11 @@ class MxitPaymentRequest(grok.View):
         if not memberid:
             return self.render()
         gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(EXAM_PAPERS_GROUP)
+        groupname = getGroupName(self.navroot)
+        group = gt.getGroupById(groupname)
         if memberid in group.getMemberIds():
-            pps = self.context.restrictedTraverse('@@plone_portal_state')
-            navroot = pps.navigation_root().absolute_url()
-            self.request.response.redirect('%s/%s' %(navroot, EXAM_PAPERS_URL))
+            url = '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
+            self.request.response.redirect(url)
         else:
             return self.render()
 
@@ -114,12 +137,13 @@ class MxitPaymentResponse(grok.View):
     grok.require('zope2.View')
     grok.name('mxitpaymentresponse')
 
-    
     def update(self):
         """ Handle the mxit response
         """
         context = self.context
         request = self.request
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        self.navroot = pps.navigation_root()
 
         self.base_url = context.absolute_url()
         self.response_code = request.get('mxit_transaction_res', None)
@@ -145,9 +169,8 @@ class MxitPaymentResponse(grok.View):
             
             # now add the member to the correct group
             gt = getToolByName(context, 'portal_groups')
-            gt.addPrincipalToGroup(member.getId(), EXAM_PAPERS_GROUP)
+            groupname = getGroupName(self.navroot)
+            gt.addPrincipalToGroup(member.getId(), groupname)
 
     def get_url(self):
-        pps = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot = pps.navigation_root().absolute_url()
-        return '%s/%s' %(navroot, EXAM_PAPERS_URL)
+        return '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
