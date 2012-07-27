@@ -88,6 +88,12 @@ class IEmasServiceCost(Interface):
         default=0
     )
 
+    MXitVendorId = TextLine(
+        title=_(u'MXit Vendor ID'),
+        description=_(u'MXit vendor id. Used in moola payment requests.'),
+        required=True
+    )
+    
     PastMathExamPapersCost = Int(
         title=_('Past Maths Exam Papers Cost'),
         description=_('The cost in moola to access past maths exam papers.'),

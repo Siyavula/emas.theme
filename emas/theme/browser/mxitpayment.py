@@ -86,9 +86,9 @@ class MxitPaymentRequest(grok.View):
         self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
-        self.vendor_id = '1'
 
         registry = queryUtility(IRegistry)
+        self.vendor_id = settings.MXitVendorId
         self.settings = registry.forInterface(IEmasSettings)
         self.transaction_reference = self.settings.order_sequence_number + 1
         self.settings.order_sequence_number = self.transaction_reference
