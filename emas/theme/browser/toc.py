@@ -8,7 +8,7 @@ from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 from emas.theme.browser.mxitpayment import EXAM_PAPERS_URL
-from emas.theme.browser.mxitpayment import getGroupName
+from emas.theme.browser.mxitpayment import SUBJECT_MAP
 
 from emas.theme import MessageFactory as _
 
@@ -46,20 +46,25 @@ class TableOfContents(BrowserView):
         """
         return item.Title() or item.getId()
 
-    def past_exam_papers_url(self):
+    def past_exam_papers_urls(self):
         memberid = member_id(self.request.get(USER_ID_TOKEN))
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         navroot = pps.navigation_root()
-
-        groupname = getGroupName(navroot)
-        gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(groupname)
-
-        # check if the current mxit member belongs to the ExamPapers group
-        if memberid in group.getMemberIds():
-            return '%s/%s' %(navroot.absolute_url() , EXAM_PAPERS_URL)
-        else:
-            return '%s/@@mxitpaymentrequest' %navroot.absolute_url()
+        
+        urls = {}
+        for subject, groupname in SUBJECT_MAP.items():
+            gt = getToolByName(self.context, 'portal_groups')
+            group = gt.getGroupById(groupname)
+            # check if the current mxit member belongs to the ExamPapers group
+            if memberid in group.getMemberIds():
+                url = '%s/%s' %(navroot.absolute_url() , EXAM_PAPERS_URL)
+                urls[url] = u'Past %s Exam Papers' %subject
+            else:
+                url = '%s/@@mxitpaymentrequest?productId=%s' %(
+                    navroot.absolute_url(), groupname
+                )
+                urls[url] = u'Past %s Exam Papers' %subject
+        return urls
     
     def isPastExamPapers(self):
         """

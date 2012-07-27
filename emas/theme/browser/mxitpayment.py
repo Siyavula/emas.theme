@@ -94,10 +94,14 @@ class MxitPaymentRequest(grok.View):
         self.settings.order_sequence_number = self.transaction_reference
         self.transaction_reference = '%04d' % self.transaction_reference
 
-        self.callback_url = self.context.absolute_url() + '/mxitpaymentresponse'
-        self.product_id = self.getProductId(self.navroot)
+        self.product_id = self.request.get('productId')
         self.product_name = self.product_id
         self.product_description = self.product_id
+        self.callback_url = '%s/mxitpaymentresponse?productId=%s' %(
+            self.context.absolute_url(),
+            self.product_id
+        )
+
         self.moola_amount = self.settings.get(self.product_id + 'Cost')
         self.currency_amount = 1
 
@@ -159,6 +163,7 @@ class MxitPaymentResponse(grok.View):
         # Transaction completed successfully.
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
+            productid = request['productId']
             password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
@@ -169,8 +174,8 @@ class MxitPaymentResponse(grok.View):
             
             # now add the member to the correct group
             gt = getToolByName(context, 'portal_groups')
-            groupname = getGroupName(self.navroot)
-            gt.addPrincipalToGroup(member.getId(), groupname)
+            # at this stage group and productid are the same
+            gt.addPrincipalToGroup(member.getId(), productid)
 
     def get_url(self):
         return '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
