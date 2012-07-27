@@ -58,3 +58,11 @@ class TableOfContents(BrowserView):
             return '%s/%s' %(navroot, EXAM_PAPERS_URL)
         else:
             return '%s/@@mxitpaymentrequest' %navroot
+    
+    def isExamZone(self):
+        """
+            Testing for some interface would be better, but for the moment
+            we check the last path segment.
+        """
+        path = self.context.getPhysicalPath()
+        return EXAM_PAPERS_URL.split('/')[-1] in path
