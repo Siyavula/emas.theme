@@ -94,7 +94,7 @@ class IEmasServiceCost(Interface):
         required=True
     )
     
-    PastMathExamPapersCost = Int(
+    PastMathsExamPapersCost = Int(
         title=_('Past Maths Exam Papers Cost'),
         description=_('The cost in moola to access past maths exam papers.'),
         required=False,
