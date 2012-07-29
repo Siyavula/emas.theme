@@ -170,7 +170,7 @@ class MxitPaymentResponse(grok.View):
         # Transaction completed successfully.
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
-            productid = request['productId']
+            self.productid = request['productId']
             password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
@@ -182,7 +182,8 @@ class MxitPaymentResponse(grok.View):
             # now add the member to the correct group
             gt = getToolByName(context, 'portal_groups')
             # at this stage group and productid are the same
-            gt.addPrincipalToGroup(member.getId(), productid)
+            gt.addPrincipalToGroup(member.getId(), self.productid)
 
     def get_url(self):
-        return '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
+        return '%s/%s/@@list-exam-papers' %(
+            self.navroot.absolute_url(), EXAM_PAPERS_URL)
