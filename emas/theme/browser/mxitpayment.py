@@ -117,8 +117,7 @@ class MxitPaymentRequest(grok.View):
         if not memberid:
             return self.render()
         gt = getToolByName(self.context, 'portal_groups')
-        groupname = getGroupName(self.navroot)
-        group = gt.getGroupById(groupname)
+        group = gt.getGroupById(self.product_id)
         if memberid in group.getMemberIds():
             url = '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
             self.request.response.redirect(url)
