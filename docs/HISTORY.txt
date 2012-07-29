@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.17
+----
+
+MXit past exam papers payment integration.
+
 1.16
 ----
 
