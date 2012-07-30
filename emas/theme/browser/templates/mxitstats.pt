@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.mobiletheme">
+<body>
+
+    <metal:contentcore fill-slot="content-core">
+    
+    <tal:groupdefs define="groupstats view/stats_per_group">
+    <div tal:repeat="groupname groupstats">
+        <span tal:content="groupname">Group name</span>:
+        <span tal:content="python:groupstats[groupname]">count</span> subscribers.
+    </div>
+    </tal:groupdefs>
+
+    </metal:contentcore>
+
+</body>
+</html>
