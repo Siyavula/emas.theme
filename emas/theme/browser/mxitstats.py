@@ -2,9 +2,6 @@ from five import grok
 from zope.interface import Interface
 from Products.CMFCore.utils import getToolByName
 
-from pas.plugins.mxit.plugin import member_id
-from pas.plugins.mxit.plugin import USER_ID_TOKEN
-
 from emas.theme.browser.mxitpayment import SUBJECT_MAP
 from emas.theme.interfaces import IEmasThemeLayer
 
