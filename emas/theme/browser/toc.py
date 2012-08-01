@@ -4,7 +4,10 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from plone.app.folder.folder import IATUnifiedFolder
 
+from emas.theme.browser.mxitpayment import EXAM_PAPERS_URL
+
 from emas.theme import MessageFactory as _
+
 
 class TableOfContents(BrowserView):
     """ Helper methods and a template that renders only the table of contents.
@@ -38,3 +41,17 @@ class TableOfContents(BrowserView):
         """ If it does not have its own title, we fall back to id.
         """
         return item.Title() or item.getId()
+
+    def isExamPapersFolder(self):
+        """
+            Testing for some interface would be better, but for the moment
+            we check the last path segment.
+        """
+        path = self.context.getPhysicalPath()
+        return EXAM_PAPERS_URL.split('/')[-1] in path
+
+    def getExamPapersURL(self):
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        navroot = pps.navigation_root()
+        return '%s/%s/@@list-exam-papers' %(navroot.absolute_url(),
+                                            EXAM_PAPERS_URL)
