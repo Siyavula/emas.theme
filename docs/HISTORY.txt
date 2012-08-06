@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.18
+----
+
+Resize copyright image itself and drop CSS resizing.
+
+Add MXit exam paper signup stats view.
+
 1.17
 ----
 
