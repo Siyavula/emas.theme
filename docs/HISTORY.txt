@@ -6,6 +6,8 @@ Changelog
 
 MXit past exam papers payment integration.
 
+Changed annotator enabled check.
+
 1.16
 ----
 
