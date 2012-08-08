@@ -8,6 +8,10 @@ Resize copyright image itself and drop CSS resizing.
 
 Add MXit exam paper signup stats view.
 
+Update annotator enabled check.
+
+Add rounded corners to annotator help CSS.
+
 1.17
 ----
 
