@@ -167,15 +167,16 @@ class AnnotatorEnabledView(BrowserView):
     def enabled(self):
         if IAnnotatableContent.providedBy(self.context):
             return IAnnotatableContent(self.context).enableAnnotations
-            
+
         if not IBaseContent.providedBy(self.context):
             return False
-        enabled = self.context.Schema().getField(
-            'enableAnnotations').getAccessor(self.context)()
-        return enabled and bool(self.request.get('HTTP_X_THEME_ENABLED', None))
+
+        field = self.context.Schema().getField('enableAnnotations')
+        if field is None:
+            return False
+        return field.getAccessor(self.context)()
 
     __call__ = enabled
-
 
 class EmasUserDataPanel(UserDataPanel):
     def __init__(self, context, request):
