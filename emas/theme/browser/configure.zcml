@@ -222,6 +222,7 @@
         for="*"
         name="practice"
         class=".practice.Practice"
+        template="templates/practice.pt"
         permission="zope2.View"
         />
 

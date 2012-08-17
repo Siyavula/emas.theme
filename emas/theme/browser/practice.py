@@ -12,7 +12,6 @@ from zope.component import queryUtility
 from plone.registry.interfaces import IRegistry
 
 from Products.Five import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.theme.interfaces import IEmasSettings
 
@@ -31,7 +30,6 @@ class Practice(BrowserView):
 
     implements(IPractice, IPublishTraverse)
 
-    index = ViewPageTemplateFile('templates/practice.pt')
 
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
