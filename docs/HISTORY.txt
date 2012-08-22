@@ -1,12 +1,43 @@
 Changelog
 =========
 
-1.1? (unreleased)
+1.19 (unreleased)
 ----
 
 Add VCS integration
 
 Add emas.app dependency
+
+=======
+1.18
+----
+
+Resize copyright image itself and drop CSS resizing.
+
+Add MXit exam paper signup stats view.
+
+Update annotator enabled check.
+
+Add rounded corners to annotator help CSS.
+
+1.17
+----
+
+MXit past exam papers payment integration.
+
+1.16
+----
+
+Remove schoolorders template.
+
+Update theme rules to incorporate PloneFormGen forms.
+
+1.15
+----
+
+Add copyright to footer
+
+Add schoolorders template
 
 1.14
 ----

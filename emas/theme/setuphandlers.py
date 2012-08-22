@@ -9,6 +9,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent, AddPortalContent
 from Products.CMFCore.permissions import DeleteObjects
 
+from emas.theme.browser.mxitpayment import SUBJECT_MAP
+
 log = logging.getLogger('emas.theme-setuphandlers')
 
 def reorder_contenttype_registry(portal):
@@ -87,6 +89,28 @@ def setupPortalContent(portal):
         transactions.manage_permission(DeleteObjects, roles=[], acquire=0)
 
 
+def addGroups(portal):
+    groups = {
+        SUBJECT_MAP['maths']: 
+            {'roles': [],
+             'props': {'title': 'Past Maths Exam Papers'},
+            },
+        SUBJECT_MAP['science']:
+            {'roles': [],
+             'props': {'title': 'Past Science Exam Papers'},
+            },
+    }
+    gt = getToolByName(portal, 'portal_groups')
+    for id, details in groups.items():
+        group = gt.getGroupById(id)
+        if not group:
+            roles = details['roles']
+            gt.addGroup(id, roles=roles)
+            group = gt.getGroupById(id)
+
+        group.setProperties(**details['props'])
+
+
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
         return
@@ -94,3 +118,4 @@ def install(context):
 
     reorder_contenttype_registry(site)
     setupPortalContent(site)
+    addGroups(site)

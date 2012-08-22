@@ -714,10 +714,6 @@ div#copyright {
     margin-bottom: 7px;
 }
 
-#footer div#copyright-image-container img {
-    width: 170px;
-}
-
 #footer div#copyright-text {
     margin-top: 6px;
     margin-bottom: 6px;
@@ -725,8 +721,4 @@ div#copyright {
 
 .hidden {
     display: none;
-}
-
-#footer div#copyright-image-container img#copyright-image-c {
-    width: 44px;
 }
