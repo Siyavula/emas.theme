@@ -116,34 +116,6 @@ class AnnotatorHelpViewlet(ViewletBase):
     """ Adds a help panel for the annotator. """
     index = ViewPageTemplateFile('annotatorhelp.pt')
 
-class PremiumServicesViewlet(ViewletBase):
-    """ Adds a panel for premium services. """
-    index = ViewPageTemplateFile('templates/premiumservices.pt')
-
-    def update(self):
-        super(PremiumServicesViewlet, self).update()
-        services = self.context.restrictedTraverse('@@enabled-services')
-        self.practice_enabled = services.is_enabled(PRACTICE_SYSTEM)
-        memberprop = SERVICE_MEMBER_PROP_MAP.get(PRACTICE_SYSTEM)
-        d = services.expirydate(memberprop)
-        if d is not None:
-            self.practice_expirydate = d.strftime('%d %B %Y')
-        self.askquestions_enabled = services.ask_expert_enabled
-        self.questions_left = services.questions_left
-        self.context_allows_questions = services.context_allows_questions
-        portalstate = self.context.restrictedTraverse('@@plone_portal_state')
-        self.trialuser = portalstate.member().getProperty('trialuser')
-
-    def render(self):
-        """ only render this viewlet if the diazo theme is enabled and 
-            we are not in the context of the practise service
-        """
-        theme_enabled = self.request.getHeader('HTTP_X_THEME_ENABLED', False)
-        practising = IPracticeLayer.providedBy(self.request)
-        if theme_enabled and not practising:
-            return super(PremiumServicesViewlet, self).render()
-        return ''
-
 class SearchView(BrowserView):
     """ Combine searching for shortcode and searchabletext
     """

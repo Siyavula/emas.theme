@@ -31,14 +31,6 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
-    <browser:viewlet
-        name="premiumservices"
-        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-        class=".views.PremiumServicesViewlet"
-        permission="zope2.View"
-        layer="emas.theme.interfaces.IEmasThemeLayer"
-        />
-
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="toc"
