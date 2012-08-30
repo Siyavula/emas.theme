@@ -722,3 +722,14 @@ div#copyright {
 .hidden {
     display: none;
 }
+
+#slider div{
+    margin: 0;
+}
+#slider img{
+    max-height: 250px;
+}
+
+#slider .nivoSlider {
+    height: 1000px;
+}

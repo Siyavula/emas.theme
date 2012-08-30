@@ -33,6 +33,13 @@
 
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
+        name="site-home"
+        template="templates/home.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
         name="toc"
         class=".toc.TableOfContents"
         template="templates/toc.pt"
