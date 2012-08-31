@@ -20,6 +20,7 @@ EXAM_PAPERS_URL = "past-exam-papers"
 
 MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
 SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
+INTELLIGENT_PRACTICE_GROUP = ""
 
 SUBJECT_MAP = {
     'maths': MATHS_EXAM_PAPERS_GROUP,
@@ -87,6 +88,7 @@ class MxitPaymentRequest(grok.View):
         self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
+        memberid = member_id(self.request.get(USER_ID_TOKEN))
 
         registry = queryUtility(IRegistry)
         self.emas_settings = registry.forInterface(IEmasSettings)
@@ -101,6 +103,37 @@ class MxitPaymentRequest(grok.View):
             self.context.absolute_url(),
             self.product_id
         )
+        
+        # create and order for this member : product combination
+        products_and_services = pps.products_and_services
+        product = products_and_services._getOb(self.product_id)
+        if product:
+            portal = pps.portal()
+            member_orders = portal['orders']
+
+            registry = queryUtility(IRegistry)
+            settings = registry.forInterface(IEmasSettings)
+            ordernumber = settings.order_sequence_number + 1
+            settings.order_sequence_number = ordernumber
+
+            ordernumber = '%04d' % ordernumber
+            member_orders.invokeFactory(
+                type_name='emas.app.order',
+                id=ordernumber,
+                title=ordernumber,
+                userid=memberid
+            )
+            order = member_orders._getOb(ordernumber)
+                
+            relation = create_relation(product.getPhysicalPath())
+            item_id = self.order.generateUniqueId(type_name='orderitem')
+            self.order.invokeFactory(
+                type_name='emas.app.orderitem',
+                id=item_id,
+                title=item_id,
+                related_item=relation,
+                quantity=1,
+            )
 
         self.cost_settings = registry.forInterface(IEmasServiceCost)
         self.vendor_id = self.cost_settings.MXitVendorId
@@ -113,7 +146,6 @@ class MxitPaymentRequest(grok.View):
         self.currency_amount = 1
 
         # check if the current mxit member belongs to the ExamPapers group
-        memberid = member_id(self.request.get(USER_ID_TOKEN))
         if not memberid:
             return self.render()
         gt = getToolByName(self.context, 'portal_groups')
@@ -170,13 +202,15 @@ class MxitPaymentResponse(grok.View):
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
             self.productid = request['productId']
-            password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
             member = pmt.getMemberById(memberid)
             if not member:
+                password = password_hash(context, memberid)
                 member = pmt.addMember(memberid, password, 'Member', '')
                 member = pmt.getMemberById(memberid)
+            
+            # find the order and transition it to 'paid'
             
             # now add the member to the correct group
             gt = getToolByName(context, 'portal_groups')
