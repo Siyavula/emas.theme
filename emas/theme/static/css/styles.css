@@ -114,6 +114,7 @@ td, th {
     clear: none;
     background: #008fb4;
     margin: 0;
+    width: 550px;
 }
 #portal-globalnav li a {
     background: #008fb4;
@@ -732,4 +733,10 @@ div#copyright {
 
 #slider .nivoSlider {
     height: 1000px;
+}
+
+#marktagline {
+    font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 18pt;
+    line-height: 25pt;
 }
