@@ -1,0 +1,35 @@
+<tal:sections tal:define="portal_tabs view/portal_tabs"
+     tal:condition="portal_tabs"
+     i18n:domain="plone">
+    <h5 class="hiddenStructure" i18n:translate="heading_sections">Sections</h5>
+
+    <ul id="portal-globalnav"
+        tal:define="selected_tab python:view.selected_portal_tab">
+        <li id="portaltab-home"
+             tal:attributes="class python:selected_tab=='portaltab-home' and 'selected' or 'plain'"><a href="#" class="noClick" title="Home">Home
+            </a>
+        </li>
+        <li id="portaltab-readtextbook"
+             tal:attributes="class python:selected_tab=='portaltab-readtextbook' and 'selected' or 'plain'"><a href="#" class="noClick" title="Read a textbook">Read a textbook
+            </a><ul class="submenu">
+                    <li><a href="#" title="Grade 10">Grade 10</a></li>
+                    <li><a href="#" title="Grade 11">Grade 11</a></li>
+                    <li><a href="#" title="Grade 12">Grade 12</a></li>
+                </ul>
+        </li>
+        <li id="portaltab-practice"
+             tal:attributes="class python:selected_tab=='portaltab-practice' and 'selected' or 'plain'"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
+            </a><ul class="submenu">
+                    <li><a href="#" title="About Intelligent Practice">About Intelligent Practice</a></li>
+                    <li><a href="#" title="Grade 10">Grade 10</a></li>
+                    <li><a href="#" title="Grade 11">Grade 11</a></li>
+                    <li><a href="#" title="Grade 12">Grade 12</a></li>
+                </ul>
+        </li>
+        <li id="portaltab-order"
+             tal:attributes="class python:selected_tab=='portaltab-order' and 'selected' or 'plain'"><a href="#" class="noClick" title="Order products">Order
+            </a><ul class="submenu">
+                </ul>
+        </li>
+    </ul>
+</tal:sections>

@@ -1,10 +1,14 @@
-from Products.Archetypes.utils import shasattr
+from zope.interface import implements
 
+from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
-from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from plone.uuid.interfaces import IUUID
+from plone.app.layout.viewlets import common
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
+from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
+
 from emas.theme.browser.views import is_expert
 from emas.theme import MessageFactory as _
 
@@ -66,3 +70,13 @@ class QAViewlet(BaseQAViewlet):
             return super(QAViewlet, self).render()
         else:
             return ""
+
+
+class DropdownMenuViewlet(common.GlobalSectionsViewlet):
+    """A custom version of the global navigation class that has to have
+       dropdown menus for global navigation tabs objects
+    """
+    implements(IDropdownMenuViewlet)
+
+    index = ViewPageTemplateFile('templates/dropdown.pt')
+

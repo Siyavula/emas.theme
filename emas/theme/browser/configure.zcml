@@ -260,4 +260,13 @@
         class="z3c.deadlockdebugger.threads.View"
         />
 
+    <!-- Override global sections viewlet -->
+    <browser:viewlet
+        name="plone.global_sections"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".viewlets.DropdownMenuViewlet"
+        layer="emas.theme.interfaces.IEmasThemeLayer"
+        permission="zope2.View"
+        />
+
 </configure>
