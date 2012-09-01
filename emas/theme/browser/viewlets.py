@@ -1,5 +1,7 @@
 from zope.interface import implements
+from zope.component import getMultiAdapter
 
+from Acquisition import aq_inner
 from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -79,4 +81,11 @@ class DropdownMenuViewlet(common.GlobalSectionsViewlet):
     implements(IDropdownMenuViewlet)
 
     index = ViewPageTemplateFile('templates/dropdown.pt')
+
+    def update(self):
+        context = aq_inner(self.context)
+        portal_state_view = getMultiAdapter((context, self.request),
+                                             name='plone_portal_state')
+        navroot = portal_state_view.navigation_root()
+        self.site_url = navroot.absolute_url()
 
