@@ -1,35 +1,28 @@
-<tal:sections tal:define="portal_tabs view/portal_tabs"
-     tal:condition="portal_tabs"
-     i18n:domain="plone">
+<tal:sections i18n:domain="plone">
     <h5 class="hiddenStructure" i18n:translate="heading_sections">Sections</h5>
 
     <ul id="portal-globalnav"
-        tal:define="selected_tab python:view.selected_portal_tab">
-        <li id="portaltab-home"
-             tal:attributes="class python:selected_tab=='portaltab-home' and 'selected' or 'plain'"><a href="#" class="noClick" title="Home">Home
+        tal:define="portal_url view/site_url">
+        <li id="portaltab-home" class="plain"><a href="#" class="noClick" title="Home" tal:attributes="href portal_url">Home
             </a>
         </li>
-        <li id="portaltab-readtextbook"
-             tal:attributes="class python:selected_tab=='portaltab-readtextbook' and 'selected' or 'plain'"><a href="#" class="noClick" title="Read a textbook">Read a textbook
+        <li id="portaltab-readtextbook" class="plain"><a href="#" class="noClick" title="Read a textbook">Read a textbook
             </a><ul class="submenu">
-                    <li><a href="#" title="Grade 10">Grade 10</a></li>
-                    <li><a href="#" title="Grade 11">Grade 11</a></li>
-                    <li><a href="#" title="Grade 12">Grade 12</a></li>
+                    <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/grade-10">Grade 10</a></li>
+                    <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/grade-11">Grade 11</a></li>
+                    <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/grade-12">Grade 12</a></li>
                 </ul>
         </li>
-        <li id="portaltab-practice"
-             tal:attributes="class python:selected_tab=='portaltab-practice' and 'selected' or 'plain'"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
+        <li id="portaltab-practice" class="plain"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
             </a><ul class="submenu">
                     <li><a href="#" title="About Intelligent Practice">About Intelligent Practice</a></li>
-                    <li><a href="#" title="Grade 10">Grade 10</a></li>
-                    <li><a href="#" title="Grade 11">Grade 11</a></li>
-                    <li><a href="#" title="Grade 12">Grade 12</a></li>
+                    <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/grade-10/@@practice">Grade 10</a></li>
+                    <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/grade-11/@@practice">Grade 11</a></li>
+                    <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/grade-12/@@practice">Grade 12</a></li>
                 </ul>
         </li>
-        <li id="portaltab-order"
-             tal:attributes="class python:selected_tab=='portaltab-order' and 'selected' or 'plain'"><a href="#" class="noClick" title="Order products">Order
-            </a><ul class="submenu">
-                </ul>
+        <li id="portaltab-order" class="plain"><a href="#" class="noClick" title="Order products" tal:attributes="href string:$portal_url/order">Order
+            </a>
         </li>
     </ul>
 </tal:sections>
