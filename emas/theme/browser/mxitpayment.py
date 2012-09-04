@@ -189,7 +189,7 @@ class MxitPaymentResponse(grok.View):
             if not member:
                 password = password_hash(context, memberid)
                 country, birthdate, gender = \
-                    self._mxitprofile(request.get('HTTP_X_MXIT_PROFILE', '')
+                    self._mxitprofile(request.get('HTTP_X_MXIT_PROFILE', ''))
                 props={'fullname': request.get('HTTP_X_MXIT_NICK', ''),
                        'location': request.get('HTTP_X_MXIT_LOCATION', ''),
                        'language': request.get('LANGUAGE', ''),

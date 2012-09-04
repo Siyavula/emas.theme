@@ -126,7 +126,7 @@ class IEmasUserDataSchema(IUserDataSchema):
         required=False,
         )
 
-    birthdate = TextLine(,
+    birthdate = TextLine(
         title=_(u'label_birthdate', default=u'Birth date'),
         required=False,
         )
