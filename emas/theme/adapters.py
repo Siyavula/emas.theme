@@ -74,3 +74,40 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self.context.setMemberProperties({'trialuser': value})
     trialuser = property(get_trialuser, set_trialuser)
 
+    def get_ua_device(self):
+        return self._getProperty('ua_device')
+    def set_ua_device(self, value):
+        return self.context.setMemberProperties({'ua_device': value})
+    ua_device = property(get_ua_device, set_ua_device)
+
+    def get_ua_pixels(self):
+        return self._getProperty('ua_pixels')
+    def set_ua_pixels(self, value):
+        return self.context.setMemberProperties({'ua_pixels': value})
+    ua_pixels = property(get_ua_pixels, set_ua_pixels)
+
+    def get_mxitcontact(self):
+        return self._getProperty('mxitcontact')
+    def set_mxitcontact(self, value):
+        return self.context.setMemberProperties({'mxitcontact': value})
+    mxitcontact = property(get_mxitcontact, set_mxitcontact)
+
+    def get_country(self):
+        return self._getProperty('country')
+    def set_country(self, value):
+        return self.context.setMemberProperties({'country': value})
+    country = property(get_country, set_country)
+
+    def get_birthdate(self):
+        return self._getProperty('birthdate')
+    def set_birthdate(self, value):
+        return self.context.setMemberProperties({'birthdate': value})
+    birthdate = property(get_birthdate, set_bir)
+
+    def get_gender(self):
+        return self._getProperty('gender')
+    def set_gender(self, value):
+        return self.context.setMemberProperties({'gender': value})
+    gender = property(get_gender, set_gender)
+
+
