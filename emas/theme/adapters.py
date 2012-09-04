@@ -102,7 +102,7 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self._getProperty('birthdate')
     def set_birthdate(self, value):
         return self.context.setMemberProperties({'birthdate': value})
-    birthdate = property(get_birthdate, set_bir)
+    birthdate = property(get_birthdate, set_birthdate)
 
     def get_gender(self):
         return self._getProperty('gender')
