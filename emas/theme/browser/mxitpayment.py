@@ -147,6 +147,18 @@ class MxitPaymentResponse(grok.View):
     grok.require('zope2.View')
     grok.name('mxitpaymentresponse')
 
+
+    def _mxitprofile(self, data):
+        """ mxit profile data looks like this:
+            'en,ZA,1975-10-29,Male,1' 
+        """
+        data = data.split(',')
+        if len(data) > 4:
+            return [data[1], data[2], data[3]]
+        else:
+            return ['', '', '']
+
+
     def update(self):
         """ Handle the mxit response
         """
@@ -175,7 +187,21 @@ class MxitPaymentResponse(grok.View):
             pmt = getToolByName(context, 'portal_membership')
             member = pmt.getMemberById(memberid)
             if not member:
-                member = pmt.addMember(memberid, password, 'Member', '')
+                password = password_hash(context, memberid)
+                country, birthdate, gender = \
+                    self._mxitprofile(request.get('HTTP_X_MXIT_PROFILE', '')
+                props={'fullname': request.get('HTTP_X_MXIT_NICK', ''),
+                       'location': request.get('HTTP_X_MXIT_LOCATION', ''),
+                       'language': request.get('LANGUAGE', ''),
+                       'trialuser': True,
+                       'ua_pixels': request.get('HTTP_UA_PIXELS', ''),
+                       'ua_device': request.get('HTTP_X_DEVICE_USER_AGENT', ''),
+                       'mxitcontact':  request.get('HTTP_X_MXIT_CONTACT', ''),
+                       'country': country,
+                       'birthdate': birthdate,
+                       'gender': gender,
+                       }
+                member = pmt.addMember(memberid, password, 'Member', '', props)
                 member = pmt.getMemberById(memberid)
             
             # now add the member to the correct group

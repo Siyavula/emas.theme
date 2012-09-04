@@ -104,6 +104,38 @@ class IEmasUserDataSchema(IUserDataSchema):
         required=False,
     )
     
+    # User Agent
+    ua_device = TextLine(
+        title=_(u'label_ua_agent', default=u'User agent'),
+        required=False,
+        )
+
+    # User Agent resolution in pixels
+    ua_pixels = TextLine(
+        title=_(u'label_ua_pixels', default=u'User agent resolution'),
+        required=False,
+        )
+
+    mxitcontact = TextLine(
+        title=_(u'label_mxit_contact', default=u'MXit contact'),
+        required=False,
+        )
+
+    country = TextLine(
+        title=_(u'label_country', default=u'Country'),
+        required=False,
+        )
+
+    birthdate = TextLine(,
+        title=_(u'label_birthdate', default=u'Birth date'),
+        required=False,
+        )
+
+    gender = TextLine(
+        title=_(u'label_gender', default=u'Gender'),
+        required=False,
+        )
+
 
 class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)
