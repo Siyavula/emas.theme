@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.19
+----
+
+New landing page with slider and drop down menus
+
+Remove premium services viewlet
+
 1.18
 ----
 
