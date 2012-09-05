@@ -30,7 +30,75 @@
 
                     <input type="hidden" name="ordersubmitted" value="true"/>
                     
-                    Individual order
+                    <h2>Subject</h2>
+                    <fieldset><legend>
+                            Choose your subject(s) and grade:
+                        </legend>
+                        <p>
+                            <input name="practice_subjects" value="Maths" type="radio"> Maths
+                            <input name="practice_subjects" value="Science" type="radio"> Science
+                            <input name="practice_subjects" value="Maths,Science" type="radio"> Both Maths &amp; Science
+                        </p>
+                        <p>
+                            <input name="practice_grade" value="Grade 10" type="radio"> Grade 10 (CAPS)
+                            <input name="practice_grade" value="Grade 11" type="radio"> Grade 11 (CAPS)
+                            <input name="practice_grade" value="Grade 12" type="radio"> Grade 12 (NCS)
+                        </p>
+
+                    <h2>Product</h2>
+
+                    <fieldset><legend>
+                            Select your product:
+                        </legend>
+                    <fieldset>
+                        <p>
+                            <input name="prod_practice_book" value="PracticeBook" type="radio"> Intelligent Practice and a textbook [per subject: <strong>1</strong> textbook and one year subscription <strong>R200</strong>]
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <p>
+                            <input name="prod_practice_book" value="Practice" type="radio"> Intelligent Practice only (no textbook) [per subject: one year subscription <strong>R150</strong>]
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <p>
+                            <input name="prod_practice_book" value="Book" type="radio"> Textbook only (no Intelligent Practice) [per subject: <strong>R95</strong>]
+                        </p>
+                    </fieldset>
+
+                    </fieldset>
+                    <h2>Details</h2>
+                    <fieldset><legend>
+                            How would you like to pay?
+                        </legend>
+                        <p>
+                            <input name="prod_payment" value="Maths" type="radio"> Credit Card payment<br />
+                        </p>
+                        <p>
+                            <input name="prod_payment" value="Science" type="radio"> Electronic Funds Transfer (EFT)<br />
+                        </p>
+                    </fieldset>
+<i style='color:green;'>if they haven't ordered practice or they are already logged in we should hide this</i>
+                    <fieldset><legend id='loginrequest'>
+                            You are not logged in, for Intelligent Practice you need an account on the site. Please <a href="#">login or register</a>. 
+                        </legend>
+                    </fieldset>
+                    <div id='bookonly' class='hidden'>
+                    <fieldset>
+                        <legend id='postaladdress'>
+                            You have requested a <b>textbook</b>, we need to know your details for delivery: 
+                        </legend>
+                        <p>
+                            Name and surname:<input  value="" type="text">
+                        </p>
+                        <p>
+                            Phone number:<input  value="" type="text">
+                        </p>
+                        <p>
+                            Postal address: <textarea></textarea>
+                        </p>
+                    </fieldset>
+                    </div>
 
                     <div class="ordertotal">
                         <div>
@@ -40,6 +108,7 @@
                         <button type="submit" class="button generic no-icon small-caps allowMultiSubmit" name="submit" value="1">Submit
                         </button>
                     </div>
+
                 </form>
             </div>
 
