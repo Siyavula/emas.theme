@@ -8,91 +8,58 @@
 <body>
 
     <metal:core fill-slot="main">
-        <h1 tal:condition="not:view/ordersubmitted" class="documentFirstHeading">Place Order</h1>
         <h1 tal:condition="view/ordersubmitted" class="documentFirstHeading"> Order Successful</h1>
 
         <div id="content-core">
 
-            <div id="selectpackage" tal:condition="not:view/ordersubmitted">
-                <form id="orderform" name="orderform" method="POST" tal:attributes="action string:${context/absolute_url}/${view/__name__}">
+            <div id="formtabs" tal:condition="not:view/ordersubmitted">
+                <ul>
+                    <li id="individual-order-form-link" class="button formactive">
+                        Individual Order
+                    </li>
+                    <li id="school-order-form-link" class="button">
+                        School Order
+                    </li>
+                </ul>
+            </div>
+
+            <div id="individual-order-form" class="selectpackage" 
+                tal:condition="not:view/ordersubmitted">
+                <form id="individual-orderform" name="orderform" method="POST"
+                      tal:attributes="action string:${context/absolute_url}/${view/__name__}">
 
                     <input type="hidden" name="ordersubmitted" value="true"/>
-
-                    <h2>Intelligent Practice</h2>
-
-                    <fieldset>
-                        <legend>
-                            To which subjects would you like to subscribe?
-                        </legend>
-
-                        <div class="pricinginfo">
-                            <strong>1</strong> subject @ <strong>R150</strong>/year
-                        </div>
-                        <div class="pricinginfo">
-                            <strong>2</strong> subjects @ <strong>R250</strong>/year
-                        </div>
-                        <p>
-                            <input type="radio" name="practice_subjects" value="Maths"/> Maths
-                            <input type="radio" name="practice_subjects" value="Science"/> Science
-                            <input type="radio" name="practice_subjects" value="Maths,Science"/> Both Maths &amp; Science
-                        </p>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Which grade?</legend>
-
-                        <p>
-                            <input type="radio" name="practice_grade" value="Grade 10"/> Grade 10
-                            <input type="radio" name="practice_grade" value="Grade 11"/> Grade 11
-                            <input type="radio" name="practice_grade" value="Grade 12"/> Grade 12
-                        </p>
-                    </fieldset>
-
-                    <h2>Textbooks</h2>
-
-
-                    <fieldset>
-                        <legend>Do you want a printed textbook for the selected subjects?</legend>
-
-                        <div class="pricinginfo">
-                            <strong>1</strong> textbook @ <strong>R50</strong>
-                        </div>
-                        <div class="pricinginfo">
-                            <strong>2</strong> textbooks @ <strong>R100</strong>
-                        </div>
-                        <p>
-
-                            <input type="radio" name="include_textbook" value="yes"/> Yes
-                            <input type="radio" name="include_textbook" value="no"/> No
-
-                        </p>
-                    </fieldset>
-
-                    <h2>Expert Answers</h2>
-
-                    <fieldset>
-                        <legend>Do you want to ask experts questions
-                        about the content in our books?</legend>
-                        <div class="pricinginfo">
-                            <strong>10</strong> questions @
-                            <strong>R25</strong>
-                        </div>
-                        <p>
-                            <input type="radio" name="include_expert_answers" value="yes"/> Yes
-                            <input type="radio" name="include_expert_answers" value="no"/> No
-                        </p>
-                    </fieldset>
+                    
+                    Individual order
 
                     <div class="ordertotal">
                         <div>
-                        Total = <span id="totalcost" class="amount">R0</span>
+                            Total = <span id="totalcost" class="amount">R0</span>
                         </div>
 
                         <button type="submit" class="button generic no-icon small-caps allowMultiSubmit" name="submit" value="1">Submit
                         </button>
                     </div>
+                </form>
+            </div>
 
+            <div id="school-order-form" class="selectpackage hidden" 
+                tal:condition="not:view/ordersubmitted">
+                <form id="school-orderform" name="orderform" method="POST"
+                      tal:attributes="action string:${context/absolute_url}/${view/__name__}">
 
+                    <input type="hidden" name="ordersubmitted" value="true"/>
+                    
+                    School order
+
+                    <div class="ordertotal">
+                        <div>
+                            Total = <span id="totalcost" class="amount">R0</span>
+                        </div>
+
+                        <button type="submit" class="button generic no-icon small-caps allowMultiSubmit" name="submit" value="1">Submit
+                        </button>
+                    </div>
                 </form>
             </div>
 

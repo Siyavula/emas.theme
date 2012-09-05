@@ -1,3 +1,4 @@
+// local functions
 function ordertotal() {
     var totalcost = 0;
     var practice_subjects = $('input[name="practice_subjects"]:checked').val();
@@ -21,10 +22,22 @@ function ordertotal() {
     $('#totalcost').html("R"+totalcost);
 }
 
+function hideForms() 
+{
+    $("#formtabs li").each(function(i){
+        $(this).removeClass("formactive");
+    });
+    $("div.selectpackage").each(function(i){
+        $(this).hide();
+    });
+    return false;
+}
+
+// runs when the page is loaded
 $(function($) {
     ordertotal();
-    $("#selectpackage input[type='radio']").change(ordertotal);
-    $("#selectpackage button[type='submit']").click(function () {
+    $(".selectpackage input[type='radio']").change(ordertotal);
+    $(".selectpackage button[type='submit']").click(function () {
 
         var practice_subjects = $('input[name="practice_subjects"]:checked').val();
         var practice_grade = $('input[name="practice_grade"]:checked').val();
@@ -51,4 +64,29 @@ $(function($) {
 
         return result;
     });
+
+    $('input').change(function(){
+        var  product=$('input[name="prod_practice_book"]:checked').val();
+        if (product == 'Practice'){
+        $('#bookonly').addClass('hidden');}
+        else{
+        $('#bookonly').removeClass('hidden');}
+    });
+
+    $("table tr:even").css("background-color", "#ccccff");
+
+    $("#individual-order-form-link").click(function() {
+        hideForms();
+        $(this).addClass( "formactive" );
+        $("div#individual-order-form").show();
+        return false;
+    });
+
+    $("#school-order-form-link").click(function() {
+        hideForms();
+        $(this).addClass("formactive");
+        $("div#school-order-form").show();
+        return false;
+    });
+
 });
