@@ -740,10 +740,19 @@ div#copyright {
 #slider .nivoSlider {
     height: 1000px;
 }
+#content-core .theme-light.slider-wrapper {
+    padding: 0 10px;
+}
+
+div.nivo-caption {
+    background: white;
+    color: black;
+    font-size: 16pt;
+}
 
 #marktagline {
     font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
-    font-size: 18pt;
+    font-size: 20pt;
     line-height: 25pt;
 }
 
