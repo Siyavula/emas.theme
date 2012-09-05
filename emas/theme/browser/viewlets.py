@@ -7,8 +7,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.uuid.interfaces import IUUID
-from plone.app.layout.viewlets import common
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
+from webcouturier.dropdownmenu.browser import dropdown
 from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
 
 from emas.theme.browser.views import is_expert
@@ -74,15 +74,22 @@ class QAViewlet(BaseQAViewlet):
             return ""
 
 
-class DropdownMenuViewlet(common.GlobalSectionsViewlet):
-    """A custom version of the global navigation class that has to have
-       dropdown menus for global navigation tabs objects
+class DropdownMenuViewlet(dropdown.DropdownMenuViewlet):
+    """ Specialise dropdown menu viewlet to render custom template for
+        theme
     """
     implements(IDropdownMenuViewlet)
 
-    index = ViewPageTemplateFile('templates/dropdown.pt')
+    _theme_template = ViewPageTemplateFile('templates/dropdown.pt')
+
+    def index(self):
+        if self.request.get('HTTP_X_THEME_ENABLED') == True:
+            return self._theme_template()
+        else:
+            return self._template()
 
     def update(self):
+        super(DropdownMenuViewlet, self).update()
         context = aq_inner(self.context)
         portal_state_view = getMultiAdapter((context, self.request),
                                              name='plone_portal_state')
