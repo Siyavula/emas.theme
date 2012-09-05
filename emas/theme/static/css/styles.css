@@ -33,7 +33,6 @@ td, th {
 
 #navbar {
     background-color: #008fb4;
-    padding: 10px;
     width: 100%;
 }
 
@@ -114,25 +113,32 @@ td, th {
     clear: none;
     background: #008fb4;
     margin: 0;
+    width: 550px;
 }
 #portal-globalnav li a {
     background: #008fb4;
     border: none;
     color: white;
-    padding: 0 2em 0 0;
+    padding: 1em;
     min-width: 0;
 }
 #portal-globalnav li.selected a,
 #portal-globalnav li.selected a:hover,
 #portal-globalnav li a:hover {
-    background: #008fb4;
-    color: white;
+    background: #32a5c3;
+}
+
+ul.submenu {
+    z-index: 100;
+}
+#portal-globalnav ul.submenu li a {
+    padding: 1em;
 }
 
 #portal-searchbox {
     background: url("../images/searcharea.png") no-repeat scroll 0 0 transparent;
     height: 34px;
-    margin-top: -27px;
+    margin-top: -41px;
     padding: 0;
     text-align: right;
     text-transform: none;
@@ -144,7 +150,7 @@ td, th {
     padding: 0;
 }
 #portal-searchbox input.searchButton {
-    background: url("../images/searchicon.png") no-repeat scroll 0 0 transparent;
+    background: no-repeat scroll 0 0 transparent;
     border: medium none;
     float: left;
     font-size: 0;
@@ -152,6 +158,7 @@ td, th {
     margin: 0;
     padding: 0;
     width: 25px;
+    cursor: pointer;
 }
 #searchGadget {
     border: medium none;
@@ -761,3 +768,30 @@ div#copyright {
 .hidden {
     display: none;
 }
+
+#slider div{
+    margin: 0;
+}
+#slider img{
+    max-height: 250px;
+}
+
+#slider .nivoSlider {
+    height: 1000px;
+}
+#content-core .theme-light.slider-wrapper {
+    padding: 0 10px;
+}
+
+div.nivo-caption {
+    background: white;
+    color: black;
+    font-size: 16pt;
+}
+
+#marktagline {
+    font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 20pt;
+    line-height: 25pt;
+}
+

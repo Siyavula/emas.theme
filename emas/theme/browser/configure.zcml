@@ -31,12 +31,11 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
-    <browser:viewlet
-        name="premiumservices"
-        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-        class=".views.PremiumServicesViewlet"
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="site-home"
+        template="templates/home.pt"
         permission="zope2.View"
-        layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
     <browser:page

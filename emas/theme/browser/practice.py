@@ -37,8 +37,7 @@ class Practice(BrowserView):
         alsoProvides(self.request, IPracticeLayer)
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        if portal_state.anonymous() and \
-                self.request.REMOTE_ADDR not in ('127.0.0.1', 'localhost'):
+        if portal_state.anonymous():
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()

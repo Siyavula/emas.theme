@@ -1,10 +1,16 @@
-from Products.Archetypes.utils import shasattr
+from zope.interface import implements
+from zope.component import getMultiAdapter
 
+from Acquisition import aq_inner
+from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
-from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from plone.uuid.interfaces import IUUID
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
+from webcouturier.dropdownmenu.browser import dropdown
+from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
+
 from emas.theme.browser.views import is_expert
 from emas.theme import MessageFactory as _
 
@@ -66,3 +72,27 @@ class QAViewlet(BaseQAViewlet):
             return super(QAViewlet, self).render()
         else:
             return ""
+
+
+class DropdownMenuViewlet(dropdown.DropdownMenuViewlet):
+    """ Specialise dropdown menu viewlet to render custom template for
+        theme
+    """
+    implements(IDropdownMenuViewlet)
+
+    _theme_template = ViewPageTemplateFile('templates/dropdown.pt')
+
+    def index(self):
+        if self.request.get('HTTP_X_THEME_ENABLED') == True:
+            return self._theme_template()
+        else:
+            return self._template()
+
+    def update(self):
+        super(DropdownMenuViewlet, self).update()
+        context = aq_inner(self.context)
+        portal_state_view = getMultiAdapter((context, self.request),
+                                             name='plone_portal_state')
+        navroot = portal_state_view.navigation_root()
+        self.site_url = navroot.absolute_url()
+

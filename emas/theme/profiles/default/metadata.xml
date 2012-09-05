@@ -13,5 +13,6 @@
         <dependency>profile-siyavula.what:default</dependency>
         <dependency>profile-emas.transforms:default</dependency>
         <dependency>profile-collective.topictree:default</dependency>
+        <dependency>profile-webcouturier.dropdownmenu:default</dependency>
     </dependencies>
 </metadata>

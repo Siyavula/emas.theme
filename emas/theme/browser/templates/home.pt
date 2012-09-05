@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+<body>
+
+    <metal:core fill-slot="main">
+        <div id="content-core">
+            <script type="text/javascript">
+                $(function(){
+                    $('#slider').nivoSlider({
+                        effect: 'slideInLeft', 
+                        pauseTime: 7000,
+                    });
+                });
+            </script>
+
+            <div class="slider-wrapper theme-light">
+                <div id="slider" class="nivoSlider">
+                    <img src="images/bookbannergimp.jpg" alt="Curriculum-aligned, collaboratively authored, open textbooks available for free to read, download and adapt." title="#bookslidercaption"
+                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/bookbannergimp.jpg"/>
+                    <img src="images/devicebannergimp780.jpg" title="#devicecaption"
+                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/devicebannergimp780.jpg"/>
+                    <img src="images/practicebanner.jpg" title="#intelligentpracticecaption"
+                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/practicebanner.jpg"/>
+                    <img src="images/communitybanner.jpg" title="#communitycaption"
+                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/communitybanner.jpg"/>
+                </div>
+                <div id="bookslidercaption" class="nivo-html-caption">
+                    <strong>Curriculum-aligned</strong>, collaboratively authored, open textbooks available for free to read, download and adapt.
+                </div>
+                <div id="devicecaption" class="nivo-html-caption">
+                    Read the same textbook and access the same resources on <strong>all your devices</strong>, via the web, mobile or MXit.
+                </div>
+                <div id="intelligentpracticecaption" class="nivo-html-caption">
+                    Intelligent Practice allows you to <strong>practice exam questions</strong>, manage your progress using your dashboard and gives you targeted feedback on your strengths and weaknesses. <a style='' href="#"><strong style=''>Register</strong></a> for your free trial now!
+                </div>
+                <div id="communitycaption" class="nivo-html-caption">
+                    <strong>Community</strong> is central to how we work, <a href="#"><strong>join</strong></a> us for events, discussion and work collaboratively to ensure you have access to the best resources.
+                </div>
+            </div>
+            <!--
+            <span id='marktagline'>Curriculum aligned textbooks with embedded videos, simulations, presentations and Intelligent Practice for all your exam preparation.</span>
+            -->
+        </div>
+    </metal:core>
+
+</body>
+</html>
