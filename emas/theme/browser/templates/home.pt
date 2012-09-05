@@ -33,7 +33,7 @@
                     <strong>Curriculum-aligned</strong>, collaboratively authored, open textbooks available for free to read, download and adapt.
                 </div>
                 <div id="devicecaption" class="nivo-html-caption">
-                    Read the same textbook and access the same resources on <strong>all your devices</strong>, via the web, mobile or Mxit.
+                    Read the same textbook and access the same resources on <strong>all your devices</strong>, via the web, mobile or MXit.
                 </div>
                 <div id="intelligentpracticecaption" class="nivo-html-caption">
                     Intelligent Practice allows you to <strong>practice exam questions</strong>, manage your progress using your dashboard and gives you targeted feedback on your strengths and weaknesses. <a style='' href="#"><strong style=''>Register</strong></a> for your free trial now!
@@ -42,7 +42,9 @@
                     <strong>Community</strong> is central to how we work, <a href="#"><strong>join</strong></a> us for events, discussion and work collaboratively to ensure you have access to the best resources.
                 </div>
             </div>
+            <!--
             <span id='marktagline'>Curriculum aligned textbooks with embedded videos, simulations, presentations and Intelligent Practice for all your exam preparation.</span>
+            -->
         </div>
     </metal:core>
 
