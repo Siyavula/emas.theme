@@ -16,9 +16,9 @@
         <li id="portaltab-practice" class="plain"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
             </a><ul class="submenu">
                     <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/online-practice-information">About Intelligent Practice</a></li>
-                    <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/grade-10/@@practice">Grade 10</a></li>
-                    <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/grade-11/@@practice">Grade 11</a></li>
-                    <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/grade-12/@@practice">Grade 12</a></li>
+                    <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
+                    <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/@@practice/grade-11">Grade 11</a></li>
+                    <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
                 </ul>
         </li>
         <li id="portaltab-order" class="plain"><a href="#" class="plain" title="Order products" tal:attributes="href string:$portal_url/order">Order
