@@ -3,6 +3,7 @@ import hashlib
 from datetime import datetime, timedelta, date
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
+from z3c.relationfield.relation import create_relation
 
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -13,6 +14,7 @@ from plone.app.users.browser.personalpreferences import UserDataPanel
 from upfront.shorturl.browser.views import RedirectView
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Archetypes.interfaces import IBaseContent
@@ -24,10 +26,16 @@ from siyavula.what.browser.views import AddQuestionView as AddQuestionBaseView
 from siyavula.what.browser.views import DeleteQuestionView as \
     DeleteQuestionBaseView 
 
+from emas.app.browser.utils import member_credits
+from emas.app.browser.utils import practice_service_expirydate
+from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import subject_and_grade
+from emas.app.browser.utils import member_services 
+
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
-from emas.theme.browser.utils import getAuthedMemberCredits
 from emas.theme.browser.practice import IPracticeLayer
+
 from emas.theme import MessageFactory as _
 
 NULLDATE = date(1970, 01, 01)
@@ -109,6 +117,9 @@ class AnnotatorConfigViewlet(ViewletBase):
     def annotatorStore(self):
         return self.settings.store
 
+    def bccAddress(self):
+        return self.settings.bcc_address
+    
     def userId(self):
         return self.portal_state.member().getId()
 
@@ -169,9 +180,7 @@ class CreditsViewlet(ViewletBase):
 
     @property
     def credits(self):
-        member = self.context.restrictedTraverse(
-            '@@plone_portal_state').member()
-        return member.getProperty('credits', 0)
+        return member_credits(self.context)
 
 class CreditsView(BrowserView):
     def __call__(self):
@@ -226,6 +235,36 @@ class CreditsView(BrowserView):
 class EnabledServicesView(BrowserView):
     """ Utility view to check and report on enabled pay services.
     """
+    
+    def get_member_services_for_subject(self, subject, memberid=None):
+        """ This method probably needs caching since it is called a lot during
+            the rendering of all pages which have the PremiumServicesViewlet.
+        """
+        services = {}
+        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+        if memberid is None:
+            memberid = portal_state.member().getId()
+        
+        ms_folder = portal_state.portal()._getOb('memberservices')
+
+        pc = getToolByName(self.context, 'portal_catalog')
+        query = {'portal_type': 'emas.app.memberservice',
+                 'memberid': memberid,
+                 'subject': subject,
+                 'path': '/'.join(ms_folder.getPhysicalPath())}
+        
+        for brain in pc(query):
+            ms = brain.getObject()
+            service = ms.related_service.to_object
+            st = service.service_type
+            details = {'service_title': service.Title(),
+                       'grade': service.grade,
+                       'expiry_date': ms.expiry_date,
+                       'credits': ms.credits,}
+            tmp_list = services.get(st, [])
+            tmp_list.append(details)
+            services[st] = tmp_list
+        return services
 
     def is_enabled(self, service):
         if is_expert(self.context): return True
@@ -242,33 +281,54 @@ class EnabledServicesView(BrowserView):
             return False
 
     def expirydate(self, memberprop):
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        return member.getProperty(memberprop)
+        return memberservice_expiry_date(self.context) 
     
-    @property
-    def ask_expert_enabled(self):
-        if is_expert(self.context): return True
+    def ask_expert_enabled(self, context=None):
+        context = context or self.context
 
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        current_credits = member.getProperty('credits', 0)
+        if is_expert(context):
+            return True
+        
+        current_credits = member_credits(context)
         return current_credits > 0
 
-    @property
-    def questions_left(self):
-        pmt = getToolByName(self.context, 'portal_membership')
-        member = pmt.getAuthenticatedMember()
-        current_credits = member.getProperty('credits', 0)
-        return current_credits
+    def questions_left(self, context=None):
+        context = context or self.context
 
-    @property
-    def answer_database_enabled(self):
+        return member_credits(context)
+
+    def answer_database_enabled(self, context=None):
+        context = context or self.context
+
+        if grade is None or subject is None:
+            raise AttributeError('You must supply a grade and subject.')
+
+        ps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = ps.member().getId()
+            
         return self.is_enabled(ANSWER_DATABASE)
 
-    @property
-    def more_exercise_enabled(self):
-        return self.is_enabled(PRACTICE_SYSTEM)
+    def more_exercise_enabled(self, context=None):
+        context = context or self.context
+
+        permission = 'Manage portal'
+        pmt = getToolByName(context, 'portal_membership')
+        if pmt.checkPermission(permission, context):
+            return True
+        
+        service_uuids = practice_service_uuids(context)
+        memberservices = member_services(context, service_uuids)
+        # if we cannot find any memberservices the exercise link should not be
+        # available.
+        if memberservices is None or len(memberservices) < 1:
+            return False
+
+        now = date.today()
+        for ms in memberservices:
+            if ms.expiry_date > now:
+                return True
+        
+        return False
 
     @property
     def context_allows_questions(self):
@@ -559,7 +619,7 @@ class PurchaseApproved(BrowserView):
 
 class CreditView(BrowserView):
     def getAuthedMemberCreditsJSON(self):
-        credits = getAuthedMemberCredits(self.context)
+        credits = member_credits(self.context)
         return json.dumps({'credits': credits})
 
 

@@ -62,7 +62,7 @@ class QAViewlet(BaseQAViewlet):
         """
         context = self.context
         view = context.restrictedTraverse('@@enabled-services')
-        return view.ask_expert_enabled
+        return view.ask_expert_enabled(self.context)
 
     def render(self):
         """ We render an empty string when a specific piece of content

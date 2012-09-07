@@ -136,7 +136,7 @@ function removeQuestion(data, textStatus, jqXHR) {
 
 function updateQuestionTextArea() {
     jq.ajax({
-        url: portal_url + "/@@json-authenticated-member-creditbalance",
+        url: "@@json-authenticated-member-creditbalance",
         success: toggleQuestionTextArea,
         dataType: "json",
     });

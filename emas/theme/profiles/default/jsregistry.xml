@@ -141,8 +141,14 @@
                 compression="none"
                 cookable="True"
                 enabled="True"
-                id="++resource++emas.theme.resources/jquery.nivo.slider.js"
+                id="++resource++emas.theme.resources/purchase.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                id="++resource++emas.theme.resources/jquery.nivo.slider.js"
+                inline="False"/>
 
 </object>

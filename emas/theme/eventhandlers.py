@@ -4,8 +4,6 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.content.folder import ATFolder
 
-from emas.theme.browser.views import is_expert
-
 def onMemberJoined(obj, event):
     portal = obj.restrictedTraverse('@@plone_portal_state').portal()
     transactions = portal.transactions
@@ -48,25 +46,3 @@ def onMemberJoined(obj, event):
     propsheet = obj.getPropertysheet('mutable_properties')
     for key, value in properties.items():
         propsheet.setProperty(obj, key, value)
-
-def questionAsked(obj, event):
-    """ Deduct a credit when a question is asked
-    """
-    if is_expert(obj):
-        return
-
-    member = obj.restrictedTraverse('@@plone_portal_state').member()
-    credits = member.getProperty('credits') - 1
-    if credits < 0:
-        raise RuntimeError("Credits can't be less than zero")
-    member.setMemberProperties({'credits': credits})
-
-def questionDeleted(obj, event):
-    """ Add a credit when a question is deleted.
-    """
-    if is_expert(obj):
-        return
-    pmt = getToolByName(obj, 'portal_membership')
-    member = pmt.getMemberById(obj.Creator())
-    credits = member.getProperty('credits') + 1
-    member.setMemberProperties({'credits': credits})
