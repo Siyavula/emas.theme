@@ -233,14 +233,6 @@
 
     <browser:page
         for="*"
-        name="order"
-        class=".order.OrderForm"
-        permission="cmf.SetOwnProperties"
-        />
-
-
-    <browser:page
-        for="*"
         name="payment"
         template="templates/payment.pt"
         permission="cmf.SetOwnProperties"
