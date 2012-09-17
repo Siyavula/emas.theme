@@ -50,3 +50,25 @@ recipe to manage your project, you can do this:
         
 You can skip the ZCML slug if you are going to explicitly include the package
 from another package's configure.zcml file.
+
+
+Reinstalling version 1.19 after rebuilding
+------------------------------------------
+
+Navigate to maths.
+
+Delete the standard 'Welcome' page.
+
+Select 'site-home' as default view.
+
+Navigate to science.
+
+Delete the standard 'Welcome' page.
+
+Select 'site-home' as default view.
+
+Portal CSS and Javascript 'save' to refresh.
+
+Make sure you deactivate ++resource++collective.topictree/js/edittopictree.js.
+
+
