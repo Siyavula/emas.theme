@@ -7,9 +7,6 @@
             <element value="email" />
             <element value="password" />
             <element value="mail_me" />
-            <element value="userrole" />
-            <element value="school" />
-            <element value="province" />
         </property>
     </object>
 </object>
