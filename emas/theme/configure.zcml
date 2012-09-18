@@ -47,10 +47,4 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
-    <subscriber
-        for="Products.PluggableAuthService.interfaces.authservice.IPropertiedUser
-            Products.PluggableAuthService.interfaces.events.IPrincipalCreatedEvent"
-        handler=".eventhandlers.onMemberJoined"
-        />
-
 </configure>
