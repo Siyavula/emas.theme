@@ -561,9 +561,16 @@ section.packages table td.price span {
 }
 
 button.generic:hover, a.generic:hover {
-    background: -moz-linear-gradient(center top , #FFFFFF, #EAEAEA) repeat scroll 0 0 transparent;
-    color: #82BBCE;
+    background: -moz-linear-gradient(center top , #FFFFFF, #EAEAEA) repeat scroll 0 0 transparent; /* FF3.6+ */
+    background: #EAEAEA; /* Old browsers */ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#EAEAEA)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* IE10+ */
+    background: linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EAEAEA',GradientType=0 ); /* IE6-9 */
     text-shadow: 0 0 0.2em rgba(255, 255, 255, 0.75);
+    color: black;
 }
 
 .button:hover {
@@ -571,16 +578,18 @@ button.generic:hover, a.generic:hover {
 }
 
 button.generic, a.generic {
-    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent; /* FF3.6+ */
+    background: #E0E0E0; /* Old browsers */ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#E0E0E0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* IE10+ */
+    background: linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#E0E0E0',GradientType=0 ); /* IE6-9 */
     border: 1px solid #CCCCCC;
-    color: #777777;
+    color: black;
 }
 
-button.generic, a.generic {
-    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent;
-    border: 1px solid #CCCCCC;
-    color: #777777;
-}
 .small-caps, button.small-caps {
     font-size: 18px;
     font-variant: small-caps;
