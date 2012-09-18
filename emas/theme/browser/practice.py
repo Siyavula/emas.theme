@@ -2,6 +2,7 @@ import base64
 import httplib
 import urllib2
 import lxml
+import logging
 from urllib import urlencode
 from urlparse import urlparse
 
@@ -18,6 +19,8 @@ from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services 
 
 from emas.theme.interfaces import IEmasSettings
+
+log = logging.getLogger('emas.theme.browser.practice')
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -54,6 +57,8 @@ class Practice(BrowserView):
         else:
             accessto = ''
         memberid = member.getId() or 'Anonymous'
+
+        log.info('X-Access-To for %s: %s' % (memberid, accessto))
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         urlparts = urlparse(settings.practiceurl)
