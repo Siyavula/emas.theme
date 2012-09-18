@@ -91,4 +91,4 @@ Make sure you deactivate ++resource++collective.topictree/js/edittopictree.js.
 
 Make sure that users are allowed to select their own passwords during registration.
 
-
+Make sure that user role school and province are no longer on the registartion forms.
