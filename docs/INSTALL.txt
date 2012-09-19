@@ -50,3 +50,54 @@ recipe to manage your project, you can do this:
         
 You can skip the ZCML slug if you are going to explicitly include the package
 from another package's configure.zcml file.
+
+
+Reinstalling version 1.19 after rebuilding
+------------------------------------------
+
+From portal_quickinstaller:
+
+- uninstall siyavula.what
+
+- reinstall emas.theme
+
+- install siyavula.what
+
+Setup VCS integration from plone control panel, Configuration Registry:
+
+- vcs_md5_key: [ask the admin for this info]
+
+- vcs_terminal_id: 4751
+
+- vcs_url: https://www.vcs.co.za/vvonline/ccform.asp 
+
+- vcs_user_id: admin
+
+Navigate to maths.
+
+Delete the standard 'Welcome' page.
+
+Select 'site-home' as default view.
+
+Navigate to science.
+
+Delete the standard 'Welcome' page.
+
+Select 'site-home' as default view.
+
+Portal CSS and Javascript 'save' to refresh.
+
+Make sure you deactivate ++resource++collective.topictree/js/edittopictree.js.
+
+Make sure that users are allowed to select their own passwords during registration.
+
+Make sure that user role school and province are no longer on the registartion forms.
+
+Delete the following from portal_javascripts:
+- payservice.js
+- credits.js
+- purchase.js
+
+*Fix ALL VCS URLs in the VCS online admin console*
+- approved
+- declined
