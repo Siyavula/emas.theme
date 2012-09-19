@@ -23,8 +23,8 @@
         </li>
         <li id="portaltab-order" class="plain"><a href="#" class="noClick" title="Order products">Order
             </a><ul class="submenu">
-                    <li><a href="#" title="Individual Order" tal:attributes="href string:$portal_url/order">About Intelligent Practice</a></li>
-                    <li><a href="#" title="School Order" tal:attributes="href string:$portal_url/schoolorders">School Orders</a></li>
+                    <li><a href="#" title="Individual Order" tal:attributes="href string:$portal_url/order">Individual Order</a></li>
+                    <li><a href="#" title="School Order" tal:attributes="href string:$portal_url/schoolorders">School Order</a></li>
                 </ul>
         </li>
     </ul>
