@@ -21,8 +21,11 @@
                     <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
                 </ul>
         </li>
-        <li id="portaltab-order" class="plain"><a href="#" class="plain" title="Order products" tal:attributes="href string:$portal_url/order">Order
-            </a>
+        <li id="portaltab-order" class="plain"><a href="#" class="noClick" title="Order products">Order
+            </a><ul class="submenu">
+                    <li><a href="#" title="Individual Order" tal:attributes="href string:$portal_url/order">About Intelligent Practice</a></li>
+                    <li><a href="#" title="School Order" tal:attributes="href string:$portal_url/schoolorders">School Orders</a></li>
+                </ul>
         </li>
     </ul>
 </tal:sections>
