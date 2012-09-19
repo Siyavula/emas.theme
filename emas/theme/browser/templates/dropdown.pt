@@ -3,7 +3,7 @@
 
     <ul id="portal-globalnav"
         tal:define="portal_url view/site_url">
-        <li id="portaltab-home" class="plain"><a href="#" class="noClick" title="Home" tal:attributes="href portal_url">Home
+        <li id="portaltab-home" class="plain"><a href="#" class="plain" title="Home" tal:attributes="href portal_url">Home
             </a>
         </li>
         <li id="portaltab-readtextbook" class="plain"><a href="#" class="noClick" title="Read a textbook">Read a textbook
