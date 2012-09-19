@@ -12,6 +12,8 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.component import queryUtility
 from plone.registry.interfaces import IRegistry
 
+from AccessControl import getSecurityManager
+from Products.CMFCore import permissions
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -47,7 +49,12 @@ class Practice(BrowserView):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
-        if member.getId():
+        sm = getSecurityManager()
+        # give managers access to everything
+        if sm.checkPermission(permissions.ManagePortal, self.context):
+            accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
+                        'science-grade-10,science-grade-11,science-grade-12')
+        elif member.getId():
             service_uuids = practice_service_uuids(self.context)
             memberservices = member_services(self.context, service_uuids)
             services = [ms.related_service.to_object for ms in memberservices]
