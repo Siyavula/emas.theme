@@ -126,7 +126,7 @@
     <javascript cacheable="True"
                 compression="none"
                 cookable="True"
-                enabled="True"
+                enabled="False"
                 expression="not:request/HTTP_X_THEME_ENABLED | nothing"
                 id="++resource++kukit.js"
                 inline="False"/>
