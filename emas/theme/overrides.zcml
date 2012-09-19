@@ -40,4 +40,13 @@
         permission="zope2.View"
         />
 
+    <!-- Override webcouturier global sections viewlet -->
+    <browser:viewlet
+        name="plone.global_sections"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".browser.viewlets.DropdownMenuViewlet"
+        layer="webcouturier.dropdownmenu.browser.interfaces.IDropdownSpecific"
+        permission="zope2.View"
+        />
+
 </configure>

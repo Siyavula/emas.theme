@@ -9,5 +9,6 @@
         <element value="atct_album_view"/>
         <element value="folder_listing"/>
         <element value="toc"/>
+        <element value="site-home"/>
     </property>
 </object>

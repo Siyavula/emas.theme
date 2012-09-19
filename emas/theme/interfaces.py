@@ -42,6 +42,13 @@ class IEmasSettings(Interface):
         required=True
     )
 
+    bcc_address = TextLine(
+        title=_(u'Annotator Notifier BCC address'),
+        description=_(u"Define the email address that get's bcc'd when notification emails are sent."),
+        required=True,
+        default=u'info@siyavula.com'
+    )
+
     creditcost = Int(
         title=_('Credit Cost'),
         description=_('The cost per credit in cents'),
@@ -54,13 +61,28 @@ class IEmasSettings(Interface):
         required=False,
     )
 
+    vcs_url = TextLine(
+        title=_(u'VCS URL'),
+        description=_(u'The URL to which the VCS payment request is made.'),
+        required=False,
+    )
+
     vcs_terminal_id = TextLine(
-        title=_('VCS Terminal ID'),
+        title=_(u'VCS Terminal ID'),
+        description=_(u'Assigned by VCS. Unique identifier of the merchant.'),
         required=False,
     )
 
     vcs_md5_key = TextLine(
-        title=_('VCS md5 key'),
+        title=_(u'VCS md5 key'),
+        description=_(u'Used to validate to VCS that the source or the call',
+                      ' is legitemate.'),
+        required=False,
+    )
+
+    vcs_user_id = TextLine(
+        title=_(u'VCS user id'),
+        description=_(u'This user will be used to create the member services.'),
         required=False,
     )
 

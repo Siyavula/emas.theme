@@ -3,14 +3,15 @@
 
    <permissions>
          <permission
-         name="Siyavula What: Add Question"
-         acquire="True">
-         <role name="Member" />
+            name="Siyavula What: Add Question"
+            acquire="True">
+            <role name="Member" />
          </permission>
          <permission
-         name="Siyavula What: Add Answer"
-         acquire="True">
-         <role name="Site Administrator" />
+            name="Siyavula What: Add Answer"
+            acquire="True">
+            <role name="Site Administrator" />
+            <role name="Contributor" />
          </permission>
   </permissions>
 

@@ -2,6 +2,7 @@ import base64
 import httplib
 import urllib2
 import lxml
+import logging
 from urllib import urlencode
 from urlparse import urlparse
 
@@ -11,10 +12,17 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.component import queryUtility
 from plone.registry.interfaces import IRegistry
 
+from AccessControl import getSecurityManager
+from Products.CMFCore import permissions
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import member_services 
+
 from emas.theme.interfaces import IEmasSettings
+
+log = logging.getLogger('emas.theme.browser.practice')
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -37,17 +45,27 @@ class Practice(BrowserView):
         alsoProvides(self.request, IPracticeLayer)
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        if portal_state.anonymous() and \
-                self.request.REMOTE_ADDR not in ('127.0.0.1', 'localhost'):
+        if portal_state.anonymous():
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
-        if member.getId():
+        sm = getSecurityManager()
+        # give managers access to everything
+        if sm.checkPermission(permissions.ManagePortal, self.context):
+            accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
+                        'science-grade-10,science-grade-11,science-grade-12')
+        elif member.getId():
+            service_uuids = practice_service_uuids(self.context)
+            memberservices = member_services(self.context, service_uuids)
+            services = [ms.related_service.to_object for ms in memberservices]
             accessto = ','.join(
-                member.getProperty('intelligent_practice_access'))
+                ['%s-%s' %(s.subject, s.grade) for s in services]
+            )
         else:
             accessto = ''
         memberid = member.getId() or 'Anonymous'
+
+        log.info('X-Access-To for %s: %s' % (memberid, accessto))
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         urlparts = urlparse(settings.practiceurl)
@@ -75,7 +93,7 @@ class Practice(BrowserView):
             conn.request("GET", path, headers=headers)
         elif self.request.method == 'POST':
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            conn = httplib.HTTPConnection(practiceserver)
+            conn = httplib.HTTPConnection(practiceserver, timeout=10)
             conn.request("POST", path,
                          body=urlencode(self.request.form.items()),
                          headers=headers)

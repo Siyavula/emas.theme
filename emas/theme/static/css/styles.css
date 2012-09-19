@@ -33,7 +33,6 @@ td, th {
 
 #navbar {
     background-color: #008fb4;
-    padding: 10px;
     width: 100%;
 }
 
@@ -114,25 +113,32 @@ td, th {
     clear: none;
     background: #008fb4;
     margin: 0;
+    width: 550px;
 }
 #portal-globalnav li a {
     background: #008fb4;
     border: none;
     color: white;
-    padding: 0 2em 0 0;
+    padding: 1em;
     min-width: 0;
 }
 #portal-globalnav li.selected a,
 #portal-globalnav li.selected a:hover,
 #portal-globalnav li a:hover {
-    background: #008fb4;
-    color: white;
+    background: #32a5c3;
+}
+
+ul.submenu {
+    z-index: 100;
+}
+#portal-globalnav ul.submenu li a {
+    padding: 1em;
 }
 
 #portal-searchbox {
     background: url("../images/searcharea.png") no-repeat scroll 0 0 transparent;
     height: 34px;
-    margin-top: -27px;
+    margin-top: -41px;
     padding: 0;
     text-align: right;
     text-transform: none;
@@ -144,7 +150,7 @@ td, th {
     padding: 0;
 }
 #portal-searchbox input.searchButton {
-    background: url("../images/searchicon.png") no-repeat scroll 0 0 transparent;
+    background: no-repeat scroll 0 0 transparent;
     border: medium none;
     float: left;
     font-size: 0;
@@ -152,6 +158,7 @@ td, th {
     margin: 0;
     padding: 0;
     width: 25px;
+    cursor: pointer;
 }
 #searchGadget {
     border: medium none;
@@ -495,8 +502,8 @@ section.packages table td.price span {
     font-size: 16px;
 }
 
-#selectpackage,
-#selectitems {
+.selectpackage,
+.selectitems {
     font-size: 100%;
     background-color: #FFFFCC;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -505,58 +512,65 @@ section.packages table td.price span {
     width: 700px;
 }
 
-#selectpackage h2,
-#selectitems h2 {
+.selectpackage h2,
+.selectitems h2 {
     border-bottom: 1px solid #E3C27C;
 }
 
-#selectpackage .pricinginfo,
-#selectitems .pricinginfo {
+.selectpackage .pricinginfo,
+.selectitems .pricinginfo {
     float: right;
     margin: 0;
     clear: both;
 }
 
-#selectpackage fieldset,
-#selectitems fieldset {
+.selectpackage fieldset,
+.selectitems fieldset {
     padding: 0;
     margin: 0;
     border: none;
 }
-#selectpackage legend,
-#selectitems legend {
+.selectpackage legend,
+.selectitems legend {
     font-size: 100%;
     font-weight: bold;
 }
-#selectpackage fieldset p,
-#selectitems fieldset p {
+.selectpackage fieldset p,
+.selectitems fieldset p {
     padding: 0em;
     margin: 0.5em 0;
 }
 
-#selectpackage strong,
-#selectitems strong {
+.selectpackage strong,
+.selectitems strong {
     color: #CC0000;
 }
-#selectpackage li,
-#selectitems li {
+.selectpackage li,
+.selectitems li {
     font-weight: bold;
 }
 
-#selectpackage input,
-#selectitems input {
+.selectpackage input,
+.selectitems input {
     margin-left: 1em;
 }
 
-#selectpackage input[type="submit"],
-#selectitems input[type="submit"] {
+.selectpackage input[type="submit"],
+.selectitems input[type="submit"] {
     margin-left: 0em;
 }
 
 button.generic:hover, a.generic:hover {
-    background: -moz-linear-gradient(center top , #FFFFFF, #EAEAEA) repeat scroll 0 0 transparent;
-    color: #82BBCE;
+    background: -moz-linear-gradient(center top , #FFFFFF, #EAEAEA) repeat scroll 0 0 transparent; /* FF3.6+ */
+    background: #EAEAEA; /* Old browsers */ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#EAEAEA)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* IE10+ */
+    background: linear-gradient(top, #FFFFFF 0%,#EAEAEA 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EAEAEA',GradientType=0 ); /* IE6-9 */
     text-shadow: 0 0 0.2em rgba(255, 255, 255, 0.75);
+    color: black;
 }
 
 .button:hover {
@@ -564,16 +578,18 @@ button.generic:hover, a.generic:hover {
 }
 
 button.generic, a.generic {
-    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent; /* FF3.6+ */
+    background: #E0E0E0; /* Old browsers */ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#E0E0E0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* IE10+ */
+    background: linear-gradient(top, #FFFFFF 0%,#E0E0E0 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#E0E0E0',GradientType=0 ); /* IE6-9 */
     border: 1px solid #CCCCCC;
-    color: #777777;
+    color: black;
 }
 
-button.generic, a.generic {
-    background: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0) repeat scroll 0 0 transparent;
-    border: 1px solid #CCCCCC;
-    color: #777777;
-}
 .small-caps, button.small-caps {
     font-size: 18px;
     font-variant: small-caps;
@@ -611,6 +627,45 @@ button.generic, a.generic {
 div.ordertotal span.amount {
     text-align: right;
     color: #008FB4;
+}
+
+#formtabs ul {
+    display: inline;
+}
+
+.formactive{
+    color:#CC0000;
+}
+
+#formtabs li {
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+li#individual-order-form-link {
+    padding-right: 2em;
+    display: inline;
+}
+
+li#school-order-form-link {
+    padding-left: 2em;
+    display: inline;
+}
+
+.toggleform td, .toggleform th{
+    vertical-align: middle;
+}
+
+#formtabs li.button {
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    outline: medium none;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+    vertical-align: middle;
 }
 
 #content pre.bankdetails {
@@ -722,3 +777,30 @@ div#copyright {
 .hidden {
     display: none;
 }
+
+#slider div{
+    margin: 0;
+}
+#slider img{
+    max-height: 250px;
+}
+
+#slider .nivoSlider {
+    height: 1000px;
+}
+#content-core .theme-light.slider-wrapper {
+    padding: 0 10px;
+}
+
+div.nivo-caption {
+    background: white;
+    color: black;
+    font-size: 16pt;
+}
+
+#marktagline {
+    font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 20pt;
+    line-height: 25pt;
+}
+

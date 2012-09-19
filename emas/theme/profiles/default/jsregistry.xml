@@ -120,21 +120,47 @@
                 compression="none"
                 cookable="True"
                 enabled="True"
-                id="++resource++emas.theme.resources/credits.js"
+                id="++resource++emas.theme.resources/jquery.nivo.slider.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="False"
+                expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+                id="++resource++kukit.js"
                 inline="False"/>
 
     <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
-                id="++resource++emas.theme.resources/payservices.js"
+                expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+                id="++resource++jquery.jstree.js"
                 inline="False"/>
 
     <javascript cacheable="True"
                 compression="none"
                 cookable="True"
                 enabled="True"
-                id="++resource++emas.theme.resources/order.js"
+                expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+                id="++resource++jstree-jquery.hotkeys.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+                id="++resource++jstree-jsquery.cookie.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"
+                expression="not:request/HTTP_X_THEME_ENABLED | nothing"
+                id="++resource++collective.topictree/js/edittopictree.js"
                 inline="False"/>
 
 

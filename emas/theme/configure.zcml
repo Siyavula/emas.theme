@@ -47,22 +47,4 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
-    <subscriber
-        for="Products.PluggableAuthService.interfaces.authservice.IPropertiedUser
-            Products.PluggableAuthService.interfaces.events.IPrincipalCreatedEvent"
-        handler=".eventhandlers.onMemberJoined"
-        />
-
-    <subscriber
-        for="siyavula.what.question.IQuestion
-             zope.lifecycleevent.IObjectAddedEvent"
-        handler=".eventhandlers.questionAsked"
-        />
-
-    <subscriber
-        for="siyavula.what.question.IQuestion
-             zope.app.container.interfaces.IObjectRemovedEvent"
-        handler=".eventhandlers.questionDeleted"
-        />
-
 </configure>
