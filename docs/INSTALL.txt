@@ -92,3 +92,12 @@ Make sure you deactivate ++resource++collective.topictree/js/edittopictree.js.
 Make sure that users are allowed to select their own passwords during registration.
 
 Make sure that user role school and province are no longer on the registartion forms.
+
+Delete the following from portal_javascripts:
+- payservice.js
+- credits.js
+- purchase.js
+
+*Fix ALL VCS URLs in the VCS online admin console*
+- approved
+- declined
