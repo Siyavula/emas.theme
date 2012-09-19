@@ -13,7 +13,7 @@
                 $(function(){
                     $('#slider').nivoSlider({
                         effect: 'slideInLeft', 
-                        pauseTime: 7000,
+                        pauseTime: 7000
                     });
                 });
             </script>
