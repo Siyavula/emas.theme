@@ -9,7 +9,7 @@
  <state state_id="answered" title="Answered">
   <description>A subject matter expert provided an answer.</description>
   <exit-transition transition_id="submit"/>
-  <permission-map name="Access contents information" acquired="True">
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
@@ -17,7 +17,7 @@
   <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="List folder contents" acquired="True">
+  <permission-map name="List folder contents" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
@@ -25,7 +25,7 @@
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="View" acquired="True">
+  <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
@@ -34,7 +34,7 @@
  <state state_id="draft" title="New question">
   <description>A new question was added to the system.</description>
   <exit-transition transition_id="submit"/>
-  <permission-map name="Access contents information" acquired="True">
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -42,7 +42,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="List folder contents" acquired="True">
+  <permission-map name="List folder contents" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -50,7 +50,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="View" acquired="True">
+  <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -58,7 +58,7 @@
  <state state_id="submitted" title="Submitted">
   <description>The question is now in the worklist queues.</description>
   <exit-transition transition_id="answer"/>
-  <permission-map name="Access contents information" acquired="True">
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
@@ -68,7 +68,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="List folder contents" acquired="True">
+  <permission-map name="List folder contents" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
@@ -77,16 +77,16 @@
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="Review portal content" acquired="True">
+  <permission-map name="Review portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="View" acquired="True">
+  <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Review portal content" acquired="True">
+  <permission-map name="Review portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
