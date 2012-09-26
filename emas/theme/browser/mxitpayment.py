@@ -1,12 +1,16 @@
+import datetime
 from urllib import urlencode
 from five import grok
 from Acquisition import aq_inner
 
 from zope.interface import Interface
 from zope.component import queryUtility
+from z3c.relationfield.relation import create_relation
 
+from plone.uuid.interfaces import IUUID
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from plone.dexterity.utils import createContentInContainer
 
 from emas.theme.interfaces import IEmasSettings
 from emas.theme.interfaces import IEmasServiceCost
@@ -150,9 +154,11 @@ class MxitPaymentResponse(grok.View):
         """
         context = self.context
         request = self.request
-        pps = self.context.restrictedTraverse('@@plone_portal_state')
-        self.products_and_services = pps.portal()._getOb('products_and_services')
-        self.navroot = pps.navigation_root()
+        self.pps = self.context.restrictedTraverse('@@plone_portal_state')
+        self.portal = self.pps.portal()
+        self.products_and_services = self.portal._getOb('products_and_services')
+        self.memberservices = self.portal._getOb('memberservices')
+        self.navroot = self.pps.navigation_root()
 
         self.base_url = context.absolute_url()
         self.response_code = request.get('mxit_transaction_res', None)
@@ -168,8 +174,8 @@ class MxitPaymentResponse(grok.View):
         # Transaction completed successfully.
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
-            self.productid = request['productId']
-            self.product = self.products_and_services._getOb(self.product_id)
+            self.service_id = request['productId']
+            self.service = self.products_and_services._getOb(self.service_id)
             password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
@@ -178,7 +184,12 @@ class MxitPaymentResponse(grok.View):
                 pmt.addMember(memberid, password, 'Member', '')
                 member = pmt.getMemberById(memberid)
             
-            access_group = self.product.access_group
+            memberservice = self.get_memberservice(self.service,
+                                                   memberid,
+                                                   self.memberservices,
+                                                   self.portal)
+
+            access_group = self.service.access_group
             if access_group:
                 # now add the member to the correct group
                 gt = getToolByName(context, 'portal_groups')
@@ -187,3 +198,46 @@ class MxitPaymentResponse(grok.View):
     def get_url(self):
         return '%s/%s/@@list-exam-papers' %(
             self.navroot.absolute_url(), EXAM_PAPERS_URL)
+
+    def get_memberservice(self, service, memberid, memberservices, portal):
+        now = datetime.datetime.now().date()
+        pms = getToolByName(portal, 'portal_membership')
+        pc = getToolByName(portal, 'portal_catalog')
+        query = {'portal_type': 'emas.app.memberservice',
+                 'serviceuid': IUUID(service),
+                 'userid': memberid,
+                }
+        brains = pc(query)
+
+        if len(brains) > 0:
+            ms = brains[0].getObject()
+        else:
+            service_relation = create_relation(service.getPhysicalPath())
+            mstitle = '%s for %s' % (service.title, memberid)
+            props = {'title': mstitle,
+                     'userid': memberid,
+                     'related_service': service_relation,
+                     'service_type': service.service_type}
+
+            ms = createContentInContainer(
+                memberservices,
+                'emas.app.memberservice',
+                False,
+                **props
+            )
+            pms.setLocalRoles(ms, [memberid], 'Owner')
+
+        if service.service_type == 'credit':
+            credits = ms.credits
+            credits += service.amount_of_credits
+            ms.credits = credits
+        elif service.service_type == 'subscription':
+            if now > ms.expiry_date:
+                ms.expiry_date = now
+            expiry_date = ms.expiry_date + datetime.timedelta(
+                service.subscription_period
+            )
+            ms.expiry_date = expiry_date
+
+        ms.reindexObject()
+        return ms
