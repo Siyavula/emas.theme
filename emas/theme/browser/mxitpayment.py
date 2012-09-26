@@ -84,6 +84,7 @@ class MxitPaymentRequest(grok.View):
      
     def update(self):
         pps = self.context.restrictedTraverse('@@plone_portal_state')
+        self.products_and_services = pps.portal()._getOb('products_and_services')
         self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
@@ -95,8 +96,9 @@ class MxitPaymentRequest(grok.View):
         self.transaction_reference = '%04d' % self.transaction_reference
 
         self.product_id = self.request.get('productId')
-        self.product_name = self.product_id
-        self.product_description = self.product_id
+        self.product = self.products_and_services._getOb(self.product_id)
+        self.product_name = self.product.title
+        self.product_description = self.product.description
         self.callback_url = '%s/mxitpaymentresponse?productId=%s' %(
             self.context.absolute_url(),
             self.product_id
@@ -104,20 +106,16 @@ class MxitPaymentRequest(grok.View):
 
         self.cost_settings = registry.forInterface(IEmasServiceCost)
         self.vendor_id = self.cost_settings.MXitVendorId
-        # get the schema for this record
-        schema = self.cost_settings.__schema__
-        # the the field by name from the schema
-        field = schema[self.product_id + 'Cost']
-        # get the value from the object 'cost_settings' via the field
-        self.moola_amount = field.get(self.cost_settings)
-        self.currency_amount = 1
+
+        self.moola_amount = self.product.amount_of_moola
+        self.currency_amount = self.product.price
 
         # check if the current mxit member belongs to the ExamPapers group
         memberid = member_id(self.request.get(USER_ID_TOKEN))
         if not memberid:
             return self.render()
         gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(self.product_id)
+        group = gt.getGroupById(self.product.access_group)
         if memberid in group.getMemberIds():
             url = '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
             self.request.response.redirect(url)
@@ -153,6 +151,7 @@ class MxitPaymentResponse(grok.View):
         context = self.context
         request = self.request
         pps = self.context.restrictedTraverse('@@plone_portal_state')
+        self.products_and_services = pps.portal()._getOb('products_and_services')
         self.navroot = pps.navigation_root()
 
         self.base_url = context.absolute_url()
@@ -170,18 +169,20 @@ class MxitPaymentResponse(grok.View):
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
             self.productid = request['productId']
+            self.product = self.products_and_services._getOb(self.product_id)
             password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
             member = pmt.getMemberById(memberid)
             if not member:
-                member = pmt.addMember(memberid, password, 'Member', '')
+                pmt.addMember(memberid, password, 'Member', '')
                 member = pmt.getMemberById(memberid)
             
-            # now add the member to the correct group
-            gt = getToolByName(context, 'portal_groups')
-            # at this stage group and productid are the same
-            gt.addPrincipalToGroup(member.getId(), self.productid)
+            access_group = self.product.access_group
+            if access_group:
+                # now add the member to the correct group
+                gt = getToolByName(context, 'portal_groups')
+                gt.addPrincipalToGroup(member.getId(), access_group)
 
     def get_url(self):
         return '%s/%s/@@list-exam-papers' %(
