@@ -58,6 +58,7 @@ class Practice(BrowserView):
             service_uuids = practice_service_uuids(self.context)
             memberservices = member_services(self.context, service_uuids)
             services = [ms.related_service.to_object for ms in memberservices]
+            services = [service for service in services if '@@practice' in service.access_path]
             accessto = ','.join(
                 ['%s-%s' %(s.subject, s.grade) for s in services]
             )
