@@ -16,7 +16,8 @@
                 <h3>Mxit replied:</h3>
                 <span tal:content="view/message">mxit message</span>
             </div>
-            <a href="#" tal:attributes="href view/get_url">
+            <a tal:condition="python:view.response_code == 0"
+                href="#" tal:attributes="href view/get_url">
                 Return to Past Exam Papers.
             </a>
 

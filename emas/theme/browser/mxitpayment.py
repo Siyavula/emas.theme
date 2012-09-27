@@ -20,16 +20,6 @@ from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 
-EXAM_PAPERS_URL = "past-exam-papers"
-
-MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
-SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
-
-SUBJECT_MAP = {
-    'maths': MATHS_EXAM_PAPERS_GROUP,
-    'science': SCIENCE_EXAM_PAPERS_GROUP,
-}
-
 MXIT_MESSAGES = {
     '0':
         u'Transaction completed successfully.',
@@ -58,20 +48,6 @@ MXIT_MESSAGES = {
     '-1':
         u'Technical system error occurred.',
 }
-
-
-def getGroupName(navroot):
-    subject = getSubject(navroot)
-    return SUBJECT_MAP[subject]
-
-
-def getProductId(navroot):
-    subject = getSubject(navroot)
-    return SUBJECT_MAP[subject]
-
-
-def getSubject(navroot):
-    return navroot.getId()
 
 
 grok.templatedir('templates')
@@ -118,10 +94,17 @@ class MxitPaymentRequest(grok.View):
         memberid = member_id(self.request.get(USER_ID_TOKEN))
         if not memberid:
             return self.render()
+
+        url = '%s/%s' %(self.navroot.absolute_url(), self.product.access_path)
+        
+        # if there is no group specified we assume that the user has access.
+        group_name = self.product.access_group
+        if not group_name:
+            self.request.response.redirect(url)
+
         gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(self.product.access_group)
+        group = gt.getGroupById(group_name)
         if memberid in group.getMemberIds():
-            url = '%s/%s' %(self.navroot.absolute_url(), EXAM_PAPERS_URL)
             self.request.response.redirect(url)
         else:
             return self.render()
@@ -196,8 +179,7 @@ class MxitPaymentResponse(grok.View):
                 gt.addPrincipalToGroup(member.getId(), access_group)
 
     def get_url(self):
-        return '%s/%s/@@list-exam-papers' %(
-            self.navroot.absolute_url(), EXAM_PAPERS_URL)
+        return '%s/%s' %(self.navroot.absolute_url(), self.service.access_path)
 
     def get_memberservice(self, service, memberid, memberservices, portal):
         now = datetime.datetime.now().date()
