@@ -100,12 +100,12 @@ class MxitPaymentRequest(grok.View):
         # if there is no group specified we assume that the user has access.
         group_name = self.product.access_group
         if not group_name:
-            self.request.response.redirect(url)
+            return self.request.response.redirect(url)
 
         gt = getToolByName(self.context, 'portal_groups')
         group = gt.getGroupById(group_name)
         if memberid in group.getMemberIds():
-            self.request.response.redirect(url)
+            return self.request.response.redirect(url)
         else:
             return self.render()
 
