@@ -2,8 +2,13 @@ from five import grok
 from zope.interface import Interface
 from Products.CMFCore.utils import getToolByName
 
-from emas.theme.browser.mxitpayment import SUBJECT_MAP
 from emas.theme.interfaces import IEmasThemeLayer
+
+SUBJECT_MAP = {
+    'maths': MATHS_EXAM_PAPERS_GROUP,
+    'science': SCIENCE_EXAM_PAPERS_GROUP,
+}
+
 
 grok.templatedir('templates')
 grok.layer(IEmasThemeLayer)
