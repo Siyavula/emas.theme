@@ -19,6 +19,9 @@ from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
+from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import member_services 
+
 
 MXIT_MESSAGES = {
     '0':
@@ -97,14 +100,14 @@ class MxitPaymentRequest(grok.View):
 
         url = '%s/%s' %(self.navroot.absolute_url(), self.product.access_path)
         
-        # if there is no group specified we assume that the user has access.
-        group_name = self.product.access_group
-        if not group_name:
-            return self.request.response.redirect(url)
+        import pdb;pdb.set_trace()
+        # get all active services for this user
+        service_uuids = practice_service_uuids(self.context)
+        memberservices = member_services(self.context, service_uuids)
+        active_services = [m.related_service.to_object for m in memberservices]
 
-        gt = getToolByName(self.context, 'portal_groups')
-        group = gt.getGroupById(group_name)
-        if memberid in group.getMemberIds():
+        # check if the currently requested on is in the list
+        if self.product in active_services:
             return self.request.response.redirect(url)
         else:
             return self.render()
