@@ -4,6 +4,9 @@ from Products.CMFCore.utils import getToolByName
 
 from emas.theme.interfaces import IEmasThemeLayer
 
+MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
+SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
+
 SUBJECT_MAP = {
     'maths': MATHS_EXAM_PAPERS_GROUP,
     'science': SCIENCE_EXAM_PAPERS_GROUP,
