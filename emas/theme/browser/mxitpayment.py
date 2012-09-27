@@ -100,7 +100,6 @@ class MxitPaymentRequest(grok.View):
 
         url = '%s/%s' %(self.navroot.absolute_url(), self.product.access_path)
         
-        import pdb;pdb.set_trace()
         # get all active services for this user
         service_uuids = practice_service_uuids(self.context)
         memberservices = member_services(self.context, service_uuids)
