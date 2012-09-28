@@ -7,6 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.uuid.interfaces import IUUID
+from plone.app.layout.viewlets.common import ViewletBase
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from webcouturier.dropdownmenu.browser import dropdown
 from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
@@ -96,3 +97,20 @@ class DropdownMenuViewlet(dropdown.DropdownMenuViewlet):
         navroot = portal_state_view.navigation_root()
         self.site_url = navroot.absolute_url()
 
+class MathJaxViewlet(ViewletBase):
+    """ Viewlet to render Mathjax configuration inline
+    """
+
+    def index(self): 
+        return """\
+<script type="text/x-mathjax-config">
+MathJax.Ajax.timeout = 60*1000;
+MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    extensions: ["tex2jax.js","mml2jax.js","MathZoom.js","MathMenu.js","toMathML.js","TeX/noErrors.js","TeX/noUndefined.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"]
+});
+</script>
+<script type="text/javascript" src="++resource++fullmarks.mathjax/mathjax/MathJax.js">
+</script>
+"""
