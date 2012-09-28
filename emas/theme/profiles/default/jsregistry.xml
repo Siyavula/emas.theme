@@ -163,5 +163,15 @@
                 id="++resource++collective.topictree/js/edittopictree.js"
                 inline="False"/>
 
+    <!-- disable MathJax registration, we load configure it inline in
+         emas.theme.browser.viewlets.MathJaxViewlet -->
+    <javascript cacheable="False"
+                compression="none"
+                cookable="False"
+                enabled="False"
+                expression=""
+                id="++resource++fullmarks.mathjax/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"
+                inline="False"/>
+
 
 </object>

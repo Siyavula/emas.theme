@@ -31,6 +31,13 @@
         layer="emas.theme.interfaces.IEmasThemeLayer"
         />
 
+    <browser:viewlet
+        name="emas.mathjax"
+        manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+        class=".viewlets.MathJaxViewlet"
+        permission="zope2.View"
+        />
+
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="site-home"
