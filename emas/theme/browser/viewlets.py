@@ -102,6 +102,10 @@ class MathJaxViewlet(ViewletBase):
     """
 
     def index(self): 
+        context = aq_inner(self.context)
+        portal_state_view = getMultiAdapter((context, self.request),
+                                             name='plone_portal_state')
+        navroot = portal_state_view.navigation_root()
         return """\
 <script type="text/x-mathjax-config">
 MathJax.Ajax.timeout = 60*1000;
@@ -109,6 +113,6 @@ MathJax.Hub.Config({
     config: ["TeX-AMS-MML_HTMLorMML.js"],
 });
 </script>
-<script type="text/javascript" src="++resource++fullmarks.mathjax/mathjax/MathJax.js">
+<script type="text/javascript" src="%s/++resource++fullmarks.mathjax/mathjax/MathJax.js">
 </script>
-"""
+""" % navroot.absolute_url()
