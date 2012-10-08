@@ -86,6 +86,13 @@ class IEmasSettings(Interface):
         required=False,
     )
 
+    bulksms_password = TextLine(
+        title=_(u'BulkSMS password'),
+        description=_(u'Used to authenticate the BulkSMS comms.'),
+        required=False,
+        default=u''
+    )
+
 class IEmasServiceCost(Interface):
     """
     """
