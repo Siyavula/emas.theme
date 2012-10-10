@@ -86,11 +86,32 @@ class IEmasSettings(Interface):
         required=False,
     )
 
-    bulksms_password = TextLine(
-        title=_(u'BulkSMS password'),
+    bulksms_send_username = TextLine(
+        title=_(u'BulkSMS username'),
         description=_(u'Used to authenticate the BulkSMS comms.'),
         required=False,
-        default=u''
+        default=u'upfronttest'
+    )
+
+    bulksms_send_password = TextLine(
+        title=_(u'BulkSMS send password'),
+        description=_(u'Used to authenticate when sending SMS.'),
+        required=False,
+        default=u'12345'
+    )
+
+    bulksms_send_url = TextLine(
+        title=_(u'BulkSMS sending destination URL'),
+        description=_(u'We send messages to this URL in order to send a SMS.'),
+        required=False,
+        default=u'http://bulksms.2way.co.za:5567/eapi/submission/send_sms/2/2.0'
+    )
+
+    bulksms_receive_password = TextLine(
+        title=_(u'BulkSMS receive password'),
+        description=_(u'Used to authenticate when receiving SMS.'),
+        required=False,
+        default=u'12345'
     )
 
 class IEmasServiceCost(Interface):
