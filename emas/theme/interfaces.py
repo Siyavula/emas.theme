@@ -86,6 +86,13 @@ class IEmasSettings(Interface):
         required=False,
     )
 
+    bulksms_premium_number = TextLine(
+        title=_(u'BulkSMS premium number'),
+        description=_(u'The user sends and SMS to this number in order to pay.'),
+        required=False,
+        default=u'08200722929001'
+    )
+
     bulksms_send_username = TextLine(
         title=_(u'BulkSMS username'),
         description=_(u'Used to authenticate the BulkSMS comms.'),
