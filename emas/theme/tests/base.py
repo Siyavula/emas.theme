@@ -16,23 +16,29 @@ class TestCase(PloneSandboxLayer):
         import plone.app.theming
         import plone.app.folder
         import rhaptos.xmlfile
+        import collective.topictree
+        import webcouturier.dropdownmenu
         import emas.transforms
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
         import upfront.shorturl
         import fullmarks.mathjax
         import siyavula.what
+        import emas.app
         import emas.theme
         self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=plone.resource)
         self.loadZCML(package=plone.app.theming)
         self.loadZCML(package=rhaptos.xmlfile)
+        self.loadZCML(package=collective.topictree)
+        self.loadZCML(package=webcouturier.dropdownmenu)
         self.loadZCML(package=emas.transforms)
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)
         self.loadZCML(package=upfront.shorturl)
         self.loadZCML(package=fullmarks.mathjax)
         self.loadZCML(package=siyavula.what)
+        self.loadZCML(package=emas.app)
         self.loadZCML(package=emas.theme)
         self.loadZCML('overrides.zcml', package=emas.theme)
 
