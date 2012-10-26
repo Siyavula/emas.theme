@@ -67,6 +67,11 @@
             css:theme="#portal-breadcrumbs"
             css:content="#portal-breadcrumbs" />
 
+        <!-- portal status message -->
+        <replace
+            css:theme="dl.portalMessage"
+            css:content="dl.portalMessage" />
+
         <!-- portlets -->
         <after
             css:theme="#topnav"

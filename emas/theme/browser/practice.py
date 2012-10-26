@@ -14,6 +14,7 @@ from plone.registry.interfaces import IRegistry
 
 from AccessControl import getSecurityManager
 from Products.CMFCore import permissions
+from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -21,6 +22,8 @@ from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services 
 
 from emas.theme.interfaces import IEmasSettings
+
+from emas.theme import MessageFactory as _
 
 log = logging.getLogger('emas.theme.browser.practice')
 
@@ -43,10 +46,13 @@ class Practice(BrowserView):
 
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
+        self.service_expired = False
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
         if portal_state.anonymous():
-            return self.request.RESPONSE.unauthorized()
+            self.add_message()
+            self.html = "Order intelligent practice now."
+            return self.index()
 
         member = portal_state.member()
         sm = getSecurityManager()
@@ -76,7 +82,6 @@ class Practice(BrowserView):
         startpos = path.find(self.__name__)
         # strip the view name from the path
         path = path[startpos+len(self.__name__):]
-        url = "%s%s" % (practiceserver, path)
 
         headers = {
             "Accept-Encoding": "identity",
@@ -130,8 +135,17 @@ class Practice(BrowserView):
                 redirto += '#%s' % urlparts.fragment
             return self.request.RESPONSE.redirect(redirto)
         else:
-            return self.request.RESPONSE.unauthorized()
+            self.html = "Order intelligent practice now."
+            self.add_message()
+            return self.index()
 
+    def add_message(self):
+        # set a portal message
+        self.service_expired = True
+        plone_utils = getToolByName(self.context, 'plone_utils')
+        message = _(u'You do not currently have access to this service.')
+        plone_utils.addPortalMessage(message)
+        return message
 
     def publishTraverse(self, request, name):
         """ consume the subpath """

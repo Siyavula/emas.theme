@@ -804,3 +804,6 @@ div.nivo-caption {
     line-height: 25pt;
 }
 
+dl.portalMessage dt {
+    background-color: red;
+}
