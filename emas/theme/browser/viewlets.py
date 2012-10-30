@@ -118,3 +118,14 @@ MathJax.Hub.Config({
 <script type="text/javascript" src="%s/++resource++fullmarks.mathjax/mathjax/MathJax.js">
 </script>
 """ % navroot.absolute_url()
+
+
+class PracticeServiceMessagesViewlet(ViewletBase):
+    
+    index = ViewPageTemplateFile('templates/practice_service_messages.pt')
+
+    def update(self):
+        self.is_visible = True
+    
+    def render(self):
+        return self.index()
