@@ -3,4 +3,9 @@
   <order manager="plone.belowcontent" skinname="*">
     <viewlet name="qaviewlet" insert-before="*"/>
   </order>
+
+  <order manager="plone.belowcontenttitle" skinname="*">
+    <viewlet name="emas.practice_service_messages" insert-after="*"/>
+  </order>
+
 </object>

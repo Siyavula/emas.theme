@@ -38,6 +38,13 @@
         permission="zope2.View"
         />
 
+    <browser:viewlet
+        name="emas.practice_service_messages"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+        class=".viewlets.PracticeServiceMessagesViewlet"
+        permission="zope2.View"
+        />
+
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="site-home"
