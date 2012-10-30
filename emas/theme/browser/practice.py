@@ -5,6 +5,7 @@ import lxml
 import logging
 from urllib import urlencode
 from urlparse import urlparse
+from datetime import datetime, timedelta
 
 from zope.interface import Interface, implements, alsoProvides
 from zope.publisher.interfaces import IPublishTraverse
@@ -46,42 +47,40 @@ class Practice(BrowserView):
 
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
-        self.service_expired = False
+        
+        self.memberservices = []
+        self.practice_services = []
+        self.accessto = ''
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
         if portal_state.anonymous():
-            self.add_message()
-            self.html = "Order intelligent practice now."
-            return self.index()
+            return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
         sm = getSecurityManager()
         # give managers access to everything
         if sm.checkPermission(permissions.ManagePortal, self.context):
-            accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
+            self.accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
                         'science-grade-10,science-grade-11,science-grade-12')
         elif member.getId():
-            service_uuids = practice_service_uuids(self.context)
-            memberservices = member_services(self.context, service_uuids)
-            services = [ms.related_service.to_object for ms in memberservices]
-            services = [service for service in services if '@@practice' in service.access_path]
-            accessto = ','.join(
-                ['%s-%s' %(s.subject, s.grade) for s in services]
-            )
+            self.memberservices, self.practice_services = \
+                self.get_services(self.context)
+            self.accessto = self.get_accessto(self.practice_services)
         else:
-            accessto = ''
-        memberid = member.getId() or 'Anonymous'
+            self.accessto = ''
 
-        log.info('X-Access-To for %s: %s' % (memberid, accessto))
+        memberid = member.getId()
+        log.info('X-Access-To for %s: %s' % (memberid, self.accessto))
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         urlparts = urlparse(settings.practiceurl)
         practiceserver = urlparts.netloc
         
-        path = self.request.get_header('PATH_INFO')
-        startpos = path.find(self.__name__)
-        # strip the view name from the path
-        path = path[startpos+len(self.__name__):]
+        path = self.request.get_header('PATH_INFO', '')
+        if path and len(path) > 0:
+            startpos = path.find(self.__name__)
+            # strip the view name from the path
+            path = path[startpos+len(self.__name__):]
 
         headers = {
             "Accept-Encoding": "identity",
@@ -89,7 +88,7 @@ class Practice(BrowserView):
             "Connection": "close",
             "Authorization": 'Basic ' + base64.b64encode(memberid),
             "Cookie": self.request.HTTP_COOKIE,
-            "X-Access-To": accessto,
+            "X-Access-To": self.accessto,
             "Referer": self.request.HTTP_REFERER,
         }
 
@@ -135,16 +134,54 @@ class Practice(BrowserView):
                 redirto += '#%s' % urlparts.fragment
             return self.request.RESPONSE.redirect(redirto)
         else:
-            self.html = "Order intelligent practice now."
-            self.add_message()
+            self.add_noaccess_message()
             return self.index()
+    
+    def add_first_login_message(self, member):
+        last_login_time = member.getProperty('last_login_time')
+        login_time = member.getProperty('login_time')
+        # if it last login and current login are within 2 seconds of eachother, 
+        # we consider this the 'first login'
+        if login_time.micros() - last_login_time.micros() < 2000000:
+            plone_utils = getToolByName(self.context, 'plone_utils')
+            message = _(u'Have a look at the practice services.')
+            plone_utils.addPortalMessage(message, 'info')
+        
+    def services_active(self):
+        return len(self.memberservices) > 0
 
-    def add_message(self):
+    def show_expirywarning(self):
+        now = datetime.now()
+        expiry_date = (now + timedelta(30)).date()
+        for s in self.memberservices:
+            if s.expiry_date <= expiry_date:
+                return True
+        return False
+
+    def get_services(self, context):
+        memberservices = []
+        services = []
+
+        service_uuids = practice_service_uuids(self.context)
+        tmpservices = member_services(self.context, service_uuids)
+        for ms in tmpservices:
+            service = ms.related_service.to_object
+            if '@@practice' in service.access_path:
+                memberservices.append(ms)
+                services.append(service)
+        return memberservices, services
+
+    def get_accessto(self, practice_services):
+        accessto = ','.join(
+            ['%s-%s' %(s.subject, s.grade) for s in practice_services]
+        )
+        return accessto
+
+    def add_noaccess_message(self):
         # set a portal message
-        self.service_expired = True
         plone_utils = getToolByName(self.context, 'plone_utils')
         message = _(u'You do not currently have access to this service.')
-        plone_utils.addPortalMessage(message)
+        plone_utils.addPortalMessage(message, 'info')
         return message
 
     def publishTraverse(self, request, name):

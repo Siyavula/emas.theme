@@ -11,11 +11,7 @@
 
         <div id="practice-content"></div>
 
-        <div tal:condition="view/service_expired">
-            <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-              Portal status message
-            </div>
-            
+        <div tal:condition="not:view/services_active">
             <div id="content-core">
                 <h3>You don't have access to Intelligent Practice right now</h3>
 
@@ -49,8 +45,13 @@
             </div>
         </div>
 
-        <div tal:condition="not:view/service_expired"
-            id="content-core" tal:content="structure view/html"></div>
+        <div tal:condition="view/services_active" id="content-core">
+            <div id="expiry-warning" tal:condition="view/show_expirywarning">
+                Your Intelligent Practice access expires in 30 days.
+            </div>
+
+            <span tal:content="structure view/html">Practice content</span>
+        </div>
 
     </metal:core>
 
