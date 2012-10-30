@@ -12,7 +12,6 @@ class FirstLogin(grok.View):
     grok.require('zope2.View')
 
     def practice_url(self):
-        import pdb;pdb.set_trace()
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         navroot = pps.navigation_root().absolute_url()
         return '%s/@@practice' % navroot
