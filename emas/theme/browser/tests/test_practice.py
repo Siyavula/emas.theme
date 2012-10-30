@@ -109,6 +109,32 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
             assert (IService.providedBy(service),
                 'The practice_service does not provide the correct interface.')
 
+    def test_get_services_with_empty_access_path(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        memberservices, services = view.get_services(self.portal)
+
+        self.assertEqual(len(memberservices), 6,
+                         'There should be 6 memberservices.')
+
+        self.assertEqual(len(services), 6,
+                         'There should be 6 practice services.')
+
+        self.clear_access_path()
+
+        memberservices, services = view.get_services(self.portal)
+
+        self.assertEqual(len(memberservices), 0,
+                         'There should be 0 memberservices.')
+
+        self.assertEqual(len(services), 0,
+                         'There should be 0 practice services.')
+
+
+    def clear_access_path(self):
+        memberservices = self.portal._getOb('memberservices')
+        for ms in memberservices.objectValues():
+            ms.related_service.to_object.access_path = u''
+
     def deactivate_services(self):
         memberservices = self.portal._getOb('memberservices')
         expired = date(1970, 01, 01)
