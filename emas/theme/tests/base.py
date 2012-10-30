@@ -3,6 +3,8 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import quickInstallProduct
 
+from Products.PloneTestCase import PloneTestCase as ptc
+
 from plone.testing import z2
 
 PROJECTNAME = "emas.theme"
@@ -51,3 +53,8 @@ class TestCase(PloneSandboxLayer):
 
 FIXTURE = TestCase()
 INTEGRATION_TESTING = IntegrationTesting(bases=(FIXTURE,), name="fixture:Integration")
+
+
+class BaseFunctionalTestCase(ptc.FunctionalTestCase):
+    """
+    """
