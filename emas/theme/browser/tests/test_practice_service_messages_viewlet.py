@@ -60,7 +60,6 @@ class TestPracticeServiceMessagesViewlet(BaseFunctionalTestCase):
         message = _(u'You do not currently have access to this service.')
         plone_utils.addPortalMessage(message, 'services-warning')
         
-        import pdb;pdb.set_trace()
         viewlet = self.get_viewlet()
         result = viewlet.index()
 
