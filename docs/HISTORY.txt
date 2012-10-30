@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.21 (unreleased)
+-----------------
+
+- Add viewlet to show practice service warnings.
+- Add first login info about Practice service.
+- Add practice service expiry warnings.
+
 1.20
 ----
 
