@@ -7,6 +7,7 @@ from urllib import urlencode
 from urlparse import urlparse
 from datetime import datetime, timedelta
 
+from ZPublisher import NotFound, BadRequest
 from zope.interface import Interface, implements, alsoProvides
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces.browser import IBrowserRequest
@@ -133,9 +134,16 @@ class Practice(BrowserView):
             if urlparts.fragment:
                 redirto += '#%s' % urlparts.fragment
             return self.request.RESPONSE.redirect(redirto)
-        else:
+        elif response.status == 400: # Bad request
+            raise BadRequest('The URL:%s is a bad request.' %path)
+        elif response.status == 403: # Forbidden
             self.add_noaccess_message()
             return self.index()
+        elif response.status == 404: # NotFound
+            raise NotFound('The URL:%s could not be found.' %path)
+        else:
+            log.warn('Upstream returned:%s for URL:%s. Status is not handled.' %
+                (response.status, path))
     
     def add_first_login_message(self, member):
         last_login_time = member.getProperty('last_login_time')
