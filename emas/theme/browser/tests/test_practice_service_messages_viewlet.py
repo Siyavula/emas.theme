@@ -12,7 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from emas.theme.interfaces import IEmasThemeLayer
 from emas.theme import MessageFactory as _
 
-from browserbase import BaseFunctionalTestCase
+from emas.theme.tests.base import BaseFunctionalTestCase
 
 dirname = os.path.dirname(__file__)
 
