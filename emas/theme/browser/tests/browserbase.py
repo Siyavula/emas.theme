@@ -63,7 +63,7 @@ def setup_product():
     zcml.load_config('configure.zcml', package=emas.app)
     zcml.load_config('overrides.zcml', package=emas.theme)
 
-    fiveconfigure.debug_mode = False
+    #fiveconfigure.debug_mode = False
     
     ztc.installPackage('emas.theme')
     

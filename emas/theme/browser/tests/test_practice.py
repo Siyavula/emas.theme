@@ -3,7 +3,7 @@ import transaction
 from datetime import date
 import unittest2 as unittest
 from DateTime import DateTime
-from browserbase import BaseFunctionalTestCase
+from emas.theme.tests.base import BaseFunctionalTestCase
 
 from zExceptions import Unauthorized
 from zope.component import queryUtility
@@ -13,15 +13,19 @@ from z3c.relationfield.relation import create_relation
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 from plone.dexterity.utils import createContentInContainer
+from plone.app.testing import TEST_USER_ID
 
 from emas.theme.interfaces import IEmasSettings
 from emas.app.member_service import IMemberService
 from emas.app.service import IService
 from emas.theme.browser.practice import IPractice, Practice
 
+NUM_SERVICES = 6
+
 class TestPracticeBrowserView(BaseFunctionalTestCase):
     
-    def afterSetUp(self):
+    def setUp(self):
+        super(TestPracticeBrowserView, self).setUp()
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         settings.practiceurl = u'http://localhost:37183'
         
@@ -98,8 +102,8 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.update_request(view)
         result = view()
 
-        self.assertEqual(len(view.memberservices), 6,
-                         'There should be 6 practice memberservices.')
+        self.assertEqual(len(view.memberservices), NUM_SERVICES,
+                         'There should be %s practice memberservices.')
 
         for ms in view.memberservices:
             assert (IMemberService.providedBy(ms),
@@ -113,11 +117,11 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         view = self.portal.restrictedTraverse('@@practice')
         memberservices, services = view.get_services(self.portal)
 
-        self.assertEqual(len(memberservices), 6,
-                         'There should be 6 memberservices.')
+        self.assertEqual(len(memberservices), NUM_SERVICES,
+                         'There should be %s memberservices.' % NUM_SERVICES)
 
-        self.assertEqual(len(services), 6,
-                         'There should be 6 practice services.')
+        self.assertEqual(len(services), NUM_SERVICES,
+                         'There should be %s practice services.' % NUM_SERVICES)
 
         self.clear_access_path()
 
@@ -129,6 +133,14 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.assertEqual(len(services), 0,
                          'There should be 0 practice services.')
 
+    def test_manager_user_access(self):
+        self.setRoles(('Manager',))
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        view()
+
+        self.assertEqual(len(view.accessto.split(',')), NUM_SERVICES,
+                         '"accesto" should be %s long.' % NUM_SERVICES)
 
     def clear_access_path(self):
         memberservices = self.portal._getOb('memberservices')
@@ -141,33 +153,6 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         for service in memberservices.objectValues():
             service.expiry_date = expired
             service.reindexObject(idxs=['expiry_date'])
-
-    def create_memberservices(self, userid, services):
-        self.logout()
-        self.loginAsPortalOwner()
-        
-        products_and_services = self.portal._getOb('products_and_services')
-        memberservices = self.portal._getOb('memberservices')
-        for service in services:
-            service = products_and_services._getOb(service)
-            mstitle = '%s for %s' % (service.title, userid)
-            related_service = create_relation(service.getPhysicalPath())
-
-            props = {'title': mstitle,
-                     'userid': userid,
-                     'related_service': related_service,
-                     'service_type': service.service_type
-                     }
-
-
-            ms = createContentInContainer(
-                memberservices,
-                'emas.app.memberservice',
-                False,
-                **props
-            )
-            
-            self.login()
 
     def update_request(self, view):
         cookie = ''

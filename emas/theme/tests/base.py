@@ -1,7 +1,10 @@
+import unittest2 as unittest
+
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import quickInstallProduct
+from plone.app.testing import logout, login, setRoles, TEST_USER_ID
 
 from Products.PloneTestCase import PloneTestCase as ptc
 
@@ -55,6 +58,22 @@ FIXTURE = TestCase()
 INTEGRATION_TESTING = IntegrationTesting(bases=(FIXTURE,), name="fixture:Integration")
 
 
-class BaseFunctionalTestCase(ptc.FunctionalTestCase):
+class BaseFunctionalTestCase(unittest.TestCase):
     """
     """
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        super(BaseFunctionalTestCase, self).setUp()
+        self.portal = self.layer['portal']
+
+    def login(self, userid=None):
+        userid = userid or TEST_USER_ID
+        login(userid)
+
+    def logout(self):
+        logout()
+
+    def setRoles(self, newroles, userid=None):
+        userid = userid or TEST_USER_ID
+        setRoles(self.portal, TEST_USER_ID, newroles)
