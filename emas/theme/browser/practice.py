@@ -105,7 +105,8 @@ class Practice(BrowserView):
                          headers=headers)
         else:
             return self.request.RESPONSE.unauthorized()
-
+        
+        self.html = ''
         # Handle response from Monassis server
         response = conn.getresponse()
         if response.status == 200:   # Ok
@@ -137,6 +138,7 @@ class Practice(BrowserView):
         elif response.status == 400: # Bad request
             raise BadRequest('The URL:%s is a bad request.' %path)
         elif response.status == 403: # Forbidden
+            log.info('User not allowed to access URL:%s.' % path)
             self.add_noaccess_message()
             return self.index()
         elif response.status == 404: # NotFound
