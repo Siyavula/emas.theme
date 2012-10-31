@@ -1,5 +1,7 @@
 <span tal:define="href view/practice_url">
     You have a free, 30-day trial subscription to intelligent practice. 
     Why not <a href="#" tal:attributes="href href">try it out right away</a>,
-    we know you'll like it.
+    we know you'll like it.<br/>
+    Your username and password will work on both Everything Science and
+    Everything Maths.
 </span>
