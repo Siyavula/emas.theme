@@ -138,7 +138,8 @@ class Practice(BrowserView):
         elif response.status == 400: # Bad request
             raise BadRequest('The URL:%s is a bad request.' %path)
         elif response.status == 403: # Forbidden
-            log.info('User not allowed to access URL:%s.' % path)
+            log.info('User:%s not allowed to access URL:%s.' % 
+                (memberid, path))
             self.add_noaccess_message()
             return self.index()
         elif response.status == 404: # NotFound
