@@ -1,10 +1,12 @@
 import unittest2 as unittest
 
+from Products.CMFCore.utils import getToolByName
+
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import quickInstallProduct
-from plone.app.testing import logout, login, setRoles, TEST_USER_ID
+from plone.app.testing import logout, login, setRoles
 
 from Products.PloneTestCase import PloneTestCase as ptc
 
@@ -57,6 +59,8 @@ class TestCase(PloneSandboxLayer):
 FIXTURE = TestCase()
 INTEGRATION_TESTING = IntegrationTesting(bases=(FIXTURE,), name="fixture:Integration")
 
+TEST_USER_ID = 'emastestuser'
+TEST_USER_PWD = '12345'
 
 class BaseFunctionalTestCase(unittest.TestCase):
     """
@@ -66,10 +70,13 @@ class BaseFunctionalTestCase(unittest.TestCase):
     def setUp(self):
         super(BaseFunctionalTestCase, self).setUp()
         self.portal = self.layer['portal']
+        acl_users = getToolByName(self.portal, 'acl_users')
+        acl_users.userFolderAddUser(TEST_USER_ID, TEST_USER_PWD, ['Member'], [])
+        self.login(TEST_USER_ID)
 
     def login(self, userid=None):
         userid = userid or TEST_USER_ID
-        login(userid)
+        login(self.portal, userid)
 
     def logout(self):
         logout()

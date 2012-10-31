@@ -13,7 +13,6 @@ from z3c.relationfield.relation import create_relation
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 from plone.dexterity.utils import createContentInContainer
-from plone.app.testing import TEST_USER_ID
 
 from emas.theme.interfaces import IEmasSettings
 from emas.app.member_service import IMemberService
