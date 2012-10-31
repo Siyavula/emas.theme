@@ -70,7 +70,7 @@
         <!-- portal status message -->
         <replace
             css:theme="dl.portalMessage"
-            css:content="dl.portalMessage" />
+            css:content="dl#practice-service-messages" />
 
         <!-- portlets -->
         <after

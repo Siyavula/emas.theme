@@ -40,7 +40,7 @@
 
     <browser:viewlet
         name="emas.practice_service_messages"
-        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
         class=".viewlets.PracticeServiceMessagesViewlet"
         permission="zope2.View"
         />

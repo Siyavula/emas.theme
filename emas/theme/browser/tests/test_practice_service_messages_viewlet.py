@@ -41,7 +41,7 @@ class TestPracticeServiceMessagesViewlet(BaseFunctionalTestCase):
         self.setRoles(['Reader',])
         self.context = self.portal.maths
         self.request = self.portal.REQUEST
-        self.manager_name = 'plone.belowcontenttitle'
+        self.manager_name = 'plone.abovecontent'
         self.themelayer = IEmasThemeLayer
         self.viewlet_name = 'emas.practice_service_messages'
 
@@ -64,7 +64,7 @@ class TestPracticeServiceMessagesViewlet(BaseFunctionalTestCase):
         result = viewlet.index()
 
         expected_result = \
-u"""\n\n    <dl class="portalMessage services-warning">\n        <dt>Services-warning</dt>\n        <dd>You do not currently have access to this service.</dd>\n    </dl>\n\n\n"""
+u"""\n\n    <dl id="practice-service-messages" class="portalMessage services-warning">\n        <dd>You do not currently have access to this service.</dd>\n    </dl>\n\n\n"""
         self.assertEqual(result, expected_result, 'Incorrect message returned.')
 
         doc = lxml.html.fromstring(result)

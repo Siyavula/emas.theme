@@ -807,3 +807,7 @@ div.nivo-caption {
 dl.portalMessage dt {
     background-color: red;
 }
+
+div#expiry-warning {
+    color: red;
+}
