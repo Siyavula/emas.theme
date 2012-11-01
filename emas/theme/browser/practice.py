@@ -58,9 +58,9 @@ class Practice(BrowserView):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
-        sm = getSecurityManager()
+        self.sm = getSecurityManager()
         # give managers access to everything
-        if sm.checkPermission(permissions.ManagePortal, self.context):
+        if self.sm.checkPermission(permissions.ManagePortal, self.context):
             self.accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
                         'science-grade-10,science-grade-11,science-grade-12')
         elif member.getId():
@@ -159,7 +159,14 @@ class Practice(BrowserView):
             plone_utils.addPortalMessage(message, 'info')
         
     def services_active(self):
-        return len(self.memberservices) > 0
+        """ If the user has the ManagePortal permission.
+            OR
+            If the user has any active services.
+            We want to display the practice service content.
+        """
+        ismanager = self.sm.checkPermission(
+            permissions.ManagePortal, self.context) or False
+        return ismanager or len(self.memberservices) > 0
 
     def show_expirywarning(self):
         now = datetime.now()

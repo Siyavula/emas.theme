@@ -134,12 +134,19 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
 
     def test_manager_user_access(self):
         self.setRoles(('Manager',))
+        self.deactivate_services()
         view = self.portal.restrictedTraverse('@@practice')
         self.update_request(view)
         view()
+        
+        self.assertEqual(len(view.memberservices), 0,
+                         'All member services should be expired.')
 
         self.assertEqual(len(view.accessto.split(',')), NUM_SERVICES,
                          '"accesto" should be %s long.' % NUM_SERVICES)
+        
+        self.assertEqual(view.services_active(), True,
+                         'Manager always has access.')
 
     def clear_access_path(self):
         memberservices = self.portal._getOb('memberservices')
