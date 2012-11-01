@@ -179,7 +179,6 @@ class Practice(BrowserView):
             TODO:
             Update the design in conjunction with the Siyavula team.
         """
-        self.memberservices.sort()
         days = 30
         now = datetime.now().date()
         for ms in self.memberservices:
