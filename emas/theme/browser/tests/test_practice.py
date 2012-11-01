@@ -1,6 +1,6 @@
 import lxml
 import transaction
-from datetime import date
+from datetime import datetime, date, timedelta
 import unittest2 as unittest
 from DateTime import DateTime
 from emas.theme.tests.base import BaseFunctionalTestCase
@@ -147,11 +147,34 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         
         self.assertEqual(view.services_active(), True,
                          'Manager always has access.')
+    
+    def test_days_to_expiry_date_calculation(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        view()
+        
+        # we start at 30 days, since that is the default trial period.
+        self.assertEqual(view.get_days_to_expiry_date(), 30,
+                         'The furthest expiry date should be 30 days away.')
+        
+        self.change_service_expiry_date(view, 10)
+        self.assertEqual(view.get_days_to_expiry_date(), 20,
+                         'The furthest expiry date should be 20 days away.')
+
+        self.change_service_expiry_date(view, 20)
+        self.assertEqual(view.get_days_to_expiry_date(), 0,
+                         'The furthest expiry date should be 0 days away.')
 
     def clear_access_path(self):
         memberservices = self.portal._getOb('memberservices')
         for ms in memberservices.objectValues():
             ms.related_service.to_object.access_path = u''
+
+    def change_service_expiry_date(self, view, days):
+        for service in view.memberservices:
+            newdate = service.expiry_date - timedelta(days)
+            service.expiry_date = newdate
+            service.reindexObject(idxs=['expiry_date'])
 
     def deactivate_services(self):
         memberservices = self.portal._getOb('memberservices')

@@ -167,7 +167,27 @@ class Practice(BrowserView):
         ismanager = self.sm.checkPermission(
             permissions.ManagePortal, self.context) or False
         return ismanager or len(self.memberservices) > 0
+    
+    def get_days_to_expiry_date(self):
+        """ Sort member services according to expiry date,
+            closest to expire first.
+            Then return the difference in days, beteen 'now'
+            and the member service expiry date.
+            This is naive, since the member services potentially all have
+            different expiry dates.
 
+            TODO:
+            Update the design in conjunction with the Siyavula team.
+        """
+        self.memberservices.sort()
+        days = 30
+        now = datetime.now().date()
+        for ms in self.memberservices:
+            delta = (ms.expiry_date - now).days
+            if delta < days:
+                days = delta
+        return days
+        
     def show_expirywarning(self):
         now = datetime.now()
         expiry_date = (now + timedelta(30)).date()
