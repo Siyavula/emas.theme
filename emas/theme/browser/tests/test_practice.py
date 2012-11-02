@@ -18,6 +18,7 @@ from emas.theme.interfaces import IEmasSettings
 from emas.app.member_service import IMemberService
 from emas.app.service import IService
 from emas.theme.browser.practice import IPractice, Practice
+from emas.theme.browser.practice import NUM_DAYS
 
 NUM_SERVICES = 6
 
@@ -94,7 +95,15 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.update_request(view)
         result = view()
         self.assertEqual(view.show_expirywarning(), True,
-                         'Trial service should all expire withing 30 days.')
+                         'Trial service should all expire withing NUM_DAYS days.')
+
+    def test_expiry_warning_for_manager(self):
+        self.setRoles(('Manager',))
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        result = view()
+        self.assertEqual(view.show_expirywarning(), False,
+                         "We don't show expiry warnings to manager users.")
 
     def test_get_services(self):
         view = self.portal.restrictedTraverse('@@practice')
@@ -131,11 +140,43 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
 
         self.assertEqual(len(services), 0,
                          'There should be 0 practice services.')
+    
+    def test_filtered_services_for_maths_grade10(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        view()
+
+        memberservices, services = view.get_services(self.portal)
+        filteredservices = view.filtered(memberservices, 'maths', 'grade-10')
+        
+        self.assertEqual(len(filteredservices), 1,
+                         'There can be onle one!')
+
+    def test_filtered_services_for_maths(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        view()
+
+        memberservices, services = view.get_services(self.portal)
+        filteredservices = view.filtered(memberservices, 'maths', None)
+        
+        self.assertEqual(len(filteredservices), 3,
+                         'We should find 3  member services for maths.')
+
+    def test_filtered_services_for_None_subject_None_grade(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        self.update_request(view)
+        view()
+
+        memberservices, services = view.get_services(self.portal)
+        filteredservices = view.filtered(memberservices, None, None)
+        self.assertEqual(len(filteredservices), 6,
+                         'We should find 6 member services.')
 
     def test_manager_user_access(self):
         self.setRoles(('Manager',))
         self.deactivate_services()
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.maths.restrictedTraverse('@@practice')
         self.update_request(view)
         view()
         
@@ -153,17 +194,19 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.update_request(view)
         view()
         
-        # we start at 30 days, since that is the default trial period.
-        self.assertEqual(view.get_days_to_expiry_date(), 30,
-                         'The furthest expiry date should be 30 days away.')
-        
-        self.change_service_expiry_date(view, 10)
-        self.assertEqual(view.get_days_to_expiry_date(), 20,
-                         'The furthest expiry date should be 20 days away.')
-
-        self.change_service_expiry_date(view, 20)
-        self.assertEqual(view.get_days_to_expiry_date(), 0,
-                         'The furthest expiry date should be 0 days away.')
+        numdays = NUM_DAYS
+        for offset in [0, 10, 10]:
+            numdays = numdays - offset
+            print 'Testing %s days.' % numdays
+            self.change_service_expiry_date(view, offset)
+            self.assertEqual(view.get_days_to_expiry_date(), numdays,
+                             'Expiry date should be %s days away.' % numdays)
+    
+    def test_subject_and_grade_computing_no_subject_no_grade(self):
+        view = self.portal.restrictedTraverse('@@practice')
+        view()
+        self.assertEqual(view.get_days_to_expiry_date(), NUM_DAYS,
+                         'Expiry date should be %s days away.' % NUM_DAYS)
 
     def clear_access_path(self):
         memberservices = self.portal._getOb('memberservices')
@@ -189,7 +232,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         host = 'localhost:8080'
         serverurl = 'http://%s' % host
         referer = '%s%s' % (serverurl, path)
-        props = {'method':             'GET',
+        props = {'REQUEST_METHOD':    'GET',
                  'PATH_INFO':          path,
                  'HTTP_HOST':          host,
                  'HTTP_COOKIE':        cookie,
@@ -197,10 +240,8 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                  'SERVER_URL':         serverurl,
                  'CONTENT_LENGTH':     '0',
                  'GATEWAY_INTERFACE':  'TestFooInterface/1.0',}
-
-        for k, v in props.items():
-            setattr(view.request, k, v)
         
+        view.request.environ.update(props)
         return view.request
 
 

@@ -13,6 +13,7 @@ from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.component import queryUtility
 from plone.registry.interfaces import IRegistry
+from plone.uuid.interfaces import IUUID
 
 from AccessControl import getSecurityManager
 from Products.CMFCore import permissions
@@ -21,13 +22,16 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services 
+from emas.app.browser.utils import member_services
+from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
 
 from emas.theme.interfaces import IEmasSettings
 
 from emas.theme import MessageFactory as _
 
 log = logging.getLogger('emas.theme.browser.practice')
+
+NUM_DAYS = 30
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -58,9 +62,11 @@ class Practice(BrowserView):
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
-        self.sm = getSecurityManager()
+        sm = getSecurityManager()
+        self.ismanager = sm.checkPermission(
+            permissions.ManagePortal, self.context) or False
         # give managers access to everything
-        if self.sm.checkPermission(permissions.ManagePortal, self.context):
+        if self.ismanager:
             self.accessto = ('maths-grade-10,maths-grade-11,maths-grade-12,'
                         'science-grade-10,science-grade-11,science-grade-12')
         elif member.getId():
@@ -164,9 +170,7 @@ class Practice(BrowserView):
             If the user has any active services.
             We want to display the practice service content.
         """
-        ismanager = self.sm.checkPermission(
-            permissions.ManagePortal, self.context) or False
-        return ismanager or len(self.memberservices) > 0
+        return self.ismanager or len(self.memberservices) > 0
     
     def get_days_to_expiry_date(self):
         """ Sort member services according to expiry date,
@@ -179,17 +183,45 @@ class Practice(BrowserView):
             TODO:
             Update the design in conjunction with the Siyavula team.
         """
-        days = 30
+        path = self.request.get_header('PATH_INFO', '')
+        subject = get_subject_from_path(path)
+        grade = get_grade_from_path(path)
+
+        days = NUM_DAYS
         now = datetime.now().date()
-        for ms in self.memberservices:
+
+        for ms in self.filtered(self.memberservices, subject, grade):
             delta = (ms.expiry_date - now).days
             if delta < days:
                 days = delta
         return days
+
+    def filtered(self, memberservices, subject, grade):
+        # Short circuit the filtering here. If we don't have a subject, we
+        # cannot filter properly.
+        if  subject == None:
+            return memberservices
+
+        filteredms = []
+        for ms in memberservices:
+            service = ms.related_service.to_object
+            if service.subject == subject:
+                # if we don't have a grade, we want to return this memberservice
+                if not grade:
+                    filteredms.append(ms)
+                # if we have a grade, check it
+                elif service.grade == grade:
+                    filteredms.append(ms)
+                
+        return filteredms 
         
     def show_expirywarning(self):
+        # We don't show expiry warnings to manager users.
+        if self.ismanager:
+            return False
+
         now = datetime.now()
-        expiry_date = (now + timedelta(30)).date()
+        expiry_date = (now + timedelta(NUM_DAYS)).date()
         for s in self.memberservices:
             if s.expiry_date <= expiry_date:
                 return True
