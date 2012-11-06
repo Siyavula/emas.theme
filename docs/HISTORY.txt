@@ -1,6 +1,19 @@
 Changelog
 =========
 
+1.22
+----
+
+Reworked to include subject and grade in the filtering of
+memberservices, but ONLY where the calculation of expiry date warning
+messages are concerned.
+
+Show the calculated days-to-expiry.
+
+Restore access for users with ManagePortal permission.
+
+Add more logging to practice proxy.
+
 1.21
 ----
 
