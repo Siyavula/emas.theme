@@ -22,8 +22,8 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
+from emas.app.browser.utils import member_services 
 
 from emas.theme.interfaces import IEmasSettings
 
@@ -51,6 +51,10 @@ class Practice(BrowserView):
     index = ViewPageTemplateFile('templates/practice.pt')
 
     def __call__(self, *args, **kw):
+        self.isRegistered = False
+        self.accessto = ''
+        self.memberservices = []
+
         alsoProvides(self.request, IPracticeLayer)
         
         self.memberservices = []
@@ -78,6 +82,25 @@ class Practice(BrowserView):
 
         memberid = member.getId()
         log.info('X-Access-To for %s: %s' % (memberid, self.accessto))
+
+        if memberid:
+            service_uuids = practice_service_uuids(self.context)
+            self.memberservices = member_services(self.context, service_uuids)
+            services = \
+                [ms.related_service.to_object for ms in self.memberservices]
+            self.accessto = ','.join(
+                ['%s-%s' %(s.subject, s.grade) for s in services]
+            )
+
+        if self.accessto:
+            self.isRegistered = True
+        else:
+            # the user does not have access to the practice service.
+            # and is 'anonymous'; raise unauth so they are challenged to login.
+            if memberid == 'Anonymous':
+                return self.request.RESPONSE.unauthorized()
+            # show the template with the purchase links.
+            return self.index()
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
         urlparts = urlparse(settings.practiceurl)

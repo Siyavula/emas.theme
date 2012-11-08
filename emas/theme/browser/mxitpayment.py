@@ -22,6 +22,16 @@ from pas.plugins.mxit.plugin import USER_ID_TOKEN
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services 
 
+EXAM_PAPERS_URL = "past-exam-papers"
+
+MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
+SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
+INTELLIGENT_PRACTICE_GROUP = ""
+
+SUBJECT_MAP = {
+    'maths': MATHS_EXAM_PAPERS_GROUP,
+    'science': SCIENCE_EXAM_PAPERS_GROUP,
+}
 
 MXIT_MESSAGES = {
     '0':
@@ -71,6 +81,7 @@ class MxitPaymentRequest(grok.View):
         self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
+        memberid = member_id(self.request.get(USER_ID_TOKEN))
 
         registry = queryUtility(IRegistry)
         self.emas_settings = registry.forInterface(IEmasSettings)
@@ -86,6 +97,37 @@ class MxitPaymentRequest(grok.View):
             self.context.absolute_url(),
             self.product_id
         )
+        
+        # create and order for this member : product combination
+        products_and_services = pps.products_and_services
+        product = products_and_services._getOb(self.product_id)
+        if product:
+            portal = pps.portal()
+            member_orders = portal['orders']
+
+            registry = queryUtility(IRegistry)
+            settings = registry.forInterface(IEmasSettings)
+            ordernumber = settings.order_sequence_number + 1
+            settings.order_sequence_number = ordernumber
+
+            ordernumber = '%04d' % ordernumber
+            member_orders.invokeFactory(
+                type_name='emas.app.order',
+                id=ordernumber,
+                title=ordernumber,
+                userid=memberid
+            )
+            order = member_orders._getOb(ordernumber)
+                
+            relation = create_relation(product.getPhysicalPath())
+            item_id = self.order.generateUniqueId(type_name='orderitem')
+            self.order.invokeFactory(
+                type_name='emas.app.orderitem',
+                id=item_id,
+                title=item_id,
+                related_item=relation,
+                quantity=1,
+            )
 
         self.cost_settings = registry.forInterface(IEmasServiceCost)
         self.vendor_id = self.cost_settings.MXitVendorId
@@ -94,7 +136,6 @@ class MxitPaymentRequest(grok.View):
         self.currency_amount = self.product.price
 
         # check if the current mxit member belongs to the ExamPapers group
-        memberid = member_id(self.request.get(USER_ID_TOKEN))
         if not memberid:
             return self.render()
 
@@ -159,8 +200,8 @@ class MxitPaymentResponse(grok.View):
         # Transaction completed successfully.
         if self.response_code == '0':
             memberid = member_id(request.get(USER_ID_TOKEN))
-            self.service_id = request['productId']
-            self.service = self.products_and_services._getOb(self.service_id)
+            self.productid = request['productId']
+            self.service = self.products_and_services._getOb(self.productid)
             password = password_hash(context, memberid)
 
             pmt = getToolByName(context, 'portal_membership')
@@ -179,6 +220,15 @@ class MxitPaymentResponse(grok.View):
                 # now add the member to the correct group
                 gt = getToolByName(context, 'portal_groups')
                 gt.addPrincipalToGroup(member.getId(), access_group)
+                member = pmt.addMember(memberid, password, 'Member', '')
+                member = pmt.getMemberById(memberid)
+            
+            # find the order and transition it to 'paid'
+            
+            # now add the member to the correct group
+            gt = getToolByName(context, 'portal_groups')
+            # at this stage group and productid are the same
+            gt.addPrincipalToGroup(member.getId(), self.productid)
 
     def get_url(self):
         return '%s/%s' %(self.navroot.absolute_url(), self.service.access_path)
