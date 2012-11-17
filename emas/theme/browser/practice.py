@@ -58,7 +58,9 @@ class Practice(BrowserView):
         self.accessto = ''
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        if portal_state.anonymous():
+        path = self.request.get_header('PATH_INFO')
+        is_static = '@@practice/static' in path
+        if portal_state.anonymous() and not is_static:
             return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
@@ -76,7 +78,10 @@ class Practice(BrowserView):
         else:
             self.accessto = ''
 
-        memberid = member.getId()
+        if portal_state.anonymous():
+            memberid = 'Anonymous'
+        else:
+            memberid = member.getId()
         log.info('X-Access-To for %s: %s' % (memberid, self.accessto))
 
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
