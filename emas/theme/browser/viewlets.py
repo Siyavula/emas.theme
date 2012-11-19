@@ -83,11 +83,15 @@ class DropdownMenuViewlet(dropdown.DropdownMenuViewlet):
 
     _theme_template = ViewPageTemplateFile('templates/dropdown.pt')
 
+    _default_template = ViewPageTemplateFile('templates/dropdown_sections.pt')
+
     def index(self):
         if self.request.get('HTTP_X_THEME_ENABLED') == True:
             return self._theme_template()
         else:
-            return self._template()
+            # this template effectively disables dropdown in Plone's
+            # default theme
+            return self._default_template()
 
     def update(self):
         super(DropdownMenuViewlet, self).update()
