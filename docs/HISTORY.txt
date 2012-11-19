@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.23
+----
+
+Allow anonymous requests for static resources on the practice service
+
+Disable dropdown menu in Plone's default template
+
 1.22
 ----
 
