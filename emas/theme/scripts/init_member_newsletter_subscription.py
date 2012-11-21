@@ -3,6 +3,7 @@
 """
 import sys
 import transaction
+from types import ListType
 
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
@@ -29,12 +30,34 @@ app = makerequest.makerequest(app)
 user = app.acl_users.getUser('admin')
 newSecurityManager(None, user.__of__(app.acl_users))
 
-import pdb;pdb.set_trace()
 newsletters = portal._getOb('newsletters')
 newsletter = newsletters._getOb('everything_news')
-receivers = set(newsletter.ploneReceiverMembers)
-memberids = set(portal.portal_membership.listMemberIds())
-new_receivers = receivers.union(memberids)
-newsletter.ploneReceiverMembers = new_receivers
+receivers = ListType(newsletter.ploneReceiverMembers)
+skipped = []
+
+count = 0
+prop_name = 'subscribe_to_newsletter'
+for member in portal.portal_membership.listMembers():
+    count += 1
+
+    memberid = member.getId()
+    print "Initialising newsletter subscription for %s" % memberid
+
+    if memberid in receivers:
+        print 'Skipping:%s (already in subscribed).' % memberid
+    else:
+        propsheet = member.getPropertysheet('mutable_properties')
+        propsheet.setProperty(member, prop_name, True)
+        if memberid not in receivers:
+            receivers.append(memberid)
+        else:
+            skipped.append(memberid)
+
+    if count % 100 == 0:
+        print '************************************************************'
+        print 'Committing transaction.'
+        transaction.commit()
+
+newsletter.ploneReceiverMembers = receivers
 
 transaction.commit()
