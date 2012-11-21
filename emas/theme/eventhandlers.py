@@ -28,15 +28,14 @@ def subscribe_to_newsletters(obj, event):
         return
 
     if obj.getProperty('subscribe_to_newsletter', False):
-        portal.REQUEST['subscriber'] = obj.getProperty('email')
-        portal.REQUEST['fullname'] = obj.getProperty('fullname')
-        portal.REQUEST['salutation'] = obj.getProperty('salutation', '')
-        portal.REQUEST['organisation'] = obj.getProperty('school')
-        nl_path = '/'.join(newsletters._getOb(name).getPhysicalPath())
-        portal.REQUEST['newsletter'] = nl_path
-
-        view = portal.restrictedTraverse('@@register-subscriber')
-        view()
+        newsletter = newsletters._getOb('everything-news')
+        receivers = newsletter.ploneReceiverMembers
+        memberid = obj.getId()
+        if memberid in receivers:
+            LOGGER.debug('Member:%s is already in newsletter.' % memberid)
+        else:
+            receivers.append(memberid)
+            newsletter.ploneReceiverMembers = receivers
 
 def onMemberPropsUpdated(obj, event):
     subscribe_to_newsletters(obj, event)
