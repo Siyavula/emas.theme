@@ -1,0 +1,135 @@
+""" Run this zctl script to initialise the newsletter subscription for
+    current members.
+"""
+import re
+import os
+import sys
+import datetime
+import transaction
+
+from Testing import makerequest
+from email.MIMEText import MIMEText
+from AccessControl.SecurityManagement import newSecurityManager
+
+from zope.component import queryUtility
+from zope.app.component.hooks import setSite
+
+from Products.CMFCore.utils import getToolByName
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+
+from Products.EasyNewsletter.interfaces import IENLRegistrationTool
+from Products.EasyNewsletter.browser.registration import RegistrationData 
+
+
+def _requestReset(userid):
+    pwrtool = getToolByName(portal, 'portal_password_reset')
+    randomstring = pwrtool.uniqueString(userid)
+    expiry = pwrtool.expirationDate()
+    pwrtool._requests[randomstring] = (userid, expiry)
+    pwrtool.clearExpired(10)   # clear out untouched records more than 10 days old
+                            # this is a cheap sort of "automatic" clearing
+    pwrtool._p_changed = 1
+    retval = {}
+    retval['randomstring'] = randomstring
+    retval['expires'] = expiry
+    retval['userid'] = userid
+    return retval
+
+
+def register_subscriber(
+    portal, subscriber, fullname, salutation, organization, newsletter):
+
+    if not subscriber:
+        print '    Not valid subscriber:%s' % subscriber
+        print '    ... skipping.'
+        return
+
+    nl_path = '/'.join(newsletter.getPhysicalPath())
+    nl_path = nl_path.strip('/')
+
+    from Products.validation.validators.BaseValidators import EMAIL_RE
+    EMAIL_RE = "^" + EMAIL_RE
+    mo = re.search(EMAIL_RE, subscriber)
+    if not mo:
+        print '    Invalid email address'
+        print '    ... skipping.'
+        return
+
+    norm = queryUtility(IIDNormalizer)
+    normalized_subscriber = norm.normalize(subscriber)
+    if normalized_subscriber in newsletter.objectIds():
+        print '    Already subscriber.'
+        print '    ... skipping.'
+        return
+
+    subscriber_data = {}
+    subscriber_data["subscriber"] = subscriber
+    subscriber_data["fullname"] = fullname
+    subscriber_data["salutation"] = salutation
+    subscriber_data["organization"] = organization
+    subscriber_data["path_to_easynewsletter"] = nl_path
+
+    # use password reset tool to create a hash
+    pwr_data = _requestReset(subscriber)
+    hashkey = pwr_data['randomstring']
+    enl_registration_tool = queryUtility(IENLRegistrationTool, 'enl_registration_tool')
+    if hashkey not in enl_registration_tool.objectIds():
+        enl_registration_tool[hashkey] = RegistrationData(hashkey, **subscriber_data)
+        msg_subject = newsletter.getRawSubscriber_confirmation_mail_subject().replace(
+            "${portal_url}", portal.absolute_url().strip('http://'))
+        confirmation_url = portal.absolute_url() + '/confirm-subscriber?hkey=' + str(hashkey)
+        msg_text = newsletter.getRawSubscriber_confirmation_mail_text().replace(
+            "${newsletter_title}", newsletter.Title())
+        msg_text = msg_text.replace("${subscriber_email}", subscriber)
+        msg_text = msg_text.replace("${confirmation_url}", confirmation_url)
+        msg_sender = portal.getProperty('email_from_address')
+        msg_receiver = subscriber
+        msg = MIMEText(msg_text)
+        msg['To']= msg_receiver
+        msg['From'] = msg_sender
+        msg['Subject'] = msg_subject
+        portal.MailHost.send(msg.as_string())
+
+try:
+    portal_id = sys.argv[1]
+except IndexError:
+    portal_id = 'Plone' 
+
+if not app.hasObject(portal_id):
+    print "Please specify the id of your plone site as the first argument "
+    print "to this script."
+    print "Usage: <instancehome>/bin/instance run %s <id>" % sys.argv[0]
+    sys.exit(1)
+
+portal = app[portal_id]
+setSite(portal)
+
+# we assume there is an admin user
+app = makerequest.makerequest(app)
+user = app.acl_users.getUser('admin')
+newSecurityManager(None, user.__of__(app.acl_users))
+
+count = 0
+newsletters = portal._getOb('newsletters')
+for member in portal.portal_membership.listMembers():
+    count += 1
+
+    print "Initialising newsletter subscription for %s" % member.getId()
+    propsheet = member.getPropertysheet('mutable_properties')
+    propsheet.setProperty(member, 'subscribe_to_newsletter', 'True')
+
+    subscriber = member.getProperty('email')
+    fullname = member.getProperty('fullname')
+    salutation = member.getProperty('salutation', '')
+    organization = member.getProperty('school')
+    newsletter = newsletters._getOb('everything_news')
+    
+    register_subscriber(
+        portal, subscriber, fullname, salutation, organization, newsletter)
+
+    if count % 100 == 0:
+        print '************************************************************'
+        print 'Committing transaction.'
+        transaction.commit()
+
+transaction.commit()
