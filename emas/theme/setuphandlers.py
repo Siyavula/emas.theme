@@ -3,6 +3,8 @@ from StringIO import StringIO
 
 from zope.interface import directlyProvides, directlyProvidedBy
 
+from Products.ATContentTypes.permission import ModifyConstrainTypes
+from Products.ATContentTypes.permission import ModifyViewTemplate
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from Products.CMFCore.utils import getToolByName
@@ -86,7 +88,41 @@ def setupPortalContent(portal):
         transactions.manage_permission(ModifyPortalContent, roles=[], acquire=0)
         transactions.manage_permission(AddPortalContent, roles=[], acquire=0)
         transactions.manage_permission(DeleteObjects, roles=[], acquire=0)
+    
+    # all extra folders we require
+    folders = [
+        {'id': 'newsletters',
+        'type': 'Folder',
+        'title': 'Everything News',
+        'allowed_types': ['EasyNewsletter',],
+        'exclude_from_nav':True,
+        'workflowid': 'simple_publication_workflow',
+        'publish': True,
+        },
+    ]
 
+    for folder_dict in folders:
+        if not portal.hasObject(folder_dict['id']):
+            portal.invokeFactory(type_name=folder_dict['type'],
+                id=folder_dict['id'],
+                title=folder_dict['title'],
+                exclude_from_nav=folder_dict.get('exclude_from_nav', False),
+            ) 
+
+        folder = portal._getOb(folder_dict['id'])
+
+        # Nobody is allowed to modify the constraints or tweak the
+        # display here
+        folder.manage_permission(ModifyConstrainTypes, roles=[])
+        folder.manage_permission(ModifyViewTemplate, roles=[])
+        
+        if folder_dict.get('publish', False):
+            wf = getToolByName(portal, 'portal_workflow')
+            wfid = folder_dict['workflowid']
+            status = wf.getStatusOf(wfid, folder)
+            if status and status['review_state'] != 'published':
+                wf.doActionFor(folder, 'publish')
+                folder.reindexObject()
 
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
