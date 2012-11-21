@@ -79,5 +79,5 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
     def set_subscribe_to_newsletter(self, value):
         return self.context.setMemberProperties(
             {'subscribe_to_newsletter': value})
-    subscribe_to_maths_newsletter = property(
+    subscribe_to_newsletter = property(
         get_subscribe_to_newsletter, set_subscribe_to_newsletter)
