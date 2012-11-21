@@ -24,10 +24,7 @@
     <property name="trialuser" type="boolean">
         True
     </property>
-    <property name="subscribe_to_maths_newsletter" type="boolean">
-        True
-    </property>
-    <property name="subscribe_to_science_newsletter" type="boolean">
+    <property name="subscribe_to_newsletter" type="boolean">
         True
     </property>
 </object>

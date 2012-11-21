@@ -74,18 +74,10 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self.context.setMemberProperties({'trialuser': value})
     trialuser = property(get_trialuser, set_trialuser)
 
-    def get_subscribe_to_maths_newsletter(self):
-        return self.context.getProperty('subscribe_to_maths_newsletter', False)
-    def set_subscribe_to_maths_newsletter(self, value):
+    def get_subscribe_to_newsletter(self):
+        return self.context.getProperty('subscribe_to_newsletter', False)
+    def set_subscribe_to_newsletter(self, value):
         return self.context.setMemberProperties(
-            {'subscribe_to_maths_newsletter': value})
+            {'subscribe_to_newsletter': value})
     subscribe_to_maths_newsletter = property(
-        get_subscribe_to_maths_newsletter, set_subscribe_to_maths_newsletter)
-
-    def get_subscribe_to_science_newsletter(self):
-        return self.context.getProperty('subscribe_to_science_newsletter', False)
-    def set_subscribe_to_science_newsletter(self, value):
-        return self.context.setMemberProperties(
-            {'subscribe_to_science_newsletter': value})
-    subscribe_to_science_newsletter = property(
-        get_subscribe_to_science_newsletter, set_subscribe_to_science_newsletter)
+        get_subscribe_to_newsletter, set_subscribe_to_newsletter)

@@ -86,19 +86,6 @@ class IEmasSettings(Interface):
         required=False,
     )
 
-    maths_newsletter = TextLine(
-        title=_(u'Everything Maths Newsletter.'),
-        description=_(u'A newsletter for all interested in maths topics.'),
-        required=False,
-        default=_(u'EverythingNews')
-    )
-
-    science_newsletter = TextLine(
-        title=_(u'Everything Science Newsletter.'),
-        description=_(u'A newsletter for all interested in science topics.'),
-        required=False,
-        default=_(u'EverythingNews')
-    )
 
 class IEmasServiceCost(Interface):
     """

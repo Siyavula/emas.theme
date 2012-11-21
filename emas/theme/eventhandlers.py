@@ -27,18 +27,16 @@ def subscribe_to_newsletters(obj, event):
         LOGGER.warn('No newsletters configured')
         return
 
-    for name in newsletter_names:
-        # subscribe the user to each one that he accepted during registration
-        if obj.getProperty('%s%s' % (subscribe_prefix, name), False):
-            portal.REQUEST['subscriber'] = obj.getProperty('email')
-            portal.REQUEST['fullname'] = obj.getProperty('fullname')
-            portal.REQUEST['salutation'] = obj.getProperty('salutation', '')
-            portal.REQUEST['organisation'] = obj.getProperty('school')
-            nl_path = '/'.join(newsletters._getOb(name).getPhysicalPath())
-            portal.REQUEST['newsletter'] = nl_path
+    if obj.getProperty('subscribe_to_newsletter', False):
+        portal.REQUEST['subscriber'] = obj.getProperty('email')
+        portal.REQUEST['fullname'] = obj.getProperty('fullname')
+        portal.REQUEST['salutation'] = obj.getProperty('salutation', '')
+        portal.REQUEST['organisation'] = obj.getProperty('school')
+        nl_path = '/'.join(newsletters._getOb(name).getPhysicalPath())
+        portal.REQUEST['newsletter'] = nl_path
 
-            view = portal.restrictedTraverse('@@register-subscriber')
-            view()
+        view = portal.restrictedTraverse('@@register-subscriber')
+        view()
 
 def onMemberPropsUpdated(obj, event):
     subscribe_to_newsletters(obj, event)

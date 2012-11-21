@@ -104,16 +104,9 @@ class IEmasUserDataSchema(IUserDataSchema):
         required=False,
     )
     
-    subscribe_to_maths_newsletter = Bool(
-        title=_(u'label_subscribe_to_maths_newsletter',
-                default=u'Subscibe to Maths Newsletter.'),
-        required=False,
-        default=True,
-    )
-
-    subscribe_to_science_newsletter = Bool(
-        title=_(u'label_subscribe_to_science_newsletter',
-                default=u'Subscibe to Science Newsletter.'),
+    subscribe_to_newsletter = Bool(
+        title=_(u'label_subscribe_to_newsletter',
+                default=u'Subscibe to newsletter.'),
         required=False,
         default=True,
     )
