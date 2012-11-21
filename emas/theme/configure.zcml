@@ -53,4 +53,10 @@
         handler=".eventhandlers.onUserInitialLogin"
         />
 
+    <subscriber
+        for="Products.PluggableAuthService.interfaces.authservice.IPropertiedUser
+            Products.PluggableAuthService.interfaces.events.IPropertiesUpdatedEvent"
+        handler=".eventhandlers.onMemberPropsUpdated"
+        />
+
 </configure>
