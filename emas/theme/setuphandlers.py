@@ -89,8 +89,8 @@ def setupPortalContent(portal):
         transactions.manage_permission(AddPortalContent, roles=[], acquire=0)
         transactions.manage_permission(DeleteObjects, roles=[], acquire=0)
     
-    # all extra folders we require
-    folders = [
+    # all extra items we require
+    items = [
         {'id': 'newsletters',
         'type': 'Folder',
         'title': 'Everything News',
@@ -98,31 +98,47 @@ def setupPortalContent(portal):
         'exclude_from_nav':True,
         'workflowid': 'simple_publication_workflow',
         'publish': True,
+        'sub_items': [{'id': 'everything-news',
+                        'type': 'EasyNewsletter',
+                        'title': 'Everything Newsletter',
+                        'exclude_from_nav':True,
+                      },
+                     ]
         },
     ]
 
-    for folder_dict in folders:
-        if not portal.hasObject(folder_dict['id']):
-            portal.invokeFactory(type_name=folder_dict['type'],
-                id=folder_dict['id'],
-                title=folder_dict['title'],
-                exclude_from_nav=folder_dict.get('exclude_from_nav', False),
+    for prop_dict in items:
+        if not portal.hasObject(prop_dict['id']):
+            portal.invokeFactory(type_name=prop_dict['type'],
+                id=prop_dict['id'],
+                title=prop_dict['title'],
+                exclude_from_nav=prop_dict.get('exclude_from_nav', False),
             ) 
 
-        folder = portal._getOb(folder_dict['id'])
+        folder = portal._getOb(prop_dict['id'])
 
         # Nobody is allowed to modify the constraints or tweak the
         # display here
         folder.manage_permission(ModifyConstrainTypes, roles=[])
         folder.manage_permission(ModifyViewTemplate, roles=[])
         
-        if folder_dict.get('publish', False):
+        if prop_dict.get('publish', False):
             wf = getToolByName(portal, 'portal_workflow')
-            wfid = folder_dict['workflowid']
+            wfid = prop_dict['workflowid']
             status = wf.getStatusOf(wfid, folder)
             if status and status['review_state'] != 'published':
                 wf.doActionFor(folder, 'publish')
                 folder.reindexObject()
+       
+        # create required sub-items
+        for subitem_props in prop_dict['sub_items']:
+            if not folder.hasObject(subitem_props['id']):
+                folder.invokeFactory(type_name=subitem_props['type'],
+                    id=subitem_props['id'],
+                    title=subitem_props['title'],
+                    exclude_from_nav=subitem_props.get('exclude_from_nav', False),
+                ) 
+    
 
 def install(context):
     if context.readDataFile('emas.theme-marker.txt') is None:
