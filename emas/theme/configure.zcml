@@ -54,9 +54,15 @@
         />
 
     <subscriber
-        for="Products.PluggableAuthService.interfaces.authservice.IPropertiedUser
-            Products.PluggableAuthService.interfaces.events.IPropertiesUpdatedEvent"
+        for="Products.CMFCore.interfaces.IMemberData
+            Products.Archetypes.interfaces.IObjectEditedEvent"
         handler=".eventhandlers.onMemberPropsUpdated"
+        />
+
+    <subscriber
+        for="Products.EasyNewsletter.interfaces.IEasyNewsletter
+            Products.Archetypes.interfaces.IObjectEditedEvent"
+        handler=".eventhandlers.onNewsLetterEdited"
         />
 
 </configure>
