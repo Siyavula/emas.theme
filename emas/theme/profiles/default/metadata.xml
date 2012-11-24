@@ -14,6 +14,7 @@
         <dependency>profile-emas.transforms:default</dependency>
         <dependency>profile-collective.topictree:default</dependency>
         <dependency>profile-webcouturier.dropdownmenu:default</dependency>
+        <dependency>profile-Products.EasyNewsletter:default</dependency>
         <dependency>profile-emas.app:default</dependency>
     </dependencies>
 </metadata>
