@@ -2,12 +2,15 @@ import os
 import lxml
 from DateTime import DateTime
 
+import zope.event
 from Products.CMFCore.utils import getToolByName
+from Products.PluggableAuthService.events import PropertiesUpdated 
 
 from base import BaseFunctionalTestCase
 from emas.theme.browser.tests.test_practice_service_messages_viewlet import \
     find_viewlet
 from emas.theme.interfaces import IEmasThemeLayer
+from emas.theme.eventhandlers import *
 
 dirname = os.path.dirname(__file__)
 
@@ -48,3 +51,22 @@ class TestEventhandlers(BaseFunctionalTestCase):
         elements = doc.xpath('//a[contains(.,"@@practice")]')
         self.assertEqual(len(elements), 0,
                          'No link to @@practice found.')
+    
+    def test_onMemberPropsUpdates_subscribe(self):
+        portal_state = self.portal.restrictedTraverse('@@plone_portal_state')
+        member = portal_state.member()
+        member.setProperties(subscribe_to_newsletter=True)
+        event = PropertiesUpdated(member, 'subscribe_to_newsletter')
+        update_newsletter_subscription(member, event)
+
+    def test_onMemberPropsUpdates_unsubscribe(self):
+        portal_state = self.portal.restrictedTraverse('@@plone_portal_state')
+        member = portal_state.member()
+        member.setProperties(subscribe_to_newsletter=False)
+        event = PropertiesUpdated(member, 'subscribe_to_newsletter')
+        update_newsletter_subscription(member, event)
+    
+    
+    def test_update_newsletter_subscription(self):
+        self.fail()
+    
