@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.30 (unreleased)
+----
+
+Add Premium SMS payment functionality.
+
 1.23
 ----
 
