@@ -121,6 +121,21 @@ class IEmasSettings(Interface):
         default=u'12345'
     )
 
+    annual_expiry_warning_threshold = Int(
+        title=_('Annual expiry warning threshold'),
+        description=_('Dictates how many days before expiry the warning is shown.'),
+        required=False,
+        default=30
+    )
+
+    monthly_expiry_warning_threshold = Int(
+        title=_('Monthly expiry warning threshold'),
+        description=_('Dictates how many days before expiry the warning is shown.'),
+        required=False,
+        default=7
+    )
+
+
 class IEmasServiceCost(Interface):
     """
     """

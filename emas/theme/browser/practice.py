@@ -31,6 +31,8 @@ from emas.theme import MessageFactory as _
 
 log = logging.getLogger('emas.theme.browser.practice')
 
+MONTH = 30
+YEAR = 365
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -49,6 +51,10 @@ class Practice(BrowserView):
     implements(IPractice, IPublishTraverse)
 
     index = ViewPageTemplateFile('templates/practice.pt')
+
+    def __init__(self, context, request):
+        super(Practice, self).__init__(context, request)
+        self.settings = queryUtility(IRegistry).forInterface(IEmasSettings)
 
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
@@ -84,8 +90,7 @@ class Practice(BrowserView):
             memberid = member.getId()
         log.info('X-Access-To for %s: %s' % (memberid, self.accessto))
 
-        settings = queryUtility(IRegistry).forInterface(IEmasSettings)
-        urlparts = urlparse(settings.practiceurl)
+        urlparts = urlparse(self.settings.practiceurl)
         practiceserver = urlparts.netloc
         
         path = self.request.get_header('PATH_INFO', '')
@@ -124,7 +129,7 @@ class Practice(BrowserView):
             body = response.read()
             if response.msg.type == 'text/html':
                 html = lxml.html.fromstring(body)
-                html.make_links_absolute(base_url=settings.practiceurl,
+                html.make_links_absolute(base_url=self.settings.practiceurl,
                                          resolve_base_href=True)
                 content = html.find('.//*[@id="content"]')
                 if content is not None:
@@ -179,7 +184,7 @@ class Practice(BrowserView):
     
     def get_days_to_expiry_date(self):
         """ Sort member services according to expiry date,
-            closest to expire first.
+            closest to expiry first.
             Then return the difference in days, beteen 'now'
             and the member service expiry date.
             This is naive, since the member services potentially all have
@@ -192,7 +197,7 @@ class Practice(BrowserView):
         subject = get_subject_from_path(path)
         grade = get_grade_from_path(path)
 
-        days = self.NUM_DAYS
+        days = self.settings.annual_expiry_warning_threshold
         now = datetime.now().date()
 
         for ms in self.filtered(self.memberservices, subject, grade):
@@ -226,11 +231,29 @@ class Practice(BrowserView):
             return False
 
         now = datetime.now()
-        expiry_date = (now + timedelta(self.NUM_DAYS)).date()
         for s in self.memberservices:
-            if s.expiry_date <= expiry_date:
+            days = self.memberservice_expiry_threshold(s)
+            expiry_threshold = (now + timedelta(days)).date()
+            if s.expiry_date <= expiry_threshold:
                 return True
         return False
+    
+    def memberservice_expiry_threshold(self, memberservice):
+        """ This method helps us decide when to show expiry warnings.
+
+            For all services that have subscription_period of a YEAR or less,
+            but not less than a MONTH, we want to show the message within the,
+            'annual_expiry_warning_threshold'.
+
+            For all services that have subscription_period of a MONTH or less,
+            we want to show the message within the,
+            'monthly_expiry_warning_threshold'. 
+        """
+        subperiod = memberservice.subscription_period
+        if subperiod <= MONTH:
+            return self.settings.monthly_expiry_warning_threshold
+        elif subperiod <= YEAR:
+            return self.settings.annual_expiry_warning_threshold
 
     def get_services(self, context):
         memberservices = []
