@@ -123,14 +123,18 @@ class IEmasSettings(Interface):
 
     annual_expiry_warning_threshold = Int(
         title=_('Annual expiry warning threshold'),
-        description=_('Dictates how many days before expiry the warning is shown.'),
+        description=_('Relevant to member services with a subscription period ',
+                      'of 365 days or more. Indicates how many days before ',
+                      'expiry of the service the expiry warning is shown.'),
         required=False,
         default=30
     )
 
     monthly_expiry_warning_threshold = Int(
         title=_('Monthly expiry warning threshold'),
-        description=_('Dictates how many days before expiry the warning is shown.'),
+        description=_('Relevant to member services with a subscription period ',
+                      'of 30 days or less. Indicates how many days before ',
+                      'expiry of the service the expiry warning is shown.'),
         required=False,
         default=7
     )
