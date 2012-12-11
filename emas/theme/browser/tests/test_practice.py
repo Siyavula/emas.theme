@@ -18,7 +18,6 @@ from emas.theme.interfaces import IEmasSettings
 from emas.app.member_service import IMemberService
 from emas.app.service import IService
 from emas.theme.browser.practice import IPractice, Practice
-from emas.theme.browser.practice import NUM_DAYS
 
 NUM_SERVICES = 6
 
@@ -194,7 +193,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.update_request(view)
         view()
         
-        numdays = NUM_DAYS
+        numdays = Practice.NUM_DAYS
         for offset in [0, 10, 10]:
             numdays = numdays - offset
             print 'Testing %s days.' % numdays
@@ -205,8 +204,8 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
     def test_subject_and_grade_computing_no_subject_no_grade(self):
         view = self.portal.restrictedTraverse('@@practice')
         view()
-        self.assertEqual(view.get_days_to_expiry_date(), NUM_DAYS,
-                         'Expiry date should be %s days away.' % NUM_DAYS)
+        self.assertEqual(view.get_days_to_expiry_date(), Practice.NUM_DAYS,
+                         'Expiry date should be %s days away.' % Practice.NUM_DAYS)
 
     def clear_access_path(self):
         memberservices = self.portal._getOb('memberservices')

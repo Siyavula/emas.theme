@@ -31,7 +31,6 @@ from emas.theme import MessageFactory as _
 
 log = logging.getLogger('emas.theme.browser.practice')
 
-NUM_DAYS = 30
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -45,6 +44,7 @@ class IPracticeLayer(IBrowserRequest):
 class Practice(BrowserView):
     """ Proxy for practice in Monassis
     """
+    NUM_DAYS = 30
 
     implements(IPractice, IPublishTraverse)
 
@@ -192,7 +192,7 @@ class Practice(BrowserView):
         subject = get_subject_from_path(path)
         grade = get_grade_from_path(path)
 
-        days = NUM_DAYS
+        days = self.NUM_DAYS
         now = datetime.now().date()
 
         for ms in self.filtered(self.memberservices, subject, grade):
@@ -226,7 +226,7 @@ class Practice(BrowserView):
             return False
 
         now = datetime.now()
-        expiry_date = (now + timedelta(NUM_DAYS)).date()
+        expiry_date = (now + timedelta(self.NUM_DAYS)).date()
         for s in self.memberservices:
             if s.expiry_date <= expiry_date:
                 return True
