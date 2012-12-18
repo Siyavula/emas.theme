@@ -249,7 +249,7 @@ class Practice(BrowserView):
             we want to show the message within the,
             'monthly_expiry_warning_threshold'. 
         """
-        subperiod = memberservice.subscription_period
+        subperiod = memberservice.related_service.to_object.subscription_period
         if subperiod <= MONTH:
             return self.settings.monthly_expiry_warning_threshold
         elif subperiod <= YEAR:
