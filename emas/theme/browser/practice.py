@@ -125,6 +125,9 @@ class Practice(BrowserView):
         self.html = ''
         # Handle response from Monassis server
         response = conn.getresponse()
+
+        # Force no caching of response
+        self.request.RESPONSE.appendHeader('Cache-Control', 'no-store, no-cache')
         if response.status == 200:   # Ok
             body = response.read()
             if response.msg.type == 'text/html':
