@@ -1,10 +1,16 @@
 Changelog
 =========
 
-1.30 (unreleased)
-----
+1.24 (unreleased)
+-----------------
 
 Add Premium SMS payment functionality.
+Try to tell caches to leave the monassis content alone.
+The subscription_period attribute is on the service.
+Add dependency on fastmember properties.
+Set monthy threshold amount to 7.
+Make the expiry warning threshold configurable in the configuration registry and use it in the practice proxy to decide when to show the expiry warnings.
+Move NUM_DAYS to class level in order to override it in inheriting classes.
 
 1.23
 ----
