@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.24 (unreleased)
------------------
+1.24
+----
 
 Add Premium SMS payment functionality.
 Try to tell caches to leave the monassis content alone.
