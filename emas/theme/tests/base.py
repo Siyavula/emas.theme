@@ -33,6 +33,7 @@ class TestCase(PloneSandboxLayer):
         import siyavula.what
         import emas.app
         import emas.theme
+        import inqbus.plone.fastmemberproperties
         self.loadZCML(package=plone.app.registry)
         self.loadZCML(package=plone.resource)
         self.loadZCML(package=plone.app.theming)
@@ -47,6 +48,7 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML(package=siyavula.what)
         self.loadZCML(package=emas.app)
         self.loadZCML(package=emas.theme)
+        self.loadZCML(package=inqbus.plone.fastmemberproperties)
         self.loadZCML('overrides.zcml', package=emas.theme)
 
     def setUpPloneSite(self, portal):

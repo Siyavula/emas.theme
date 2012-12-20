@@ -90,10 +90,14 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                          'No link to @@practice found.')
     
     def test_expiry_warning(self):
+        """
+        Memberservice are only valid for 30 days and the expiry warning for
+        monthly services is 7 days before expiry. So they should not show now.
+        """
         view = self.portal.restrictedTraverse('@@practice')
         self.update_request(view)
         result = view()
-        self.assertEqual(view.show_expirywarning(), True,
+        self.assertEqual(view.show_expirywarning(), False,
                          'Trial service should all expire withing NUM_DAYS days.')
 
     def test_expiry_warning_for_manager(self):
