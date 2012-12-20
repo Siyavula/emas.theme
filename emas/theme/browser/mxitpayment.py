@@ -99,9 +99,7 @@ class MxitPaymentRequest(grok.View):
         )
         
         # create and order for this member : product combination
-        products_and_services = pps.products_and_services
-        product = products_and_services._getOb(self.product_id)
-        if product:
+        if self.product:
             portal = pps.portal()
             member_orders = portal['orders']
 
@@ -117,9 +115,9 @@ class MxitPaymentRequest(grok.View):
                 title=ordernumber,
                 userid=memberid
             )
-            order = member_orders._getOb(ordernumber)
+            self.order = member_orders._getOb(ordernumber)
                 
-            relation = create_relation(product.getPhysicalPath())
+            relation = create_relation(self.product.getPhysicalPath())
             item_id = self.order.generateUniqueId(type_name='orderitem')
             self.order.invokeFactory(
                 type_name='emas.app.orderitem',
