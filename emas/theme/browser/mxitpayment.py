@@ -3,6 +3,10 @@ from urllib import urlencode
 from five import grok
 from Acquisition import aq_inner
 
+from AccessControl.SecurityManagement import getSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager
+from AccessControl.SecurityManagement import setSecurityManager
+
 from zope.interface import Interface
 from zope.component import queryUtility
 from z3c.relationfield.relation import create_relation
@@ -19,19 +23,11 @@ from pas.plugins.mxit.plugin import member_id
 from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
+from emas.app.order import MOOLA
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services 
+from emas.app.browser.utils import generate_verification_code
 
-EXAM_PAPERS_URL = "past-exam-papers"
-
-MATHS_EXAM_PAPERS_GROUP = "PastMathsExamPapers"
-SCIENCE_EXAM_PAPERS_GROUP = "PastScienceExamPapers"
-INTELLIGENT_PRACTICE_GROUP = ""
-
-SUBJECT_MAP = {
-    'maths': MATHS_EXAM_PAPERS_GROUP,
-    'science': SCIENCE_EXAM_PAPERS_GROUP,
-}
 
 MXIT_MESSAGES = {
     '0':
@@ -81,7 +77,22 @@ class MxitPaymentRequest(grok.View):
         self.navroot = pps.navigation_root()
         self.base_url = 'http://billing.internal.mxit.com/Transaction/PaymentRequest'
         self.action = self.context.absolute_url() + '/@@mxitpaymentrequest'
-        memberid = member_id(self.request.get(USER_ID_TOKEN))
+
+        pmt = getToolByName(self.context, 'portal_membership')
+        memberid = member_id(
+            self.request.get(USER_ID_TOKEN.lower(),
+                             self.request.get(USER_ID_TOKEN)
+                            )
+        )
+        if not memberid:
+            raise ValueError('No member id supplied.')
+        member = pmt.getMemberById(memberid)
+        if not member:
+            password = password_hash(self.context, memberid)
+            pmt.addMember(memberid, password, 'Member', '')
+            member = pmt.getMemberById(memberid)
+            # login as new member
+            newSecurityManager(self.request, member)
 
         registry = queryUtility(IRegistry)
         self.emas_settings = registry.forInterface(IEmasSettings)
@@ -93,50 +104,53 @@ class MxitPaymentRequest(grok.View):
         self.product = self.products_and_services._getOb(self.product_id)
         self.product_name = self.product.title
         self.product_description = self.product.description
-        self.callback_url = '%s/mxitpaymentresponse?productId=%s' %(
-            self.context.absolute_url(),
-            self.product_id
-        )
         
-        # create and order for this member : product combination
+        # create an order for this member : product combination
         if self.product:
             portal = pps.portal()
             member_orders = portal['orders']
 
-            registry = queryUtility(IRegistry)
-            settings = registry.forInterface(IEmasSettings)
-            ordernumber = settings.order_sequence_number + 1
-            settings.order_sequence_number = ordernumber
-
-            ordernumber = '%04d' % ordernumber
-            member_orders.invokeFactory(
-                type_name='emas.app.order',
-                id=ordernumber,
-                title=ordernumber,
-                userid=memberid
+            props = {'id'            : self.transaction_reference, 
+                     'title'         : self.transaction_reference,
+                     'userid'        : memberid,
+                     'payment_method': MOOLA,
+                     }
+            self.order= createContentInContainer(
+                member_orders,
+                'emas.app.order',
+                False,
+                **props
             )
-            self.order = member_orders._getOb(ordernumber)
+            self.order = member_orders._getOb(self.transaction_reference)
+            self.order.verification_code = generate_verification_code(self.order)
+            self.order.manage_setLocalRoles(self.order.userid, ('Owner',))
                 
             relation = create_relation(self.product.getPhysicalPath())
             item_id = self.order.generateUniqueId(type_name='orderitem')
-            self.order.invokeFactory(
-                type_name='emas.app.orderitem',
-                id=item_id,
-                title=item_id,
-                related_item=relation,
-                quantity=1,
+            props = {'id'           : item_id,
+                     'title'        : item_id,
+                     'related_item' : relation,
+                     'quantity'     : 1}
+            order_item = createContentInContainer(
+                self.order,
+                'emas.app.orderitem',
+                False,
+                **props
+            )
+            order_item.manage_setLocalRoles(self.order.userid, ('Owner',))
+
+            self.callback_url = \
+                '%s/mxitpaymentresponse?productId=%s&order_number=%s&verification_code=%s' %(
+                    self.context.absolute_url(),
+                    self.product_id,
+                    self.order.getId(),
+                    self.order.verification_code
             )
 
         self.cost_settings = registry.forInterface(IEmasServiceCost)
         self.vendor_id = self.cost_settings.MXitVendorId
-
         self.moola_amount = self.product.amount_of_moola
         self.currency_amount = self.product.price
-
-        # check if the current mxit member belongs to the ExamPapers group
-        if not memberid:
-            return self.render()
-
         url = '%s/%s' %(self.navroot.absolute_url(), self.product.access_path)
         
         # get all active services for this user
@@ -144,7 +158,7 @@ class MxitPaymentRequest(grok.View):
         memberservices = member_services(self.context, service_uuids)
         active_services = [m.related_service.to_object for m in memberservices]
 
-        # check if the currently requested on is in the list
+        # check if the currently requested one is in the list
         if self.product in active_services:
             return self.request.response.redirect(url)
         else:
@@ -184,6 +198,10 @@ class MxitPaymentResponse(grok.View):
         self.memberservices = self.portal._getOb('memberservices')
         self.navroot = self.pps.navigation_root()
 
+        self.orders = self.portal._getOb('orders')
+        order_number = self.request['order_number']
+        self.order = self.orders._getOb(order_number)
+
         self.base_url = context.absolute_url()
         self.response_code = request.get('mxit_transaction_res', None)
         # we try to interpret the response, if that fails we use the response
@@ -197,36 +215,29 @@ class MxitPaymentResponse(grok.View):
        
         # Transaction completed successfully.
         if self.response_code == '0':
-            memberid = member_id(request.get(USER_ID_TOKEN))
             self.productid = request['productId']
             self.service = self.products_and_services._getOb(self.productid)
-            password = password_hash(context, memberid)
 
+            memberid = member_id(
+                self.request.get(USER_ID_TOKEN.lower(),
+                                 self.request.get(USER_ID_TOKEN)
+                                )
+            )
+            password = password_hash(context, memberid)
             pmt = getToolByName(context, 'portal_membership')
             member = pmt.getMemberById(memberid)
             if not member:
                 pmt.addMember(memberid, password, 'Member', '')
                 member = pmt.getMemberById(memberid)
             
-            memberservice = self.get_memberservice(self.service,
-                                                   memberid,
-                                                   self.memberservices,
-                                                   self.portal)
-
-            access_group = self.service.access_group
-            if access_group:
-                # now add the member to the correct group
-                gt = getToolByName(context, 'portal_groups')
-                gt.addPrincipalToGroup(member.getId(), access_group)
-                member = pmt.addMember(memberid, password, 'Member', '')
-                member = pmt.getMemberById(memberid)
-            
-            # find the order and transition it to 'paid'
-            
-            # now add the member to the correct group
-            gt = getToolByName(context, 'portal_groups')
-            # at this stage group and productid are the same
-            gt.addPrincipalToGroup(member.getId(), self.productid)
+            # login as member
+            newSecurityManager(self.request, member)
+            # now transition the order to paid
+            wf = getToolByName(self.context, 'portal_workflow')
+            status = wf.getStatusOf('order_workflow', self.order)
+            if status['review_state'] != 'paid':
+                wf.doActionFor(self.order, 'pay')
+                self.order.reindexObject()
 
     def get_url(self):
         return '%s/%s' %(self.navroot.absolute_url(), self.service.access_path)
