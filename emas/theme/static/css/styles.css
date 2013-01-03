@@ -815,3 +815,7 @@ dl.portalMessage dt {
 div#expiry-warning {
     color: red;
 }
+
+div#duplicate-payment-warning {
+    font-weight: bold;
+}
