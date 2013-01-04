@@ -1,6 +1,18 @@
 Changelog
 =========
 
+1.25
+----
+
+Add bold styling for expiry warning.
+
+Fix mxitpayment and bring it closer to the way we do payment response
+for VCS and BulkSMS.
+
+Update tests and fix bug in practice proxy.
+
+Fix bug in products_and_service computing.
+
 1.24
 ----
 
