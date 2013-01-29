@@ -37,7 +37,16 @@ skipped = []
 
 count = 0
 prop_name = 'subscribe_to_newsletter'
-for member in portal.portal_membership.listMembers():
+
+all_members = portal.portal_membership.listMembers()
+
+non_mxit_members = []
+for member in all_members:
+    if member.getId().endswidth('mxit.com'):
+        continue
+    non_mxit_members.append(member)
+
+for member in non_mxit_members:
     count += 1
 
     memberid = member.getId()
