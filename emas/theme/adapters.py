@@ -1,4 +1,8 @@
+import zope.event
+
 from plone.app.users.browser.personalpreferences import UserDataPanelAdapter
+from Products.PluggableAuthService.events import PropertiesUpdated 
+from Products.Archetypes.event import ObjectEditedEvent
 
 class EmasUserDataPanelAdapter(UserDataPanelAdapter):
 
@@ -74,3 +78,13 @@ class EmasUserDataPanelAdapter(UserDataPanelAdapter):
         return self.context.setMemberProperties({'trialuser': value})
     trialuser = property(get_trialuser, set_trialuser)
 
+    def get_subscribe_to_newsletter(self):
+        return self.context.getProperty('subscribe_to_newsletter', False)
+    def set_subscribe_to_newsletter(self, value):
+        result = self.context.setMemberProperties(
+            {'subscribe_to_newsletter': value})
+        event = ObjectEditedEvent(self.context, 'subscribe_to_newsletter')
+        zope.event.notify(event)
+        return result
+    subscribe_to_newsletter = property(
+        get_subscribe_to_newsletter, set_subscribe_to_newsletter)

@@ -25,6 +25,7 @@ class TestCase(PloneSandboxLayer):
         import rhaptos.xmlfile
         import collective.topictree
         import webcouturier.dropdownmenu
+        import Products.EasyNewsletter
         import emas.transforms
         import rhaptos.cnxmltransforms
         import rhaptos.compilation
@@ -40,6 +41,7 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML(package=rhaptos.xmlfile)
         self.loadZCML(package=collective.topictree)
         self.loadZCML(package=webcouturier.dropdownmenu)
+        self.loadZCML(package=Products.EasyNewsletter)
         self.loadZCML(package=emas.transforms)
         self.loadZCML(package=rhaptos.cnxmltransforms)
         self.loadZCML(package=rhaptos.compilation)

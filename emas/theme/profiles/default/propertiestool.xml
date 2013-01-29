@@ -7,6 +7,7 @@
             <element value="email" />
             <element value="password" />
             <element value="mail_me" />
+            <element value="subscribe_to_newsletter" />
         </property>
     </object>
 </object>

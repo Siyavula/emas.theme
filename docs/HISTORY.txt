@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.26
+----
+
+EasyNewsletter integration
+
 1.25
 ----
 

@@ -104,6 +104,13 @@ class IEmasUserDataSchema(IUserDataSchema):
         required=False,
     )
     
+    subscribe_to_newsletter = Bool(
+        title=_(u'label_subscribe_to_newsletter',
+                default=u'Subscibe to newsletter.'),
+        required=False,
+        default=True,
+    )
+
 
 class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)

@@ -24,4 +24,7 @@
     <property name="trialuser" type="boolean">
         True
     </property>
+    <property name="subscribe_to_newsletter" type="boolean">
+        True
+    </property>
 </object>
