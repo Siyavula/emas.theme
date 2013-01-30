@@ -42,7 +42,7 @@ all_members = portal.portal_membership.listMembers()
 
 non_mxit_members = []
 for member in all_members:
-    if member.getId().endswidth('mxit.com'):
+    if member.getId().endswith('mxit.com'):
         continue
     non_mxit_members.append(member)
 
