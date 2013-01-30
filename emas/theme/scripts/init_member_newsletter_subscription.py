@@ -31,7 +31,7 @@ user = app.acl_users.getUser('admin')
 newSecurityManager(None, user.__of__(app.acl_users))
 
 newsletters = portal._getOb('newsletters')
-newsletter = newsletters._getOb('everything_news')
+newsletter = newsletters._getOb('everything-news')
 receivers = ListType(newsletter.ploneReceiverMembers)
 skipped = []
 
