@@ -11,6 +11,7 @@
                     <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/grade-10">Grade 10</a></li>
                     <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/grade-11">Grade 11</a></li>
                     <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/grade-12">Grade 12</a></li>
+                    <li><a href="#" title="Grade 10 Mathematical Literacy" tal:attributes="href string:$portal_url/grade-10-mathematical-literacy">Grade 10 Mathematical Literacy</a></li>
                 </ul>
         </li>
         <li id="portaltab-practice" class="plain"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
