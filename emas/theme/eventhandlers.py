@@ -7,18 +7,6 @@ from emas.theme.userdataschema import IEmasUserDataSchema
 
 LOGGER = logging.getLogger('emas.theme:eventhandlers:')
 
-def onNewsLetterEdited(obj, event):
-    pmt = getToolByName(obj, 'portal_membership')
-    memberids = set(pmt.listMemberIds())
-    subscribers = set(obj.ploneReceiverMembers)
-    nonsubscribers = memberids.difference(subscribers)
-
-    subscribers = [pmt.getMemberById(s) for s in subscribers]
-    add_subscribers(subscribers)
-
-    nonsubscribers = [pmt.getMemberById(s) for s in nonsubscribers]
-    remove_subscribers(nonsubscribers)
-
 def add_subscribers(subscribers):
     update_subscription(subscribers, True)
 
@@ -42,22 +30,13 @@ def set_welcome_message(obj, event):
     plone_utils.addPortalMessage(message, 'info')
 
 def update_newsletter_subscription(obj, event):
-    portal = obj.restrictedTraverse('@@plone_portal_state').portal()
-    newsletters = portal._getOb('newsletters')
-    newsletter = newsletters._getOb('everything-news')
-    receivers = ListType(newsletter.ploneReceiverMembers)
+
     memberid = obj.getId()
 
+    portal_groups = getToolByName(obj, 'portal_groups')
+    group_id = "newsletter_subscribers"
+
     if obj.getProperty('subscribe_to_newsletter', False):
-        # subscribe member by adding the memberid to receivers list
-        if memberid in receivers:
-            LOGGER.debug('Member:%s is already in newsletter.' % memberid)
-        else:
-            receivers.append(memberid)
+        portal_groups.addPrincipalToGroup(memberid, group_id)
     else:
-        # unsubscribe member by removing the memberid from receivers list
-        if memberid not in receivers:
-            LOGGER.debug('Member:%s is not in newsletter.' % memberid)
-        else:
-            receivers.remove(memberid)
-    newsletter.ploneReceiverMembers = receivers
+        portal_groups.removePrincipalFromGroup(memberid, group_id)
