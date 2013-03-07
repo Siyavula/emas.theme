@@ -65,10 +65,6 @@ class Practice(BrowserView):
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
         path = self.request.get_header('PATH_INFO')
-        is_static = path and ('@@practice/static' in path or
-                              '@@practice/media' in path)
-        if portal_state.anonymous() and not is_static:
-            return self.request.RESPONSE.unauthorized()
 
         member = portal_state.member()
         sm = getSecurityManager()
@@ -104,11 +100,12 @@ class Practice(BrowserView):
             "Accept-Encoding": "identity",
             "Host": self.request.HTTP_HOST,
             "Connection": "close",
-            "Authorization": 'Basic ' + base64.b64encode(memberid),
             "Cookie": self.request.HTTP_COOKIE,
-            "X-Access-To": self.accessto,
             "Referer": self.request.HTTP_REFERER,
         }
+        if not portal_state.anonymous():
+            headers["Authorization"] = 'Basic ' + base64.b64encode(memberid)
+            headers["X-Access-To"] = self.accessto
 
         # Forward GET and POST requests; complain for all other request types
         if self.request.method == 'GET':
@@ -128,7 +125,9 @@ class Practice(BrowserView):
         response = conn.getresponse()
 
         # Force no caching of response
-        self.request.RESPONSE.appendHeader('Cache-Control', 'no-store, no-cache')
+        self.request.RESPONSE.appendHeader('Cache-Control',
+                                           'no-store, no-cache')
+
         if response.status == 200:   # Ok
             body = response.read()
             if response.msg.type == 'text/html':
@@ -158,10 +157,13 @@ class Practice(BrowserView):
         elif response.status == 400: # Bad request
             raise BadRequest('The URL:%s is a bad request.' %path)
         elif response.status == 403: # Forbidden
-            log.info('User:%s not allowed to access URL:%s.' % 
-                (memberid, path))
-            self.add_noaccess_message()
-            return self.index()
+            if portal_state.anonymous():
+                return self.request.RESPONSE.unauthorized()
+            else:
+                log.info('User:%s not allowed to access URL:%s.' % 
+                    (memberid, path))
+                self.add_noaccess_message()
+                return self.index()
         elif response.status == 404: # NotFound
             raise NotFound('The URL:%s could not be found.' %path)
         else:
