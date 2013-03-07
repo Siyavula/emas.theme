@@ -65,7 +65,8 @@ class Practice(BrowserView):
 
         portal_state = self.context.restrictedTraverse('@@plone_portal_state')
         path = self.request.get_header('PATH_INFO')
-        is_static = path and '@@practice/static' in path
+        is_static = path and ('@@practice/static' in path or
+                              '@@practice/media' in path)
         if portal_state.anonymous() and not is_static:
             return self.request.RESPONSE.unauthorized()
 
