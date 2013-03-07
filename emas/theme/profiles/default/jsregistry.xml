@@ -160,7 +160,7 @@
                 cookable="True"
                 enabled="True"
                 expression="not:request/HTTP_X_THEME_ENABLED | nothing"
-                id="++resource++collective.topictree/js/edittopictree.js"
+                id="++resource++collective.topictree/js/topictree.js"
                 inline="False"/>
 
     <!-- disable MathJax registration, we load configure it inline in
