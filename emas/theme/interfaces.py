@@ -1,4 +1,4 @@
-from zope.schema import List, TextLine, Bool, Int
+from zope.schema import List, TextLine, Bool, Int, Float
 from zope.interface import Interface
 from emas.theme import MessageFactory as _
 
@@ -143,25 +143,18 @@ class IEmasSettings(Interface):
 class IEmasServiceCost(Interface):
     """
     """
-    questionCost = Int(
-        title=_('Question Cost'),
-        description=_('The cost in credits to use the service.'),
+    practiceprice = Float(
+        title=_('Cost of 1 year subscription to Practice service'),
+        description=_('WARNING: Changing this value will update the price for ALL practice services in the Products and Services folder. This price is also used on the order form.'),
         required=False,
-        default=0
+        default=0.0
     )
 
-    answerCost = Int(
-        title=_('Answer Cost'),
-        description=_('The cost in credits to use the service.'),
+    textbookprice = Float(
+        title=_('Cost of textbook'),
+        description=_('WARNING: Changing this value will update the price for ALL textbook products in the Products and Services folder. This price is also used on the order form'),
         required=False,
-        default=0
-    )
-
-    exerciseCost = Int(
-        title=_('Exercise Cost'),
-        description=_('The cost in credits to use the service.'),
-        required=False,
-        default=0
+        default=0.0
     )
 
     MXitVendorId = TextLine(
