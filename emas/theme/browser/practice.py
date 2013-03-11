@@ -107,6 +107,7 @@ class Practice(BrowserView):
             "Cookie": self.request.HTTP_COOKIE,
             "X-Access-To": self.accessto,
             "Referer": self.request.HTTP_REFERER,
+            "User-Agent": self.request.HTTP_USER_AGENT,
         }
 
         # Forward GET and POST requests; complain for all other request types
