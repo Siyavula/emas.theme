@@ -148,7 +148,7 @@ _gaq.push(['_trackPageview']);
 
         <replace css:theme="#copyright-image"
             css:if-not-content="#practice-content">
-            <a id="copyright-link-ccby" href="#">
+            <a id="copyright-link-ccby" href="http://creativecommons.org/licenses/by/3.0/">
                 <img id="copyright-image-ccby"
                     src="++theme++emas.theme/images/cc_by.png"
                     alt="cc-by copyright logo" />
