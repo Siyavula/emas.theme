@@ -36,7 +36,7 @@
                     Read the same textbook and access the same resources on <strong>all your devices</strong>, via the web, mobile or Mxit.
                 </div>
                 <div id="intelligentpracticecaption" class="nivo-html-caption">
-                    Intelligent Practice allows you to <strong>practice exam questions</strong>, manage your progress using your dashboard and gives you targeted feedback on your strengths and weaknesses. <a style='' href="http://localhost:8401/emas/maths/@@register"><strong style=''>Register</strong></a> for your free trial now!
+                    Intelligent Practice allows you to <strong>practice exam questions</strong>, manage your progress using your dashboard and gives you targeted feedback on your strengths and weaknesses. <a href="#" tal:attributes="href string:${portal_url}/@@register"><strong style=''>Register</strong></a> for your free trial now!
                 </div>
                 <div id="communitycaption" class="nivo-html-caption">
                     <strong>Community</strong> is central to how we work, <a href="http://projects.siyavula.com/community"><strong>join</strong></a> us for events, discussion and work collaboratively to ensure you have access to the best resources.
