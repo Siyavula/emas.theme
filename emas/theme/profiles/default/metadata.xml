@@ -9,13 +9,11 @@
         <dependency>profile-rhaptos.cnxmltransforms:default</dependency>
         <dependency>profile-rhaptos.compilation:default</dependency>
         <dependency>profile-upfront.shorturl:default</dependency>
-        <dependency>profile-fullmarks.mathjax:default</dependency>
         <dependency>profile-siyavula.what:default</dependency>
         <dependency>profile-emas.transforms:default</dependency>
         <dependency>profile-collective.topictree:default</dependency>
         <dependency>profile-webcouturier.dropdownmenu:default</dependency>
         <dependency>profile-Products.EasyNewsletter:default</dependency>
         <dependency>profile-emas.app:default</dependency>
-        <dependency>profile-inqbus.plone.fastmemberproperties:default</dependency>
     </dependencies>
 </metadata>
