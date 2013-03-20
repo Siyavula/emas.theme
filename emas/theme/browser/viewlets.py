@@ -119,7 +119,7 @@ MathJax.Hub.Config({
     jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"]
 });
 </script>
-<script type="text/javascript" src="%s/++resource++fullmarks.mathjax/mathjax/MathJax.js">
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
 </script>
 """ % navroot.absolute_url()
 
