@@ -11,6 +11,9 @@ from plone.registry.interfaces import IRegistry
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.users.browser.personalpreferences import UserDataPanel
+from plone.app.users.browser.personalpreferences import PasswordAccountPanel \
+    as BasePasswordAccountPanel
+
 from upfront.shorturl.browser.views import RedirectView
 
 from Products.CMFCore.utils import getToolByName
@@ -162,6 +165,9 @@ class AnnotatorEnabledView(BrowserView):
     __call__ = enabled
 
 class EmasUserDataPanel(UserDataPanel):
+
+    template = ViewPageTemplateFile('templates/account-panel.pt')
+    
     def __init__(self, context, request):
         super(EmasUserDataPanel, self).__init__(context, request)
         self.form_fields = self.form_fields.omit('credits')
@@ -668,3 +674,9 @@ class AnsweredMessageView(BrowserView):
         host = HOST_NAME_MAP.get(navroot.getId(), default_host)
         path = '/'.join(content.getPhysicalPath()[3:])
         return 'http://%s/%s' %(host, path)
+
+
+# customise panel to not show edit-bar
+class PasswordAccountPanel(BasePasswordAccountPanel):
+
+    template = ViewPageTemplateFile('templates/account-panel.pt')
