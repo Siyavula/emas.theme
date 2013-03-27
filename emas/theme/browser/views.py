@@ -140,8 +140,11 @@ class SearchView(BrowserView):
         else:
             state = self.context.restrictedTraverse('@@plone_portal_state')
             root = state.navigation_root()
-            search_url = '%s/search?SearchableText=%s' % (
-                root.absolute_url(), searchtext)
+            search_url = '%s/search?SearchableText=%s&search_came_from=%s' % (
+                root.absolute_url(),
+                searchtext,
+                self.request.get('search_came_from', ''),
+                )
             self.request.response.redirect(search_url)
 
 class AnnotatorEnabledView(BrowserView):
