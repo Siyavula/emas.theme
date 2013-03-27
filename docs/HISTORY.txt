@@ -1,6 +1,27 @@
 Changelog
 =========
 
+1.28
+----
+
+MVP fixes
+
+1.27
+----
+
+Hide 'ploneReceiverMembers' field on EasyNewsletter - it's not practical
+to show this field on a site with many members
+
+Allow anonymous requests to @@practice/media
+
+Update newsletter eventhandler to add/remove member to newsletters group
+
+Fix id for topictree.js in jsregistry.xml
+
+Let Monassis decide if user is authorized to access Practice service
+resources
+
+
 1.26
 ----
 

@@ -59,10 +59,4 @@
         handler=".eventhandlers.onMemberPropsUpdated"
         />
 
-    <subscriber
-        for="Products.EasyNewsletter.interfaces.IEasyNewsletter
-            Products.Archetypes.interfaces.IObjectEditedEvent"
-        handler=".eventhandlers.onNewsLetterEdited"
-        />
-
 </configure>

@@ -49,4 +49,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        name="change-password"
+        class=".browser.views.PasswordAccountPanel"
+        permission="cmf.SetOwnPassword"
+        />
+
 </configure>
