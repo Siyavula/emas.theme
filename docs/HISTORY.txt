@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.29
+----
+
+- Enable logging and registration with email address.
+
+- Change order form information sequence.
+
 1.28
 ----
 
