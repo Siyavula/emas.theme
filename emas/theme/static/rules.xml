@@ -163,7 +163,8 @@ _gaq.push(['_trackPageview']);
                     alt="copyright logo" />
             </a>
         </replace>
-
+        
+        <drop css:content="p.discreet a.link-feed" />
     </rules>
 
 </rules>
