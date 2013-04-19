@@ -95,6 +95,10 @@
             css:if-content="div.pfg-form"
             css:theme-children="#content" 
             css:content-children="#content" />
+        <replace
+            css:if-content="div#newsletter-content"
+            css:theme-children="#content" 
+            css:content-children="#content" />
 
         <drop css:content="#table-of-contents img"/>
 
