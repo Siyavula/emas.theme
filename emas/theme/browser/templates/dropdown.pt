@@ -15,7 +15,7 @@
                 </ul>
         </li>
 
-        <li id="portaltab-practice" class="plain"><a href="#" class="noClick" title="Practice for test or practice for exams">Practice for exams
+        <li id="portaltab-practice" class="plain"><a href="#" class="noClick" title="Practise for test or practise for exams">Practise for exams
             </a><ul class="submenu">
                     <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/online-practice-information">About Intelligent Practice</a></li>
                     <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
