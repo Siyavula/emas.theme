@@ -144,9 +144,10 @@ class Practice(BrowserView):
                 return self.index()
             else:
                 resp = self.request.RESPONSE
-                resp.setHeader('Content-Type', response.msg.type)
-                resp.setHeader('Content-Length',
-                               response.msg.get('content-length'))
+                for key in ['Content-Length', 'Content-Type', 'Content-Disposition']:
+                    value = response.msg.get(key)
+                    if value is not None:
+                        resp.setHeader(key, value)
                 resp.write(body)
 
         elif response.status == 302: # Found
