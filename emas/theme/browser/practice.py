@@ -5,6 +5,7 @@ import lxml
 import logging
 from urllib import urlencode
 from urlparse import urlparse
+from collections import OrderedDict
 from datetime import datetime, timedelta
 
 from ZPublisher import NotFound, BadRequest
@@ -262,6 +263,21 @@ class Practice(BrowserView):
             return self.settings.monthly_expiry_warning_threshold
         elif subperiod <= YEAR:
             return self.settings.annual_expiry_warning_threshold
+
+    def get_practice_service_messages(self):
+        path = '/'.join(self.context.getPhysicalPath())
+        subject = get_subject_from_path(path)
+
+        messages = OrderedDict()
+        for ms in self.memberservices:
+            service = ms.related_service.to_object
+            if service.subject == subject:
+                grade = service.grade
+                tmp_services = messages.get(grade, [])
+                tmp_services.append(service)
+                messages[grade] = tmp_services
+
+        return messages
 
     def get_services(self, context):
         memberservices = []

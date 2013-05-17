@@ -46,9 +46,13 @@
         </div>
 
         <div tal:condition="view/services_active" id="content-core">
-            <div id="expiry-warning" tal:condition="view/show_expirywarning">
-                Your Intelligent Practice access expires in <span tal:replace="view/get_days_to_expiry_date">30</span> days.
-		Click <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">here</a> to renew now.
+            <div id="practice-service-messages"
+                tal:define="messages view/get_practice_service_messages">
+                <div tal:repeat="message messages">
+                    <div tal:repeat="grademessage python:messages[message]">
+                        <span tal:replace="grademessage/Title">grade message</span>
+                    </div>
+                </div>
             </div>
 
             <span tal:content="structure view/html">Practice content</span>
