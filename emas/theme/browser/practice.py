@@ -78,13 +78,26 @@ class MemberServiceGroup(object):
         messages = []
         for ms in expiring_memberservices:
             days = (ms.expiry_date - now).days
+            grade = ms.related_service.to_object.grade.split('-')[-1]
             msg = \
                 ('Your access to Grade %s %s practice will expire in %s days.' %
-                 (ms.related_service.to_object.grade, self.subject, days))
+                 (grade, self.subject, days))
             messages.append(msg)
 
         return '<br \>'.join(messages)
             
+    def format_active_messages(self, active_memberservices):
+        now = datetime.now().date()
+        messages = []
+        for ms in active_memberservices:
+            expiry_date = ms.expiry_date
+            grade = ms.related_service.to_object.grade.split('-')[-1]
+            msg = \
+                ('You will still have access to Grade %s %s until %s.' %
+                 (grade, self.subject, expiry_date))
+            messages.append(msg)
+
+        return '<br \>'.join(messages)
     
     def sort_by_expiry_date(self):
         self.memberservices.sort(key=lambda service: service.expiry_date)
