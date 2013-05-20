@@ -41,20 +41,39 @@ class MemberServiceGroup(object):
     """
     implements(IMemberServiceGroup)
 
-    def __init__(self, context, settings, groupname, member,
-                 expirydate=None, services=[]):
-
+    def __init__(self, context, settings, subject, member):
         self.context = context
         self.settings = settings
-        self.name = groupname
+        self.subject = subject
         self.member = member
-        self.expirydate = expirydate
-        self.memberservices = services
+        self.memberservices = []
         sm = getSecurityManager()
         self.ismanager = sm.checkPermission(
             permissions.ManagePortal, self.context) or False
+
+    def expiring_services(self):
+        now = datetime.now()
+        messages = []
+        for ms in self.memberservices:
+            if self.is_expiring(now, ms):
+                messages.append(ms.Title())
+        return messages
     
-    def sort_by_expirydate(self):
+    def still_active_services(self):
+        now = datetime.now()
+        messages = []
+        for ms in self.memberservices:
+            if not self.is_expiring(now, ms):
+                messages.append(ms.Title())
+        return messages
+    
+    def format_date(self, expiry_date):
+        now = datetime.now()
+        if expiry_date.year > now.year:
+            return expiry_date.strftime('%e %B %Y')
+        return expiry_date.strftime('%e %B')
+    
+    def sort_by_expiry_date(self):
         self.memberservices.sort(key=lambda service: service.expiry_date)
 
     def add_service(self, service):
@@ -64,25 +83,30 @@ class MemberServiceGroup(object):
         return self.memberservices
     
     def first_expiry_date(self):
-        self.sort_by_expirydate()
+        self.sort_by_expiry_date()
         return self.memberservices and self.memberservices[0].expiry_date
 
     def last_expiry_date(self):
-        self.sort_by_expirydate()
+        self.sort_by_expiry_date()
         return self.memberservices and self.memberservices[-1].expiry_date
 
     def show_expirywarning(self):
         # We don't show expiry warnings to manager users.
         if self.ismanager:
             return False
-        
-        self.sort_by_expirydate()
+
+        self.sort_by_expiry_date()
         now = datetime.now()
-        for s in self.memberservices:
-            days = self.memberservice_expiry_threshold(s)
-            expiry_threshold = (now + timedelta(days)).date()
-            if s.expiry_date <= expiry_threshold:
+        for ms in self.memberservices:
+            if self.is_expiring(now, ms):
                 return True
+        return False
+    
+    def is_expiring(self, cutoff_date, memberservice):
+        days = self.memberservice_expiry_threshold(memberservice)
+        expiry_threshold = (cutoff_date + timedelta(days)).date()
+        if memberservice.expiry_date <= expiry_threshold:
+            return True
         return False
     
     def memberservice_expiry_threshold(self, memberservice):
@@ -313,12 +337,12 @@ class Practice(BrowserView):
             service = ms.related_service.to_object
             if service.subject == subject:
                 grade = service.grade
-                msgroup = messages.get(grade,
-                                       MemberServiceGroup(self.context,
-                                                          self.settings,
-                                                          grade,
-                                                          member)
-                                      )
+                msgroup = messages.get(subject, None)
+                if not msgroup:
+                    msgroup = MemberServiceGroup(self.context,
+                                                 self.settings,
+                                                 subject,
+                                                 member)
                 msgroup.add_service(ms)
                 messages[grade] = msgroup
 

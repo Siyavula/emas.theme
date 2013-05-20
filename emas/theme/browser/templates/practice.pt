@@ -50,12 +50,18 @@
                 tal:define="msgroups view/grouped_practice_services">
                 <tal:msgroups repeat="mskey msgroups">
                 <div tal:define="msgroup python:msgroups[mskey]">
-                    <span tal:condition="msgroup/show_expirywarning">
-                        Warning!
-                    </span>
-                    <span tal:condition="not:msgroup/show_expirywarning">
-                        All's well.
-                    </span>
+                <tal:warn condition="msgroup/show_expirywarning">
+                Expiring:
+                <div tal:repeat="expiring msgroup/expiring_services">
+                    <span tal:content="expiring">expiring memberservice</span>
+                </div>
+                <div tal:repeat="active msgroup/still_active_services">
+                    <span tal:content="active">active memberservice</span>
+                </div>
+                </tal:warn>
+                <tal:nowarn condition="not:msgroup/show_expirywarning">
+                    <span class="hidden">All's well.</span>
+                </tal:nowarn>
                 </div>
                 </tal:msgroups>
             </div>
