@@ -47,12 +47,17 @@
 
         <div tal:condition="view/services_active" id="content-core">
             <div id="practice-service-messages"
-                tal:define="messages view/get_practice_service_messages">
-                <div tal:repeat="message messages">
-                    <div tal:repeat="grademessage python:messages[message]">
-                        <span tal:replace="grademessage/Title">grade message</span>
-                    </div>
+                tal:define="msgroups view/grouped_practice_services">
+                <tal:msgroups repeat="mskey msgroups">
+                <div tal:define="msgroup python:msgroups[mskey]">
+                    <span tal:condition="msgroup/show_expirywarning">
+                        Warning!
+                    </span>
+                    <span tal:condition="not:msgroup/show_expirywarning">
+                        All's well.
+                    </span>
                 </div>
+                </tal:msgroups>
             </div>
 
             <span tal:content="structure view/html">Practice content</span>

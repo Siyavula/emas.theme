@@ -26,7 +26,7 @@ from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
 
-from emas.theme.interfaces import IEmasSettings
+from emas.theme.interfaces import IEmasSettings, IMemberServiceGroup
 
 from emas.theme import MessageFactory as _
 
@@ -34,6 +34,74 @@ log = logging.getLogger('emas.theme.browser.practice')
 
 MONTH = 30
 YEAR = 365
+
+
+class MemberServiceGroup(object):
+    """ Non-persistent object used to group memberservices and some meta data.
+    """
+    implements(IMemberServiceGroup)
+
+    def __init__(self, context, settings, groupname, member,
+                 expirydate=None, services=[]):
+
+        self.context = context
+        self.settings = settings
+        self.name = groupname
+        self.member = member
+        self.expirydate = expirydate
+        self.memberservices = services
+        sm = getSecurityManager()
+        self.ismanager = sm.checkPermission(
+            permissions.ManagePortal, self.context) or False
+    
+    def sort_by_expirydate(self):
+        self.memberservices.sort(key=lambda service: service.expiry_date)
+
+    def add_service(self, service):
+        self.memberservices.append(service)
+
+    def get_services(self):
+        return self.memberservices
+    
+    def first_expiry_date(self):
+        self.sort_by_expirydate()
+        return self.memberservices and self.memberservices[0].expiry_date
+
+    def last_expiry_date(self):
+        self.sort_by_expirydate()
+        return self.memberservices and self.memberservices[-1].expiry_date
+
+    def show_expirywarning(self):
+        # We don't show expiry warnings to manager users.
+        if self.ismanager:
+            return False
+        
+        self.sort_by_expirydate()
+        now = datetime.now()
+        for s in self.memberservices:
+            days = self.memberservice_expiry_threshold(s)
+            expiry_threshold = (now + timedelta(days)).date()
+            if s.expiry_date <= expiry_threshold:
+                return True
+        return False
+    
+    def memberservice_expiry_threshold(self, memberservice):
+        """ This method helps us decide when to show expiry warnings.
+
+            For all services that have subscription_period of a YEAR or less,
+            but not less than a MONTH, we want to show the message within the,
+            'annual_expiry_warning_threshold'.
+
+            For all services that have subscription_period of a MONTH or less,
+            we want to show the message within the,
+            'monthly_expiry_warning_threshold'. 
+        """
+        subperiod = memberservice.related_service.to_object.subscription_period
+        if subperiod <= MONTH:
+            return self.settings.monthly_expiry_warning_threshold
+        elif subperiod <= YEAR:
+            return self.settings.annual_expiry_warning_threshold
+
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -194,7 +262,7 @@ class Practice(BrowserView):
     def get_days_to_expiry_date(self):
         """ Sort member services according to expiry date,
             closest to expiry first.
-            Then return the difference in days, beteen 'now'
+            Then return the difference in days, between 'now'
             and the member service expiry date.
             This is naive, since the member services potentially all have
             different expiry dates.
@@ -234,48 +302,25 @@ class Practice(BrowserView):
                 
         return filteredms 
         
-    def show_expirywarning(self):
-        # We don't show expiry warnings to manager users.
-        if self.ismanager:
-            return False
-
-        now = datetime.now()
-        for s in self.memberservices:
-            days = self.memberservice_expiry_threshold(s)
-            expiry_threshold = (now + timedelta(days)).date()
-            if s.expiry_date <= expiry_threshold:
-                return True
-        return False
-    
-    def memberservice_expiry_threshold(self, memberservice):
-        """ This method helps us decide when to show expiry warnings.
-
-            For all services that have subscription_period of a YEAR or less,
-            but not less than a MONTH, we want to show the message within the,
-            'annual_expiry_warning_threshold'.
-
-            For all services that have subscription_period of a MONTH or less,
-            we want to show the message within the,
-            'monthly_expiry_warning_threshold'. 
-        """
-        subperiod = memberservice.related_service.to_object.subscription_period
-        if subperiod <= MONTH:
-            return self.settings.monthly_expiry_warning_threshold
-        elif subperiod <= YEAR:
-            return self.settings.annual_expiry_warning_threshold
-
-    def get_practice_service_messages(self):
+    def grouped_practice_services(self):
         path = '/'.join(self.context.getPhysicalPath())
         subject = get_subject_from_path(path)
+        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
+        member = portal_state.member()
 
         messages = OrderedDict()
         for ms in self.memberservices:
             service = ms.related_service.to_object
             if service.subject == subject:
                 grade = service.grade
-                tmp_services = messages.get(grade, [])
-                tmp_services.append(service)
-                messages[grade] = tmp_services
+                msgroup = messages.get(grade,
+                                       MemberServiceGroup(self.context,
+                                                          self.settings,
+                                                          grade,
+                                                          member)
+                                      )
+                msgroup.add_service(ms)
+                messages[grade] = msgroup
 
         return messages
 
