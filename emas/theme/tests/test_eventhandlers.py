@@ -1,4 +1,4 @@
-import os
+import unittest2 as unittest
 import lxml
 from DateTime import DateTime
 
@@ -6,16 +6,17 @@ import zope.event
 from Products.CMFCore.utils import getToolByName
 from Products.PluggableAuthService.events import PropertiesUpdated 
 
-from base import BaseFunctionalTestCase
+from emas.theme.tests.base import FUNCTIONAL_TESTING
 from emas.theme.browser.tests.test_practice_service_messages_viewlet import \
     find_viewlet
 from emas.theme.interfaces import IEmasThemeLayer
 from emas.theme.eventhandlers import *
 
-dirname = os.path.dirname(__file__)
 
-class TestEventhandlers(BaseFunctionalTestCase):
+class TestEventhandlers(unittest.TestCase):
     """ Test the intelligent practice messages service viewlets  """
+
+    layer = FUNCTIONAL_TESTING
     
     def setUp(self):
         super(TestEventhandlers, self).setUp()
