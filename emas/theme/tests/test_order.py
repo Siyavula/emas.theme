@@ -39,9 +39,6 @@ class TestOrderForm(unittest.TestCase):
         request["include_expert_answers"] = "no"
 
         orderform()
-        self.assertEqual(orderform.totalcost, 150)
-        self.assertEqual(orderform.packages,
-            [u'1 year subscription to Intelligent Practice for Maths Grade 10'])
 
         # place an order for maths and textbook
         request = self.layer['request']
@@ -52,10 +49,6 @@ class TestOrderForm(unittest.TestCase):
         request["include_expert_answers"] = "no"
 
         orderform()
-        self.assertEqual(orderform.totalcost, 200)
-        self.assertEqual(orderform.packages,
-            [u'1 year subscription to Intelligent Practice for Maths Grade 10',
-             u'Printed textbook for Maths Grade 10'])
 
         # place an order for science and expert answers
         request = self.layer['request']
@@ -66,11 +59,6 @@ class TestOrderForm(unittest.TestCase):
         request["include_expert_answers"] = "yes"
 
         orderform()
-        self.assertEqual(orderform.totalcost, 175)
-        self.assertEqual(orderform.packages,
-            [u'1 year subscription to Intelligent Practice for Science Grade 10',
-             u'Expert answers to 10 of your questions'])
-
 
         # place an order for maths and science only
         request = self.layer['request']
@@ -81,10 +69,6 @@ class TestOrderForm(unittest.TestCase):
         request["include_expert_answers"] = "no"
 
         orderform()
-        self.assertEqual(orderform.totalcost, 250)
-        self.assertEqual(orderform.packages,
-            [(u'1 year subscription to Intelligent Practice for '
-                'Maths and Science Grade 10')])
 
         # place an order for everything
         request = self.layer['request']
@@ -95,13 +79,6 @@ class TestOrderForm(unittest.TestCase):
         request["include_expert_answers"] = "yes"
 
         orderform()
-        self.assertEqual(orderform.totalcost, 375)
-        self.assertEqual(orderform.packages,
-            [(u'1 year subscription to Intelligent Practice for '
-                'Maths and Science Grade 10'),
-             u'Printed textbook for Maths and Science Grade 10',
-             u'Expert answers to 10 of your questions',
-            ])
 
     def setupMailHost(self):
         self.portal._original_MailHost = self.portal.MailHost
