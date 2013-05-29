@@ -1,16 +1,16 @@
-import os
 import unittest2 as unittest
 from plone.app.testing import TEST_USER_ID
-from base import INTEGRATION_TESTING
 
 from zope.component import getSiteManager
 from Products.CMFPlone.tests.utils import MockMailHost
 from Products.MailHost.interfaces import IMailHost
 from AccessControl import getSecurityManager
 
+from emas.theme.tests.base import INTEGRATION_TESTING
 
 class TestOrderForm(unittest.TestCase):
-    """ Test the nextprevious adapter """
+    """ Test the order process """
+
     layer = INTEGRATION_TESTING
 
     def setUp(self):
@@ -20,7 +20,6 @@ class TestOrderForm(unittest.TestCase):
         member = state.member()
         member.setProperties({'fullname': 'Tester One',
                               'email': 'testerone@example.com'})
-
 
     def beforeTearDown(self):
         self.restoreMailHost()
