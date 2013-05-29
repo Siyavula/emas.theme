@@ -1,4 +1,4 @@
-import os
+import unittest2 as unittest
 import lxml
 from lxml.etree import ParserError
 
@@ -12,9 +12,8 @@ from Products.CMFCore.utils import getToolByName
 from emas.theme.interfaces import IEmasThemeLayer
 from emas.theme import MessageFactory as _
 
-from emas.theme.tests.base import BaseFunctionalTestCase
+from emas.theme.tests.base import FUNCTIONAL_TESTING
 
-dirname = os.path.dirname(__file__)
 
 def find_viewlet(context, request, manager_name, viewlet_name, layer=None):
     if layer:
@@ -33,9 +32,11 @@ def find_viewlet(context, request, manager_name, viewlet_name, layer=None):
     return viewlets and viewlets[0] or None
 
 
-class TestPracticeServiceMessagesViewlet(BaseFunctionalTestCase):
+class TestPracticeServiceMessagesViewlet(unittest.TestCase):
     """ Test the intelligent practice messages service viewlets  """
     
+    layer = FUNCTIONAL_TESTING
+
     def setUp(self):
         super(TestPracticeServiceMessagesViewlet, self).setUp()
         self.setRoles(['Reader',])
