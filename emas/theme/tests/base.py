@@ -2,6 +2,7 @@ import unittest2 as unittest
 
 from Products.CMFCore.utils import getToolByName
 
+from plone.app.testing import TEST_USER_ID
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting, FunctionalTesting
@@ -54,8 +55,10 @@ class Fixture(PloneSandboxLayer):
         self.loadZCML('overrides.zcml', package=emas.theme)
 
     def setUpPloneSite(self, portal):
+        setRoles(portal, TEST_USER_ID, ['Administrator'])
         quickInstallProduct(portal, 'emas.theme')
         self.applyProfile(portal, '%s:default' % PROJECTNAME)
+        setRoles(portal, TEST_USER_ID, ['Member'])
 
     def tearDownZope(self, app):
         z2.uninstallProduct(app, PROJECTNAME)
