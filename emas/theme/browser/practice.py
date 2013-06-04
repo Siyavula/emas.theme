@@ -5,7 +5,7 @@ import lxml
 import logging
 from urllib import urlencode
 from urlparse import urlparse
-from collections import OrderedDict
+from ordereddict import OrderedDict
 from datetime import datetime, timedelta
 
 from ZPublisher import NotFound, BadRequest
