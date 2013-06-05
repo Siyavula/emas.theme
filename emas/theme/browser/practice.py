@@ -248,7 +248,7 @@ class Practice(BrowserView):
             for grade in grades:
                 msg = ''
                 template = 'Your access to %s practice will expire in %s days.'
-                if expiring_services.keys() == grades
+                if expiring_services.keys() == grades:
                     msg = template % (subject, expiry_date)
                 else:
                     services = ' and '.join([s.Title() for s in expiring_services])
@@ -262,7 +262,7 @@ class Practice(BrowserView):
             for grade in grades:
                 msg = ''
                 template = 'Your will still have access to %s practice until %s.'
-                if active_services.keys() == grades
+                if active_services.keys() == grades:
                     msg = template % (subject, expiry_date)
                 else:
                     services = ' and '.join([s.Title() for s in expiring_services])
