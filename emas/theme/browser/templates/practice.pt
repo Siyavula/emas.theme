@@ -46,23 +46,13 @@
         </div>
 
         <div tal:condition="view/services_active" id="content-core">
-            <div id="practice-service-messages"
-                tal:define="msgroups view/grouped_practice_services">
-                <tal:msgroups repeat="mskey msgroups">
-                <div tal:define="msgroup python:msgroups[mskey]">
-                <tal:warn condition="msgroup/show_expirywarning">
-                <div tal:define="expiring msgroup/expiring_services">
-                    <span tal:content="python:msgroup.format_expiry_messages(expiring)">expiring memberservice</span>
-                </div>
-                <div tal:define="active msgroup/still_active_services">
-                    <span tal:content="python:msgroup.format_active_messages(active)">active memberservice</span>
-                </div>
-                </tal:warn>
-                <tal:nowarn condition="not:msgroup/show_expirywarning">
-                    <span class="hidden">All's well.</span>
-                </tal:nowarn>
-                </div>
-                </tal:msgroups>
+            <div id="practice-service-messages">
+                <tal:expiring repeat="service view/expiring_services">
+                <span tal:replace="service/Title">service</span>
+                </tal:expiring>
+                <tal:active repeat="service view/still_active_services">
+                <span tal:replace="service/Title">service</span>
+                </tal:active>
             </div>
 
             <span tal:content="structure view/html">Practice content</span>

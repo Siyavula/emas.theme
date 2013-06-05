@@ -36,123 +36,6 @@ MONTH = 30
 YEAR = 365
 
 
-class MemberServiceGroup(object):
-    """ Non-persistent object used to group memberservices and some meta data.
-    """
-    implements(IMemberServiceGroup)
-
-    def __init__(self, context, settings, subject, member):
-        self.context = context
-        self.settings = settings
-        self.subject = subject
-        self.member = member
-        self.memberservices = []
-        sm = getSecurityManager()
-        self.ismanager = sm.checkPermission(
-            permissions.ManagePortal, self.context) or False
-
-    def expiring_services(self):
-        now = datetime.now()
-        messages = []
-        for ms in self.memberservices:
-            if self.is_expiring(now, ms):
-                messages.append(ms)
-        return messages
-    
-    def still_active_services(self):
-        now = datetime.now()
-        messages = []
-        for ms in self.memberservices:
-            if not self.is_expiring(now, ms):
-                messages.append(ms)
-        return messages
-    
-    def format_date(self, expiry_date):
-        now = datetime.now()
-        if expiry_date.year > now.year:
-            return expiry_date.strftime('%e %B %Y')
-        return expiry_date.strftime('%e %B')
-
-    def format_expiry_messages(self, expiring_memberservices):
-        now = datetime.now().date()
-        messages = []
-        for ms in expiring_memberservices:
-            days = (ms.expiry_date - now).days
-            grade = ms.related_service.to_object.grade.split('-')[-1]
-            msg = \
-                ('Your access to Grade %s %s practice will expire in %s days.' %
-                 (grade, self.subject, days))
-            messages.append(msg)
-
-        return '<br \>'.join(messages)
-            
-    def format_active_messages(self, active_memberservices):
-        now = datetime.now().date()
-        messages = []
-        for ms in active_memberservices:
-            expiry_date = ms.expiry_date
-            grade = ms.related_service.to_object.grade.split('-')[-1]
-            msg = \
-                ('You will still have access to Grade %s %s until %s.' %
-                 (grade, self.subject, expiry_date))
-            messages.append(msg)
-
-        return '<br \>'.join(messages)
-    
-    def sort_by_expiry_date(self):
-        self.memberservices.sort(key=lambda service: service.expiry_date)
-
-    def add_service(self, service):
-        self.memberservices.append(service)
-
-    def get_services(self):
-        return self.memberservices
-    
-    def first_expiry_date(self):
-        self.sort_by_expiry_date()
-        return self.memberservices and self.memberservices[0].expiry_date
-
-    def last_expiry_date(self):
-        self.sort_by_expiry_date()
-        return self.memberservices and self.memberservices[-1].expiry_date
-
-    def show_expirywarning(self):
-        # We don't show expiry warnings to manager users.
-        if self.ismanager:
-            return False
-
-        self.sort_by_expiry_date()
-        now = datetime.now()
-        for ms in self.memberservices:
-            if self.is_expiring(now, ms):
-                return True
-        return False
-    
-    def is_expiring(self, cutoff_date, memberservice):
-        days = self.memberservice_expiry_threshold(memberservice)
-        expiry_threshold = (cutoff_date + timedelta(days)).date()
-        if memberservice.expiry_date <= expiry_threshold:
-            return True
-        return False
-    
-    def memberservice_expiry_threshold(self, memberservice):
-        """ This method helps us decide when to show expiry warnings.
-
-            For all services that have subscription_period of a YEAR or less,
-            but not less than a MONTH, we want to show the message within the,
-            'annual_expiry_warning_threshold'.
-
-            For all services that have subscription_period of a MONTH or less,
-            we want to show the message within the,
-            'monthly_expiry_warning_threshold'. 
-        """
-        subperiod = memberservice.related_service.to_object.subscription_period
-        if subperiod <= MONTH:
-            return self.settings.monthly_expiry_warning_threshold
-        elif subperiod <= YEAR:
-            return self.settings.annual_expiry_warning_threshold
-
-
 class IPractice(Interface):
     """ Marker interface for IPractice """
 
@@ -352,27 +235,45 @@ class Practice(BrowserView):
                 
         return filteredms 
         
-    def grouped_practice_services(self):
-        path = '/'.join(self.context.getPhysicalPath())
-        subject = get_subject_from_path(path)
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        member = portal_state.member()
-
-        messages = OrderedDict()
+    def expiring_services(self):
+        now = datetime.now()
+        messages = []
         for ms in self.memberservices:
-            service = ms.related_service.to_object
-            if service.subject == subject:
-                grade = service.grade
-                msgroup = messages.get(subject, None)
-                if not msgroup:
-                    msgroup = MemberServiceGroup(self.context,
-                                                 self.settings,
-                                                 subject,
-                                                 member)
-                msgroup.add_service(ms)
-                messages[grade] = msgroup
-
+            if self.is_expiring(now, ms):
+                messages.append(ms)
         return messages
+    
+    def still_active_services(self):
+        now = datetime.now()
+        messages = []
+        for ms in self.memberservices:
+            if not self.is_expiring(now, ms):
+                messages.append(ms)
+        return messages
+    
+    def is_expiring(self, cutoff_date, memberservice):
+        days = self.memberservice_expiry_threshold(memberservice)
+        expiry_threshold = (cutoff_date + timedelta(days)).date()
+        if memberservice.expiry_date <= expiry_threshold:
+            return True
+        return False
+    
+    def memberservice_expiry_threshold(self, memberservice):
+        """ This method helps us decide when to show expiry warnings.
+
+            For all services that have subscription_period of a YEAR or less,
+            but not less than a MONTH, we want to show the message within the,
+            'annual_expiry_warning_threshold'.
+
+            For all services that have subscription_period of a MONTH or less,
+            we want to show the message within the,
+            'monthly_expiry_warning_threshold'. 
+        """
+        subperiod = memberservice.related_service.to_object.subscription_period
+        if subperiod <= MONTH:
+            return self.settings.monthly_expiry_warning_threshold
+        elif subperiod <= YEAR:
+            return self.settings.annual_expiry_warning_threshold
 
     def get_services(self, context):
         memberservices = []
