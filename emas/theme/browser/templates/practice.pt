@@ -47,12 +47,9 @@
 
         <div tal:condition="view/services_active" id="content-core">
             <div id="practice-service-messages">
-                <tal:expiring repeat="service view/expiring_services">
-                <span tal:replace="service/Title">service</span>
-                </tal:expiring>
-                <tal:active repeat="service view/still_active_services">
-                <span tal:replace="service/Title">service</span>
-                </tal:active>
+                <tal:messages repeat="message view/practice_service_messages">
+                <span tal:replace="message">service</span>
+                </tal:messages>
             </div>
 
             <span tal:content="structure view/html">Practice content</span>
