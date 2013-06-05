@@ -3,6 +3,8 @@ import httplib
 import urllib2
 import lxml
 import logging
+from types import ListType
+from itertools import chain
 from urllib import urlencode
 from urlparse import urlparse
 from ordereddict import OrderedDict
@@ -236,48 +238,67 @@ class Practice(BrowserView):
         return filteredms 
         
     def practice_service_messages(self):
-        subject = get_subject_from_path(path)
         messages = []
+        path = self.request.get_header('PATH_INFO', '')
+        subject = get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         expiring_services = self.expiring_services()
         active_services = self.active_services()
         grades = [10, 11, 12]
-        if expiring_services:
-            expiry_date = expiring_services.values().sort(
-                key=lambda service: service.expiry_date)[-1]
 
-            for grade in grades:
-                msg = ''
-                template = 'Your access to %s practice will expire in %s days.'
-                if expiring_services.keys() == grades:
-                    msg = template % (subject, expiry_date)
-                else:
-                    services = ' and '.join([s.Title() for s in expiring_services])
-                    msg = template % (services, expiry_date) 
+        if expiring_services:
+            # flatten the list of memberservice lists
+            memberservices = ListType(chain.from_iterable(expiring_services.values()))
+            # sort according to expiry_date
+            memberservices.sort(key=lambda service: service.expiry_date)
+            # use the last expiry date
+            expiry_date = memberservices[-1].expiry_date
+
+            msg = ''
+            template = 'Your access to %s practice will expire in %s days.'
+            service_grades = expiring_services.keys()
+            service_grades.sort()
+            if service_grades == grades:
+                msg = template % (subject, self.days_until(expiry_date))
+            else:
+                services = ' and '.join(['Grade %s' %s for s in service_grades])
+                services = ' %s %s' % (services, subject)
+                msg = template % (services, self.days_until(expiry_date))
                 messages.append(msg)
 
         if active_services:
-            expiry_date = active_services.values().sort(
-                key=lambda service: service.expiry_date)[-1]
+            # flatten the list of memberservice lists
+            memberservices = ListType(chain.from_iterable(active_services.values()))
+            # sort according to expiry_date
+            memberservices.sort(key=lambda service: service.expiry_date)
+            # use the last expiry date
+            expiry_date = memberservices[-1].expiry_date
 
-            for grade in grades:
-                msg = ''
-                template = 'Your will still have access to %s practice until %s.'
-                if active_services.keys() == grades:
-                    msg = template % (subject, expiry_date)
-                else:
-                    services = ' and '.join([s.Title() for s in expiring_services])
-                    msg = template % (services, expiry_date) 
+            msg = ''
+            template = 'Your will still have access to %s practice until %s.'
+            service_grades = active_services.keys()
+            service_grades.sort()
+            if service_grades == grades:
+                msg = template % (subject, expiry_date)
+            else:
+                services = ' and '.join(['Grade %s' %s for s in service_grades])
+                services = ' %s %s' % (services, subject)
+                msg = template % (services, expiry_date) 
                 messages.append(msg)
         return messages
+
+    def days_until(self, expiry_date):
+        now = datetime.now().date()
+        delta = expiry_date - now
+        return delta.days
         
     def expiring_services(self):
         now = datetime.now()
         expiring_services = {}
         for ms in self.memberservices:
             if self.is_expiring(now, ms):
-                grade = ms.related_service.to_object.grade.split('-')[-1]
+                grade = int(ms.related_service.to_object.grade.split('-')[-1])
                 tmpservices = expiring_services.get(grade, [])
-                tempservices.append(ms)
+                tmpservices.append(ms)
                 expiring_services[grade] = tmpservices
         return expiring_services
     
@@ -286,7 +307,7 @@ class Practice(BrowserView):
         active_services = {}
         for ms in self.memberservices:
             if not self.is_expiring(now, ms):
-                grade = ms.related_service.to_object.grade.split('-')[-1]
+                grade = int(ms.related_service.to_object.grade.split('-')[-1])
                 tmpservices = active_services.get(grade, [])
                 tmpservices.append(ms)
                 active_services[grade] = tmpservices
