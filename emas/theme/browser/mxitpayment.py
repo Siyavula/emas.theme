@@ -1,4 +1,5 @@
 import datetime
+import logging
 from urllib import urlencode
 from five import grok
 from Acquisition import aq_inner
@@ -28,6 +29,7 @@ from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import member_services 
 from emas.app.browser.utils import generate_verification_code
 
+log = logging.getLogger('emas.mobiletheme')
 
 MXIT_MESSAGES = {
     '0':
@@ -101,7 +103,13 @@ class MxitPaymentRequest(grok.View):
         self.transaction_reference = '%04d' % self.transaction_reference
 
         self.product_id = self.request.get('productId')
-        self.product = self.products_and_services._getOb(self.product_id)
+        try:
+            self.product = self.products_and_services._getOb(self.product_id)
+        except AttributeError:
+            raise AttributeError(
+                'Product with id %s not found' % self.product_id
+                )
+            
         self.product_name = self.product.title
         self.product_description = self.product.description
         
