@@ -271,14 +271,15 @@ class Practice(BrowserView):
             # sort according to expiry_date
             memberservices.sort(key=lambda service: service.expiry_date)
             # use the last expiry date
-            expiry_date = memberservices[-1].expiry_date
+            formatted_expiry_date = \
+                self.format_date(memberservices[-1].expiry_date)
 
             msg = ''
             template = 'You will still have access to %s practice until %s.'
             service_grades = active_services.keys()
             service_grades.sort()
             services = ' and '.join(['Grade %s' %s for s in service_grades])
-            msg = template % (services, expiry_date) 
+            msg = template % (services, formatted_expiry_date) 
             messages.append(msg)
 
         if expiring_services:
@@ -286,6 +287,11 @@ class Practice(BrowserView):
                 '<a href="/order">To extend your subscription, click here.</a>')
 
         return messages
+
+    def format_date(self, expiry_date):
+        if expiry_date.year == datetime.now().year:
+            return expiry_date.strftime("%e %B")
+        return expiry_date.strftime("%e %B %Y")
 
     def days_until(self, expiry_date):
         now = datetime.now().date()
