@@ -241,6 +241,7 @@ class Practice(BrowserView):
         messages = []
         path = self.request.get_header('PATH_INFO', '')
         subject = get_subject_from_path('/'.join(self.context.getPhysicalPath()))
+        subject = subject.capitalize()
         expiring_services = self.expiring_services()
         active_services = self.active_services()
         grades = [10, 11, 12]
@@ -262,7 +263,7 @@ class Practice(BrowserView):
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
                 msg = template % (services, self.days_until(expiry_date))
-                messages.append(msg)
+            messages.append(msg)
 
         if active_services:
             # flatten the list of memberservice lists
@@ -273,19 +274,16 @@ class Practice(BrowserView):
             expiry_date = memberservices[-1].expiry_date
 
             msg = ''
-            template = 'Your will still have access to %s practice until %s.'
+            template = 'You will still have access to %s practice until %s.'
             service_grades = active_services.keys()
             service_grades.sort()
-            if service_grades == grades:
-                msg = template % (subject, expiry_date)
-            else:
-                services = ' and '.join(['Grade %s' %s for s in service_grades])
-                msg = template % (services, expiry_date) 
-                messages.append(msg)
+            services = ' and '.join(['Grade %s' %s for s in service_grades])
+            msg = template % (services, expiry_date) 
+            messages.append(msg)
 
         if expiring_services:
             messages.append(
-                '<a href="/orders">To extend your subscription, click here.</a>')
+                '<a href="/order">To extend your subscription, click here.</a>')
 
         return messages
 
