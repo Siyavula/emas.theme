@@ -261,7 +261,6 @@ class Practice(BrowserView):
                 msg = template % (subject, self.days_until(expiry_date))
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
-                services = ' %s %s' % (services, subject)
                 msg = template % (services, self.days_until(expiry_date))
                 messages.append(msg)
 
@@ -281,9 +280,13 @@ class Practice(BrowserView):
                 msg = template % (subject, expiry_date)
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
-                services = ' %s %s' % (services, subject)
                 msg = template % (services, expiry_date) 
                 messages.append(msg)
+
+        if expiring_services:
+            messages.append(
+                '<a href="/orders">To extend your subscription, click here.</a>')
+
         return messages
 
     def days_until(self, expiry_date):

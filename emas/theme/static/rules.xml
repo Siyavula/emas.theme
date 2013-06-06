@@ -67,10 +67,12 @@
             css:theme="#portal-breadcrumbs"
             css:content="#portal-breadcrumbs" />
 
-        <!-- portal status message -->
+        <!-- practice service messages -->
         <replace
-            css:theme="dl.portalMessage"
-            css:content="dl#practice-service-messages" />
+            css:theme-children="dl.portalMessage"
+            css:content-children="dl#practice-service-messages" />
+        <!-- remove the original to stop message duplication -->
+        <drop css:content="div > dl#practice-service-messages" />
 
         <!-- portlets -->
         <after
