@@ -244,25 +244,21 @@ class Practice(BrowserView):
         subject = subject.capitalize()
         expiring_services = self.expiring_services()
         active_services = self.active_services()
+        for grade in expiring_services.keys():
+            active_services.pop(grade)
         grades = [10, 11, 12]
 
         if expiring_services:
-            # flatten the list of memberservice lists
-            memberservices = ListType(chain.from_iterable(expiring_services.values()))
-            # sort according to expiry_date
-            memberservices.sort(key=lambda service: service.expiry_date)
-            # use the last expiry date
-            expiry_date = memberservices[-1].expiry_date
-
+            earliest_date = self.earliest_date(expiring_services)
             msg = ''
             template = 'Your access to %s practice will expire in %s days.'
             service_grades = expiring_services.keys()
             service_grades.sort()
             if service_grades == grades:
-                msg = template % (subject, self.days_until(expiry_date))
+                msg = template % (subject, earliest_date)
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
-                msg = template % (services, self.days_until(expiry_date))
+                msg = template % (services, earliest_date)
             messages.append(msg)
 
         if active_services:
@@ -293,7 +289,13 @@ class Practice(BrowserView):
             return expiry_date.strftime("%e %B")
         return expiry_date.strftime("%e %B %Y")
 
-    def days_until(self, expiry_date):
+    def earliest_date(self, expiring_services):
+        # flatten the list of memberservice lists
+        memberservices = ListType(chain.from_iterable(expiring_services.values()))
+        # sort according to expiry_date
+        memberservices.sort(key=lambda service: service.expiry_date)
+        # use the last expiry date
+        expiry_date = memberservices[0].expiry_date
         now = datetime.now().date()
         delta = expiry_date - now
         return delta.days
