@@ -238,17 +238,16 @@ class Practice(BrowserView):
         return filteredms 
         
     def practice_service_messages(self):
+        grades = [10, 11, 12]
+
         messages = []
         path = self.request.get_header('PATH_INFO', '')
         subject = get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         subject = subject.capitalize()
-        expiring_services = self.expiring_services()
-        active_services = self.active_services()
-        for grade in expiring_services.keys():
-            active_services.pop(grade)
-        grades = [10, 11, 12]
 
-        if expiring_services:
+        expiring_services = self.expiring_services()
+        # Format messages about expiring services.
+        if expiring_services.values():
             earliest_date = self.earliest_date(expiring_services)
             msg = ''
             template = 'Your access to %s practice will expire in %s days.'
@@ -260,8 +259,16 @@ class Practice(BrowserView):
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
                 msg = template % (services, earliest_date)
             messages.append(msg)
-
-        if active_services:
+        else:
+            # no services expiring? Then don't show any messages.
+            return []
+        
+        # Now, we do the formatting of the active services.
+        active_services = self.active_services()
+        # Remove all the services that we already reported on above.
+        for grade in expiring_services.keys():
+            active_services.pop(grade, None)
+        if active_services.values():
             # flatten the list of memberservice lists
             memberservices = ListType(chain.from_iterable(active_services.values()))
             # sort according to expiry_date
@@ -277,7 +284,8 @@ class Practice(BrowserView):
             services = ' and '.join(['Grade %s' %s for s in service_grades])
             msg = template % (services, formatted_expiry_date) 
             messages.append(msg)
-
+        
+        # Lastly, add a link to the order form.
         if expiring_services:
             messages.append(
                 '<a href="/order">To extend your subscription, click here.</a>')
