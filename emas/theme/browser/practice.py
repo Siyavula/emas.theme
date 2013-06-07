@@ -248,16 +248,18 @@ class Practice(BrowserView):
         expiring_services = self.expiring_services()
         # Format messages about expiring services.
         if expiring_services.values():
-            earliest_date = self.earliest_date(expiring_services)
             msg = ''
-            template = 'Your access to %s practice will expire in %s days.'
+            num_days = self.number_of_days_until(expiring_services)
+            days = num_days > 1 and 'days.' or 'day.'
+            template = 'Your access to %s practice will expire in %s '+days
+
             service_grades = expiring_services.keys()
             service_grades.sort()
             if service_grades == grades:
-                msg = template % (subject, earliest_date)
+                msg = template % (subject, num_days)
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
-                msg = template % (services, earliest_date)
+                msg = template % (services, num_days)
             messages.append(msg)
         else:
             # no services expiring? Then don't show any messages.
@@ -297,7 +299,7 @@ class Practice(BrowserView):
             return expiry_date.strftime("%e %B")
         return expiry_date.strftime("%e %B %Y")
 
-    def earliest_date(self, expiring_services):
+    def number_of_days_until(self, expiring_services):
         # flatten the list of memberservice lists
         memberservices = ListType(chain.from_iterable(expiring_services.values()))
         # sort according to expiry_date
