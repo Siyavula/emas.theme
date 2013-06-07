@@ -69,10 +69,14 @@
 
         <!-- practice service messages -->
         <replace
+            css:if="div > dl#practice-service-messages > dd"
             css:theme-children="dl.portalMessage"
             css:content-children="dl#practice-service-messages" />
         <!-- remove the original to stop message duplication -->
         <drop css:content="div > dl#practice-service-messages" />
+        <drop 
+            css:if-not="div > dl#practice-service-messages > dd"
+            css:theme="dl.portalMessage" />
 
         <!-- portlets -->
         <after

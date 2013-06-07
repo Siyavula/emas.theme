@@ -41,9 +41,10 @@
             information to give you better advice.</p>
         </div>
 
-        <div tal:condition="view/services_active" id="content-core">
-            <dl class="portalMessage info" id="practice-service-messages">
-                <tal:messages repeat="message view/practice_service_messages">
+        <div tal:condition="view/services_active" id="content-core"
+            tal:define="messages view/practice_service_messages">
+            <dl class="portalMessage info" id="practice-service-messages" tal:condition="python:len(messages) > 0">
+                <tal:messages repeat="message messages">
                 <dd tal:content="structure message">service</dd>
                 </tal:messages>
             </dl>
