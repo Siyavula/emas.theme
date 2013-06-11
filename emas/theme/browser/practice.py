@@ -25,7 +25,7 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services
+from emas.app.browser.utils import member_services_for_subject
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
 
 from emas.theme.interfaces import IEmasSettings, IMemberServiceGroup
@@ -63,6 +63,8 @@ class Practice(BrowserView):
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
         
+        self.subject = \
+            get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         self.memberservices = []
         self.practice_services = []
         self.accessto = ''
@@ -80,7 +82,7 @@ class Practice(BrowserView):
                         'science-grade-10,science-grade-11,science-grade-12')
         elif member.getId():
             self.memberservices, self.practice_services = \
-                self.get_services(self.context)
+                self.get_services(self.context, member.getId(), self.subject)
             self.accessto = self.get_accessto(self.practice_services)
         else:
             self.accessto = ''
@@ -239,11 +241,7 @@ class Practice(BrowserView):
         
     def practice_service_messages(self):
         grades = [10, 11, 12]
-
         messages = []
-        path = self.request.get_header('PATH_INFO', '')
-        subject = get_subject_from_path('/'.join(self.context.getPhysicalPath()))
-        subject = subject.capitalize()
 
         expiring_services = self.expiring_services()
         # Format messages about expiring services.
@@ -256,7 +254,7 @@ class Practice(BrowserView):
             service_grades = expiring_services.keys()
             service_grades.sort()
             if service_grades == grades:
-                msg = template % (subject, num_days)
+                msg = template % (self.subject.capitalize(), num_days)
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
                 msg = template % (services, num_days)
@@ -356,12 +354,15 @@ class Practice(BrowserView):
         elif subperiod <= YEAR:
             return self.settings.annual_expiry_warning_threshold
 
-    def get_services(self, context):
+    def get_services(self, context, userid, subject):
         memberservices = []
         services = []
 
         service_uuids = practice_service_uuids(self.context)
-        tmpservices = member_services(self.context, service_uuids)
+        tmpservices = member_services_for_subject(self.context,
+                                                  service_uuids,
+                                                  userid,
+                                                  subject)
         for ms in tmpservices:
             service = ms.related_service.to_object
             if '@@practice' in service.access_path:
