@@ -32,6 +32,8 @@
 
     <adapter factory=".exportimport.TopicIndexNodeAdapter"/>
 
+    <adapter factory="emas.theme.httpcharsets.MoreCharsets" />
+
     <browser:page
         for="*"
         name="answered-message"
