@@ -131,9 +131,10 @@ class Practice(BrowserView):
         # Handle response from Monassis server
         response = conn.getresponse()
 
-        # Force no caching of response
-        self.request.RESPONSE.appendHeader('Cache-Control',
-                                           'no-store, no-cache')
+        # Force no caching of response, unless /static or /image
+        if tuple(path.split('/')[:2]) not in [('','static'), ('','image')]:
+            self.request.RESPONSE.appendHeader('Cache-Control',
+                                               'no-store, no-cache')
 
         if response.status == 200:   # Ok
             body = response.read()
