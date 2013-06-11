@@ -273,9 +273,9 @@ class Practice(BrowserView):
             memberservices = ListType(chain.from_iterable(active_services.values()))
             # sort according to expiry_date
             memberservices.sort(key=lambda service: service.expiry_date)
-            # use the last expiry date
+            # use the first expiry date
             formatted_expiry_date = \
-                self.format_date(memberservices[-1].expiry_date)
+                self.format_date(memberservices[0].expiry_date)
 
             msg = ''
             template = 'You will still have access to %s practice until %s.'
