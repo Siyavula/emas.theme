@@ -248,16 +248,20 @@ class Practice(BrowserView):
         if expiring_services.values():
             msg = ''
             num_days = self.number_of_days_until(expiring_services)
-            days = num_days > 1 and 'days.' or 'day.'
-            template = 'Your access to %s practice will expire in %s '+days
+            if num_days < 1:
+                days = 'today.'
+            else:
+                days = num_days > 1 and 'in %s days.' or 'in %s day.'
+                days = days % num_days
+            template = 'Your access to %s practice will expire '+days
 
             service_grades = expiring_services.keys()
             service_grades.sort()
             if service_grades == grades:
-                msg = template % (self.subject.capitalize(), num_days)
+                msg = template % self.subject.capitalize()
             else:
                 services = ' and '.join(['Grade %s' %s for s in service_grades])
-                msg = template % (services, num_days)
+                msg = template % services
             messages.append(msg)
         else:
             # no services expiring? Then don't show any messages.
