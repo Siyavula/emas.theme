@@ -6,6 +6,9 @@ import zope.event
 from Products.CMFCore.utils import getToolByName
 from Products.PluggableAuthService.events import PropertiesUpdated 
 
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import logout, login, setRoles
+
 from emas.theme.tests.base import FUNCTIONAL_TESTING
 from emas.theme.browser.tests.test_practice_service_messages_viewlet import \
     find_viewlet
@@ -20,7 +23,8 @@ class TestEventhandlers(unittest.TestCase):
     
     def setUp(self):
         super(TestEventhandlers, self).setUp()
-        self.setRoles(['Reader',])
+        self.portal = self.layer['portal']
+        setRoles(self.portal, TEST_USER_ID, ['Reader'])
         self.context = self.portal.maths
         self.request = self.portal.REQUEST
         self.manager_name = 'plone.belowcontenttitle'
@@ -30,7 +34,7 @@ class TestEventhandlers(unittest.TestCase):
     def test_first_login_message(self):
         portal_state = self.portal.restrictedTraverse('@@plone_portal_state')
         member = portal_state.member()
-        self.setRoles('Owner')
+        setRoles(self.portal, TEST_USER_ID, ['Reader'])
         default = DateTime('2000/01/01')
         member.setProperties(login_time=default,
                              last_login_time=default)
