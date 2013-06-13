@@ -22,8 +22,8 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
+from emas.app.memberservice import member_services
 
 from emas.theme.interfaces import IEmasSettings
 

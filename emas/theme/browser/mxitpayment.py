@@ -25,8 +25,8 @@ from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 from emas.app.order import MOOLA
 from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services 
 from emas.app.browser.utils import generate_verification_code
+from emas.app.memberservice import member_services 
 
 
 MXIT_MESSAGES = {

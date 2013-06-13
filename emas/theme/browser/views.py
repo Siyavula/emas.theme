@@ -33,7 +33,7 @@ from emas.app.browser.utils import member_credits
 from emas.app.browser.utils import practice_service_expirydate
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import subject_and_grade
-from emas.app.browser.utils import member_services 
+from emas.app.memberservice import member_services
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
