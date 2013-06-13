@@ -26,7 +26,7 @@ from pas.plugins.mxit.plugin import USER_ID_TOKEN
 from emas.app.order import MOOLA
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import generate_verification_code
-from emas.app.memberservice import member_services 
+from emas.app.memberservice import MemberServicesDataAccess 
 
 
 MXIT_MESSAGES = {
@@ -155,7 +155,8 @@ class MxitPaymentRequest(grok.View):
         
         # get all active services for this user
         service_uuids = practice_service_uuids(self.context)
-        memberservices = member_services(self.context, service_uuids)
+        dao = MemberServicesDataAccess(self.context)
+        memberservices = dao.get_member_services(service_uuids, memberid)
         active_services = [m.related_service.to_object for m in memberservices]
 
         # check if the currently requested one is in the list

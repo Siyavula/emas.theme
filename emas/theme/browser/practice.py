@@ -23,7 +23,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
-from emas.app.memberservice import member_services
+from emas.app.memberservice import MemberServicesDataAccess 
 
 from emas.theme.interfaces import IEmasSettings
 
@@ -267,8 +267,11 @@ class Practice(BrowserView):
         memberservices = []
         services = []
 
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = pps.member().getId()
         service_uuids = practice_service_uuids(self.context)
-        tmpservices = member_services(self.context, service_uuids)
+        dao = MemberServicesDataAccess(self.context)
+        tmpservices = dao.get_member_services(service_uuids, memberid)
         for ms in tmpservices:
             service = ms.related_service.to_object
             if '@@practice' in service.access_path:

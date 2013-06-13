@@ -33,7 +33,7 @@ from emas.app.browser.utils import member_credits
 from emas.app.browser.utils import practice_service_expirydate
 from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import subject_and_grade
-from emas.app.memberservice import member_services
+from emas.app.memberservice import MemberServicesDataAccess
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
@@ -326,7 +326,10 @@ class EnabledServicesView(BrowserView):
             return True
         
         service_uuids = practice_service_uuids(context)
-        memberservices = member_services(context, service_uuids)
+        ps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = ps.member().getId()
+        dao = MemberServicesDataAccess(self.context)
+        memberservices = dao.get_member_services(service_uuids, memberid)
         # if we cannot find any memberservices the exercise link should not be
         # available.
         if memberservices is None or len(memberservices) < 1:
