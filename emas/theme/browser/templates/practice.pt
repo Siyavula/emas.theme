@@ -11,45 +11,43 @@
 
         <div id="practice-content"></div>
 
-        <div tal:condition="not:view/services_active">
-            <div id="content-core">
-                <h3>You don't have access to Intelligent Practice right now</h3>
+        <div tal:condition="not:view/services_active" id="content-core">
+            <h3>You don't have access to Intelligent Practice right now</h3>
 
-                <p>Why?</p>
+            <p>Why?</p>
 
-                <p>When your account was created you either:</p>
-                <ul>
-                    <li>paid for a subscription and your subscription has expired, or</li>
-                    <li>you automatically had access via our time-limited, free trial and that has expired.</li>
-                </ul>
+            <p>When your account was created you either:</p>
+            <ul>
+                <li>paid for a subscription and your subscription has expired, or</li>
+                <li>you automatically had access via our time-limited, free trial and that has expired.</li>
+            </ul>
 
-                <p>What can you do about this?</p>
+            <p>What can you do about this?</p>
 
-                <p>You need to <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">subscribe to Intelligent Practice</a>. 
-                    If your school signed you up then you should ask your 
-                    teacher what the status of the school's subscription is. 
-                    If you signed up individually you need to renew your 
-                    subscription via the <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">orders page</a>.</p>
+            <p>You need to <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">subscribe to Intelligent Practice</a>. 
+                If your school signed you up then you should ask your 
+                teacher what the status of the school's subscription is. 
+                If you signed up individually you need to renew your 
+                subscription via the <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">orders page</a>.</p>
 
-                <p>Even if your school signed you up originally, you can make an 
-                    individual order to extend your account.</p>
+            <p>Even if your school signed you up originally, you can make an 
+                individual order to extend your account.</p>
 
-                <p>What about my previous data?</p>
+            <p>What about my previous data?</p>
 
-                <p>We don't delete your Intelligent Practice history for 3 months. As 
-                long as you subscribe again within 3 months your history will still be 
-                available and Intelligent Practice will be able to use that 
-                information to give you better advice.</p>
-
-
-            </div>
+            <p>We don't delete your Intelligent Practice history for 3 months. As 
+            long as you subscribe again within 3 months your history will still be 
+            available and Intelligent Practice will be able to use that 
+            information to give you better advice.</p>
         </div>
 
-        <div tal:condition="view/services_active" id="content-core">
-            <div id="expiry-warning" tal:condition="view/show_expirywarning">
-                Your Intelligent Practice access expires in <span tal:replace="view/get_days_to_expiry_date">30</span> days.
-		Click <a href="#" tal:attributes="href string:${context/absolute_url}/@@order">here</a> to renew now.
-            </div>
+        <div tal:condition="view/services_active" id="content-core"
+            tal:define="messages view/practice_service_messages">
+            <dl class="portalMessage info" id="practice-service-messages" tal:condition="python:len(messages) > 0">
+                <tal:messages repeat="message messages">
+                <dd tal:content="structure message">service</dd>
+                </tal:messages>
+            </dl>
 
             <span tal:content="structure view/html">Practice content</span>
         </div>

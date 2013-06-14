@@ -29,7 +29,8 @@ setup(name='emas.theme',
           'rhaptos.xmlfile',
           'rhaptos.cnxmltransforms',
           'upfront.shorturl',
-          'asciimathml'
+          'asciimathml',
+          'ordereddict',
       ],
       tests_require=[
         'plone.app.registry',
