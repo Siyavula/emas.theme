@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.31
+----
+
+- More informative practice service expiry message
+
 1.30
 ----
 
