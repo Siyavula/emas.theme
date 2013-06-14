@@ -29,6 +29,7 @@ td, th {
     background-color:#efefef;
     color: #000000;
     width: 100%;
+    padding-bottom:20px;
 }
 
 #navbar {
@@ -48,19 +49,21 @@ td, th {
     line-height: 100%;
 }
 
+
+
 #sitetitletop {
     padding: 0.7em 0 0;
-    font-size: 2.6em;
+    font-size: 2.2em;
 }
+
 #sitetitletop a {
     color: #bbb;
 }
 #sitetitlebottom {
-    font-size: 2.6em;
-    letter-spacing: 10px;
+    color:black;
 }
 #sitetitlebottom a {
-    color: #111;
+    color: black;
 }
 #belowtitle {
     color: #008fb4;
