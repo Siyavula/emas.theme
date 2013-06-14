@@ -3,8 +3,11 @@ import httplib
 import urllib2
 import lxml
 import logging
+from types import ListType
+from itertools import chain
 from urllib import urlencode
 from urlparse import urlparse
+from ordereddict import OrderedDict
 from datetime import datetime, timedelta
 
 from ZPublisher import NotFound, BadRequest
@@ -25,7 +28,7 @@ from emas.app.browser.utils import practice_service_uuids
 from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
 from emas.app.memberservice import MemberServicesDataAccess 
 
-from emas.theme.interfaces import IEmasSettings
+from emas.theme.interfaces import IEmasSettings, IMemberServiceGroup
 
 from emas.theme import MessageFactory as _
 
@@ -33,6 +36,7 @@ log = logging.getLogger('emas.theme.browser.practice')
 
 MONTH = 30
 YEAR = 365
+
 
 class IPractice(Interface):
     """ Marker interface for IPractice """
@@ -59,6 +63,8 @@ class Practice(BrowserView):
     def __call__(self, *args, **kw):
         alsoProvides(self.request, IPracticeLayer)
         
+        self.subject = \
+            get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         self.memberservices = []
         self.practice_services = []
         self.accessto = ''
@@ -76,7 +82,7 @@ class Practice(BrowserView):
                         'science-grade-10,science-grade-11,science-grade-12')
         elif member.getId():
             self.memberservices, self.practice_services = \
-                self.get_services(self.context)
+                self.get_services(self.context, member.getId(), self.subject)
             self.accessto = self.get_accessto(self.practice_services)
         else:
             self.accessto = ''
@@ -125,9 +131,10 @@ class Practice(BrowserView):
         # Handle response from Monassis server
         response = conn.getresponse()
 
-        # Force no caching of response
-        self.request.RESPONSE.appendHeader('Cache-Control',
-                                           'no-store, no-cache')
+        # Force no caching of response, unless /static or /image
+        if tuple(path.split('/')[:2]) not in [('','static'), ('','image')]:
+            self.request.RESPONSE.appendHeader('Cache-Control',
+                                               'no-store, no-cache')
 
         if response.status == 200:   # Ok
             body = response.read()
@@ -193,7 +200,7 @@ class Practice(BrowserView):
     def get_days_to_expiry_date(self):
         """ Sort member services according to expiry date,
             closest to expiry first.
-            Then return the difference in days, beteen 'now'
+            Then return the difference in days, between 'now'
             and the member service expiry date.
             This is naive, since the member services potentially all have
             different expiry dates.
@@ -233,17 +240,106 @@ class Practice(BrowserView):
                 
         return filteredms 
         
-    def show_expirywarning(self):
-        # We don't show expiry warnings to manager users.
-        if self.ismanager:
-            return False
+    def practice_service_messages(self):
+        grades = [10, 11, 12]
+        messages = []
 
+        expiring_services = self.expiring_services()
+        # Format messages about expiring services.
+        if expiring_services.values():
+            msg = ''
+            num_days = self.number_of_days_until(expiring_services)
+            if num_days < 1:
+                days = 'today.'
+            else:
+                days = num_days > 1 and 'in %s days.' or 'in %s day.'
+                days = days % num_days
+            template = 'Your access to %s practice will expire '+days
+
+            service_grades = expiring_services.keys()
+            service_grades.sort()
+            if service_grades == grades:
+                msg = template % self.subject.capitalize()
+            else:
+                services = ' and '.join(['Grade %s' %s for s in service_grades])
+                msg = template % services
+            messages.append(msg)
+        else:
+            # no services expiring? Then don't show any messages.
+            return []
+        
+        # Now, we do the formatting of the active services.
+        active_services = self.active_services()
+        # Remove all the services that we already reported on above.
+        for grade in expiring_services.keys():
+            active_services.pop(grade, None)
+        if active_services.values():
+            # flatten the list of memberservice lists
+            memberservices = ListType(chain.from_iterable(active_services.values()))
+            # sort according to expiry_date
+            memberservices.sort(key=lambda service: service.expiry_date)
+            # use the first expiry date
+            formatted_expiry_date = \
+                self.format_date(memberservices[0].expiry_date)
+
+            msg = ''
+            template = 'You will still have access to %s practice until %s.'
+            service_grades = active_services.keys()
+            service_grades.sort()
+            services = ' and '.join(['Grade %s' %s for s in service_grades])
+            msg = template % (services, formatted_expiry_date) 
+            messages.append(msg)
+        
+        # Lastly, add a link to the order form.
+        if expiring_services:
+            messages.append(
+                '<a href="/order">To extend your subscription, click here.</a>')
+
+        return messages
+
+    def format_date(self, expiry_date):
+        if expiry_date.year == datetime.now().year:
+            return expiry_date.strftime("%e %B")
+        return expiry_date.strftime("%e %B %Y")
+
+    def number_of_days_until(self, expiring_services):
+        # flatten the list of memberservice lists
+        memberservices = ListType(chain.from_iterable(expiring_services.values()))
+        # sort according to expiry_date
+        memberservices.sort(key=lambda service: service.expiry_date)
+        # use the last expiry date
+        expiry_date = memberservices[0].expiry_date
+        now = datetime.now().date()
+        delta = expiry_date - now
+        return delta.days
+        
+    def expiring_services(self):
         now = datetime.now()
-        for s in self.memberservices:
-            days = self.memberservice_expiry_threshold(s)
-            expiry_threshold = (now + timedelta(days)).date()
-            if s.expiry_date <= expiry_threshold:
-                return True
+        expiring_services = {}
+        for ms in self.memberservices:
+            if self.is_expiring(now, ms):
+                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                tmpservices = expiring_services.get(grade, [])
+                tmpservices.append(ms)
+                expiring_services[grade] = tmpservices
+        return expiring_services
+    
+    def active_services(self):
+        now = datetime.now()
+        active_services = {}
+        for ms in self.memberservices:
+            if not self.is_expiring(now, ms):
+                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                tmpservices = active_services.get(grade, [])
+                tmpservices.append(ms)
+                active_services[grade] = tmpservices
+        return active_services
+    
+    def is_expiring(self, cutoff_date, memberservice):
+        days = self.memberservice_expiry_threshold(memberservice)
+        expiry_threshold = (cutoff_date + timedelta(days)).date()
+        if memberservice.expiry_date <= expiry_threshold:
+            return True
         return False
     
     def memberservice_expiry_threshold(self, memberservice):
@@ -263,7 +359,7 @@ class Practice(BrowserView):
         elif subperiod <= YEAR:
             return self.settings.annual_expiry_warning_threshold
 
-    def get_services(self, context):
+    def get_services(self, context, userid, subject):
         memberservices = []
         services = []
 
@@ -271,7 +367,10 @@ class Practice(BrowserView):
         memberid = pps.member().getId()
         service_uuids = practice_service_uuids(self.context)
         dao = MemberServicesDataAccess(self.context)
-        tmpservices = dao.get_member_services(service_uuids, memberid)
+        tmpservices = dao.get_member_services_by_subject(service_uuids,
+                                                         memberid,
+                                                         subject)
+
         for ms in tmpservices:
             service = ms.related_service.to_object
             if '@@practice' in service.access_path:

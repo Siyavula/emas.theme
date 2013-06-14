@@ -176,3 +176,15 @@ class IEmasServiceCost(Interface):
         required=False,
         default=200
     )
+
+
+class IMemberServiceGroup(Interface):
+
+    def __init__(self, groupname, expirydate=None, services=[]):
+        pass
+    
+    def add_service(self, service):
+        pass
+
+    def get_services(self):
+        pass

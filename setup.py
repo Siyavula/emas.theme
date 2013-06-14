@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.29'
+version = '1.31'
 
 setup(name='emas.theme',
       version=version,
@@ -29,7 +29,8 @@ setup(name='emas.theme',
           'rhaptos.xmlfile',
           'rhaptos.cnxmltransforms',
           'upfront.shorturl',
-          'asciimathml'
+          'asciimathml',
+          'ordereddict',
       ],
       tests_require=[
         'plone.app.registry',
