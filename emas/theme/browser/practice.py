@@ -197,49 +197,6 @@ class Practice(BrowserView):
         """
         return self.ismanager or len(self.memberservices) > 0
     
-    def get_days_to_expiry_date(self):
-        """ Sort member services according to expiry date,
-            closest to expiry first.
-            Then return the difference in days, between 'now'
-            and the member service expiry date.
-            This is naive, since the member services potentially all have
-            different expiry dates.
-
-            TODO:
-            Update the design in conjunction with the Siyavula team.
-        """
-        path = self.request.get_header('PATH_INFO', '')
-        subject = get_subject_from_path(path)
-        grade = get_grade_from_path(path)
-
-        days = self.settings.annual_expiry_warning_threshold
-        now = datetime.now().date()
-
-        for ms in self.filtered(self.memberservices, subject, grade):
-            delta = (ms.expiry_date - now).days
-            if delta < days:
-                days = delta
-        return days
-
-    def filtered(self, memberservices, subject, grade):
-        # Short circuit the filtering here. If we don't have a subject, we
-        # cannot filter properly.
-        if  subject == None:
-            return memberservices
-
-        filteredms = []
-        for ms in memberservices:
-            service = ms.related_service.to_object
-            if service.subject == subject:
-                # if we don't have a grade, we want to return this memberservice
-                if not grade:
-                    filteredms.append(ms)
-                # if we have a grade, check it
-                elif service.grade == grade:
-                    filteredms.append(ms)
-                
-        return filteredms 
-        
     def practice_service_messages(self):
         grades = [10, 11, 12]
         messages = []
