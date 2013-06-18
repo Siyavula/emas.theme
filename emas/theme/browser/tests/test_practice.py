@@ -3,41 +3,51 @@ import transaction
 from datetime import datetime, date, timedelta
 import unittest2 as unittest
 from DateTime import DateTime
-from emas.theme.tests.base import BaseFunctionalTestCase
 
 from zExceptions import Unauthorized
 from zope.component import queryUtility
+from zope.intid.interfaces import IIntIds
 from zope.publisher.browser import TestRequest
 from z3c.relationfield.relation import create_relation
 
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 from plone.dexterity.utils import createContentInContainer
+from plone.app.testing import logout, login, setRoles
+from plone.app.testing import TEST_USER_ID
 
 from emas.theme.interfaces import IEmasSettings
-from emas.app.member_service import IMemberService
+from emas.app.memberservice import IMemberService, MemberServicesDataAccess
 from emas.app.service import IService
 from emas.theme.browser.practice import IPractice, Practice
 
+from emas.theme.tests.base import INTEGRATION_TESTING
+
 NUM_SERVICES = 6
 
-class TestPracticeBrowserView(BaseFunctionalTestCase):
+class TestPracticeBrowserView(unittest.TestCase):
     
+    layer = INTEGRATION_TESTING
+
     def setUp(self):
         super(TestPracticeBrowserView, self).setUp()
+        self.portal = self.layer['portal']
         settings = queryUtility(IRegistry).forInterface(IEmasSettings)
-        settings.practiceurl = u'http://localhost:37183'
+        settings.practiceurl = u'http://localhost:27183'
+        self.dao = MemberServicesDataAccess(self.portal)
+        self.intids = queryUtility(IIntIds, context=self.portal)
+        self.services = self.portal._getOb('products_and_services')
         
     def test_not_logged_in(self):
-        self.logout()
-        view = self.portal.restrictedTraverse('@@practice')
+        logout()
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.assertRaises(Unauthorized, view,
                          'The system should force a login.')
 
-    def test_logged_in_not_active(self):
+    def test_logged_in_memberservices_expired(self):
         self.deactivate_services()
 
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view) 
         result = view()
 
@@ -50,8 +60,8 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         self.assertGreater(len(elements), 0,
                            'No order links found.')
 
-    def test_logged_in_not_expired(self):
-        view = self.portal.restrictedTraverse('@@practice')
+    def test_logged_in_memberservices_active(self):
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         result = view()
 
@@ -63,7 +73,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                            'There should be no order links.')
     
     def test_logged_in_grade10_maths(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         result = view()
 
@@ -77,7 +87,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         member.setProperties(login_time=default,
                              last_login_time=default)
 
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         # The call to loginUser is the one that fires the required event.
         # The testcase's login method simly creates a new security manager, it
@@ -94,7 +104,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
         Memberservice are only valid for 30 days and the expiry warning for
         monthly services is 7 days before expiry. So they should not show now.
         """
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         result = view()
         self.assertEqual(view.show_expirywarning(), False,
@@ -102,14 +112,14 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
 
     def test_expiry_warning_for_manager(self):
         self.setRoles(('Manager',))
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         result = view()
         self.assertEqual(view.show_expirywarning(), False,
                          "We don't show expiry warnings to manager users.")
 
     def test_get_services(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         result = view()
 
@@ -125,7 +135,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                 'The practice_service does not provide the correct interface.')
 
     def test_get_services_with_empty_access_path(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         memberservices, services = view.get_services(self.portal)
 
         self.assertEqual(len(memberservices), NUM_SERVICES,
@@ -145,7 +155,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                          'There should be 0 practice services.')
     
     def test_filtered_services_for_maths_grade10(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         view()
 
@@ -156,7 +166,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                          'There can be onle one!')
 
     def test_filtered_services_for_maths(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         view()
 
@@ -167,7 +177,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                          'We should find 3  member services for maths.')
 
     def test_filtered_services_for_None_subject_None_grade(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         view()
 
@@ -179,7 +189,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
     def test_manager_user_access(self):
         self.setRoles(('Manager',))
         self.deactivate_services()
-        view = self.portal.maths.restrictedTraverse('@@practice')
+        view = self.portal.maths.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         view()
         
@@ -193,7 +203,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                          'Manager always has access.')
     
     def test_days_to_expiry_date_calculation(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         self.update_request(view)
         view()
         
@@ -206,7 +216,7 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
                              'Expiry date should be %s days away.' % numdays)
     
     def test_subject_and_grade_computing_no_subject_no_grade(self):
-        view = self.portal.restrictedTraverse('@@practice')
+        view = self.portal.restrictedTraverse('maths/@@practice')
         view()
         self.assertEqual(view.get_days_to_expiry_date(), Practice.NUM_DAYS,
                          'Expiry date should be %s days away.' % Practice.NUM_DAYS)
@@ -223,15 +233,17 @@ class TestPracticeBrowserView(BaseFunctionalTestCase):
             service.reindexObject(idxs=['expiry_date'])
 
     def deactivate_services(self):
-        memberservices = self.portal._getOb('memberservices')
+        service_uids = [self.intids.getId(service) \
+                        for service in self.services.objectValues()]
+        memberservices = self.dao.get_memberservices(service_uids, TEST_USER_ID)
         expired = date(1970, 01, 01)
-        for service in memberservices.objectValues():
+        for service in memberservices:
             service.expiry_date = expired
-            service.reindexObject(idxs=['expiry_date'])
+            self.dao.update_memberservice(service)
 
     def update_request(self, view):
         cookie = ''
-        path = '/emas/maths/@@practice/grade-10'
+        path = 'maths/@@practice/grade-10'
         host = 'localhost:8080'
         serverurl = 'http://%s' % host
         referer = '%s%s' % (serverurl, path)
