@@ -24,11 +24,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
+from emas.app.browser.utils import practice_service_intids
+from emas.app.browser.utils import get_subject_from_path
 from emas.app.memberservice import MemberServicesDataAccess 
 
-from emas.theme.interfaces import IEmasSettings, IMemberServiceGroup
+from emas.theme.interfaces import IEmasSettings
 
 from emas.theme import MessageFactory as _
 
@@ -322,11 +322,10 @@ class Practice(BrowserView):
 
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         memberid = pps.member().getId()
-        service_uuids = practice_service_uuids(self.context)
+        service_uuids = practice_service_intids(self.context)
         dao = MemberServicesDataAccess(self.context)
-        tmpservices = dao.get_member_services_by_subject(service_uuids,
-                                                         memberid,
-                                                         subject)
+        tmpservices = dao.get_memberservices_by_subject(memberid,
+                                                        subject)
 
         for ms in tmpservices:
             service = ms.related_service.to_object

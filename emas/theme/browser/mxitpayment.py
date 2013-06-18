@@ -25,7 +25,7 @@ from pas.plugins.mxit.plugin import password_hash
 from pas.plugins.mxit.plugin import USER_ID_TOKEN
 
 from emas.app.order import MOOLA
-from emas.app.browser.utils import practice_service_uuids
+from emas.app.browser.utils import practice_service_intids
 from emas.app.browser.utils import generate_verification_code
 from emas.app.memberservice import MemberServicesDataAccess 
 
@@ -162,9 +162,9 @@ class MxitPaymentRequest(grok.View):
         url = '%s/%s' %(self.navroot.absolute_url(), self.product.access_path)
         
         # get all active services for this user
-        service_uuids = practice_service_uuids(self.context)
+        service_intids = practice_service_intids(self.context)
         dao = MemberServicesDataAccess(self.context)
-        memberservices = dao.get_member_services(service_uuids, memberid)
+        memberservices = dao.get_member_services(service_intids, memberid)
         active_services = [m.related_service.to_object for m in memberservices]
 
         # check if the currently requested one is in the list
@@ -250,46 +250,3 @@ class MxitPaymentResponse(grok.View):
 
     def get_url(self):
         return '%s/%s' %(self.navroot.absolute_url(), self.service.access_path)
-
-    def get_memberservice(self, service, memberid, memberservices, portal):
-        now = datetime.datetime.now().date()
-        pms = getToolByName(portal, 'portal_membership')
-        pc = getToolByName(portal, 'portal_catalog')
-        query = {'portal_type': 'emas.app.memberservice',
-                 'serviceuid': IUUID(service),
-                 'userid': memberid,
-                }
-        brains = pc(query)
-
-        if len(brains) > 0:
-            ms = brains[0].getObject()
-        else:
-            service_relation = create_relation(service.getPhysicalPath())
-            mstitle = '%s for %s' % (service.title, memberid)
-            props = {'title': mstitle,
-                     'userid': memberid,
-                     'related_service': service_relation,
-                     'service_type': service.service_type}
-
-            ms = createContentInContainer(
-                memberservices,
-                'emas.app.memberservice',
-                False,
-                **props
-            )
-            pms.setLocalRoles(ms, [memberid], 'Owner')
-
-        if service.service_type == 'credit':
-            credits = ms.credits
-            credits += service.amount_of_credits
-            ms.credits = credits
-        elif service.service_type == 'subscription':
-            if now > ms.expiry_date:
-                ms.expiry_date = now
-            expiry_date = ms.expiry_date + datetime.timedelta(
-                service.subscription_period
-            )
-            ms.expiry_date = expiry_date
-
-        ms.reindexObject()
-        return ms

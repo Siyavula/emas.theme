@@ -30,9 +30,7 @@ from siyavula.what.browser.views import DeleteQuestionView as \
     DeleteQuestionBaseView 
 
 from emas.app.browser.utils import member_credits
-from emas.app.browser.utils import practice_service_expirydate
-from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import subject_and_grade
+from emas.app.browser.utils import practice_service_intids
 from emas.app.memberservice import MemberServicesDataAccess
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
@@ -254,16 +252,10 @@ class EnabledServicesView(BrowserView):
         if memberid is None:
             memberid = portal_state.member().getId()
         
-        ms_folder = portal_state.portal()._getOb('memberservices')
-
-        pc = getToolByName(self.context, 'portal_catalog')
-        query = {'portal_type': 'emas.app.memberservice',
-                 'memberid': memberid,
-                 'subject': subject,
-                 'path': '/'.join(ms_folder.getPhysicalPath())}
-        
-        for brain in pc(query):
-            ms = brain.getObject()
+        dao = MemberServicesDataAccess(self.context)
+        memberid = member.getId()
+        memberservices = dao.get_memberservices_by_subject(memberid, subject)
+        for ms in memberservices:
             service = ms.related_service.to_object
             st = service.service_type
             details = {'service_title': service.Title(),
@@ -325,11 +317,11 @@ class EnabledServicesView(BrowserView):
         if pmt.checkPermission(permission, context):
             return True
         
-        service_uuids = practice_service_uuids(context)
+        intids = practice_service_intids(context)
         ps = self.context.restrictedTraverse('@@plone_portal_state')
         memberid = ps.member().getId()
         dao = MemberServicesDataAccess(self.context)
-        memberservices = dao.get_member_services(service_uuids, memberid)
+        memberservices = dao.get_member_services(intids, memberid)
         # if we cannot find any memberservices the exercise link should not be
         # available.
         if memberservices is None or len(memberservices) < 1:
