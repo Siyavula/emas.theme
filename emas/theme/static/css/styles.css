@@ -143,7 +143,7 @@ ul.submenu {
     text-align: right;
     text-transform: none;
     white-space: nowrap;
-    width: 180px;
+    width: 140px;
 }
 #globalnav form {
     margin: 0;
@@ -166,7 +166,7 @@ ul.submenu {
     margin-right: 10px;
     margin-top: 8px;
     padding: 0;
-    width: 140px;
+    width: 115px;
 }
 
 #portal-breadcrumbs {
