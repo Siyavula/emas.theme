@@ -48,6 +48,7 @@
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="site-home"
+        class=".views.HomeView"
         template="templates/home.pt"
         permission="zope2.View"
         />

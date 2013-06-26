@@ -182,7 +182,7 @@ ul.submenu {
 
 #content div.media {
     width: 100%;
-    text-align: center;
+.    text-align: center;
 }
 
 #content div.video {
@@ -818,4 +818,383 @@ div#expiry-warning {
 
 div#duplicate-payment-warning {
     font-weight: bold;
+}
+
+h2.spacing {
+    letter-spacing: 0.5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.center.subtitle {
+    margin: 5px 0px 15px 0px !important;
+}      
+
+.home-left-heading,
+.home-right-heading {
+    z-index: 3;
+    position: absolute;
+    background: #ffffff;
+    padding: 0px 5px 0 5px;
+}
+
+.home-left-heading {
+    left: 75px;
+    top: -10px;
+}
+
+.home-right-heading {
+    left: 385px;
+    top: -10px;
+}
+
+.home-container {
+    width: 800px;
+    height: 405px;
+    display: inline-block;
+    margin: 0px;
+    float: left;
+    z-index: 2;
+    position: relative
+}
+
+.home-left {
+    width: 235px;
+    height: 275px;
+    border: 2px #000 solid;
+    margin-left: 57px;
+    margin-right: 75px;
+    position: relative;
+    float: left;
+    z-index: 2;
+}
+
+.home-right {
+    width: 375px;
+    height: 275px;
+    display: inline-block;
+    border: 2px #000 solid;
+    margin: 0px;
+    float: left;
+    z-index: 2;
+    position: relative;
+}
+
+.home-left #__ac_name {
+    position: absolute;
+    top: 30px;
+    left: 40px;        
+}
+
+.home-left #__ac_password {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+}
+
+.next-button,
+.prev-button {
+    width: 60px;
+    height: 30px;
+    display: inline-block;
+    border: 1px #000 solid;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;    
+    bottom : 15px;
+}
+
+.next-button {
+    float: right;
+    right: 20px
+}
+
+.prev-button {
+    float: left;
+    left: 20px
+}
+
+.hidden {
+    display: none;
+}
+
+.homebutton {
+    height: 22px;
+    color: #fff;
+    border: 1px #000 solid;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+    padding-top: 6px;
+    overflow:none; 
+    font: 600 14px/100% Arial,Helvetica,sans-serif;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#I-want-to-text {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+    top: 25px;
+    left: 30px;
+}
+
+.practice.homebutton {
+    background: #008fb4;
+    width: 200px;
+    position: absolute;
+    left: 18px;
+    top: 68px;
+}
+
+.read-textbook.homebutton {
+    background: #ffab00;
+    width: 200px;
+    position: absolute;
+    left: 18px;
+    top: 128px;
+}
+
+.extend-subscription.homebutton {
+    background: #ff5e04;
+    width: 200px;
+    margin: 0px;
+    position: absolute;
+    left: 18px;
+    top: 188px;
+}
+
+#slide0-text1 {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 20px;
+    left: 20px;    
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    text-align: center;
+}
+
+#slide0-text2 {
+    width: 300px;
+    height: 14px;
+    position: absolute;
+    top: 40px;
+    left: 55px; 
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+}
+
+#slide0-text3 {
+    width: 300px;
+    height: 14px;
+    position: absolute;
+    top: 80px;
+    left: 55px; 
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+}
+
+#howitworks-img {
+    position: absolute;
+    top: 115px;
+    left: 110px;
+    background: url("../images/howitworks.png");
+    height: 96px;	
+    width: 194px;
+    margin: 1px;
+    display: block;    
+}
+
+.how-works.homebutton {
+    background: #6fb52e;
+    width: 210px;
+    margin: 0px;
+    position: absolute;
+    left: 80px;
+    bottom: 20px;
+}
+
+#go-to-dashboard-text {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    text-align: center;
+}
+
+#dashboard-img {
+    position: absolute;
+    top: 95px;
+    left: 50px;
+    background: url("../images/dashboard.png");
+    height: 96px;	
+    width: 271px;
+    margin: 1px;
+    display: block;
+}
+
+.dashboard.homebutton {
+    background: #6fb52e;
+    width: 210px;
+    margin: 0px;
+    position: absolute;
+    left: 80px;
+    bottom: 20px;
+}
+
+.sign-in.homebutton {
+    background: #008fb4;
+    width: 80px;
+    margin: 0px;
+    position: absolute;
+    left: 78px;
+    bottom: 120px;
+}
+
+#or-text {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+    bottom: 80px;
+    left: 108px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+}
+
+.start-trial.homebutton {
+    background: #ff5e04;
+    width: 200px;
+    margin: 0px;
+    position: absolute;
+    left: 18px;
+    bottom: 20px;
+}
+
+#slide1-text1 {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#graph-img {
+    position: absolute;
+    top: 50px;
+    left: 120px;
+    background: url("../images/graph.png");
+    height: 124px;	
+    width: 130px;
+    margin: 1px;
+    display: block;
+}
+
+#slide1-text2 {
+    width: 40px;
+    height: 14px;
+    position: absolute;
+    top: 195px;
+    left: 120px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+}
+
+#demo_answer {
+    position: absolute;
+    top: 190px;
+    left: 150px;    
+}
+
+#slide3-text {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#learners-dashboard-img {
+    position: absolute;
+    top: 92px;
+    left: 18px;
+    background: url("../images/learnersdashboard.png");
+    height: 120px;	
+    width: 340px;
+    margin: 1px;
+    display: block;
+}
+
+#slide4-text {
+    width: 330px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#teachers-dashboard-img {
+    position: absolute;
+    top: 102px;
+    left: 18px;
+    background: url("../images/teachersdashboard.png");
+    height: 120px;	
+    width: 340px;
+    margin: 1px;
+    display: block;
+}
+
+#slide5-text {
+    width: 360px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#textbooks-img {
+    position: absolute;
+    top: 92px;
+    left: 15px;
+    background: url("../images/textbooks.png");
+    height: 120px;	
+    width: 340px;
+    margin: 1px;
+    display: block;
+}
+
+#slide6-text {
+    width: 370px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#media-img {
+    position: absolute;
+    top: 75px;
+    left: 15px;
+    background: url("../images/media.png");
+    height: 128px;	
+    width: 340px;
+    margin: 1px;
+    display: block;
 }

@@ -683,3 +683,44 @@ class AnsweredMessageView(BrowserView):
 class PasswordAccountPanel(BasePasswordAccountPanel):
 
     template = ViewPageTemplateFile('templates/account-panel.pt')
+
+
+class HomeView(BrowserView):
+    """ Home Page Logic
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+    def show_tour(self):
+        """ show tour if annonymous or (logged in and signed up < 8 days ago)
+            XXX LOGIC NOT FINISHED
+        """
+        return True
+
+    def user_annonymous(self):
+        """ determines if the user is browsing the site annonymously
+        """
+        mt = getToolByName(self.context, 'portal_membership')
+        if mt.isAnonymousUser():  # TEST!!!
+            return True
+        return False
+
+    def welcome_message(self):
+        """ return signup or welcome message           
+        """
+        if self.user_annonymous:
+            return 'Sign in or Sign up!'
+        else:
+            mt = getToolByName(self.context, 'portal_membership')
+            user = mt.getAuthenticatedMember().getUserName()
+            return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
+                                            # to prevent overflow
+
+    def maths_or_science(self):
+        """ determing if the site is Everything Maths or EVerything Science
+            XXX LOGIC NOT FINISHED
+        """
+        return 'Practise Maths'
+        # return 'Practise Science'
+

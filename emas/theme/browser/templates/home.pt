@@ -8,43 +8,137 @@
 <body>
 
     <metal:core fill-slot="main">
-        <div id="content-core">
-            <script type="text/javascript">
-                $(function(){
-                    $('#slider').nivoSlider({
-                        effect: 'slideInLeft', 
-                        pauseTime: 7000
-                    });
-                });
-            </script>
+        <div id="content-core"
+             tal:define="portal_url view/site_url">
 
-            <div class="slider-wrapper theme-light">
-                <div id="slider" class="nivoSlider">
-                    <img src="images/bookbannergimp.jpg" alt="Curriculum-aligned, collaboratively authored, open textbooks available for free to read, download and adapt." title="#bookslidercaption"
-                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/bookbannergimp.jpg"/>
-                    <img src="images/devicebannergimp780.jpg" title="#devicecaption"
-                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/devicebannergimp780.jpg"/>
-                    <img src="images/practicebanner.jpg" title="#intelligentpracticecaption"
-                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/practicebanner.jpg"/>
-                    <img src="images/communitybanner.jpg" title="#communitycaption"
-                        tal:attributes="src string:${portal_url}/++theme++emas.theme/images/communitybanner.jpg"/>
-                </div>
-                <div id="bookslidercaption" class="nivo-html-caption">
-                    <strong>Curriculum-aligned</strong>, collaboratively authored, open textbooks available for free to read, download and adapt.
-                </div>
-                <div id="devicecaption" class="nivo-html-caption">
-                    Read the same textbook and access the same resources on <strong>all your devices</strong>, via the web, mobile or Mxit.
-                </div>
-                <div id="intelligentpracticecaption" class="nivo-html-caption">
-                    Intelligent Practice allows you to <strong>practice exam questions</strong>, manage your progress using your dashboard and gives you targeted feedback on your strengths and weaknesses. <a href="#" tal:attributes="href string:${portal_url}/@@register"><strong style=''>Register</strong></a> for your free trial now!
-                </div>
-                <div id="communitycaption" class="nivo-html-caption">
-                    <strong>Community</strong> is central to how we work, <a href="http://projects.siyavula.com/community"><strong>join</strong></a> us for events, discussion and work collaboratively to ensure you have access to the best resources.
-                </div>
+            <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
+            <div class="center subtitle">
+                <span>Practise, track your progress and achieve your goals with Intelligent Practice.<br>
+                      Bring your textbooks to life with videos and simulations.
+                </span>
             </div>
-            <!--
-            <span id='marktagline'>Curriculum aligned textbooks with embedded videos, simulations, presentations and Intelligent Practice for all your exam preparation.</span>
-            -->
+
+            <span class="home-container">            
+                <span class="home-left-heading" tal:content="view/welcome_message"></span>
+
+                <span tal:condition="view/user_annonymous" class="home-left">
+
+                    <input type="text" id="__ac_name" value="" name="__ac_name" size="15">
+                    <input type="password" id="__ac_password" name="__ac_password" size="15">
+                    <span class="sign-in homebutton">Sign in</span>
+                    <span id="or-text">OR</span>
+                    <span class="start-trial homebutton">Start your free trial</span>
+
+                </span>
+                <span tal:condition="not:view/user_annonymous" class="home-left">
+                    <span id="I-want-to-text">I want to:</span>
+                    <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
+                        <span class="practice homebutton" tal:content="view/maths_or_science">Practise something</span>
+                    </a>
+                    <a href="#" tal:attributes="href string:$portal_url/@@catalogue">
+                        <span class="read-textbook homebutton">Read a textbook</span>
+                    </a>
+                    <a href="#" tal:attributes="href string:$portal_url/order">
+                        <span class="extend-subscription homebutton">Extend my subscription</span>
+                    </a>
+                </span>
+
+                <span tal:condition="view/show_tour">
+                    <span class="slide0">
+                        <span class="home-right-heading">Take the Tour!</span>
+                        <span class="home-right">
+                            <span id="slide0-text1"><b>Want more information?</b> Take the tour to learn about:</span>
+                            <ul>
+                                <li id="slide0-text2">reading your interactive textbooks anywhere, anytime, on any device.
+                                </li>
+                                <li id="slide0-text3">using Intelligent Practice to improve your Maths and Science results.
+                                </li>
+                            </ul>
+                            <span id="howitworks-img"></span>
+                            <span class="how-works homebutton">Show me how it works</span>
+                        </span>
+                    </span>
+                    <span class="slide1 hidden">
+                        <span class="home-right-heading">Take the Tour 1/6</span>
+                        <span class="home-right">
+                            <span id="slide1-text1">The graph below shows an equation which has the form y = mx + c.
+                                                   Calculate the slope (m) of the graph.</span>
+                            <span id="graph-img"></span>
+                            <span id="slide1-text2">m = </span>
+                            <input type="text" id="demo_answer" value="" name="demo_answer" size="8">
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+                    <span class="slide2 hidden">
+                        <span class="home-right-heading">Take the Tour 2/6</span>
+                        <span class="home-right">
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+                    <span class="slide3 hidden">
+                        <span class="home-right-heading">Take the Tour 3/6</span>
+                        <span class="home-right">
+                            <span id="slide3-text">Intelligent Practice tracks your progress on your personalised
+                                                  <b>leaner's dashboard</b>. View what section's you've practised,
+                                                  how many points you've earned and how your performance is improving.</span>
+                            <span id="learners-dashboard-img"></span>
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+                    <span class="slide4 hidden">
+                        <span class="home-right-heading">Take the Tour 4/6</span>
+                        <span class="home-right">
+                            <span id="slide4-text">Your teacher's dashboard allows educators to monitor the progress
+                                                   of an entire class or view and individual learner's results. Access
+                                                   the questions that learners are practising, identify areas of difficulty
+                                                   and be more strategic in your teaching.</span>
+                            <span id="teachers-dashboard-img"></span>
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+                    <span class="slide5 hidden">
+                        <span class="home-right-heading">Take the Tour 5/6</span>
+                        <span class="home-right">
+                            <span id="slide5-text">Your Everything Maths and Science textbooks are freely available to
+                                                   read online. You can access them using any device - computer, tablet or mobile phone.
+                                                   You can also download the books and read them offline.</span>
+                            <span id="textbooks-img"></span>
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+                    <span class="slide6 hidden">
+                        <span class="home-right-heading">Take the Tour 6/6</span>
+                        <span class="home-right">
+                            <span id="slide6-text">Your hardcopy textbooks become interactive when you read them
+                                                   online. They are filled with videos, simulations and presentations to
+                                                   give you a richer learning experience.</span>
+                            <span id="media-img"></span>
+                            <span class="prev-button"></span>
+                            <span class="next-button"></span>
+                        </span>
+                    </span>
+
+                </span>
+                <span tal:condition="not:view/show_tour">
+                    <span class="home-right-heading">Go to your dashboard!</span>
+                    <span class="home-right">
+                        <span id="go-to-dashboard-text">Go to your dashboard to view your points and progress and
+                                                        to chose what to practise next!</span>
+                        <span id="dashboard-img"></span>
+                        <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
+                            <span class="dashboard homebutton">Take me to my dashboard</span>
+                        </a>
+                    </span>
+
+                </span>
+
+            </span>
+
         </div>
     </metal:core>
 
