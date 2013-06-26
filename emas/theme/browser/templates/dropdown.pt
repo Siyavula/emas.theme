@@ -51,9 +51,9 @@
             <a href="#" class="noClick" title="Products and Pricing">Products and Pricing</a>
             <ul class="submenu">
                 <li><a href="#" title="For Parents and learners"
-                       tal:attributes="href string:$portal_url/individualabout">For Parents and Learners</a></li>
-                <li><a href="#" title="For Teachers and Schools"
-                       tal:attributes="href string:$portal_url/schoolabout">For Teachers and Schools</a></li>
+                       tal:attributes="href string:$portal_url/individual-about-information">For Parents and Learners</a></li>
+                <li><a href="#" title="For Teachers and Schools" 
+                       tal:attributes="href string:$portal_url/school-about-information">For Teachers and Schools</a></li>
             </ul>
         </li>
 
