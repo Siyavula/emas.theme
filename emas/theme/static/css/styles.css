@@ -897,13 +897,16 @@ h2.spacing {
 .next-button,
 .prev-button {
     width: 60px;
-    height: 30px;
+    height: 26px;
     display: inline-block;
     border: 1px #000 solid;
     cursor: pointer;
     z-index: 2;
     position: absolute;    
     bottom : 15px;
+    margin: 2px;
+    text-align: center;
+    vertical-align: center;
 }
 
 .next-button {
@@ -913,7 +916,11 @@ h2.spacing {
 
 .prev-button {
     float: left;
-    left: 20px
+    left: 20px;    
+}
+
+.width160 {
+    width: 160px;
 }
 
 .hidden {

@@ -698,24 +698,13 @@ class HomeView(BrowserView):
         """
         return True
 
-    def user_annonymous(self):
-        """ determines if the user is browsing the site annonymously
+    def welcome_message(self):
+        """ return welcome message to logged in user
         """
         mt = getToolByName(self.context, 'portal_membership')
-        if mt.isAnonymousUser():  # TEST!!!
-            return True
-        return False
-
-    def welcome_message(self):
-        """ return signup or welcome message           
-        """
-        if self.user_annonymous:
-            return 'Sign in or Sign up!'
-        else:
-            mt = getToolByName(self.context, 'portal_membership')
-            user = mt.getAuthenticatedMember().getUserName()
-            return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
-                                            # to prevent overflow
+        user = mt.getAuthenticatedMember().getUserName()
+        return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
+                                        # to prevent overflow
 
     def maths_or_science(self):
         """ determing if the site is Everything Maths or EVerything Science
