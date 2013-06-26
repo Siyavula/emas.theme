@@ -11,7 +11,7 @@
                 <li><a href="http://everythingscience.co.za" title="Everything Science">Everything Science</a></li>
             </ul>
         </li>
-        <li  id="portaltab-home" class="plain">
+        <li tal:condition="python:'science' in portal_url" id="portaltab-home" class="plain">
             <a href="#" class="plain" title="Home" tal:attributes="href portal_url">Home</a>
             <ul class="submenu">
                 <li><a href="http://everythingscience.co.za" title="Everything Science">Everything Science</a></li>
@@ -28,7 +28,7 @@
                 <li><a href="#" title="User Guide">User Guide</a></li>
             </ul>
         </li>
-        <li  id="portaltab-practice" class="plain">
+        <li tal:condition="python:'science' in portal_url" id="portaltab-practice" class="plain">
             <a href="#" class="noClick" title="Practise Science">Practise Science</a>
             <ul class="submenu">
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
