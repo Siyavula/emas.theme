@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.30
+----
+
+- Do not cache /static and /image from Monassis.
+
+- if no charset is specified try to encode with latin‐1 too.
+
+- Log the product id for Mxit payment requests.
+
 1.29
 ----
 
