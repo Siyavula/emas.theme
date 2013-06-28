@@ -73,6 +73,8 @@
                             <input type="text" id="demo_answer" value="" name="demo_answer" size="8">
                             <span class="prev-button">Home</span>
                             <span class="next-button width160">Check my answer</span>
+                            <span id="tooltip1" class="hidden">Type your answer in here</span>
+                            <span id="tooltip2" class="hidden">Click here</span>
                         </span>
                     </span>
                     <span class="slide2 hidden">

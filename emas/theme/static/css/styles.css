@@ -1114,7 +1114,35 @@ h2.spacing {
 #demo_answer {
     position: absolute;
     top: 190px;
-    left: 150px;    
+    left: 150px; 
+}
+
+#tooltip1 {
+    z-index: 4;
+    position: absolute;
+    top: 115px;
+    right: 90px;
+    width: 70px;
+    height: 70px;
+    background: #fdf;
+    padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#tooltip2 {
+    z-index: 4;
+    position: absolute;
+    top: 178px;
+    right: 10px;
+    width: 35px;
+    height: 45px;
+    background: #dfd;
+    padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #slide2-text {

@@ -6,19 +6,28 @@ $(function() {
     });
    $(".slide1 .next-button").live("click", function() {
         var answer = $('#demo_answer').attr('value')
-        $('.slide1').addClass('hidden');
-        $('.slide2').removeClass('hidden');
-        if ( answer == "2" ) {
-            // hide incorrect
-            $('#answer-incorrect-img').addClass('hidden');
-            $('#answer-correct-img').removeClass('hidden');
+        if ( answer == "" ) {
+            // show tooltips
+            $('#tooltip1').removeClass('hidden');
+            $('#tooltip2').removeClass('hidden');
         }
         else {
-            // else hide correct
-            $('#answer-correct-img').addClass('hidden');
-            $('#answer-incorrect-img').removeClass('hidden');
+            $('.slide1').addClass('hidden');
+            $('.slide2').removeClass('hidden');
+            if ( answer == "2" ) {
+                // hide incorrect
+                $('#answer-incorrect-img').addClass('hidden');
+                $('#answer-correct-img').removeClass('hidden');
+            }
+            else {
+                // else hide correct
+                $('#answer-correct-img').addClass('hidden');
+                $('#answer-incorrect-img').removeClass('hidden');
+            }
+            // hide tooltips (in case they are shown)
+            $('#tooltip1').addClass('hidden');
+            $('#tooltip2').addClass('hidden');
         }
-
     });
    $(".slide2 .next-button").live("click", function() {
         $('.slide2').addClass('hidden');
@@ -44,6 +53,9 @@ $(function() {
    $(".slide1 .prev-button").live("click", function() {
         $('.slide1').addClass('hidden');
         $('.slide0').removeClass('hidden');
+        // hide tooltips (in case they are shown)
+        $('#tooltip1').addClass('hidden');
+        $('#tooltip2').addClass('hidden');
     });
    $(".slide2 .prev-button").live("click", function() {
         $('.slide2').addClass('hidden');
