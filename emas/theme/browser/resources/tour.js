@@ -5,8 +5,20 @@ $(function() {
         $('.slide1').removeClass('hidden');
     });
    $(".slide1 .next-button").live("click", function() {
+        var answer = $('#demo_answer').attr('value')
         $('.slide1').addClass('hidden');
         $('.slide2').removeClass('hidden');
+        if ( answer == "2" ) {
+            // hide incorrect
+            $('#answer-incorrect-img').addClass('hidden');
+            $('#answer-correct-img').removeClass('hidden');
+        }
+        else {
+            // else hide correct
+            $('#answer-correct-img').addClass('hidden');
+            $('#answer-incorrect-img').removeClass('hidden');
+        }
+
     });
    $(".slide2 .next-button").live("click", function() {
         $('.slide2').addClass('hidden');

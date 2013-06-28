@@ -40,7 +40,7 @@
                     <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
                         <span class="practice homebutton" tal:content="view/maths_or_science">Practise something</span>
                     </a>
-                    <a href="#" tal:attributes="href string:$portal_url/@@catalogue">
+                    <a href="#" tal:attributes="href string:$portal_url/@@textbook-catalogue">
                         <span class="read-textbook homebutton">Read a textbook</span>
                     </a>
                     <a href="#" tal:attributes="href string:$portal_url/order">
@@ -78,6 +78,12 @@
                     <span class="slide2 hidden">
                         <span class="home-right-heading">Take the Tour 2/6</span>
                         <span class="home-right">
+                            <span id="slide2-text">Intelligent Practice marks your answer immediately and gives you
+                                                  a <b>fully worked solution</b>. You can try the same type of question again or move
+                                                  on to a different one. The more questions you get right, the harder they become.</span>
+                            <span id="answer-incorrect-img"></span>
+                            <span id="answer-correct-img"></span>
+
                             <span class="prev-button">Back</span>
                             <span class="next-button width160">View my dashboard</span>
                         </span>
