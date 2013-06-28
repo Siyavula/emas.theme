@@ -267,4 +267,12 @@
         class="z3c.deadlockdebugger.threads.View"
         />
 
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="textbook-catalogue"
+        class=".views.CatalogueView"
+        template="templates/catalogue.pt"
+        permission="zope2.View"
+        />
+
 </configure>

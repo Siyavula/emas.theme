@@ -923,10 +923,6 @@ h2.spacing {
     width: 160px;
 }
 
-.hidden {
-    display: none;
-}
-
 .homebutton {
     height: 22px;
     color: #fff;
@@ -1118,6 +1114,36 @@ h2.spacing {
     left: 150px;    
 }
 
+#slide2-text {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#answer-correct-img,
+#answer-incorrect-img {
+    position: absolute;
+    top: 92px;
+    left: 18px;
+    height: 124px;	
+    width: 340px;
+    margin: 1px;
+    display: block;
+} 
+
+#answer-correct-img {
+    background: url("../images/answer_correct.png");
+}
+
+#answer-incorrect-img {
+    background: url("../images/answer_incorrect.png");
+}
+
 #slide3-text {
     width: 340px;
     height: 14px;
@@ -1204,4 +1230,52 @@ h2.spacing {
     width: 340px;
     margin: 1px;
     display: block;
+}
+
+.textbook-row {
+    width: 800px;
+    display: inline-block;
+}
+
+.textbook-data {
+    display: inline-block;
+    padding: 0px 25px 0px 25px;
+}
+
+#maths-grade10,
+#maths-grade11,
+#maths-grade12,
+#mathsliteracy-grade10,
+#sci-grade10,
+#sci-grade11,
+#sci-grade12,
+#lifesciences-grade10 {
+    height: 200px;	
+    width: 141px;
+    display: inline-block;
+}
+
+#maths-grade10 {
+    background: url("../images/maths-grade10.png");
+}
+#maths-grade11 {
+    background: url("../images/maths-grade11.png");
+}
+#maths-grade12 {
+    background: url("../images/maths-grade12.png");
+}
+#mathsliteracy-grade10 {
+    background: url("../images/mathsliteracy-grade10.png");
+}
+#sci-grade10 {
+    background: url("../images/sci-grade10.png");
+}
+#sci-grade11 {
+    background: url("../images/sci-grade11.png");
+}
+#sci-grade12 {
+    background: url("../images/sci-grade12.png");
+}
+#lifesciences-grade10 {
+    background: url("../images/lifesciences-grade10.png");
 }

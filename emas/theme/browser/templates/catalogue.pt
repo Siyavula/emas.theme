@@ -1,0 +1,89 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="emas.theme">
+<body>
+
+    <metal:core fill-slot="main">
+        <div id="content-core"
+             tal:define="portal_url view/site_url">
+
+            <h2 class="center spacing">Your free textbook library</h2>
+            <div class="center subtitle">
+                <span>Click on book to read it online or<br>
+                      click on a download link to save your book as a PDF file.
+                </span>
+            </div>
+
+            <!-- display maths books first -->
+            <div class="textbook-row" tal:condition="python:'maths' in portal_url">
+
+                <h5>Everything Maths</h5>
+                <div class="textbook-data">
+                    <a id="maths-grade10" href="http://www.everythingmaths.co.za/grade-10">
+                </div>
+                <div class="textbook-data">
+                    <a id="maths-grade11" href="http://www.everythingmaths.co.za/grade-11">
+                </div>
+                <div class="textbook-data">
+                    <a id="maths-grade12" href="http://www.everythingmaths.co.za/grade-12">
+                </div>
+                <div class="textbook-data">
+                    <a id="mathsliteracy-grade10" href="#">
+                </div>
+
+                <h5>Everything Science</h5>
+                <div class="textbook-data">
+                    <a id="sci-grade10" href="http://www.everythingscience.co.za/grade-10">
+                </div>
+                <div class="textbook-data">
+                    <a id="sci-grade11" href="http://www.everythingscience.co.za/grade-11">
+                </div>
+                <div class="textbook-data">
+                    <a id="sci-grade12" href="http://www.everythingscience.co.za/grade-12">
+                </div>
+                <div class="textbook-data">
+                    <a id="lifesciences-grade10" href="#">
+                </div>
+            </div>
+
+            <!-- display science books first -->
+            <div tal:condition="python:'science' in portal_url">
+
+                <h5>Everything Science</h5>
+                <div class="textbook-data">
+                    <a id="sci-grade10" href="http://www.everythingscience.co.za/grade-10">
+                </div>
+                <div class="textbook-data">
+                    <a id="sci-grade11" href="http://www.everythingscience.co.za/grade-11">
+                </div>
+                <div class="textbook-data">
+                    <a id="sci-grade12" href="http://www.everythingscience.co.za/grade-12">
+                </div>
+                <div class="textbook-data">
+                    <a id="lifesciences-grade10" href="#">
+                </div>
+
+                <h5>Everything Maths</h5>
+                <div class="textbook-data">
+                    <a id="maths-grade10" href="http://www.everythingmaths.co.za/grade-10">
+                </div>
+                <div class="textbook-data">
+                    <a id="maths-grade11" href="http://www.everythingmaths.co.za/grade-11">
+                </div>
+                <div class="textbook-data">
+                    <a id="maths-grade12" href="http://www.everythingmaths.co.za/grade-12">
+                </div>
+                <div class="textbook-data">
+                    <a id="mathsliteracy-grade10" href="#">
+                </div>
+            </div>
+
+        </div>
+    </metal:core>
+
+</body>
+</html>
