@@ -1268,8 +1268,13 @@ h2.spacing {
 }
 
 .textbook-data {
+    margin-top: 5px !important;
     display: inline-block;
-    padding: 0px 25px 0px 25px;
+    padding: 0px 2px 0px 2px;
+}
+
+.textbook-img {
+    display: inline-block;
 }
 
 #maths-grade10,
@@ -1308,4 +1313,30 @@ h2.spacing {
 }
 #lifesciences-grade10 {
     background: url("../images/lifesciences-grade10.png");
+}
+
+ul.dropdown-menu,
+ul.dropdown-menu-wide {
+    margin-left: 0px !important;
+}
+
+.dropdown-menu {
+    width: 190px;
+    display: block;
+}
+
+.dropdown-menu-wide {
+    width: 200px;
+    display: block;
+}
+
+.dropdown-menu li,
+.dropdown-menu-wide li {
+    list-style-type: none;
+    line-height: 60% !important;
+}
+
+.dropdown-menu a,
+.dropdown-menu-wide a {
+    font: 400 12px/100% Arial,Helvetica,sans-serif;
 }
