@@ -25,7 +25,7 @@
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
                 <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/@@practice/grade-11">Grade 11</a></li>
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
-                <li><a href="http://everythingmaths.co.za/IntelligentPractice_UserGuide.pdf" title="User Guide">User Guide</a></li>
+                <li><a href="http://everythingmaths.co.za/IntelligentPracticeUserGuide.pdf" title="User Guide">User Guide</a></li>
             </ul>
         </li>
         <li tal:condition="python:'science' in portal_url" id="portaltab-practice" class="plain">
@@ -34,7 +34,7 @@
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
                 <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/@@practice/grade-11">Grade 11</a></li>
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
-                <li><a href="http://everythingscience.co.za/IntelligentPractice_UserGuide.pdf" title="User Guide">User Guide</a></li>
+                <li><a href="http://everythingscience.co.za/IntelligentPracticeUserGuide.pdf" title="User Guide">User Guide</a></li>
             </ul>
         </li>
 
