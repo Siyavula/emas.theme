@@ -690,7 +690,7 @@ class HomeView(BrowserView):
     """
 
     def site_url(self):
-        return getToolByName(self.context, 'portal_url')
+        return getToolByName(self.context, 'portal_url').absolute_url()
 
     def show_tour(self):
         """ show tour if annonymous or (logged in and signed up < 8 days ago)
@@ -717,13 +717,6 @@ class HomeView(BrowserView):
         fullname = mt.getAuthenticatedMember().getProperty('fullname')
         return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
                                         # to prevent overflow
-
-    def maths_or_science(self):
-        """ determing if the site is Everything Maths or EVerything Science
-            XXX LOGIC NOT FINISHED
-        """
-        return 'Practise Maths'
-        # return 'Practise Science'
 
 
 class CatalogueView(BrowserView):

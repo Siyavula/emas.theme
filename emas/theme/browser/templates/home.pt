@@ -38,7 +38,12 @@
                 <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">
                     <span id="I-want-to-text">I want to:</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
-                        <span class="practice homebutton" tal:content="view/maths_or_science">Practise something</span>
+                        <tal:maths tal:condition="python:'maths' in portal_url">
+                            <span class="practice homebutton">Practise Maths</span>
+                        </tal:maths>
+                        <tal:science tal:condition="python:'science' in portal_url">
+                            <span class="practice homebutton">Practise Science</span>
+                        </tal:science>    
                     </a>
                     <a href="#" tal:attributes="href string:$portal_url/@@textbook-catalogue">
                         <span class="read-textbook homebutton">Read a textbook</span>
