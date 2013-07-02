@@ -139,3 +139,21 @@ class EMASPathBarViewlet(PathBarViewlet):
     def update(self):
         super(EMASPathBarViewlet, self).update()
 
+    def display_breadcrumbs(self):
+        """ determines if breadcrumbs are shown
+        """
+        portal_state = getMultiAdapter((self.context, self.request), 
+                                        name=u'plone_portal_state')
+        context_state = getMultiAdapter((self.context, self.request), 
+                                        name=u'plone_context_state')
+
+        # do not show breadcrumbs for home page
+        if context_state.current_page_url() == \
+           '%s/' % portal_state.navigation_root_url():
+            return False
+        # do not show breadcrumbs for textbook catalogue page
+        if context_state.current_page_url() == \
+           '%s/@@textbook-catalogue' % portal_state.navigation_root_url():
+            return False
+
+        return True

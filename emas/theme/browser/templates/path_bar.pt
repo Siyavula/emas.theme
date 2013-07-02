@@ -1,11 +1,9 @@
 <div id="portal-breadcrumbs"
      i18n:domain="plone"
      tal:define="breadcrumbs view/breadcrumbs;
-                 is_rtl view/is_rtl;
-                 portal_url context/@@plone_portal_state/portal_url;
-                 navigation_root_url context/@@plone_portal_state/navigation_root_url">
+                 is_rtl view/is_rtl">
 
-    <tal:home tal:condition="not:python:portal_url == navigation_root_url">
+    <tal:home tal:condition="view/display_breadcrumbs">
         <span id="breadcrumbs-you-are-here" i18n:translate="you_are_here">You are here:</span>
         <span id="breadcrumbs-home">
             <a i18n:translate="tabs_home"
