@@ -1337,6 +1337,9 @@ ul.dropdown-menu-wide {
 }
 
 .dropdown-menu a,
-.dropdown-menu-wide a {
+.dropdown-menu-wide a,
+.dropdown-menu li,
+.dropdown-menu-wide li {
     font: 400 12px/100% Arial,Helvetica,sans-serif;
+    color: #205C90;    
 }
