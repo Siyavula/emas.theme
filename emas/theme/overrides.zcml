@@ -51,6 +51,14 @@
         permission="zope2.View"
         />
 
+    <!-- Override path_bar viewlet -->
+     <browser:viewlet
+        name="plone.path_bar"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+        class=".browser.viewlets.EMASPathBarViewlet"
+        permission="zope2.View"
+     />    
+
     <browser:page
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         name="change-password"

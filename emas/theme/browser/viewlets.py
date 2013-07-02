@@ -8,6 +8,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.uuid.interfaces import IUUID
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.app.layout.viewlets.common import PathBarViewlet
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from webcouturier.dropdownmenu.browser import dropdown
 from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
@@ -130,3 +131,11 @@ class PracticeServiceMessagesViewlet(ViewletBase):
 
     def render(self):
         return self.index()
+
+
+class EMASPathBarViewlet(PathBarViewlet):
+    index = ViewPageTemplateFile('templates/path_bar.pt')
+
+    def update(self):
+        super(EMASPathBarViewlet, self).update()
+
