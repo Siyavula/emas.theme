@@ -11,7 +11,7 @@
         <div id="content-core"
              tal:define="portal_url view/site_url">
 
-            <h2 class="center spacing">Your free textbook library</h2>
+            <h3 class="center spacing">Your free textbook library</h3>
             <div class="center subtitle">
                 <span>Click on book to read it online or<br>
                       click on a download link to save your book as a PDF file.
