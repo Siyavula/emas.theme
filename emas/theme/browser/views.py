@@ -694,15 +694,27 @@ class HomeView(BrowserView):
 
     def show_tour(self):
         """ show tour if annonymous or (logged in and signed up < 8 days ago)
-            XXX LOGIC NOT FINISHED
         """
-        return True
+        mt = getToolByName(self.context, 'portal_membership')
+        if mt.isAnonymousUser(): 
+            return True
+        else:
+            user = mt.getAuthenticatedMember().getUserName()
+            memberid = mt.getAuthenticatedMember().getId()
+            member = mt.getMemberById(memberid)
+            initial_login_date = member.getProperty('registrationdate')
+            now = datetime.now()
+            delta = now - initial_login_date
+            if delta.days >= 8:
+                return False
+            return True
 
     def welcome_message(self):
         """ return welcome message to logged in user
         """
         mt = getToolByName(self.context, 'portal_membership')
         user = mt.getAuthenticatedMember().getUserName()
+        fullname = mt.getAuthenticatedMember().getProperty('fullname')
         return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
                                         # to prevent overflow
 
