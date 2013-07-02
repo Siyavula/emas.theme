@@ -9,7 +9,8 @@
 
     <metal:core fill-slot="main">
         <div id="content-core"
-             tal:define="portal_url view/site_url">
+             tal:define="portal_url view/site_url;
+                         navigation_root_url context/@@plone_portal_state/navigation_root_url">
 
             <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
             <div class="center subtitle">
@@ -28,11 +29,29 @@
                 </tal:welcome>
 
                 <span tal:condition="context/@@plone_portal_state/anonymous" class="home-left">
-                    <input type="text" id="__ac_name" value="" name="__ac_name" size="15">
-                    <input type="password" id="__ac_password" name="__ac_password" size="15">
-                    <span class="sign-in homebutton">Sign in</span>
+                    <form tal:attributes="action navigation_root_url" id="login_form" method="post" class="enableAutoFocus">
+                        <input type="hidden" name="came_from">
+                        <input type="hidden" name="next">
+                        <input type="hidden" name="ajax_load">
+                        <input type="hidden" name="ajax_include_head">
+                        <input type="hidden" name="target">
+                        <input type="hidden" name="mail_password_url">
+                        <input type="hidden" name="join_url">
+                        <input type="hidden" value="1" name="form.submitted">
+                        <input type="hidden" value="0" id="js_enabled" name="js_enabled">
+                        <input type="hidden" value="" id="cookies_enabled" name="cookies_enabled">
+                        <input type="hidden" value="" id="login_name" name="login_name">
+                        <input type="hidden" value="0" id="pwd_empty" name="pwd_empty">
+                        <input type="text" id="__ac_name" value="" name="__ac_name" placeholder="username" size="15">
+                        <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="15">
+                        <input class="sign-in homebutton" type="submit" value="Sign in" name="submit" class="context">
+                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" value="True">
+                    </form>
+                    <span id="keep-me-logged-in-text">Keep me logged in</span>
                     <span id="or-text">OR</span>
-                    <span class="start-trial homebutton">Start your free trial</span>
+                    <a href="#" tal:attributes="href string:$portal_url/@@practice">
+                        <span class="start-trial homebutton">Start your free trial</span>
+                    </a>                    
                 </span>
 
                 <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">

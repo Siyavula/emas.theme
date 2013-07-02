@@ -908,6 +908,7 @@ h2.spacing {
     position: absolute;    
     bottom : 15px;
     margin: 2px;
+    padding-top: 4px;
     text-align: center;
     vertical-align: center;
 }
@@ -1053,20 +1054,38 @@ h2.spacing {
     bottom: 20px;
 }
 
-.sign-in.homebutton {
+input.sign-in.homebutton {
     background: #008fb4;
-    width: 80px;
+    height: 30px;
+    width: 100px;
     margin: 0px;
     position: absolute;
-    left: 78px;
-    bottom: 120px;
+    left: 68px;
+    bottom: 140px;
+    padding-top: 0px;
+}
+
+#keep-me-logged-in-checkbox {
+    position: absolute;
+    bottom: 115px;
+    left: 53px;
+}
+
+#keep-me-logged-in-text {
+    position: absolute;
+    bottom: 115px;
+    left: 71px;
+    width: 140px;
+    height: 14px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    display: block;
 }
 
 #or-text {
     width: 140px;
     height: 14px;
     position: absolute;
-    bottom: 80px;
+    bottom: 75px;
     left: 108px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
 }
