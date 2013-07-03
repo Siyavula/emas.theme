@@ -690,6 +690,9 @@ class HomeView(BrowserView):
     """
 
     def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+    def site_absolute_url(self):
         return getToolByName(self.context, 'portal_url').absolute_url()
 
     def show_tour(self):

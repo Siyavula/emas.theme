@@ -10,6 +10,7 @@
     <metal:core fill-slot="main">
         <div id="content-core"
              tal:define="portal_url view/site_url;
+                         site_absolute_url view/site_absolute_url;
                          navigation_root_url context/@@plone_portal_state/navigation_root_url">
 
             <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
@@ -51,7 +52,7 @@
                     </form>
                     <span id="keep-me-logged-in-text">Keep me logged in</span>
                     <span id="or-text">OR</span>
-                    <a href="#" tal:attributes="href string:$portal_url/@@practice">
+                    <a href="#" tal:attributes="href string:$portal_url/@@register">
                         <span class="start-trial homebutton">Start your free trial</span>
                     </a>                    
                 </span>
@@ -59,10 +60,10 @@
                 <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">
                     <span id="I-want-to-text">I want to:</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
-                        <tal:maths tal:condition="python:'maths' in portal_url">
+                        <tal:maths tal:condition="python:'maths' in site_absolute_url">
                             <span class="practice homebutton">Practise Maths</span>
                         </tal:maths>
-                        <tal:science tal:condition="python:'science' in portal_url">
+                        <tal:science tal:condition="python:'science' in site_absolute_url">
                             <span class="practice homebutton">Practise Science</span>
                         </tal:science>    
                     </a>

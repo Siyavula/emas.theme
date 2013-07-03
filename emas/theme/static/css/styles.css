@@ -855,7 +855,6 @@ h2.spacing {
 
 .home-container {
     width: 800px;
-    height: 405px;
     display: inline-block;
     margin: 0px;
     float: left;
@@ -1038,10 +1037,14 @@ h2.spacing {
 .how-works.homebutton {
     background: #6fb52e;
     width: 260px;
+    height: 32px;
+    margin: 0px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 8px;
     margin: 0px;
     position: absolute;
-    left: 80px;
-    bottom: 20px;
+    left: 75px;
+    bottom: 25px;
 }
 
 #go-to-dashboard-text {
