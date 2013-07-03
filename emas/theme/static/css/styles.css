@@ -956,33 +956,44 @@ h2.spacing {
     width: 140px;
     height: 14px;
     position: absolute;
-    top: 25px;
+    top: 35px;
     left: 30px;
 }
 
 .practice.homebutton {
     background: #008fb4;
-    width: 200px;
+    width: 215px;
+    height: 28px;
+    margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 68px;
+    top: 88px;
 }
 
 .read-textbook.homebutton {
     background: #ffab00;
-    width: 200px;
+    width: 215px;
+    height: 28px;
+    margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 128px;
+    top: 148px;
 }
 
 .extend-subscription.homebutton {
     background: #ff5e04;
-    width: 200px;
+    width: 215px;
+    height: 28px;
     margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 188px;
+    top: 208px;
 }
 
 #slide0-text1 {
