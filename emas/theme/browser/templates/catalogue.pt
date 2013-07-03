@@ -9,7 +9,7 @@
 
     <metal:core fill-slot="main">
         <div id="content-core"
-             tal:define="portal_url view/site_url">
+             tal:define="site_absolute_url view/site_absolute_url">
 
             <h3 class="center spacing">Your free textbook library</h3>
             <div class="center subtitle">
@@ -19,7 +19,7 @@
             </div>
 
             <!-- display maths books first -->
-            <div class="textbook-row" tal:condition="python:'maths' in portal_url">
+            <div class="textbook-row" tal:condition="python:'maths' in site_absolute_url">
 
                 <h5>Everything Maths</h5>
                 <div class="textbook-data">
@@ -122,7 +122,7 @@
             </div>
 
             <!-- display science books first -->
-            <div tal:condition="python:'science' in portal_url">
+            <div tal:condition="python:'science' in site_absolute_url">
 
                 <h5>Everything Science</h5>
                 <div class="textbook-data">

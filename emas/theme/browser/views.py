@@ -725,5 +725,5 @@ class CatalogueView(BrowserView):
     """ Textbook Catalogue
     """
 
-    def site_url(self):
+    def site_absolute_url(self):
         return getToolByName(self.context, 'portal_url').absolute_url()
