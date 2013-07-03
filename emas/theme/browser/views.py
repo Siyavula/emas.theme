@@ -714,7 +714,7 @@ class HomeView(BrowserView):
         mt = getToolByName(self.context, 'portal_membership')
         user = mt.getAuthenticatedMember().getUserName()
         fullname = mt.getAuthenticatedMember().getProperty('fullname')
-        return 'Welcome ' + user[0:12]  # show only 1st 12 chars of username
+        return 'Welcome ' + user[0:15]  # show only 1st 12 chars of username
                                         # to prevent overflow
 
 
