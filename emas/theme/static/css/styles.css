@@ -180,7 +180,7 @@ ul.submenu {
 #content {
     margin: 1.5em auto;
     max-width: 780px;
-    min-height: 400px;
+    min-height: 445px;
 }
 
 #content div.media {
@@ -832,7 +832,7 @@ h2.spacing {
 }
 
 .center.subtitle {
-    margin: 5px 0px 15px 0px !important;
+    margin: 5px 0px 40px 0px !important;
 }      
 
 .home-left-heading,
@@ -844,12 +844,12 @@ h2.spacing {
 }
 
 .home-left-heading {
-    left: 75px;
+    left: 50px;
     top: -10px;
 }
 
 .home-right-heading {
-    left: 385px;
+    left: 375px;
     top: -10px;
 }
 
@@ -864,19 +864,19 @@ h2.spacing {
 }
 
 .home-left {
-    width: 235px;
-    height: 275px;
+    width: 255px;
+    height: 310px;
     border: 2px #000 solid;
-    margin-left: 57px;
-    margin-right: 75px;
+    margin-left: 38px;
+    margin-right: 60px;
     position: relative;
     float: left;
     z-index: 2;
 }
 
 .home-right {
-    width: 375px;
-    height: 275px;
+    width: 410px;
+    height: 310px;
     display: inline-block;
     border: 2px #000 solid;
     margin: 0px;
@@ -885,16 +885,25 @@ h2.spacing {
     position: relative;
 }
 
-.home-left #__ac_name {
+#login-inputs {
     position: absolute;
-    top: 30px;
-    left: 40px;        
+    top: 25px;
+    width: 255px;
+    height: 80px;
+    display: block;
+    text-align: center;
+}
+
+.home-left #__ac_name {
+    margin: auto;
+    font-size: 140%;
+    display: block;
 }
 
 .home-left #__ac_password {
-    position: absolute;
-    top: 60px;
-    left: 40px;
+    margin: auto;
+    font-size: 140%;
+    display: block;
 }
 
 .next-button,
@@ -930,13 +939,13 @@ h2.spacing {
 .homebutton {
     height: 22px;
     color: #fff;
-    border: 1px #000 solid;
+    border: 1px #999 solid;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
     padding-top: 6px;
     overflow:none; 
-    font: 600 14px/100% Arial,Helvetica,sans-serif;
+    font: 600 16px/100% Arial,Helvetica,sans-serif;
     vertical-align: middle;
     text-align: center;
     text-decoration: none;
@@ -1017,7 +1026,7 @@ h2.spacing {
 
 .how-works.homebutton {
     background: #6fb52e;
-    width: 210px;
+    width: 260px;
     margin: 0px;
     position: absolute;
     left: 80px;
@@ -1056,25 +1065,25 @@ h2.spacing {
 
 input.sign-in.homebutton {
     background: #008fb4;
-    height: 30px;
-    width: 100px;
+    height: 40px;
+    width: 110px;
     margin: 0px;
     position: absolute;
-    left: 68px;
-    bottom: 140px;
+    left: 75px;
+    bottom: 150px;
     padding-top: 0px;
 }
 
 #keep-me-logged-in-checkbox {
     position: absolute;
-    bottom: 115px;
-    left: 53px;
+    bottom: 125px;
+    left: 60px;
 }
 
 #keep-me-logged-in-text {
     position: absolute;
-    bottom: 115px;
-    left: 71px;
+    bottom: 125px;
+    left: 78px;
     width: 140px;
     height: 14px;
     font: 400 13px/100% Arial,Helvetica,sans-serif;
@@ -1085,18 +1094,21 @@ input.sign-in.homebutton {
     width: 140px;
     height: 14px;
     position: absolute;
-    bottom: 75px;
-    left: 108px;
+    bottom: 90px;
+    left: 115px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
 }
 
 .start-trial.homebutton {
     background: #ff5e04;
-    width: 200px;
+    width: 215px;
+    height: 32px;
     margin: 0px;
     position: absolute;
-    left: 18px;
-    bottom: 20px;
+    left: 20px;
+    bottom: 25px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 8px;
 }
 
 #slide1-text1 {

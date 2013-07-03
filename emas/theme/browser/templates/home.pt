@@ -42,8 +42,10 @@
                         <input type="hidden" value="" id="cookies_enabled" name="cookies_enabled">
                         <input type="hidden" value="" id="login_name" name="login_name">
                         <input type="hidden" value="0" id="pwd_empty" name="pwd_empty">
-                        <input type="text" id="__ac_name" value="" name="__ac_name" placeholder="username" size="15">
-                        <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="15">
+                        <div id="login-inputs">
+                            <input type="text" id="__ac_name" value="" name="__ac_name" placeholder="username" size="13">
+                            <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
+                        </div>
                         <input class="sign-in homebutton" type="submit" value="Sign in" name="submit" class="context">
                         <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" value="True">
                     </form>
@@ -118,7 +120,7 @@
                         <span class="home-right-heading">Take the Tour 3/6</span>
                         <span class="home-right">
                             <span id="slide3-text">Intelligent Practice tracks your progress on your personalised
-                                                  <b>leaner's dashboard</b>. View what section's you've practised,
+                                                  <b>leaner's dashboard</b>. View what sections you've practised,
                                                   how many points you've earned and how your performance is improving.</span>
                             <span id="learners-dashboard-img"></span>
                             <span class="prev-button">Back</span>
