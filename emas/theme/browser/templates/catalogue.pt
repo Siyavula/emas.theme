@@ -110,7 +110,7 @@
 
                 <div class="textbook-data">
                     <div class="textbook-img">
-                        <a id="lifesciences-grade10" href="#">
+                        <a id="lifesciences-grade10">
                     </div>
                     <ul class="dropdown-menu-wide">
                         <li><a>Read Life Sciences 10</a></li>
@@ -163,7 +163,7 @@
 
                 <div class="textbook-data">
                     <div class="textbook-img">
-                        <a id="lifesciences-grade10" href="#">
+                        <a id="lifesciences-grade10">
                     </div>
                     <ul class="dropdown-menu-wide">
                         <li><a>Read Life Sciences 10</a></li>
