@@ -702,9 +702,8 @@ class HomeView(BrowserView):
             user = mt.getAuthenticatedMember().getUserName()
             memberid = mt.getAuthenticatedMember().getId()
             member = mt.getMemberById(memberid)
-            initial_login_date = member.getProperty('registrationdate')
-            now = datetime.now()
-            delta = now - initial_login_date
+            registration_date = member.getProperty('registrationdate')
+            delta = datetime.now() - registration_date
             if delta.days >= 8:
                 return False
             return True
