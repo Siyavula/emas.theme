@@ -12,7 +12,7 @@
              tal:define="site_absolute_url view/site_absolute_url">
 
             <h3 class="center spacing">Your free textbook library</h3>
-            <div class="center subtitle">
+            <div class="center subtitle catalogue">
                 <span>Click on book to read it online or<br>
                       click on a download link to save your book as a PDF file.
                 </span>

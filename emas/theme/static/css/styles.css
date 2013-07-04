@@ -835,6 +835,10 @@ h2.spacing {
     margin: 5px 0px 40px 0px !important;
 }      
 
+.center.subtitle.catalogue {
+    margin: 5px 0px 5px 0px !important;
+}      
+
 .home-left-heading,
 .home-right-heading {
     z-index: 3;
