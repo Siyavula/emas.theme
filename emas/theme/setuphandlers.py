@@ -65,6 +65,14 @@ def setupPortalContent(portal):
         directlyProvides(community, directlyProvidedBy(community),
                          INavigationRoot)
 
+    # add Individual About and School About pages
+    if not portal.hasObject('individual-about-information'):
+        portal.invokeFactory(id='individual-about', type_name='Document',
+                             title='Individual About')
+    if not portal.hasObject('school-about'):
+        portal.invokeFactory(id='school-about-information', type_name='Document',
+                             title='School About')
+
     # disable tabs
     pprop = getToolByName(portal, 'portal_properties')
     pprop.site_properties._updateProperty('disable_folder_sections', True)
