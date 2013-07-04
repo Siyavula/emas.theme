@@ -908,27 +908,25 @@ h2.spacing {
 .next-button,
 .prev-button {
     width: 60px;
-    height: 26px;
+    height: 20px;
     display: inline-block;
     border: 1px #000 solid;
     cursor: pointer;
     z-index: 2;
     position: absolute;    
-    bottom : 15px;
-    margin: 2px;
-    padding-top: 4px;
+    bottom : 10px;
+    margin: 1px;
+    padding-bottom: 2px;
     text-align: center;
     vertical-align: center;
 }
 
 .next-button {
-    float: right;
-    right: 20px
+    right: 10px
 }
 
 .prev-button {
-    float: left;
-    left: 20px;    
+    left: 10px;    
 }
 
 .width160 {
@@ -996,12 +994,12 @@ h2.spacing {
 }
 
 #slide0-text1 {
-    width: 340px;
+    width: 380px;
     height: 14px;
     position: absolute;
     top: 20px;
     left: 20px;    
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     text-align: center;
 }
 
@@ -1010,8 +1008,8 @@ h2.spacing {
     height: 14px;
     position: absolute;
     top: 40px;
-    left: 55px; 
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    left: 65px; 
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
 }
 
 #slide0-text3 {
@@ -1019,14 +1017,14 @@ h2.spacing {
     height: 14px;
     position: absolute;
     top: 80px;
-    left: 55px; 
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    left: 65px; 
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
 }
 
 #howitworks-img {
     position: absolute;
-    top: 115px;
-    left: 110px;
+    top: 120px;
+    left: 130px;
     background: url("../images/howitworks.png");
     height: 96px;	
     width: 194px;
@@ -1051,30 +1049,34 @@ h2.spacing {
     width: 340px;
     height: 14px;
     position: absolute;
-    top: 40px;
-    left: 20px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    top: 30px;
+    left: 40px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     text-align: center;
+    line-height: 130%;
 }
 
 #dashboard-img {
     position: absolute;
-    top: 95px;
-    left: 50px;
+    top: 88px;
+    left: 30px;
     background: url("../images/dashboard.png");
-    height: 96px;	
-    width: 271px;
+    height: 125px;	
+    width: 350px;
     margin: 1px;
     display: block;
 }
 
 .dashboard.homebutton {
     background: #6fb52e;
-    width: 210px;
+    width: 290px;
+    height: 32px;
     margin: 0px;
     position: absolute;
-    left: 80px;
-    bottom: 20px;
+    left: 60px;
+    bottom: 25px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 8px;
 }
 
 input.sign-in.homebutton {
@@ -1130,19 +1132,19 @@ input.sign-in.homebutton {
     height: 14px;
     position: absolute;
     top: 15px;
-    left: 15px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    left: 35px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
 
 #graph-img {
     position: absolute;
-    top: 50px;
+    top: 60px;
     left: 120px;
     background: url("../images/graph.png");
-    height: 124px;	
-    width: 130px;
+    height: 150px;	
+    width: 157px;
     margin: 1px;
     display: block;
 }
@@ -1151,21 +1153,21 @@ input.sign-in.homebutton {
     width: 40px;
     height: 14px;
     position: absolute;
-    top: 195px;
-    left: 120px;
+    top: 230px;
+    left: 130px;
     font: 400 13px/100% Arial,Helvetica,sans-serif;
 }
 
 #demo_answer {
     position: absolute;
-    top: 190px;
-    left: 150px; 
+    top: 225px;
+    left: 160px; 
 }
 
 #tooltip1 {
     z-index: 4;
     position: absolute;
-    top: 115px;
+    top: 150px;
     right: 90px;
     width: 70px;
     height: 70px;
@@ -1179,7 +1181,7 @@ input.sign-in.homebutton {
 #tooltip2 {
     z-index: 4;
     position: absolute;
-    top: 178px;
+    top: 223px;
     right: 10px;
     width: 35px;
     height: 45px;
@@ -1191,12 +1193,12 @@ input.sign-in.homebutton {
 }
 
 #slide2-text {
-    width: 340px;
+    width: 380px;
     height: 14px;
     position: absolute;
     top: 15px;
     left: 15px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
@@ -1204,10 +1206,10 @@ input.sign-in.homebutton {
 #answer-correct-img,
 #answer-incorrect-img {
     position: absolute;
-    top: 92px;
-    left: 18px;
-    height: 124px;	
-    width: 340px;
+    top: 105px;
+    left: 15px;
+    height: 138px;	
+    width: 380px;
     margin: 1px;
 } 
 
@@ -1220,89 +1222,89 @@ input.sign-in.homebutton {
 }
 
 #slide3-text {
-    width: 340px;
+    width: 380px;
     height: 14px;
     position: absolute;
     top: 15px;
     left: 15px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
 
 #learners-dashboard-img {
     position: absolute;
-    top: 92px;
-    left: 18px;
+    top: 105px;
+    left: 15px;
     background: url("../images/learnersdashboard.png");
-    height: 120px;	
-    width: 340px;
+    height: 150px;	
+    width: 380px;
     margin: 1px;
     display: block;
 }
 
 #slide4-text {
-    width: 330px;
+    width: 390px;
     height: 14px;
     position: absolute;
     top: 15px;
-    left: 25px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    left: 15px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
 
 #teachers-dashboard-img {
     position: absolute;
-    top: 102px;
-    left: 18px;
+    top: 115px;
+    left: 15px;
     background: url("../images/teachersdashboard.png");
-    height: 120px;	
-    width: 340px;
+    height: 146px;	
+    width: 380px;
     margin: 1px;
     display: block;
 }
 
 #slide5-text {
-    width: 360px;
+    width: 380px;
     height: 14px;
     position: absolute;
     top: 15px;
     left: 10px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
 
 #textbooks-img {
     position: absolute;
-    top: 92px;
+    top: 105px;
     left: 15px;
     background: url("../images/textbooks.png");
-    height: 120px;	
-    width: 340px;
+    height: 143px;	
+    width: 380px;
     margin: 1px;
     display: block;
 }
 
 #slide6-text {
-    width: 370px;
+    width: 390px;
     height: 14px;
     position: absolute;
     top: 15px;
-    left: 0px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    left: 10px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
 }
 
 #media-img {
     position: absolute;
-    top: 75px;
+    top: 95px;
     left: 15px;
     background: url("../images/media.png");
-    height: 128px;	
-    width: 340px;
+    height: 141px;	
+    width: 380px;
     margin: 1px;
     display: block;
 }
