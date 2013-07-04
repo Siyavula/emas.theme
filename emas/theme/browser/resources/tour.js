@@ -1,15 +1,18 @@
 $(function() {
 
+   var check_answer_click_count = 0 // init counter
+
    $(".slide0 .how-works").live("click", function() {
         $('.slide0').addClass('hidden');
         $('.slide1').removeClass('hidden');
     });
    $(".slide1 .next-button").live("click", function() {
         var answer = $('#demo_answer').attr('value')
-        if ( answer == "" ) {
+        if ( answer == "" && check_answer_click_count == 0 ) {
             // show tooltips
             $('#tooltip1').removeClass('hidden');
             $('#tooltip2').removeClass('hidden');
+            check_answer_click_count = 1
         }
         else {
             $('.slide1').addClass('hidden');
@@ -26,7 +29,8 @@ $(function() {
             }
             // hide tooltips (in case they are shown)
             $('#tooltip1').addClass('hidden');
-            $('#tooltip2').addClass('hidden');
+            $('#tooltip2').addClass('hidden'); 
+            check_answer_click_count = 0  // reset click counter
         }
     });
    $(".slide2 .next-button").live("click", function() {
