@@ -23,10 +23,10 @@
             <span class="home-container">            
 
                 <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
-                    <span class="home-left-heading">Sign in or Sign up!</span>
+                    <span class="home-left-heading"><b>Sign in or Sign up!</b></span>
                 </tal:signup>
                 <tal:welcome tal:condition="not:context/@@plone_portal_state/anonymous">
-                    <span class="home-left-heading" tal:content="view/welcome_message"></span>
+                    <span class="home-left-heading"><b tal:content="view/welcome_message"></b></span>
                 </tal:welcome>
 
                 <span tal:condition="context/@@plone_portal_state/anonymous" class="home-left">
@@ -77,7 +77,7 @@
 
                 <span tal:condition="view/show_tour">
                     <span class="slide0">
-                        <span class="home-right-heading">Take the Tour!</span>
+                        <span class="home-right-heading"><b>Take the Tour!</b></span>
                         <span class="home-right">
                             <span id="slide0-text1"><b>Want more information?</b> Take the tour to learn about:</span>
                             <ul>

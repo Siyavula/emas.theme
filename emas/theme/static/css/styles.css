@@ -899,14 +899,18 @@ h2.spacing {
 
 .home-left #__ac_name {
     margin: auto;
-    font-size: 140%;
+    font-size: 90%;
     display: block;
+    width: 180px;
+    padding: 5px;
 }
 
 .home-left #__ac_password {
     margin: auto;
-    font-size: 140%;
+    font-size: 90%;
     display: block;
+    width: 180px;
+    padding: 5px;
 }
 
 .next-button,
@@ -970,7 +974,7 @@ h2.spacing {
     padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 88px;
+    top: 82px;
 }
 
 .read-textbook.homebutton {
@@ -982,7 +986,7 @@ h2.spacing {
     padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 148px;
+    top: 152px;
 }
 
 .extend-subscription.homebutton {
@@ -994,7 +998,7 @@ h2.spacing {
     padding-top: 12px;
     position: absolute;
     left: 18px;
-    top: 208px;
+    top: 222px;
 }
 
 #slide0-text1 {
