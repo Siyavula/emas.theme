@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from DateTime import DateTime
 from types import ListType
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
@@ -48,5 +48,5 @@ def store_initial_login_date(obj, event):
     memberid = obj.getId()
     pm = getSite().portal_membership
     member = pm.getMemberById(memberid)
-    member.setMemberProperties(mapping={"registrationdate": datetime.now()})
+    member.setMemberProperties(mapping={"registrationdate": DateTime()})
 

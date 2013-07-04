@@ -1,6 +1,7 @@
 import json
 import hashlib
 from datetime import datetime, timedelta, date
+from DateTime import DateTime
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 from z3c.relationfield.relation import create_relation
@@ -706,8 +707,9 @@ class HomeView(BrowserView):
             memberid = mt.getAuthenticatedMember().getId()
             member = mt.getMemberById(memberid)
             registration_date = member.getProperty('registrationdate')
-            delta = datetime.now() - registration_date
-            if delta.days >= 8:
+            now = DateTime()
+            delta = now - registration_date
+            if delta >= 8:
                 return False
             return True
 
