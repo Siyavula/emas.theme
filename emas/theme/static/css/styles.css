@@ -1214,11 +1214,10 @@ input.sign-in.homebutton {
 #answer-correct-img,
 #answer-incorrect-img {
     position: absolute;
-    top: 105px;
+    top: 100px;
     left: 15px;
-    height: 138px;	
+    height: 159px;	
     width: 380px;
-    margin: 1px;
 } 
 
 #answer-correct-img {

@@ -91,7 +91,7 @@
                         </span>
                     </span>
                     <span class="slide1 hidden">
-                        <span class="home-right-heading">Take the Tour 1/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 1/6</b></span>
                         <span class="home-right">
                             <span id="slide1-text1">The graph below shows an equation which has the form y = mx + c.
                                                    Calculate the slope (m) of the graph.</span>
@@ -105,7 +105,7 @@
                         </span>
                     </span>
                     <span class="slide2 hidden">
-                        <span class="home-right-heading">Take the Tour 2/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 2/6</b></span>
                         <span class="home-right">
                             <span id="slide2-text">Intelligent Practice marks your answer immediately and gives you
                                                   a <b>fully worked solution</b>. You can try the same type of question again or move
@@ -118,7 +118,7 @@
                         </span>
                     </span>
                     <span class="slide3 hidden">
-                        <span class="home-right-heading">Take the Tour 3/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 3/6</b></span>
                         <span class="home-right">
                             <span id="slide3-text">Intelligent Practice tracks your progress on your personalised
                                                   <b>leaner's dashboard</b>. View what sections you've practised,
@@ -129,7 +129,7 @@
                         </span>
                     </span>
                     <span class="slide4 hidden">
-                        <span class="home-right-heading">Take the Tour 4/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 4/6</b></span>
                         <span class="home-right">
                             <span id="slide4-text">Your teacher's dashboard allows educators to monitor the progress
                                                    of an entire class or view and individual learner's results. Access
@@ -141,7 +141,7 @@
                         </span>
                     </span>
                     <span class="slide5 hidden">
-                        <span class="home-right-heading">Take the Tour 5/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 5/6</b></span>
                         <span class="home-right">
                             <span id="slide5-text">Your Everything Maths and Science textbooks are freely available to
                                                    read online. You can access them using any device - computer, tablet or mobile phone.
@@ -152,7 +152,7 @@
                         </span>
                     </span>
                     <span class="slide6 hidden">
-                        <span class="home-right-heading">Take the Tour 6/6</span>
+                        <span class="home-right-heading"><b>Take the Tour 6/6</b></span>
                         <span class="home-right">
                             <span id="slide6-text">Your hardcopy textbooks become interactive when you read them
                                                    online. They are filled with videos, simulations and presentations to
