@@ -66,12 +66,14 @@ def setupPortalContent(portal):
                          INavigationRoot)
 
     # add Individual About and School About pages
-    if not portal.hasObject('individual-about-information'):
-        portal.invokeFactory(id='individual-about-information',
-                             type_name='Document', title='Individual About')
-    if not portal.hasObject('school-about-information'):
-        portal.invokeFactory(id='school-about-information', 
-                             type_name='Document', title='School About')
+    if not portal.hasObject('individual-products-and-pricing'):
+        portal.invokeFactory(id='individual-products-and-pricing',
+                             type_name='Document',
+                             title='Individual Products and Pricing')
+    if not portal.hasObject('school-products-and-pricing'):
+        portal.invokeFactory(id='school-products-and-pricing', 
+                             type_name='Document',
+                             title='School Products and Pricing')
 
     # disable tabs
     pprop = getToolByName(portal, 'portal_properties')
