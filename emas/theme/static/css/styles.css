@@ -915,18 +915,21 @@ h2.spacing {
 
 .next-button,
 .prev-button {
-    width: 60px;
     height: 20px;
     display: inline-block;
-    border: 1px #000 solid;
     cursor: pointer;
     z-index: 2;
     position: absolute;    
-    bottom : 10px;
+    bottom : 15px;
     margin: 1px;
     padding-bottom: 2px;
     text-align: center;
     vertical-align: center;
+}
+
+#content .next-button a.css3button:hover,
+#content .prev-button a.css3button:hover {
+    color: #fff !important;
 }
 
 .next-button {
@@ -935,10 +938,6 @@ h2.spacing {
 
 .prev-button {
     left: 10px;    
-}
-
-.width160 {
-    width: 160px;
 }
 
 .homebutton {
@@ -1172,32 +1171,31 @@ input.sign-in.homebutton {
     left: 160px; 
 }
 
-#tooltip1 {
-    z-index: 4;
-    position: absolute;
-    top: 150px;
-    right: 90px;
-    width: 70px;
-    height: 70px;
-    background: #fdf;
-    padding: 5px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
+#tooltip1,
 #tooltip2 {
     z-index: 4;
     position: absolute;
-    top: 223px;
-    right: 10px;
-    width: 35px;
-    height: 45px;
-    background: #dfd;
     padding: 5px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+    border: 1px #ddd solid;
+}
+
+#tooltip1 {
+    top: 150px;
+    right: 100px;
+    width: 70px;
+    height: 70px;
+    background: #fdf;
+}
+
+#tooltip2 {
+    top: 219px;
+    right: 7px;
+    width: 35px;
+    height: 45px;
+    background: #dfd;
 }
 
 #slide2-text {

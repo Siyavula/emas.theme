@@ -97,9 +97,13 @@
                                                    Calculate the slope (m) of the graph.</span>
                             <span id="graph-img"></span>
                             <span id="slide1-text2">m = </span>
-                            <input type="text" id="demo_answer" value="" name="demo_answer" size="8">
-                            <span class="prev-button">Home</span>
-                            <span class="next-button width160">Check my answer</span>
+                            <input type="text" id="demo_answer" value="" name="demo_answer" size="8">                            
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Home</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button"><span class="check icon"></span>&nbsp;&nbsp;Check my answer </a>
+                            </span>
                             <span id="tooltip1" class="hidden">Type your answer in here</span>
                             <span id="tooltip2" class="hidden">Click here</span>
                         </span>
@@ -112,9 +116,12 @@
                                                   on to a different one. The more questions you get right, the harder they become.</span>
                             <span id="answer-incorrect-img"></span>
                             <span id="answer-correct-img"></span>
-
-                            <span class="prev-button">Back</span>
-                            <span class="next-button width160">View my dashboard</span>
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button">View my dashboard &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                            </span>
                         </span>
                     </span>
                     <span class="slide3 hidden">
@@ -124,8 +131,12 @@
                                                   <b>leaner's dashboard</b>. View what sections you've practised,
                                                   how many points you've earned and how your performance is improving.</span>
                             <span id="learners-dashboard-img"></span>
-                            <span class="prev-button">Back</span>
-                            <span class="next-button">Next</span>
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                            </span>
                         </span>
                     </span>
                     <span class="slide4 hidden">
@@ -136,8 +147,12 @@
                                                    the questions that learners are practising, identify areas of difficulty
                                                    and be more strategic in your teaching.</span>
                             <span id="teachers-dashboard-img"></span>
-                            <span class="prev-button">Back</span>
-                            <span class="next-button">Next</span>
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                            </span>
                         </span>
                     </span>
                     <span class="slide5 hidden">
@@ -147,8 +162,12 @@
                                                    read online. You can access them using any device - computer, tablet or mobile phone.
                                                    You can also download the books and read them offline.</span>
                             <span id="textbooks-img"></span>
-                            <span class="prev-button">Back</span>
-                            <span class="next-button">Next</span>
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                            </span>
                         </span>
                     </span>
                     <span class="slide6 hidden">
@@ -158,8 +177,12 @@
                                                    online. They are filled with videos, simulations and presentations to
                                                    give you a richer learning experience.</span>
                             <span id="media-img"></span>
-                            <span class="prev-button">Back</span>
-                            <span class="next-button">Home</span>
+                            <span class="prev-button">
+                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                            </span>
+                            <span class="next-button">
+                                <a class="css3button">Home &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                            </span>
                         </span>
                     </span>
                 </span>
