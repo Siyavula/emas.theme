@@ -18,211 +18,427 @@
                 </span>
             </div>
 
-            <!-- display maths books first -->
-            <div class="textbook-row" tal:condition="python:'maths' in site_absolute_url">
+            <tal:not-qa tal:condition="python:'qa.' not in site_absolute_url">
 
-                <h5>Everything Maths</h5>
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade10" href="http://www.everythingmaths.co.za/grade-10">
+                <!-- display maths books first -->
+                <div class="textbook-row" tal:condition="python:'maths' in site_absolute_url">
+
+                    <h5>Everything Maths</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade10" href="http://everythingmaths.co.za/grade-10">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
+
+                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
+                        </ul>
                     </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
 
-                        <li><a>Lees Wiskunde 10</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
-                    </ul>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade11" href="http://everythingmaths.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
+                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade12" href="http://everythingmaths.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
+                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
+                            <li><a>Download Wiskunde 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="mathsliteracy-grade10" href="http://everythingmaths.co.za/grade-10-mathematical-literacy">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
+                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a>Download Maths Literacy 10</a></li>
+                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                        </ul>
+                    </div>
+
+                    <h5>Everything Science</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade10" href="http://everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
+                            <li><a>Lees Fisiese Wetenskape 10</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade11" href="http://everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
+                            <li><a>Lees Fisiese Wetenskape 11</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade12" href="http://everythingscience.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
+                            <li><a>Lees Fisiese Wetenskape 12</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
+                            <li><a>Download Fisiese Wetenskape 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="lifesciences-grade10">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a>Read Life Sciences 10</a></li>
+                            <li><a>Lees Lewens Wetenskape 10</a></li>
+                            <li><a>Download Life Sciences 10</a></li>
+                            <li><a>Download Lewens Wetenskape 10</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade11" href="http://www.everythingmaths.co.za/grade-11">
+                <!-- display science books first -->
+                <div tal:condition="python:'science' in site_absolute_url">
+
+                    <h5>Everything Science</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade10" href="http://everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
+                            <li><a>Lees Fisiese Wetenskape 10</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
+                        </ul>
                     </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                        <li><a>Lees Wiskunde 11</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
-                    </ul>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade11" href="http://everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
+                            <li><a>Lees Fisiese Wetenskape 11</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade12" href="http://everythingscience.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
+                            <li><a>Lees Fisiese Wetenskape 12</a></li>
+                            <li><a href="http://everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
+                            <li><a>Download Fisiese Wetenskape 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="lifesciences-grade10">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a>Read Life Sciences 10</a></li>
+                            <li><a>Lees Lewens Wetenskape 10</a></li>
+                            <li><a>Download Life Sciences 10</a></li>
+                            <li><a>Download Lewens Wetenskape 10</a></li>
+                        </ul>
+                    </div>
+
+                    <h5>Everything Maths</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade10" href="http://everythingmaths.co.za/grade-10">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
+
+                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade11" href="http://everythingmaths.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
+                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade12" href="http://everythingmaths.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
+                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
+                            <li><a>Download Wiskunde 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="mathsliteracy-grade10" href="http://everythingmaths.co.za/grade-10-mathematical-literacy">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
+                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a>Download Maths Literacy 10</a></li>
+                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade12" href="http://www.everythingmaths.co.za/grade-12">
+            </tal:not-qa>
+
+
+            <tal:qa tal:condition="python:'qa.' in site_absolute_url">
+
+                <!-- display maths books first -->
+                <div class="textbook-row" tal:condition="python:'maths' in site_absolute_url">
+
+                    <h5>Everything Maths</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade10" href="http://qa.everythingmaths.co.za/grade-10">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10">Read Maths 10</a></li>
+
+                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
+                        </ul>
                     </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                        <li><a>Lees Wiskunde 12</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                        <li><a>Download Wiskunde 12</a></li>
-                    </ul>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade11" href="http://qa.everythingmaths.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11">Read Maths 11</a></li>
+                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade12" href="http://qa.everythingmaths.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-12">Read Maths 12</a></li>
+                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
+                            <li><a>Download Wiskunde 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="mathsliteracy-grade10" href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
+                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a>Download Maths Literacy 10</a></li>
+                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                        </ul>
+                    </div>
+
+                    <h5>Everything Science</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade10" href="http://qa.everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
+                            <li><a>Lees Fisiese Wetenskape 10</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade11" href="http://qa.everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
+                            <li><a>Lees Fisiese Wetenskape 11</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade12" href="http://qa.everythingscience.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
+                            <li><a>Lees Fisiese Wetenskape 12</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
+                            <li><a>Download Fisiese Wetenskape 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="lifesciences-grade10">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a>Read Life Sciences 10</a></li>
+                            <li><a>Lees Lewens Wetenskape 10</a></li>
+                            <li><a>Download Life Sciences 10</a></li>
+                            <li><a>Download Lewens Wetenskape 10</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="mathsliteracy-grade10" href="http://everythingmaths.co.za/grade-10-mathematical-literacy">
+                <!-- display science books first -->
+                <div tal:condition="python:'science' in site_absolute_url">
+
+                    <h5>Everything Science</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade10" href="http://qa.everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
+                            <li><a>Lees Fisiese Wetenskape 10</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
+                        </ul>
                     </div>
-                    <ul class="dropdown-menu-wide">
-                        <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                        <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                        <li><a>Download Maths Literacy 10</a></li>
-                        <li><a>Download Wiskunde Geletterheid 10</a></li>
-                    </ul>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade11" href="http://qa.everythingscience.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
+                            <li><a>Lees Fisiese Wetenskape 11</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="sci-grade12" href="http://qa.everythingscience.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
+                            <li><a>Lees Fisiese Wetenskape 12</a></li>
+                            <li><a href="http://qa.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
+                            <li><a>Download Fisiese Wetenskape 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="lifesciences-grade10">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a>Read Life Sciences 10</a></li>
+                            <li><a>Lees Lewens Wetenskape 10</a></li>
+                            <li><a>Download Life Sciences 10</a></li>
+                            <li><a>Download Lewens Wetenskape 10</a></li>
+                        </ul>
+                    </div>
+
+                    <h5>Everything Maths</h5>
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade10" href="http://qa.everythingmaths.co.za/grade-10">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10">Read Maths 10</a></li>
+
+                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade11" href="http://qa.everythingmaths.co.za/grade-11">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11">Read Maths 11</a></li>
+                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="maths-grade12" href="http://qa.everythingmaths.co.za/grade-12">
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-12">Read Maths 12</a></li>
+                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a href="http://qa.everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
+                            <li><a>Download Wiskunde 12</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="textbook-data">
+                        <div class="textbook-img">
+                            <a id="mathsliteracy-grade10" href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">
+                        </div>
+                        <ul class="dropdown-menu-wide">
+                            <li><a href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
+                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a>Download Maths Literacy 10</a></li>
+                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <h5>Everything Science</h5>
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade10" href="http://www.everythingscience.co.za/grade-11">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                        <li><a>Lees Fisiese Wetenskape 10</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
-                    </ul>
-                </div>
+            </tal:qa>
 
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade11" href="http://www.everythingscience.co.za/grade-11">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                        <li><a>Lees Fisiese Wetenskape 11</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade12" href="http://www.everythingscience.co.za/grade-12">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                        <li><a>Lees Fisiese Wetenskape 12</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                        <li><a>Download Fisiese Wetenskape 12</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="lifesciences-grade10">
-                    </div>
-                    <ul class="dropdown-menu-wide">
-                        <li><a>Read Life Sciences 10</a></li>
-                        <li><a>Lees Lewens Wetenskape 10</a></li>
-                        <li><a>Download Life Sciences 10</a></li>
-                        <li><a>Download Lewens Wetenskape 10</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- display science books first -->
-            <div tal:condition="python:'science' in site_absolute_url">
-
-                <h5>Everything Science</h5>
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade10" href="http://www.everythingscience.co.za/grade-11">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                        <li><a>Lees Fisiese Wetenskape 10</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskape 10</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade11" href="http://www.everythingscience.co.za/grade-11">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                        <li><a>Lees Fisiese Wetenskape 11</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskape 11</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="sci-grade12" href="http://www.everythingscience.co.za/grade-12">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://www.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                        <li><a>Lees Fisiese Wetenskape 12</a></li>
-                        <li><a href="http://www.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                        <li><a>Download Fisiese Wetenskape 12</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="lifesciences-grade10">
-                    </div>
-                    <ul class="dropdown-menu-wide">
-                        <li><a>Read Life Sciences 10</a></li>
-                        <li><a>Lees Lewens Wetenskape 10</a></li>
-                        <li><a>Download Life Sciences 10</a></li>
-                        <li><a>Download Lewens Wetenskape 10</a></li>
-                    </ul>
-                </div>
-
-                <h5>Everything Maths</h5>
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade10" href="http://www.everythingmaths.co.za/grade-10">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
-
-                        <li><a>Lees Wiskunde 10</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade11" href="http://www.everythingmaths.co.za/grade-11">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                        <li><a>Lees Wiskunde 11</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="maths-grade12" href="http://www.everythingmaths.co.za/grade-12">
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                        <li><a>Lees Wiskunde 12</a></li>
-                        <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                        <li><a>Download Wiskunde 12</a></li>
-                    </ul>
-                </div>
-
-                <div class="textbook-data">
-                    <div class="textbook-img">
-                        <a id="mathsliteracy-grade10" href="http://everythingmaths.co.za/grade-10-mathematical-literacy">
-                    </div>
-                    <ul class="dropdown-menu-wide">
-                        <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                        <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                        <li><a>Download Maths Literacy 10</a></li>
-                        <li><a>Download Wiskunde Geletterheid 10</a></li>
-                    </ul>
-                </div>
-            </div>
 
         </div>
     </metal:core>
