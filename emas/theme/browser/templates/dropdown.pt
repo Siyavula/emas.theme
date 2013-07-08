@@ -39,7 +39,7 @@
         </li>
 
         <li id="portaltab-readtextbook" class="plain">
-            <a href="#" class="noClick" title="Read a textbook">Read a textbook</a>
+            <a href="#" tal:attributes="href string:$portal_url/@@textbook-catalogue" title="Read a textbook">Read a textbook</a>
             <ul class="submenu">
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/grade-10">Grade 10</a></li>
                 <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/grade-11">Grade 11 </a></li>

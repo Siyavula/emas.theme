@@ -903,6 +903,7 @@ h2.spacing {
     display: block;
     width: 180px;
     padding: 5px;
+    margin-bottom: 3px;
 }
 
 .home-left #__ac_password {
@@ -1162,7 +1163,7 @@ input.sign-in.homebutton {
     position: absolute;
     top: 230px;
     left: 130px;
-    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
 }
 
 #demo_answer {
