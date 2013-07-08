@@ -1005,7 +1005,7 @@ h2.spacing {
     width: 380px;
     height: 14px;
     position: absolute;
-    top: 20px;
+    top: 15px;
     left: 20px;    
     font: 400 14px/100% Arial,Helvetica,sans-serif;
     text-align: center;
@@ -1015,7 +1015,7 @@ h2.spacing {
     width: 300px;
     height: 14px;
     position: absolute;
-    top: 40px;
+    top: 35px;
     left: 65px; 
     font: 400 14px/100% Arial,Helvetica,sans-serif;
 }
@@ -1024,18 +1024,18 @@ h2.spacing {
     width: 300px;
     height: 14px;
     position: absolute;
-    top: 80px;
+    top: 75px;
     left: 65px; 
     font: 400 14px/100% Arial,Helvetica,sans-serif;
 }
 
 #howitworks-img {
     position: absolute;
-    top: 120px;
-    left: 130px;
+    top: 117px;
+    left: 82px;
     background: url("../images/howitworks.png");
-    height: 96px;	
-    width: 194px;
+    height: 122px;	
+    width: 246px;
     margin: 1px;
     display: block;    
 }
@@ -1149,10 +1149,10 @@ input.sign-in.homebutton {
 #graph-img {
     position: absolute;
     top: 60px;
-    left: 120px;
+    left: 110px;
     background: url("../images/graph.png");
-    height: 150px;	
-    width: 157px;
+    height: 162px;	
+    width: 173px;
     margin: 1px;
     display: block;
 }
@@ -1241,20 +1241,20 @@ input.sign-in.homebutton {
 #learners-dashboard-img {
     position: absolute;
     top: 105px;
-    left: 15px;
+    left: 25px;
     background: url("../images/learnersdashboard.png");
-    height: 150px;	
-    width: 380px;
+    height: 143px;	
+    width: 362px;
     margin: 1px;
     display: block;
 }
 
 #slide4-text {
-    width: 390px;
+    width: 400px;
     height: 14px;
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 10px;
+    left: 1px;
     font: 400 14px/100% Arial,Helvetica,sans-serif;
     line-height: 130%;
     text-align: center;
@@ -1262,10 +1262,10 @@ input.sign-in.homebutton {
 
 #teachers-dashboard-img {
     position: absolute;
-    top: 115px;
+    top: 102px;
     left: 15px;
     background: url("../images/teachersdashboard.png");
-    height: 146px;	
+    height: 165px;	
     width: 380px;
     margin: 1px;
     display: block;
