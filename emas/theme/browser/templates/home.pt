@@ -48,13 +48,16 @@
                             <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
                         </div>
                         <input class="sign-in homebutton" type="submit" value="Sign in" name="submit" class="context">
-                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" value="True">
+                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" checked="checked" value="True">
                     </form>
                     <span id="keep-me-logged-in-text">Keep me logged in</span>
                     <span id="or-text">OR</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@register">
                         <span class="start-trial homebutton">Start your free trial</span>
                     </a>                    
+                    <a href="#" tal:attributes="href string:$portal_url/mail_password_form?userid=">
+                        <span id="forgot-password">Forgot your password?</span>
+                    </a>
                 </span>
 
                 <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">

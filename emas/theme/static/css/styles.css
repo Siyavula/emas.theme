@@ -890,7 +890,7 @@ h2.spacing {
 
 #login-inputs {
     position: absolute;
-    top: 25px;
+    top: 20px;
     width: 255px;
     height: 80px;
     display: block;
@@ -1050,7 +1050,7 @@ h2.spacing {
     margin: 0px;
     position: absolute;
     left: 75px;
-    bottom: 25px;
+    bottom: 20px;
 }
 
 #go-to-dashboard-text {
@@ -1118,7 +1118,7 @@ input.sign-in.homebutton {
     width: 140px;
     height: 14px;
     position: absolute;
-    bottom: 90px;
+    bottom: 93px;
     left: 115px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
 }
@@ -1130,9 +1130,18 @@ input.sign-in.homebutton {
     margin: 0px;
     position: absolute;
     left: 20px;
-    bottom: 25px;
+    bottom: 35px;
     font: 700 20px/100% Arial,Helvetica,sans-serif;
     padding-top: 8px;
+}
+
+#forgot-password {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+    bottom: 5px;
+    right: 2px;
+    font: 700 12px/100% Arial,Helvetica,sans-serif;
 }
 
 #slide1-text1 {
