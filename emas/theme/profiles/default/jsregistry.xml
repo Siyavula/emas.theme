@@ -179,4 +179,11 @@
                 id="++resource++emas.theme.resources/tour.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"                
+                id="++resource++emas.theme.resources/answers.js"
+                inline="False"/>
+
 </object>
