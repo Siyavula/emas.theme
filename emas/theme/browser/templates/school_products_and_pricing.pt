@@ -11,7 +11,7 @@
         <div id="content-core" class="height-650"
              tal:define="portal_url view/site_url">
 
-            <h3 class="center spacing">Products and Pricing: teachers and schools</h3>
+            <h3 class="center spacing">Products and pricing: teachers and schools</h3>
             <div class="center subtitle pricing">
                 <span>Intelligent practice allows educators to track learners' progress with a personalised teacher's dashboard. <br>
                       Our system marks learners' homework automatically and helps educators identify and target areas of <br>
