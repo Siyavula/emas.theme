@@ -332,15 +332,29 @@ ul.submenu {
     font-weight: bold;
 }
 
-.shortcode-content {
-}
-
 .shortcode-content label.formQuestion {
     font-weight: bold;
 }
 
 .exercise-answer {
     border-bottom: 1px solid #ccc;
+}
+
+#content .answer-actions {
+    text-align: center;
+}
+#content .answer-actions a {
+    border: 0.1em solid #CCCCCC;
+    color: #205C90;
+    padding: 0.25em 0.5em;
+}
+#content .answer-actions a:hover {
+    background-color: #329FD7;
+    color: #FFF !important;
+}
+
+#content .answer-content {
+    display: none;
 }
 
 #content .table {
