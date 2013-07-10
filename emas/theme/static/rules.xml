@@ -33,6 +33,7 @@
 
         <copy attributes="href" css:content="#personaltools-login" css:theme="#personaltools-login" />
         <copy attributes="href" css:content="#personaltools-join" css:theme="#personaltools-join" />
+        <copy attributes="href" css:content="#personaltools-logout" css:theme="#personaltools-logout" />
 
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
@@ -95,6 +96,9 @@
         <replace
             css:content-children="#content-core"
             css:theme-children="#content-core" />
+        <copy attributes="class" 
+            css:content="#content-core" 
+            css:theme="#content-core" />
         <replace
             css:if-content="div.pfg-form"
             css:theme-children="#content" 

@@ -8,14 +8,14 @@
 <body>
 
     <metal:core fill-slot="main">
-        <div id="content-core"
+        <div id="content-core" class="height-670"
              tal:define="portal_url view/site_url">
 
             <h3 class="center spacing">Products and Pricing: parents and learners</h3>
             <div class="center subtitle pricing">
                 <span>Unlimited maths and science practice: track your progress, achieve higher accuracy and meet your goals. <br>
-                      Intelligent practice is curriculum aligned, allows you to work at your own level of mastery and is integrated with our
-                      free online textbooks. 
+                      Intelligent practice is curriculum aligned, allows you to work at your own level of mastery and is integrated <br>
+                      with our free online textbooks. 
                 </span>
             </div>
 
@@ -42,7 +42,13 @@
                 </table>
             </div>
 
-            <div class="order-text">Buy Now or  <a href="#" tal:attributes="href string:$portal_url/@@register">Sign up for a free trial.</a>
+            <div class="order-text">
+                <a href="#" tal:attributes="href string:$portal_url/order">
+                    <span class="buy-now homebutton btn btn-danger btn-large">Buy now</span>
+                </a>
+
+                <b>&nbsp; OR &nbsp;</b> 
+                <a href="#" tal:attributes="href string:$portal_url/@@register">Sign up for a free trial.</a>
             </div>
 
             <div class="pricing-tour-container">
@@ -58,7 +64,7 @@
                                 </li>
                             </ul>
                             <span id="howitworks-img"></span>
-                            <span class="how-works homebutton">Show me how it works</span>
+                            <span class="how-works homebutton btn btn-success btn-large">Show me how it works</span>
                         </span>
                     </div>
                     <div class="slide1 hidden">
@@ -70,10 +76,10 @@
                             <span id="slide1-text2">m = </span>
                             <input type="text" id="demo_answer" value="" name="demo_answer" size="8">                            
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Home</a>
+                                <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button"><span class="check icon"></span>&nbsp;&nbsp;Check my answer </a>
+                                <button class="btn"><i class="icon-check"></i>Check my answer</button>
                             </span>
                             <span id="tooltip1" class="hidden">Type your answer in here</span>
                             <span id="tooltip2" class="hidden">Click here</span>
@@ -88,10 +94,11 @@
                             <span id="answer-incorrect-img"></span>
                             <span id="answer-correct-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">View my dashboard &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">View my dashboard &nbsp;<i class="icon-arrow-right"></i></button>
+
                             </span>
                         </span>
                     </div>
@@ -103,10 +110,10 @@
                                                   how many points you've earned and how your performance is improving.</span>
                             <span id="learners-dashboard-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </div>
@@ -119,10 +126,10 @@
                                                    and be more strategic in your teaching.</span>
                             <span id="teachers-dashboard-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </div>
@@ -134,10 +141,10 @@
                                                    You can also download the books and read them offline.</span>
                             <span id="textbooks-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </div>
@@ -149,10 +156,10 @@
                                                    give you a richer learning experience.</span>
                             <span id="media-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Home &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </div>

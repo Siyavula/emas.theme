@@ -47,14 +47,14 @@
                             <input type="text" id="__ac_name" value="" name="__ac_name" placeholder="username" size="13">
                             <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
                         </div>
-                        <input class="sign-in homebutton" type="submit" value="Sign in" name="submit" class="context">
+                        <input class="sign-in homebutton btn btn-info btn-large" type="submit" value="Sign in" name="submit" class="context">
                         <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" checked="checked" value="True">
                     </form>
                     <span id="keep-me-logged-in-text">Keep me logged in</span>
                     <span id="or-text">OR</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@register">
-                        <span class="start-trial homebutton">Start your free trial</span>
-                    </a>                    
+                        <span class="start-trial homebutton btn btn-warning btn-large">Start your free trial</span>
+                    </a>
                     <a href="#" tal:attributes="href string:$portal_url/mail_password_form?userid=">
                         <span id="forgot-password">Forgot your password?</span>
                     </a>
@@ -64,17 +64,17 @@
                     <span id="I-want-to-text">I want to:</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
                         <tal:maths tal:condition="python:'maths' in site_absolute_url">
-                            <span class="practice homebutton">Practise Maths</span>
+                            <span class="practice homebutton btn btn-info btn-large">Practise Maths</span>
                         </tal:maths>
                         <tal:science tal:condition="python:'science' in site_absolute_url">
-                            <span class="practice homebutton">Practise Science</span>
+                            <span class="practice homebutton btn btn-info btn-large">Practise Science</span>
                         </tal:science>    
                     </a>
                     <a href="#" tal:attributes="href string:$portal_url/@@textbook-catalogue">
-                        <span class="read-textbook homebutton">Read a textbook</span>
+                        <span class="read-textbook homebutton btn btn-inverse btn-large">Read a textbook</span>
                     </a>
                     <a href="#" tal:attributes="href string:$portal_url/order">
-                        <span class="extend-subscription homebutton">Extend my subscription</span>
+                        <span class="extend-subscription homebutton btn btn-warning btn-large">Extend my subscription</span>
                     </a>
                 </span>
 
@@ -90,7 +90,7 @@
                                 </li>
                             </ul>
                             <span id="howitworks-img"></span>
-                            <span class="how-works homebutton">Show me how it works</span>
+                            <span class="how-works homebutton btn btn-success btn-large">Show me how it works</span>
                         </span>
                     </span>
                     <span class="slide1 hidden">
@@ -102,10 +102,10 @@
                             <span id="slide1-text2">m = </span>
                             <input type="text" id="demo_answer" value="" name="demo_answer" size="8">                            
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Home</a>
+                                <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button"><span class="check icon"></span>&nbsp;&nbsp;Check my answer </a>
+                                <button class="btn"><i class="icon-check"></i>Check my answer</button>
                             </span>
                             <span id="tooltip1" class="hidden">Type your answer in here</span>
                             <span id="tooltip2" class="hidden">Click here</span>
@@ -120,10 +120,11 @@
                             <span id="answer-incorrect-img"></span>
                             <span id="answer-correct-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">View my dashboard &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">View my dashboard &nbsp;<i class="icon-arrow-right"></i></button>
+
                             </span>
                         </span>
                     </span>
@@ -135,10 +136,10 @@
                                                   how many points you've earned and how your performance is improving.</span>
                             <span id="learners-dashboard-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </span>
@@ -151,10 +152,10 @@
                                                    and be more strategic in your teaching.</span>
                             <span id="teachers-dashboard-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </span>
@@ -166,10 +167,10 @@
                                                    You can also download the books and read them offline.</span>
                             <span id="textbooks-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Next &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </span>
@@ -181,22 +182,22 @@
                                                    give you a richer learning experience.</span>
                             <span id="media-img"></span>
                             <span class="prev-button">
-                                <a class="css3button"><span class="leftarrow icon"></span>&nbsp; Back</a>
+                                <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <a class="css3button">Home &nbsp;&nbsp;<span class="rightarrow icon"></span></a>
+                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
                     </span>
                 </span>
                 <span tal:condition="not:view/show_tour">
-                    <span class="home-right-heading">Go to your dashboard!</span>
                     <span class="home-right">
+                        <span class="home-right-heading"><b>Go to your dashboard!</b></span>
                         <span id="go-to-dashboard-text">Go to your dashboard to view your points and progress and
                                                         to chose what to practise next!</span>
                         <span id="dashboard-img"></span>
                         <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
-                            <span class="dashboard homebutton">Take me to my dashboard</span>
+                            <span class="dashboard homebutton btn btn-success btn-large">Take me to my dashboard</span>
                         </a>
                     </span>
                 </span>

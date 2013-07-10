@@ -183,6 +183,14 @@ ul.submenu {
     min-height: 445px;
 }
 
+.height-650 {
+    min-height: 650px;
+}
+
+.height-670 {
+    min-height: 670px;
+}
+
 #content div.media {
     width: 100%;
 .    text-align: center;
@@ -976,10 +984,10 @@ h2.spacing {
 .homebutton {
     height: 22px;
     color: #fff;
-    border: 1px #999 solid;
+/*    border: 1px #999 solid;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
-	border-radius: 6px;
+	border-radius: 6px; */
     padding-top: 6px;
     overflow:none; 
     font: 600 16px/100% Arial,Helvetica,sans-serif;
@@ -998,36 +1006,30 @@ h2.spacing {
 }
 
 .practice.homebutton {
-    background: #008fb4;
-    width: 215px;
-    height: 28px;
+    width: 182px;
     margin: 0px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
-    padding-top: 12px;
+    padding-top: 16px;
     position: absolute;
     left: 18px;
     top: 82px;
 }
 
 .read-textbook.homebutton {
-    background: #ffab00;
-    width: 215px;
-    height: 28px;
+    width: 182px;
     margin: 0px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
-    padding-top: 12px;
+    padding-top: 16px;
     position: absolute;
     left: 18px;
     top: 152px;
 }
 
 .extend-subscription.homebutton {
-    background: #ff5e04;
-    width: 215px;
-    height: 28px;
+    width: 182px;
     margin: 0px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
-    padding-top: 12px;
+    padding-top: 16px;
     position: absolute;
     left: 18px;
     top: 222px;
@@ -1073,12 +1075,9 @@ h2.spacing {
 }
 
 .how-works.homebutton {
-    background: #6fb52e;
-    width: 260px;
-    height: 32px;
     margin: 0px;
     font: 700 20px/100% Arial,Helvetica,sans-serif;
-    padding-top: 8px;
+    padding-top: 10px;
     margin: 0px;
     position: absolute;
     left: 75px;
@@ -1108,9 +1107,6 @@ h2.spacing {
 }
 
 .dashboard.homebutton {
-    background: #6fb52e;
-    width: 290px;
-    height: 32px;
     margin: 0px;
     position: absolute;
     left: 60px;
@@ -1120,14 +1116,13 @@ h2.spacing {
 }
 
 input.sign-in.homebutton {
-    background: #008fb4;
     height: 40px;
     width: 110px;
     margin: 0px;
     position: absolute;
     left: 75px;
     bottom: 150px;
-    padding-top: 0px;
+    padding-top: 8px;
 }
 
 #keep-me-logged-in-checkbox {
@@ -1156,15 +1151,12 @@ input.sign-in.homebutton {
 }
 
 .start-trial.homebutton {
-    background: #ff5e04;
-    width: 215px;
-    height: 32px;
     margin: 0px;
     position: absolute;
-    left: 20px;
+    left: 17px;
     bottom: 35px;
     font: 700 20px/100% Arial,Helvetica,sans-serif;
-    padding-top: 8px;
+    padding-top: 10px;
 }
 
 #forgot-password {
@@ -1481,11 +1473,8 @@ td.grey.title {
     margin: 0 auto;   
 }
 
-
-
-
-
-
-
-
-
+.buy-now.homebutton {
+    margin: 0px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 10px;
+}
