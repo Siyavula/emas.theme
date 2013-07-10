@@ -31,9 +31,10 @@
             css:theme="#portal-siteactions"
             />
 
-        <copy attributes="href" css:content="#personaltools-login" css:theme="#personaltools-login" />
-        <copy attributes="href" css:content="#personaltools-join" css:theme="#personaltools-join" />
-        <copy attributes="href" css:content="#personaltools-logout" css:theme="#personaltools-logout" />
+        <replace
+            css:content="#portal-personaltools-wrapper"
+            css:theme="#personaltools"
+            /> 
 
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
