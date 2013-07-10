@@ -1405,3 +1405,8 @@ ul.dropdown-menu-wide {
     font: 400 12px/100% Arial,Helvetica,sans-serif;
     color: #205C90;    
 }
+
+div#content a.practice-link {
+    color: darkgreen;
+}
+

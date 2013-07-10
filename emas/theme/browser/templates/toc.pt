@@ -26,7 +26,8 @@
                     </ul>
                 </tal:folder>
                 <tal:notfolder tal:condition="not:is_folder">
-                    <a href="#" tal:attributes="href item/absolute_url" tal:content="item/Title">Title</a>
+                    <a href="#" tal:content="item/Title" tal:attributes="href item/absolute_url; 
+                                                                         class item/css_class|nothing">Title</a>
                 </tal:notfolder>
             </li>
             </tal:items>
