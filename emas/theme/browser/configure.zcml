@@ -275,4 +275,20 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="individual-products-and-pricing"
+        class=".views.IndividualProductsPricingView"
+        template="templates/individual_products_and_pricing.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="school-products-and-pricing"
+        class=".views.SchoolProductsPricingView"
+        template="templates/school_products_and_pricing.pt"
+        permission="zope2.View"
+        />
+
 </configure>

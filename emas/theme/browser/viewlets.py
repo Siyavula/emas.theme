@@ -155,5 +155,15 @@ class EMASPathBarViewlet(PathBarViewlet):
         if context_state.current_page_url() == \
            '%s/@@textbook-catalogue' % portal_state.navigation_root_url():
             return False
+        # do not show breadcrumbs for individual pricing page
+        if context_state.current_page_url() == \
+           '%s/@@individual-products-and-pricing' % \
+                portal_state.navigation_root_url():
+            return False
+        # do not show breadcrumbs for school pricing page
+        if context_state.current_page_url() == \
+           '%s/@@school-products-and-pricing' % \
+                portal_state.navigation_root_url():
+            return False
 
         return True

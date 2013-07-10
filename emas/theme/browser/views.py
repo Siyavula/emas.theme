@@ -729,3 +729,22 @@ class CatalogueView(BrowserView):
 
     def site_absolute_url(self):
         return getToolByName(self.context, 'portal_url').absolute_url()
+
+
+class SchoolProductsPricingView(BrowserView):
+    """ Products & Pricing: Teachers and Schools
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+
+class IndividualProductsPricingView(BrowserView):
+    """ Products & Pricing: Parents and Learners
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+
+

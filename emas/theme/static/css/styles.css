@@ -839,6 +839,10 @@ h2.spacing {
     margin: 5px 0px 5px 0px !important;
 }      
 
+.center.subtitle.pricing {
+    margin: 5px 0px 5px 0px !important;
+}      
+
 .home-left-heading,
 .home-right-heading {
     z-index: 3;
@@ -853,11 +857,12 @@ h2.spacing {
 }
 
 .home-right-heading {
-    left: 375px;
+    left: 15px;
     top: -10px;
 }
 
-.home-container {
+.home-container,
+.pricing-tour-container {
     width: 800px;
     display: inline-block;
     margin: 0px;
@@ -886,6 +891,19 @@ h2.spacing {
     float: left;
     z-index: 2;
     position: relative;
+    margin: auto;
+}
+
+.slide0,
+.slide1,
+.slide2,
+.slide3,
+.slide4,
+.slide5,
+.slide6 {
+    width: 410px;
+    height: 310px;
+    margin: 0 auto !important;
 }
 
 #login-inputs {
@@ -1409,4 +1427,51 @@ ul.dropdown-menu-wide {
 div#content a.practice-link {
     color: darkgreen;
 }
+
+.pricing-table-div {
+    width: 800px;
+}
+
+.pricing-table {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.pricing-table th,
+.pricing-table td {
+    border-bottom: solid 2px #000;
+    text-align: center;
+}
+
+td.red {
+    color: #cb2b5b;
+    vertical-align: middle;
+}
+
+td.grey {
+    color: #717981;
+    vertical-align: middle;
+}
+
+td.red.title,
+td.grey.title {
+    text-align: left;
+}
+
+.price-action-text {
+    width: 800px;
+}
+
+.order-text {
+    text-align: center;   
+    margin: 0 auto;   
+}
+
+
+
+
+
+
+
+
 
