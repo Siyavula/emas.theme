@@ -202,6 +202,19 @@
                     </span>
                 </span>
 
+                <!-- preload tour images -->
+                <div id="preload" style="display: none;">
+                    <img src="/++theme++emas.theme/images/howitworks.png">
+                    <img src="/++theme++emas.theme/images/graph.png">
+                    <img src="/++theme++emas.theme/images/answer_correct.png">
+                    <img src="/++theme++emas.theme/images/answer_incorrect.png">
+                    <img src="/++theme++emas.theme/images/dashboard.png">
+                    <img src="/++theme++emas.theme/images/learnersdashboard.png">
+                    <img src="/++theme++emas.theme/images/teachersdashboard.png">
+                    <img src="/++theme++emas.theme/images/media.png">
+                    <img src="/++theme++emas.theme/images/textbooks.png">
+                </div>
+
             </div>
 
         </div>
