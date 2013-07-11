@@ -20,7 +20,7 @@
                 </span>
             </div>
 
-            <span class="home-container">            
+            <div class="home-container">            
 
                 <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
                     <span class="home-left-heading"><b>Sign in or Sign up!</b></span>
@@ -184,8 +184,8 @@
                             <span class="prev-button">
                                 <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
-                            <span class="next-button">
-                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
+                            <span class="next-button">                                
+                                <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                         </span>
                     </span>
@@ -202,7 +202,7 @@
                     </span>
                 </span>
 
-            </span>
+            </div>
 
         </div>
     </metal:core>

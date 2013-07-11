@@ -158,7 +158,7 @@
                                 <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
                             <span class="next-button">
-                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
+                                <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                         </span>
                     </div>

@@ -152,17 +152,32 @@ class EMASPathBarViewlet(PathBarViewlet):
            '%s/' % portal_state.navigation_root_url():
             return False
         # do not show breadcrumbs for textbook catalogue page
-        if context_state.current_page_url() == \
+        elif context_state.current_page_url() == \
            '%s/@@textbook-catalogue' % portal_state.navigation_root_url():
             return False
         # do not show breadcrumbs for individual pricing page
-        if context_state.current_page_url() == \
+        elif context_state.current_page_url() == \
            '%s/@@individual-products-and-pricing' % \
                 portal_state.navigation_root_url():
             return False
         # do not show breadcrumbs for school pricing page
-        if context_state.current_page_url() == \
+        elif context_state.current_page_url() == \
            '%s/@@school-products-and-pricing' % \
+                portal_state.navigation_root_url():
+            return False
+        # do not show breadcrumbs for /@@practice/dashboard
+        elif context_state.current_page_url() == \
+           '%s/@@practice/dashboard' % \
+                portal_state.navigation_root_url():
+            return False
+        # do not show breadcrumbs for question view
+        elif context_state.current_page_url() == \
+           '%s/@@practice' % \
+                portal_state.navigation_root_url():
+            return False
+        # do not show breadcrumbs for logout page
+        elif context_state.current_page_url() == \
+           '%s/logged_out' % \
                 portal_state.navigation_root_url():
             return False
 
