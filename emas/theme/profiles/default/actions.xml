@@ -235,7 +235,7 @@
             <property name="description" i18n:translate=""></property>
             <property name="url_expr">string:${globals_view/navigationRootUrl}/@@register</property>
             <property name="icon_expr"></property>
-            <property name="available_expr"></property>
+            <property name="available_expr">python:context.restrictedTraverse('@@plone_portal_state').anonymous()</property>
             <property name="permissions">
                 <element value="View"/>
             </property>
