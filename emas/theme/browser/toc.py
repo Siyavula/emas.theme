@@ -33,9 +33,13 @@ class TableOfContents(BrowserView):
         if self.has_practise_content(self.context):
             # get the chapter context from the last link of the chapter
             lastitem_url = result[len(result)-1].absolute_url()
-            chapter = lastitem_url.split('/')[-2]
-            chapter = '/' + chapter
-            result.append(self._practice_url(chapter))
+            lastitem_type = result[len(result)-1].portal_type
+            # only add 'practice this chapter now' if the other items in the 
+            # list are book links
+            if lastitem_type == 'rhaptos.xmlfile.xmlfile':
+                chapter = lastitem_url.split('/')[-2]
+                chapter = '/' + chapter    
+                result.append(self._practice_url(chapter))
 
         return result
 
