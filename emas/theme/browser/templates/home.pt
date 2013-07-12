@@ -20,7 +20,7 @@
                 </span>
             </div>
 
-            <span class="home-container">            
+            <div class="home-container">            
 
                 <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
                     <span class="home-left-heading"><b>Sign in or Sign up!</b></span>
@@ -30,7 +30,8 @@
                 </tal:welcome>
 
                 <span tal:condition="context/@@plone_portal_state/anonymous" class="home-left">
-                    <form tal:attributes="action string:${navigation_root_url}/login_form" id="login_form" method="post" class="enableAutoFocus">
+                    <form tal:attributes="action string:${navigation_root_url}/login_form" id="login_form" method="post" 
+                          class="enableAutoFocus">
                         <input type="hidden" name="came_from" tal:attributes="value navigation_root_url">
                         <input type="hidden" name="next">
                         <input type="hidden" name="ajax_load">
@@ -184,8 +185,8 @@
                             <span class="prev-button">
                                 <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
-                            <span class="next-button">
-                                <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
+                            <span class="next-button">                                
+                                <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                         </span>
                     </span>
@@ -202,7 +203,20 @@
                     </span>
                 </span>
 
-            </span>
+                <!-- preload tour images -->
+                <div id="preload" style="display: none;">
+                    <img src="/++theme++emas.theme/images/howitworks.png">
+                    <img src="/++theme++emas.theme/images/graph.png">
+                    <img src="/++theme++emas.theme/images/answer_correct.png">
+                    <img src="/++theme++emas.theme/images/answer_incorrect.png">
+                    <img src="/++theme++emas.theme/images/dashboard.png">
+                    <img src="/++theme++emas.theme/images/learnersdashboard.png">
+                    <img src="/++theme++emas.theme/images/teachersdashboard.png">
+                    <img src="/++theme++emas.theme/images/media.png">
+                    <img src="/++theme++emas.theme/images/textbooks.png">
+                </div>
+
+            </div>
 
         </div>
     </metal:core>

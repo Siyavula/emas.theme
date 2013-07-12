@@ -4,6 +4,7 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="emas.theme">
 
@@ -33,6 +34,13 @@
 
     <plone:static type="theme" directory="static" />
 
+    <!-- Register theme layer interface -->
+    <interface
+        interface=".interfaces.IEmasThemeLayer"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="emas.theme theme"
+        />
+
     <plone:behavior
         title="Related content behavior"
         description="Add a link to a piece of related content."
@@ -57,6 +65,12 @@
         for="Products.CMFCore.interfaces.IMemberData
             Products.Archetypes.interfaces.IObjectEditedEvent"
         handler=".eventhandlers.onMemberPropsUpdated"
+        />
+
+    <cmf:registerDirectory
+        name="skins"
+        directory="skins"
+        recursive="True"
         />
 
 </configure>

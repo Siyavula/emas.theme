@@ -809,10 +809,10 @@ h2.spacing {
 
 .home-left-heading,
 .home-right-heading {
-    z-index: 3;
     position: absolute;
     background: #ffffff;
     padding: 0px 5px 0 5px;
+    z-index: 3;
 }
 
 .home-left-heading {
@@ -822,17 +822,18 @@ h2.spacing {
 
 .home-right-heading {
     left: 15px;
-    top: -10px;
+    top: -12px;
 }
 
-.home-container,
+#content .home-container,
 .pricing-tour-container {
     width: 800px;
-    display: inline-block;
-    margin: 0px;
     float: left;
-    z-index: 2;
     position: relative
+}
+
+#content .home-container {
+    margin: 0px !important;
 }
 
 .home-left {
@@ -843,7 +844,6 @@ h2.spacing {
     margin-right: 60px;
     position: relative;
     float: left;
-    z-index: 2;
 }
 
 .home-right {
@@ -853,7 +853,6 @@ h2.spacing {
     border: 2px #000 solid;
     margin: 0px;
     float: left;
-    z-index: 2;
     position: relative;
     margin: auto;
 }
@@ -901,7 +900,6 @@ h2.spacing {
     height: 20px;
     display: inline-block;
     cursor: pointer;
-    z-index: 2;
     position: absolute;    
     bottom : 15px;
     margin: 1px;
@@ -1149,7 +1147,6 @@ input.sign-in.homebutton {
 
 #tooltip1,
 #tooltip2 {
-    z-index: 4;
     position: absolute;
     padding: 5px;
 	-webkit-border-radius: 3px;
@@ -1295,10 +1292,14 @@ input.sign-in.homebutton {
     display: inline-block;
 }
 
+.textbook-row a:not([href]) {
+    color: #717981;
+}
+
 .textbook-data {
     margin-top: 5px !important;
     display: inline-block;
-    padding: 0px 2px 0px 2px;
+    padding: 0px 0px 0px 0px;
 }
 
 .textbook-img {
@@ -1368,7 +1369,7 @@ ul.dropdown-menu-wide {
 .dropdown-menu-wide a,
 .dropdown-menu li,
 .dropdown-menu-wide li {
-    font: 400 12px/100% Arial,Helvetica,sans-serif;
+    font: 400 11px/100% Arial,Helvetica,sans-serif;
     color: #205C90;    
 }
 
@@ -1438,4 +1439,115 @@ p#order-discount {
 #individual-order-form ul {
     list-style: none outside none;
     margin: 1em;
+}
+
+/* overwrite style of Login, Register and Search buttons to look like btn style
+   from buttons.css */
+
+input.searchPage.searchButton, /* search */
+.formControls input.context,  /* login */
+.actionButtons input.context /* register */ {  
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #333333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+}
+
+input.searchPage.searchButton:hover,
+input.searchPage.searchButton:focus,
+input.searchPage.searchButton:active,
+input.searchPage.searchButton.active,
+.formControls input.context:hover,
+.formControls input.context:focus,
+.formControls input.context:active,
+.formControls input.context.active,
+.actionButtons input.context:hover,
+.actionButtons input.context:focus,
+.actionButtons input.context:active,
+.actionButtons input.context.active {
+  color: #333333;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+input.searchPage.searchButton:active,
+input.searchPage.searchButton.active,
+.formControls input.context:active,
+.formControls input.context.active,
+.actionButtons input.context:active,
+.actionButtons input.context.active {
+  background-color: #cccccc \9;
+}
+input.searchPage.searchButton:hover,
+input.searchPage.searchButton:focus,
+.formControls input.context:hover,
+.formControls input.context:focus,
+.actionButtons input.context:hover,
+.actionButtons input.context:focus {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+input.searchPage.searchButton:focus,
+.formControls input.context:focus,
+.actionButtons input.context:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+input.searchPage.searchButton.active,
+input.searchPage.searchButton:active,
+.formControls input.context.active,
+.formControls input.context:active,
+.actionButtons input.context.active,
+.actionButtons input.context:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+input.searchPage.searchButton {
+  padding: 0px 4px;
+}
+
+.formControls input.context,
+.actionButtons input.context {
+  padding: 2px 4px;
 }
