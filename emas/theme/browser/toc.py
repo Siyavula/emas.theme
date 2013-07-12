@@ -35,7 +35,7 @@ class TableOfContents(BrowserView):
             lastitem_url = result[len(result)-1].absolute_url()
             lastitem_type = result[len(result)-1].portal_type
             # only add 'practice this chapter now' if the other items in the 
-            # list are book links
+            # result list are book links
             if lastitem_type == 'rhaptos.xmlfile.xmlfile':
                 chapter = lastitem_url.split('/')[-2]
                 chapter = '/' + chapter    
