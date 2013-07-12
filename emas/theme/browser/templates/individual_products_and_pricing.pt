@@ -43,7 +43,7 @@
             </div>
 
             <div class="order-text">
-                <a href="#" tal:attributes="href string:$portal_url/order">
+                <a href="#" tal:attributes="href string:$portal_url/order" class="buy-now-link">
                     <span class="buy-now homebutton btn btn-danger btn-large">Buy now</span>
                 </a>
 

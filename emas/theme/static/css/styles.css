@@ -1480,6 +1480,10 @@ td.grey.title {
     padding-top: 10px;
 }
 
+#content .order-text a.buy-now-link {
+    border-bottom: none !important;
+}
+
 /* overwrite style of Login, Register and Search buttons to look like btn style
    from buttons.css */
 
@@ -1590,6 +1594,3 @@ input.searchPage.searchButton {
 .actionButtons input.context {
   padding: 2px 4px;
 }
-
-
-
