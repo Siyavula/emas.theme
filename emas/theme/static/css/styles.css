@@ -849,7 +849,6 @@ h2.spacing {
 .home-right {
     width: 410px;
     height: 310px;
-    display: inline-block;
     border: 2px #000 solid;
     margin: 0px;
     float: left;
@@ -1290,6 +1289,9 @@ input.sign-in.homebutton {
 .textbook-row {
     width: 800px;
     display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
 }
 
 .textbook-row a:not([href]) {
@@ -1300,10 +1302,16 @@ input.sign-in.homebutton {
     margin-top: 5px !important;
     display: inline-block;
     padding: 0px 0px 0px 0px;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
 }
 
 .textbook-img {
     display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
 }
 
 #maths-grade10,
@@ -1317,6 +1325,9 @@ input.sign-in.homebutton {
     height: 200px;	
     width: 141px;
     display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
 }
 
 #maths-grade10 {
