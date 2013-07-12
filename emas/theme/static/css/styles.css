@@ -531,64 +531,6 @@ section.packages table td.price span {
     font-size: 16px;
 }
 
-.selectpackage,
-.selectitems {
-    font-size: 100%;
-    background-color: #FFFFCC;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 50px auto;
-    padding: 30px;
-    width: 700px;
-}
-
-.selectpackage h2,
-.selectitems h2 {
-    border-bottom: 1px solid #E3C27C;
-}
-
-.selectpackage .pricinginfo,
-.selectitems .pricinginfo {
-    float: right;
-    margin: 0;
-    clear: both;
-}
-
-.selectpackage fieldset,
-.selectitems fieldset {
-    padding: 0;
-    margin: 0;
-    border: none;
-}
-.selectpackage legend,
-.selectitems legend {
-    font-size: 100%;
-    font-weight: bold;
-}
-.selectpackage fieldset p,
-.selectitems fieldset p {
-    padding: 0em;
-    margin: 0.5em 0;
-}
-
-.selectpackage strong,
-.selectitems strong {
-    color: #CC0000;
-}
-.selectpackage li,
-.selectitems li {
-    font-weight: bold;
-}
-
-.selectpackage input,
-.selectitems input {
-    margin-left: 1em;
-}
-
-.selectpackage input[type="submit"],
-.selectitems input[type="submit"] {
-    margin-left: 0em;
-}
-
 button.generic:hover, a.generic:hover {
     background: -moz-linear-gradient(center top , #FFFFFF, #EAEAEA) repeat scroll 0 0 transparent; /* FF3.6+ */
     background: #EAEAEA; /* Old browsers */ 
@@ -1477,4 +1419,23 @@ td.grey.title {
     margin: 0px;
     font: 700 20px/100% Arial,Helvetica,sans-serif;
     padding-top: 10px;
+}
+
+.login-links {
+    text-align: center;
+}
+
+div#selectpackage {
+    margin: 0em 2em;
+}
+
+p#order-discount {
+    color: #cb2b5b;
+    margin: 0;
+    padding: 0;
+}
+
+#individual-order-form ul {
+    list-style: none outside none;
+    margin: 1em;
 }
