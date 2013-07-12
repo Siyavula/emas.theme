@@ -13,7 +13,12 @@
                          site_absolute_url view/site_absolute_url;
                          navigation_root_url context/@@plone_portal_state/navigation_root_url">
 
-            <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
+            <tal:maths tal:condition="python:'maths' in site_absolute_url">
+                <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
+            </tal:maths>
+            <tal:science tal:condition="python:'science' in site_absolute_url">
+                <h2 class="center spacing">Technology-powered learning for success in Science</h2>
+            </tal:science>
             <div class="center subtitle">
                 <span>Practise, track your progress and achieve your goals with Intelligent Practice.<br>
                       Bring your textbooks to life with videos and simulations.
@@ -49,7 +54,7 @@
                             <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
                         </div>
                         <input class="sign-in homebutton btn btn-info btn-large" type="submit" value="Sign in" name="submit" class="context">
-                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="keep_me_logged_in" checked="checked" value="True">
+                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="__ac_persistent" checked="checked" value="True">
                     </form>
                     <span id="keep-me-logged-in-text">Keep me logged in</span>
                     <span id="or-text">OR</span>
