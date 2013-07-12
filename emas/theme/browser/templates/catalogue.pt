@@ -121,12 +121,11 @@
                             <li><a>Download Lewens Wetenskappe 10</a></li>
                         </ul>
                     </div>
-
                     <div class="center subtitle">Greyed out items coming soon!</div>
                 </div>
 
                 <!-- display science books first -->
-                <div tal:condition="python:'science' in site_absolute_url">
+                <div class="textbook-row" tal:condition="python:'science' in site_absolute_url">
 
                     <h5>Everything Science</h5>
                     <div class="textbook-data">
@@ -339,7 +338,7 @@
                 </div>
 
                 <!-- display science books first -->
-                <div tal:condition="python:'science' in site_absolute_url">
+                <div class="textbook-row" tal:condition="python:'science' in site_absolute_url">
 
                     <h5>Everything Science</h5>
                     <div class="textbook-data">
