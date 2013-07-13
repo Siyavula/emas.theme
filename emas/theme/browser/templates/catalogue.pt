@@ -31,7 +31,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
 
-                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 10</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
                         </ul>
@@ -43,7 +43,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 11</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
                         </ul>
@@ -55,9 +55,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 12</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                            <li><a>Download Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Download Wiskunde 12</a></li>
                         </ul>
                     </div>
 
@@ -67,9 +67,9 @@
                         </div>
                         <ul class="dropdown-menu-wide">
                             <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                            <li><a>Download Maths Literacy 10</a></li>
-                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Download Maths Literacy 10</a></li>
+                            <li><a class="greyed-out">Download Wiskunde Geletterheid 10</a></li>
                         </ul>
                     </div>
 
@@ -80,7 +80,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 10</a></li>
                             <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
                             <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskappe 10</a></li>
                         </ul>
@@ -92,7 +92,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 11</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 11</a></li>
                             <li><a href="http://everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
                             <li><a href="http://everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskappe 11</a></li>
                         </ul>
@@ -104,9 +104,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 12</a></li>
                             <li><a href="http://everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                            <li><a>Download Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Download Fisiese Wetenskappe 12</a></li>
                         </ul>
                     </div>
 
@@ -115,10 +115,10 @@
                             <a id="lifesciences-grade10">
                         </div>
                         <ul class="dropdown-menu-wide">
-                            <li><a>Read Life Sciences 10</a></li>
-                            <li><a>Lees Lewens Wetenskappe 10</a></li>
-                            <li><a>Download Life Sciences 10</a></li>
-                            <li><a>Download Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Read Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Lees Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Download Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Download Lewens Wetenskappe 10</a></li>
                         </ul>
                     </div>
                     <div class="center subtitle">Greyed out items coming soon!</div>
@@ -134,7 +134,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 10</a></li>
                             <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
                             <li><a href="http://everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskappe 10</a></li>
                         </ul>
@@ -146,7 +146,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 11</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 11</a></li>
                             <li><a href="http://everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
                             <li><a href="http://everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskappe 11</a></li>
                         </ul>
@@ -158,9 +158,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 12</a></li>
                             <li><a href="http://everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                            <li><a>Download Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Download Fisiese Wetenskappe 12</a></li>
                         </ul>
                     </div>
 
@@ -169,10 +169,10 @@
                             <a id="lifesciences-grade10">
                         </div>
                         <ul class="dropdown-menu-wide">
-                            <li><a>Read Life Sciences 10</a></li>
-                            <li><a>Lees Lewens Wetenskappe 10</a></li>
-                            <li><a>Download Life Sciences 10</a></li>
-                            <li><a>Download Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Read Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Lees Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Download Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Download Lewens Wetenskappe 10</a></li>
                         </ul>
                     </div>
 
@@ -184,7 +184,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-10">Read Maths 10</a></li>
 
-                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 10</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
                         </ul>
@@ -196,7 +196,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 11</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
                         </ul>
@@ -208,9 +208,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 12</a></li>
                             <li><a href="http://everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                            <li><a>Download Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Download Wiskunde 12</a></li>
                         </ul>
                     </div>
 
@@ -220,9 +220,9 @@
                         </div>
                         <ul class="dropdown-menu-wide">
                             <li><a href="http://everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                            <li><a>Download Maths Literacy 10</a></li>
-                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Download Maths Literacy 10</a></li>
+                            <li><a class="greyed-out">Download Wiskunde Geletterheid 10</a></li>
                         </ul>
                     </div>
                     <div class="center subtitle">Greyed out items coming soon!</div>
@@ -244,7 +244,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-10">Read Maths 10</a></li>
 
-                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 10</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
                         </ul>
@@ -256,7 +256,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 11</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
                         </ul>
@@ -268,9 +268,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 12</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                            <li><a>Download Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Download Wiskunde 12</a></li>
                         </ul>
                     </div>
 
@@ -280,9 +280,9 @@
                         </div>
                         <ul class="dropdown-menu-wide">
                             <li><a href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                            <li><a>Download Maths Literacy 10</a></li>
-                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Download Maths Literacy 10</a></li>
+                            <li><a class="greyed-out">Download Wiskunde Geletterheid 10</a></li>
                         </ul>
                     </div>
 
@@ -293,7 +293,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 10</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskappe 10</a></li>
                         </ul>
@@ -305,7 +305,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 11</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 11</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskappe 11</a></li>
                         </ul>
@@ -317,9 +317,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 12</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                            <li><a>Download Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Download Fisiese Wetenskappe 12</a></li>
                         </ul>
                     </div>
 
@@ -328,10 +328,10 @@
                             <a id="lifesciences-grade10">
                         </div>
                         <ul class="dropdown-menu-wide">
-                            <li><a>Read Life Sciences 10</a></li>
-                            <li><a>Lees Lewens Wetenskappe 10</a></li>
-                            <li><a>Download Life Sciences 10</a></li>
-                            <li><a>Download Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Read Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Lees Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Download Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Download Lewens Wetenskappe 10</a></li>
                         </ul>
                     </div>
                     <div class="center subtitle">Greyed out items coming soon!</div>
@@ -347,7 +347,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-10">Read Physical Sciences 10</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 10</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-grade-10.pdf">Download Physical Sciences 10</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-10/science/grade-10/everything-science-graad-10-afrikaans.pdf">Download Fisiese Wetenskappe 10</a></li>
                         </ul>
@@ -359,7 +359,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-11">Read Physical Sciences 11</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 11</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 11</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-physical-sciences-grade-11-caps">Download Physical Sciences 11</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-11/siyavula-fisiese-wetenskappe-graad-11-caps">Download Fisiese Wetenskappe 11</a></li>
                         </ul>
@@ -371,9 +371,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingscience.co.za/grade-12">Read Physical Sciences 12</a></li>
-                            <li><a>Lees Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Lees Fisiese Wetenskappe 12</a></li>
                             <li><a href="http://qa.everythingscience.co.za/grade-12/science/grade-12/everything-science-grade-12.pdf">Download Physical Sciences 12</a></li>
-                            <li><a>Download Fisiese Wetenskappe 12</a></li>
+                            <li><a class="greyed-out">Download Fisiese Wetenskappe 12</a></li>
                         </ul>
                     </div>
 
@@ -382,10 +382,10 @@
                             <a id="lifesciences-grade10">
                         </div>
                         <ul class="dropdown-menu-wide">
-                            <li><a>Read Life Sciences 10</a></li>
-                            <li><a>Lees Lewens Wetenskappe 10</a></li>
-                            <li><a>Download Life Sciences 10</a></li>
-                            <li><a>Download Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Read Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Lees Lewens Wetenskappe 10</a></li>
+                            <li><a class="greyed-out">Download Life Sciences 10</a></li>
+                            <li><a class="greyed-out">Download Lewens Wetenskappe 10</a></li>
                         </ul>
                     </div>
 
@@ -397,7 +397,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-10">Read Maths 10</a></li>
 
-                            <li><a>Lees Wiskunde 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 10</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-grade-10.pdf">Download Maths 10</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-10/maths/grade-10/everything-maths-graad-10-afrikaans.pdf">Download Wiskunde 10</a></li>
                         </ul>
@@ -409,7 +409,7 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-11">Read Maths 11</a></li>
-                            <li><a>Lees Wiskunde 11</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 11</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-mathematics-grade-11-caps">Download Maths 11</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-11/siyavula-wiskunde-graad-11-caps">Download Wiskunde 11</a></li>
                         </ul>
@@ -421,9 +421,9 @@
                         </div>
                         <ul class="dropdown-menu">
                             <li><a href="http://qa.everythingmaths.co.za/grade-12">Read Maths 12</a></li>
-                            <li><a>Lees Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde 12</a></li>
                             <li><a href="http://qa.everythingmaths.co.za/grade-12/maths/grade-12/everything-maths-grade-12.pdf">Download Maths 12</a></li>
-                            <li><a>Download Wiskunde 12</a></li>
+                            <li><a class="greyed-out">Download Wiskunde 12</a></li>
                         </ul>
                     </div>
 
@@ -433,9 +433,9 @@
                         </div>
                         <ul class="dropdown-menu-wide">
                             <li><a href="http://qa.everythingmaths.co.za/grade-10-mathematical-literacy">Read Maths Literacy 10</a></li>
-                            <li><a>Lees Wiskunde Geletterheid 10</a></li>
-                            <li><a>Download Maths Literacy 10</a></li>
-                            <li><a>Download Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Lees Wiskunde Geletterheid 10</a></li>
+                            <li><a class="greyed-out">Download Maths Literacy 10</a></li>
+                            <li><a class="greyed-out">Download Wiskunde Geletterheid 10</a></li>
                         </ul>
                     </div>
                     <div class="center subtitle">Greyed out items coming soon!</div>

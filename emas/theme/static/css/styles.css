@@ -1294,7 +1294,7 @@ input.sign-in.homebutton {
     *display: inline;
 }
 
-.textbook-row a:not([href]) {
+.textbook-row a.greyed-out {
     color: #717981;
 }
 
