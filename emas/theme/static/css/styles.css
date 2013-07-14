@@ -1562,5 +1562,7 @@ input.searchPage.searchButton {
 
 .formControls input.context,
 .actionButtons input.context {
-  padding: 2px 4px;
+  padding: 8px 12px;
+  font: 700 14px/100% Arial,Helvetica,sans-serif !important;
 }
+
