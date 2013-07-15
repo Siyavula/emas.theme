@@ -54,9 +54,9 @@
                             <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
                         </div>
                         <input class="sign-in homebutton btn btn-info btn-large" type="submit" value="Sign in" name="submit" class="context">
-                        <input id="keep-me-logged-in-checkbox" type="checkbox" name="__ac_persistent" checked="checked" value="True">
+                       <!-- <input id="keep-me-logged-in-checkbox" type="checkbox" name="__ac_persistent" checked="checked" value="True"> -->
                     </form>
-                    <span id="keep-me-logged-in-text">Keep me logged in</span>
+                    <!--<span id="keep-me-logged-in-text">Keep me logged in</span> -->
                     <span id="or-text">OR</span>
                     <a href="#" tal:attributes="href string:$portal_url/@@register">
                         <span class="start-trial homebutton btn btn-warning btn-large">Start your free trial</span>

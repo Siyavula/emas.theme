@@ -1083,7 +1083,8 @@ input.sign-in.homebutton {
     width: 140px;
     height: 14px;
     position: absolute;
-    bottom: 93px;
+/*    bottom: 93px; */ /* correct position when keep me logged in is in place */
+    bottom: 105px; 
     left: 115px;
     font: 700 16px/100% Arial,Helvetica,sans-serif;
 }
