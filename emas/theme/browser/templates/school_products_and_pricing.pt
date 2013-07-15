@@ -27,6 +27,12 @@
                         <th>Science</th>
                         <th>Maths & Science</th>                        
                     </tr>
+                    <tr> 
+                        <th class="underline"></th>
+                        <th class="underline">Gr 10, 11, 12</th>
+                        <th class="underline">Gr 10, 11, 12</th>
+                        <th class="underline">Gr 10, 11, 12</th>                        
+                    </tr>
                     <tr>
                         <td class="red title">Promotional offer: <br/> 6 month subscription</td>
                         <td class="red">R75</td>

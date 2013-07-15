@@ -1404,13 +1404,17 @@ div#content a.practice-link {
 }
 
 .pricing-table {
-    width: 500px;
+    width: 580px;
     margin: 0 auto;
+}
+
+.pricing-table th.underline,
+.pricing-table td {
+    border-bottom: solid 2px #000;
 }
 
 .pricing-table th,
 .pricing-table td {
-    border-bottom: solid 2px #000;
     text-align: center;
 }
 
