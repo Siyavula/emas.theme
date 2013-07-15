@@ -719,9 +719,15 @@ class HomeView(BrowserView):
         mt = getToolByName(self.context, 'portal_membership')
         user = mt.getAuthenticatedMember().getUserName()
         fullname = mt.getAuthenticatedMember().getProperty('fullname')
-        return 'Welcome ' + user[0:15]  # show only 1st 12 chars of username
-                                        # to prevent overflow
-
+        if fullname == '':
+            if len(user) > 15:                
+                return user[0:14] + '..'  # show only 1st 15 chars of username
+                                          # to prevent overflow, show truncation
+            return user                                   
+        else:
+            if len(fullname.lstrip(' ').split(' ')[0]) > 14:
+                return fullname.lstrip(' ').split(' ')[0][0:13] + '..'
+            return fullname.lstrip(' ').split(' ')[0]
 
 class CatalogueView(BrowserView):
     """ Textbook Catalogue

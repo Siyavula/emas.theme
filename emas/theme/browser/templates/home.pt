@@ -28,10 +28,11 @@
             <div class="home-container">            
 
                 <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
-                    <span class="home-left-heading"><b>Sign in or Sign up!</b></span>
+                    <span class="home-left-heading signup"><b>Sign in or Sign up!</b></span>
                 </tal:signup>
                 <tal:welcome tal:condition="not:context/@@plone_portal_state/anonymous">
-                    <span class="home-left-heading"><b tal:content="view/welcome_message"></b></span>
+                    <span class="welcome"><b>Welcome</b></span>
+                    <span class="home-left-heading fullname"><b tal:content="view/welcome_message"></b></span>
                 </tal:welcome>
 
                 <span tal:condition="context/@@plone_portal_state/anonymous" class="home-left">
