@@ -34,13 +34,6 @@
 
     <plone:static type="theme" directory="static" />
 
-    <!-- Register theme layer interface -->
-    <interface
-        interface=".interfaces.IEmasThemeLayer"
-        type="zope.publisher.interfaces.browser.IBrowserSkinType"
-        name="emas.theme theme"
-        />
-
     <plone:behavior
         title="Related content behavior"
         description="Add a link to a piece of related content."
