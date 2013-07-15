@@ -11,7 +11,7 @@
 
         <div id="practice-content"></div>
 
-        <div tal:condition="not:view/services_active" id="content-core">
+        <div tal:condition="view/show_no_access_message" id="content-core">
             <h3>You don't have access to Intelligent Practice right now</h3>
 
             <p>Why?</p>

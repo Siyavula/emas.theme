@@ -87,6 +87,8 @@ class Practice(BrowserView):
         else:
             self.accessto = ''
 
+        self.show_no_access_message = len(self.memberservices) == 0
+
         if portal_state.anonymous():
             memberid = 'Anonymous'
         else:
@@ -171,6 +173,7 @@ class Practice(BrowserView):
             else:
                 log.info('User:%s not allowed to access URL:%s.' % 
                     (memberid, path))
+                self.show_no_access_message = True
                 self.add_noaccess_message()
                 return self.index()
         elif response.status == 404: # NotFound
