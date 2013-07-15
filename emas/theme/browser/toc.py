@@ -10,8 +10,8 @@ from emas.theme import MessageFactory as _
 class TableOfContents(BrowserView):
     """ Helper methods and a template that renders only the table of contents.
     """
-    def getContentItems(self, container=None):
 
+    def _items(self, container=None):
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
         portal_catalog = getToolByName(self.context, 'portal_catalog')
@@ -29,7 +29,10 @@ class TableOfContents(BrowserView):
         for brain in container.getFolderContents(contentFilter):
             if not (brain.getId in idsNotToList or brain.exclude_from_nav):
                 result.append(brain.getObject())
+        return result
 
+    def getContentItems(self, container=None):
+        result = self._items(container)
         if self.has_practise_content(self.context):
             # get the chapter context from the last link of the chapter
             lastitem_url = result[len(result)-1].absolute_url()
