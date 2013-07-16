@@ -1,6 +1,7 @@
 import json
 import hashlib
 from datetime import datetime, timedelta, date
+from DateTime import DateTime
 from zope.component import queryUtility, queryAdapter
 from zope.component import createObject
 from z3c.relationfield.relation import create_relation
@@ -683,3 +684,73 @@ class AnsweredMessageView(BrowserView):
 class PasswordAccountPanel(BasePasswordAccountPanel):
 
     template = ViewPageTemplateFile('templates/account-panel.pt')
+
+
+class HomeView(BrowserView):
+    """ Home Page Logic
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+    def site_absolute_url(self):
+        return getToolByName(self.context, 'portal_url').absolute_url()
+
+    def show_tour(self):
+        """ show tour if annonymous or (logged in and signed up < 8 days ago)
+        """
+        mt = getToolByName(self.context, 'portal_membership')
+        if mt.isAnonymousUser(): 
+            return True
+        else:
+            user = mt.getAuthenticatedMember().getUserName()
+            memberid = mt.getAuthenticatedMember().getId()
+            member = mt.getMemberById(memberid)
+            registration_date = member.getProperty('registrationdate')
+            now = DateTime()
+            delta = now - registration_date
+            if delta >= 8:
+                return False
+            return True
+
+    def welcome_message(self):
+        """ return welcome message to logged in user
+        """
+        mt = getToolByName(self.context, 'portal_membership')
+        user = mt.getAuthenticatedMember().getUserName()
+        fullname = mt.getAuthenticatedMember().getProperty('fullname')
+        if fullname == '':
+            if len(user) > 15:                
+                return user[0:14] + '..'  # show only 1st 15 chars of username
+                                          # to prevent overflow, show truncation
+            return user                                   
+        else:
+            if len(fullname.lstrip(' ').split(' ')[0]) > 14:
+                return fullname.lstrip(' ').split(' ')[0][0:13] + '..'
+            return fullname.lstrip(' ').split(' ')[0]
+
+class CatalogueView(BrowserView):
+    """ Textbook Catalogue
+    """
+
+    def site_absolute_url(self):
+        return getToolByName(self.context, 'portal_url').absolute_url()
+
+
+class SchoolProductsPricingView(BrowserView):
+    """ Products & Pricing: Teachers and Schools
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+
+class IndividualProductsPricingView(BrowserView):
+    """ Products & Pricing: Parents and Learners
+    """
+
+    def site_url(self):
+        return getToolByName(self.context, 'portal_url')
+
+
+

@@ -48,6 +48,7 @@
     <browser:page
         for="Products.ATContentTypes.interfaces.IATFolder"
         name="site-home"
+        class=".views.HomeView"
         template="templates/home.pt"
         permission="zope2.View"
         />
@@ -264,6 +265,30 @@
         for="*"
         permission="cmf.ManagePortal"
         class="z3c.deadlockdebugger.threads.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="textbook-catalogue"
+        class=".views.CatalogueView"
+        template="templates/catalogue.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="individual-products-and-pricing"
+        class=".views.IndividualProductsPricingView"
+        template="templates/individual_products_and_pricing.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="Products.ATContentTypes.interfaces.IATFolder"
+        name="school-products-and-pricing"
+        class=".views.SchoolProductsPricingView"
+        template="templates/school_products_and_pricing.pt"
+        permission="zope2.View"
         />
 
 </configure>

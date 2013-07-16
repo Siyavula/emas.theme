@@ -29,6 +29,7 @@ td, th {
     background-color:#efefef;
     color: #000000;
     width: 100%;
+    padding-bottom:20px;
 }
 
 #navbar {
@@ -48,19 +49,21 @@ td, th {
     line-height: 100%;
 }
 
+
+
 #sitetitletop {
     padding: 0.7em 0 0;
-    font-size: 2.6em;
+    font-size: 2.2em;
 }
+
 #sitetitletop a {
     color: #bbb;
 }
 #sitetitlebottom {
-    font-size: 2.6em;
-    letter-spacing: 10px;
+    color:black;
 }
 #sitetitlebottom a {
-    color: #111;
+    color: black;
 }
 #belowtitle {
     color: #008fb4;
@@ -113,7 +116,7 @@ td, th {
     clear: none;
     background: #008fb4;
     margin: 0;
-    width: 550px;
+    width: 600px;
 }
 #portal-globalnav li a {
     background: #008fb4;
@@ -143,7 +146,7 @@ ul.submenu {
     text-align: right;
     text-transform: none;
     white-space: nowrap;
-    width: 240px;
+    width: 140px;
 }
 #globalnav form {
     margin: 0;
@@ -163,10 +166,9 @@ ul.submenu {
 #searchGadget {
     border: medium none;
     height: 18px;
-    margin-right: 10px;
     margin-top: 8px;
     padding: 0;
-    width: 200px;
+    width: 115px;
 }
 
 #portal-breadcrumbs {
@@ -177,12 +179,20 @@ ul.submenu {
 #content {
     margin: 1.5em auto;
     max-width: 780px;
-    min-height: 400px;
+    min-height: 445px;
+}
+
+.height-650 {
+    min-height: 650px;
+}
+
+.height-670 {
+    min-height: 670px;
 }
 
 #content div.media {
     width: 100%;
-    text-align: center;
+.    text-align: center;
 }
 
 #content div.video {
@@ -329,15 +339,29 @@ ul.submenu {
     font-weight: bold;
 }
 
-.shortcode-content {
-}
-
 .shortcode-content label.formQuestion {
     font-weight: bold;
 }
 
 .exercise-answer {
     border-bottom: 1px solid #ccc;
+}
+
+#content .answer-actions {
+    text-align: center;
+}
+#content .answer-actions a {
+    border: 0.1em solid #CCCCCC;
+    color: #205C90;
+    padding: 0.25em 0.5em;
+}
+#content .answer-actions a:hover {
+    background-color: #329FD7;
+    color: #FFF !important;
+}
+
+#content .answer-content {
+    display: none;
 }
 
 #content .table {
@@ -504,64 +528,6 @@ section.packages table td.price span {
     color: #000000;
     display: inline;
     font-size: 16px;
-}
-
-.selectpackage,
-.selectitems {
-    font-size: 100%;
-    background-color: #FFFFCC;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 50px auto;
-    padding: 30px;
-    width: 700px;
-}
-
-.selectpackage h2,
-.selectitems h2 {
-    border-bottom: 1px solid #E3C27C;
-}
-
-.selectpackage .pricinginfo,
-.selectitems .pricinginfo {
-    float: right;
-    margin: 0;
-    clear: both;
-}
-
-.selectpackage fieldset,
-.selectitems fieldset {
-    padding: 0;
-    margin: 0;
-    border: none;
-}
-.selectpackage legend,
-.selectitems legend {
-    font-size: 100%;
-    font-weight: bold;
-}
-.selectpackage fieldset p,
-.selectitems fieldset p {
-    padding: 0em;
-    margin: 0.5em 0;
-}
-
-.selectpackage strong,
-.selectitems strong {
-    color: #CC0000;
-}
-.selectpackage li,
-.selectitems li {
-    font-weight: bold;
-}
-
-.selectpackage input,
-.selectitems input {
-    margin-left: 1em;
-}
-
-.selectpackage input[type="submit"],
-.selectitems input[type="submit"] {
-    margin-left: 0em;
 }
 
 button.generic:hover, a.generic:hover {
@@ -818,4 +784,827 @@ div#expiry-warning {
 
 div#duplicate-payment-warning {
     font-weight: bold;
+}
+
+h2.spacing {
+    letter-spacing: 0.5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.center.subtitle {
+    margin: 5px 0px 40px 0px !important;
+}      
+
+.center.subtitle.catalogue {
+    margin: 5px 0px 5px 0px !important;
+}      
+
+.center.subtitle.pricing {
+    margin: 5px 0px 5px 0px !important;
+}      
+
+.home-left-heading,
+.home-right-heading,
+.welcome {
+    position: absolute;
+    background: #ffffff;
+    padding: 0px 5px 0 5px;
+    z-index: 3;
+}
+
+.welcome {
+    left: 50px;
+    top: -10px; 
+}
+
+.home-left-heading.signup {
+    left: 50px;
+    top: -10px;
+}
+
+.home-left-heading.fullname {
+    left: 124px;
+    top: -10px;
+}
+
+.home-right-heading {
+    left: 15px;
+    top: -12px;
+}
+
+#content .home-container,
+.pricing-tour-container {
+    width: 800px;
+    float: left;
+    position: relative
+}
+
+#content .home-container {
+    margin: 0px !important;
+}
+
+.home-left {
+    width: 255px;
+    height: 310px;
+    border: 2px #000 solid;
+    margin-left: 38px;
+    margin-right: 60px;
+    position: relative;
+    float: left;
+}
+
+.home-right {
+    width: 410px;
+    height: 310px;
+    border: 2px #000 solid;
+    margin: 0px;
+    float: left;
+    position: relative;
+    margin: auto;
+}
+
+.slide0,
+.slide1,
+.slide2,
+.slide3,
+.slide4,
+.slide5,
+.slide6 {
+    width: 410px;
+    height: 310px;
+    margin: 0 auto !important;
+}
+
+#login-inputs {
+    position: absolute;
+    top: 20px;
+    width: 255px;
+    height: 80px;
+    display: block;
+    text-align: center;
+}
+
+.home-left #__ac_name {
+    margin: auto;
+    font-size: 90%;
+    display: block;
+    width: 180px;
+    padding: 5px;
+    margin-bottom: 3px;
+}
+
+.home-left #__ac_password {
+    margin: auto;
+    font-size: 90%;
+    display: block;
+    width: 180px;
+    padding: 5px;
+}
+
+.next-button,
+.prev-button {
+    height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;    
+    bottom : 15px;
+    margin: 1px;
+    padding-bottom: 2px;
+    text-align: center;
+    vertical-align: center;
+}
+
+#content .next-button a.css3button:hover,
+#content .prev-button a.css3button:hover {
+    color: #fff !important;
+}
+
+.next-button {
+    right: 10px
+}
+
+.prev-button {
+    left: 10px;    
+}
+
+.homebutton {
+    height: 22px;
+    color: #fff;
+/*    border: 1px #999 solid;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px; */
+    padding-top: 6px;
+    overflow:none; 
+    font: 600 16px/100% Arial,Helvetica,sans-serif;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#I-want-to-text {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+    top: 35px;
+    left: 30px;
+}
+
+.practice.homebutton {
+    width: 182px;
+    margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 16px;
+    position: absolute;
+    left: 18px;
+    top: 82px;
+}
+
+.read-textbook.homebutton {
+    width: 182px;
+    margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 16px;
+    position: absolute;
+    left: 18px;
+    top: 152px;
+}
+
+.extend-subscription.homebutton {
+    width: 182px;
+    margin: 0px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+    padding-top: 16px;
+    position: absolute;
+    left: 18px;
+    top: 222px;
+}
+
+#slide0-text1 {
+    width: 380px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 20px;    
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    text-align: center;
+}
+
+#slide0-text2 {
+    width: 300px;
+    height: 14px;
+    position: absolute;
+    top: 35px;
+    left: 65px; 
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+}
+
+#slide0-text3 {
+    width: 300px;
+    height: 14px;
+    position: absolute;
+    top: 75px;
+    left: 65px; 
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+}
+
+#howitworks-img {
+    position: absolute;
+    top: 117px;
+    left: 82px;
+    background: url("../images/howitworks.png");
+    height: 122px;	
+    width: 246px;
+    margin: 1px;
+    display: block;    
+}
+
+.how-works.homebutton {
+    margin: 0px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 10px;
+    margin: 0px;
+    position: absolute;
+    left: 75px;
+    bottom: 20px;
+}
+
+#go-to-dashboard-text {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    text-align: center;
+    line-height: 130%;
+}
+
+#dashboard-img {
+    position: absolute;
+    top: 88px;
+    left: 30px;
+    background: url("../images/dashboard.png");
+    height: 125px;	
+    width: 350px;
+    margin: 1px;
+    display: block;
+}
+
+.dashboard.homebutton {
+    margin: 0px;
+    position: absolute;
+    left: 60px;
+    bottom: 25px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 8px;
+}
+
+input.sign-in.homebutton {
+    height: 40px;
+    width: 110px;
+    margin: 0px;
+    position: absolute;
+    left: 75px;
+    bottom: 150px;
+    padding-top: 8px;
+}
+
+#keep-me-logged-in-checkbox {
+    position: absolute;
+    bottom: 125px;
+    left: 60px;
+}
+
+#keep-me-logged-in-text {
+    position: absolute;
+    bottom: 125px;
+    left: 78px;
+    width: 140px;
+    height: 14px;
+    font: 400 13px/100% Arial,Helvetica,sans-serif;
+    display: block;
+}
+
+#or-text {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+/*    bottom: 93px; */ /* correct position when keep me logged in is in place */
+    bottom: 105px; 
+    left: 115px;
+    font: 700 16px/100% Arial,Helvetica,sans-serif;
+}
+
+.start-trial.homebutton {
+    margin: 0px;
+    position: absolute;
+    left: 17px;
+    bottom: 35px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 10px;
+}
+
+#forgot-password {
+    width: 140px;
+    height: 14px;
+    position: absolute;
+    bottom: 5px;
+    right: 2px;
+    font: 700 12px/100% Arial,Helvetica,sans-serif;
+}
+
+#slide1-text1 {
+    width: 340px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#graph-img {
+    position: absolute;
+    top: 60px;
+    left: 110px;
+    background: url("../images/graph.png");
+    height: 162px;	
+    width: 173px;
+    margin: 1px;
+    display: block;
+}
+
+#slide1-text2 {
+    width: 40px;
+    height: 14px;
+    position: absolute;
+    top: 230px;
+    left: 130px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+}
+
+#demo_answer {
+    position: absolute;
+    top: 225px;
+    left: 160px; 
+}
+
+#tooltip1,
+#tooltip2 {
+    position: absolute;
+    padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+    border: 1px #ddd solid;
+}
+
+#tooltip1 {
+    top: 150px;
+    right: 100px;
+    width: 70px;
+    height: 70px;
+    background: #fdf;
+}
+
+#tooltip2 {
+    top: 219px;
+    right: 7px;
+    width: 35px;
+    height: 45px;
+    background: #dfd;
+}
+
+#slide2-text {
+    width: 380px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#answer-correct-img,
+#answer-incorrect-img {
+    position: absolute;
+    top: 100px;
+    left: 15px;
+    height: 159px;	
+    width: 380px;
+} 
+
+#answer-correct-img {
+    background: url("../images/answer_correct.png");
+}
+
+#answer-incorrect-img {
+    background: url("../images/answer_incorrect.png");
+}
+
+#slide3-text {
+    width: 380px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#learners-dashboard-img {
+    position: absolute;
+    top: 105px;
+    left: 25px;
+    background: url("../images/learnersdashboard.png");
+    height: 143px;	
+    width: 362px;
+    margin: 1px;
+    display: block;
+}
+
+#slide4-text {
+    width: 400px;
+    height: 14px;
+    position: absolute;
+    top: 10px;
+    left: 1px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#teachers-dashboard-img {
+    position: absolute;
+    top: 102px;
+    left: 15px;
+    background: url("../images/teachersdashboard.png");
+    height: 165px;	
+    width: 380px;
+    margin: 1px;
+    display: block;
+}
+
+#slide5-text {
+    width: 380px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#textbooks-img {
+    position: absolute;
+    top: 105px;
+    left: 15px;
+    background: url("../images/textbooks.png");
+    height: 143px;	
+    width: 380px;
+    margin: 1px;
+    display: block;
+}
+
+#slide6-text {
+    width: 390px;
+    height: 14px;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font: 400 14px/100% Arial,Helvetica,sans-serif;
+    line-height: 130%;
+    text-align: center;
+}
+
+#media-img {
+    position: absolute;
+    top: 95px;
+    left: 15px;
+    background: url("../images/media.png");
+    height: 141px;	
+    width: 380px;
+    margin: 1px;
+    display: block;
+}
+
+.textbook-row {
+    width: 800px;
+    display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
+}
+
+.textbook-row a.greyed-out {
+    color: #717981;
+}
+
+.textbook-data {
+    margin-top: 5px !important;
+    display: inline-block;
+    padding: 0px 0px 0px 0px;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
+}
+
+.textbook-img {
+    display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
+}
+
+#maths-grade10,
+#maths-grade11,
+#maths-grade12,
+#mathsliteracy-grade10,
+#sci-grade10,
+#sci-grade11,
+#sci-grade12,
+#lifesciences-grade10 {
+    height: 200px;	
+    width: 141px;
+    display: inline-block;
+    /* IE7 inline-block hack */
+    zoom: 1;
+    *display: inline;
+}
+
+#maths-grade10 {
+    background: url("../images/maths-grade10.png");
+}
+#maths-grade11 {
+    background: url("../images/maths-grade11.png");
+}
+#maths-grade12 {
+    background: url("../images/maths-grade12.png");
+}
+#mathsliteracy-grade10 {
+    background: url("../images/mathsliteracy-grade10.png");
+}
+#sci-grade10 {
+    background: url("../images/sci-grade10.png");
+}
+#sci-grade11 {
+    background: url("../images/sci-grade11.png");
+}
+#sci-grade12 {
+    background: url("../images/sci-grade12.png");
+}
+#lifesciences-grade10 {
+    background: url("../images/lifesciences-grade10.png");
+}
+
+ul.dropdown-menu,
+ul.dropdown-menu-wide {
+    margin-left: 0px !important;
+}
+
+.dropdown-menu {
+    width: 190px;
+    display: block;
+}
+
+.dropdown-menu-wide {
+    width: 200px;
+    display: block;
+}
+
+.dropdown-menu li,
+.dropdown-menu-wide li {
+    list-style-type: none;
+    line-height: 60% !important;
+}
+
+.dropdown-menu a,
+.dropdown-menu-wide a,
+.dropdown-menu li,
+.dropdown-menu-wide li {
+    font: 400 11px/100% Arial,Helvetica,sans-serif;
+    color: #205C90;    
+}
+
+div#content a.practice-link {
+    color: darkgreen;
+}
+
+.pricing-table-div {
+    width: 800px;
+}
+
+.pricing-table {
+    width: 580px;
+    margin: 0 auto;
+}
+
+.pricing-table th.underline,
+.pricing-table td {
+    border-bottom: solid 2px #000;
+}
+
+.pricing-table th,
+.pricing-table td {
+    text-align: center;
+}
+
+td.red {
+    color: #cb2b5b;
+    vertical-align: middle;
+}
+
+td.grey {
+    color: #717981;
+    vertical-align: middle;
+}
+
+td.red.title,
+td.grey.title {
+    text-align: left;
+}
+
+.price-action-text {
+    width: 800px;
+}
+
+.order-text {
+    text-align: center;   
+    margin: 0 auto;   
+}
+
+.buy-now.homebutton {
+    margin: 0px;
+    font: 700 20px/100% Arial,Helvetica,sans-serif;
+    padding-top: 10px;
+}
+
+#content .order-text a.buy-now-link {
+    border-bottom: none !important;
+}
+
+.login-links {
+    text-align: center;
+}
+
+div#selectpackage {
+    margin: 0em 2em;
+}
+
+p#order-discount {
+    color: #cb2b5b;
+    margin: 0;
+    padding: 0;
+}
+
+#individual-order-form ul {
+    list-style: none outside none;
+    margin: 1em;
+}
+
+/* overwrite style of Login, Register, Search, Start Password Reset
+   buttons to look like btn style from buttons.css */
+
+input.searchPage.searchButton, /* search */
+.formControls input.context,  /* login */
+.actionButtons input.context, /* register */ 
+#mail_password input.context, /* start password reset */ 
+input.standalone {  /* login right after one has registered */
+
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  margin-bottom: 0;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  color: #333333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+}
+
+input.searchPage.searchButton:hover,
+input.searchPage.searchButton:focus,
+input.searchPage.searchButton:active,
+input.searchPage.searchButton.active,
+.formControls input.context:hover,
+.formControls input.context:focus,
+.formControls input.context:active,
+.formControls input.context.active,
+.actionButtons input.context:hover,
+.actionButtons input.context:focus,
+.actionButtons input.context:active,
+.actionButtons input.context.active,
+#mail_password input.context:hover,
+#mail_password input.context:focus,
+#mail_password input.context:active,
+#mail_password input.context.active,
+input.standalone:hover,
+input.standalone:focus,
+input.standalone:active,
+input.standalone.active {
+  color: #333333;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+input.searchPage.searchButton:active,
+input.searchPage.searchButton.active,
+.formControls input.context:active,
+.formControls input.context.active,
+.actionButtons input.context:active,
+.actionButtons input.context.active,
+#mail_password input.context:active,
+#mail_password input.context.active,
+input.standalone:active,
+input.standalone.active {
+  background-color: #cccccc \9;
+}
+input.searchPage.searchButton:hover,
+input.searchPage.searchButton:focus,
+.formControls input.context:hover,
+.formControls input.context:focus,
+.actionButtons input.context:hover,
+.actionButtons input.context:focus,
+#mail_password input.context:hover,
+#mail_password input.context:focus,
+input.standalone:hover,
+input.standalone:focus {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+input.searchPage.searchButton:focus,
+.formControls input.context:focus,
+.actionButtons input.context:focus,
+#mail_password input.context:focus,
+input.standalone:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+input.searchPage.searchButton.active,
+input.searchPage.searchButton:active,
+.formControls input.context.active,
+.formControls input.context:active,
+.actionButtons input.context.active,
+.actionButtons input.context:active,
+#mail_password input.context.active,
+#mail_password input.context:active,
+input.standalone.active,
+input.standalone:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+input.searchPage.searchButton {
+  padding: 0px 4px;
+}
+
+.formControls input.context,
+.actionButtons input.context,
+#mail_password input.context,
+input.standalone {
+  padding: 8px 12px;
+  font: 700 14px/100% Arial,Helvetica,sans-serif !important;
 }

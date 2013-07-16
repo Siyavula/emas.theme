@@ -8,85 +8,57 @@
 <body>
 
     <metal:core fill-slot="main">
-        <div id="content-core"
-             tal:define="portal_url view/site_url;
-                         site_absolute_url view/site_absolute_url;
-                         navigation_root_url context/@@plone_portal_state/navigation_root_url">
+        <div id="content-core" class="height-650"
+             tal:define="portal_url view/site_url">
 
-            <tal:maths tal:condition="python:'maths' in site_absolute_url">
-                <h2 class="center spacing">Technology-powered learning for success in Maths</h2>
-            </tal:maths>
-            <tal:science tal:condition="python:'science' in site_absolute_url">
-                <h2 class="center spacing">Technology-powered learning for success in Science</h2>
-            </tal:science>
-            <div class="center subtitle">
-                <span>Practise, track your progress and achieve your goals with Intelligent Practice.<br>
-                      Bring your textbooks to life with videos and simulations.
+            <h3 class="center spacing">Products and pricing: teachers and schools</h3>
+            <div class="center subtitle pricing">
+                <span>Intelligent practice allows educators to track learners' progress with a personalised teacher's dashboard. <br>
+                      Our system marks learners' homework automatically and helps educators identify and target areas of <br>
+                      weakness in Maths and Science. Contact us now to sign up your class, grade or entire school.
                 </span>
             </div>
 
-            <div class="home-container">            
+            <div class="price-table-div">
+                <table class="pricing-table">
+                    <tr> 
+                        <th></th>
+                        <th>Maths</th>
+                        <th>Science</th>
+                        <th>Maths & Science</th>                        
+                    </tr>
+                    <tr> 
+                        <th class="underline"></th>
+                        <th class="underline">Gr 10, 11, 12</th>
+                        <th class="underline">Gr 10, 11, 12</th>
+                        <th class="underline">Gr 10, 11, 12</th>                        
+                    </tr>
+                    <tr>
+                        <td class="red title">Promotional offer: <br/> 6 month subscription</td>
+                        <td class="red">R75</td>
+                        <td class="red">R75</td>
+                        <td class="red">R150</td>
+                    </tr>  
+                    <tr>
+                        <td class="grey title">From January 2014: <br/> 1 year subscription</td>
+                        <td class="grey">R150</td>
+                        <td class="grey">R150</td>
+                        <td class="grey">R300</td>
+                    </tr>
+                </table>
+            </div>
 
-                <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
-                    <span class="home-left-heading signup"><b>Sign in or Sign up!</b></span>
-                </tal:signup>
-                <tal:welcome tal:condition="not:context/@@plone_portal_state/anonymous">
-                    <span class="welcome"><b>Welcome</b></span>
-                    <span class="home-left-heading fullname"><b tal:content="view/welcome_message"></b></span>
-                </tal:welcome>
+            <div class="price-action-text">
+                <div class="order-text">To trial or buy bulk access to the service e-mail 
+                     <a href="mailto:carine@siyavula.com?subject=Mail from EMAS Site - Trial or buy bulk access to the service">
+                     carine@siyavula.com</a>
+                     or call 021 469 4748.
+                </div>
+            </div>
 
-                <span tal:condition="context/@@plone_portal_state/anonymous" class="home-left">
-                    <form tal:attributes="action string:${navigation_root_url}/login_form" id="login_form" method="post" 
-                          class="enableAutoFocus">
-                        <input type="hidden" name="came_from" tal:attributes="value navigation_root_url">
-                        <input type="hidden" name="next">
-                        <input type="hidden" name="ajax_load">
-                        <input type="hidden" name="ajax_include_head">
-                        <input type="hidden" name="target">
-                        <input type="hidden" name="mail_password_url">
-                        <input type="hidden" name="join_url">
-                        <input type="hidden" value="1" name="form.submitted">
-                        <input type="hidden" value="0" id="js_enabled" name="js_enabled">
-                        <input type="hidden" value="" id="cookies_enabled" name="cookies_enabled">
-                        <input type="hidden" value="" id="login_name" name="login_name">
-                        <input type="hidden" value="0" id="pwd_empty" name="pwd_empty">
-                        <div id="login-inputs">
-                            <input type="text" id="__ac_name" value="" name="__ac_name" placeholder="username" size="13">
-                            <input type="password" id="__ac_password" name="__ac_password" placeholder="password" size="13">
-                        </div>
-                        <input class="sign-in homebutton btn btn-info btn-large" type="submit" value="Sign in" name="submit" class="context">
-                       <!-- <input id="keep-me-logged-in-checkbox" type="checkbox" name="__ac_persistent" checked="checked" value="True"> -->
-                    </form>
-                    <!--<span id="keep-me-logged-in-text">Keep me logged in</span> -->
-                    <span id="or-text">OR</span>
-                    <a href="#" tal:attributes="href string:$portal_url/@@register">
-                        <span class="start-trial homebutton btn btn-warning btn-large">Start your free trial</span>
-                    </a>
-                    <a href="#" tal:attributes="href string:$portal_url/mail_password_form?userid=">
-                        <span id="forgot-password">Forgot your password?</span>
-                    </a>
-                </span>
+            <div class="pricing-tour-container">
 
-                <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">
-                    <span id="I-want-to-text">I want to:</span>
-                    <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
-                        <tal:maths tal:condition="python:'maths' in site_absolute_url">
-                            <span class="practice homebutton btn btn-info btn-large">Practise Maths</span>
-                        </tal:maths>
-                        <tal:science tal:condition="python:'science' in site_absolute_url">
-                            <span class="practice homebutton btn btn-info btn-large">Practise Science</span>
-                        </tal:science>    
-                    </a>
-                    <a href="#" tal:attributes="href string:$portal_url/@@textbook-catalogue">
-                        <span class="read-textbook homebutton btn btn-inverse btn-large">Read a textbook</span>
-                    </a>
-                    <a href="#" tal:attributes="href string:$portal_url/order">
-                        <span class="extend-subscription homebutton btn btn-warning btn-large">Extend my subscription</span>
-                    </a>
-                </span>
-
-                <span tal:condition="view/show_tour">
-                    <span class="slide0">
+                    <div class="slide0">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour!</b></span>
                             <span id="slide0-text1"><b>Want more information?</b> Take the tour to learn about:</span>
@@ -99,8 +71,8 @@
                             <span id="howitworks-img"></span>
                             <span class="how-works homebutton btn btn-success btn-large">Show me how it works</span>
                         </span>
-                    </span>
-                    <span class="slide1 hidden">
+                    </div>
+                    <div class="slide1 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 1/6</b></span>
                             <span id="slide1-text1">The graph below shows an equation which has the form y = mx + c.
@@ -117,8 +89,8 @@
                             <span id="tooltip1" class="hidden">Type your answer in here</span>
                             <span id="tooltip2" class="hidden">Click here</span>
                         </span>
-                    </span>
-                    <span class="slide2 hidden">
+                    </div>
+                    <div class="slide2 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 2/6</b></span>
                             <span id="slide2-text">Intelligent Practice marks your answer immediately and gives you
@@ -134,8 +106,8 @@
 
                             </span>
                         </span>
-                    </span>
-                    <span class="slide3 hidden">
+                    </div>
+                    <div class="slide3 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 3/6</b></span>
                             <span id="slide3-text">Intelligent Practice tracks your progress on your personalised
@@ -149,8 +121,8 @@
                                 <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
-                    </span>
-                    <span class="slide4 hidden">
+                    </div>
+                    <div class="slide4 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 4/6</b></span>
                             <span id="slide4-text">The teacher's dashboard allows educators to monitor the progress
@@ -165,8 +137,8 @@
                                 <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
-                    </span>
-                    <span class="slide5 hidden">
+                    </div>
+                    <div class="slide5 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 5/6</b></span>
                             <span id="slide5-text">Your Everything Maths and Science textbooks are freely available to
@@ -180,8 +152,8 @@
                                 <button class="btn">Next &nbsp;<i class="icon-arrow-right"></i></button>
                             </span>
                         </span>
-                    </span>
-                    <span class="slide6 hidden">
+                    </div>
+                    <div class="slide6 hidden">
                         <span class="home-right">
                             <span class="home-right-heading"><b>Take the Tour 6/6</b></span>
                             <span id="slide6-text">Your hardcopy textbooks become interactive when you read them
@@ -191,23 +163,11 @@
                             <span class="prev-button">
                                 <button class="btn"><i class="icon-arrow-left"></i>Back</button>
                             </span>
-                            <span class="next-button">                                
+                            <span class="next-button">
                                 <button class="btn"><i class="icon-home"></i>Home</button>
                             </span>
                         </span>
-                    </span>
-                </span>
-                <span tal:condition="not:view/show_tour">
-                    <span class="home-right">
-                        <span class="home-right-heading"><b>Go to your dashboard!</b></span>
-                        <span id="go-to-dashboard-text">Go to your dashboard to view your points and progress and
-                                                        to chose what to practise next!</span>
-                        <span id="dashboard-img"></span>
-                        <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
-                            <span class="dashboard homebutton btn btn-success btn-large">Take me to my dashboard</span>
-                        </a>
-                    </span>
-                </span>
+                    </div>
 
                 <!-- preload tour images -->
                 <div id="preload" style="display: none;">

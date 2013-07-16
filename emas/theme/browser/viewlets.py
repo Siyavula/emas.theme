@@ -8,6 +8,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.uuid.interfaces import IUUID
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.app.layout.viewlets.common import PathBarViewlet
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from webcouturier.dropdownmenu.browser import dropdown
 from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
@@ -130,3 +131,23 @@ class PracticeServiceMessagesViewlet(ViewletBase):
 
     def render(self):
         return self.index()
+
+
+class EMASPathBarViewlet(PathBarViewlet):
+    index = ViewPageTemplateFile('templates/path_bar.pt')
+
+    def update(self):
+        super(EMASPathBarViewlet, self).update()
+
+    def display_breadcrumbs(self):
+        """ determines if breadcrumbs are shown
+        """
+        portal_state = getMultiAdapter((self.context, self.request), 
+                                        name=u'plone_portal_state')
+        context_state = getMultiAdapter((self.context, self.request), 
+                                        name=u'plone_context_state')
+
+        # only show breadcrumbs when reading textbooks
+        if self.context.portal_type == 'rhaptos.xmlfile.xmlfile':
+            return True
+        return False

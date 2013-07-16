@@ -34,17 +34,17 @@
         <replace
             css:content="#portal-personaltools-wrapper"
             css:theme="#personaltools"
-            />
+            /> 
 
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
 
-        <replace theme="//h1[@id='sitetitlebottom']">
-            <h1 id="sitetitlebottom" class="sitetitle"><a><xsl:attribute name="href"><xsl:value-of select="//a[@id='portal-logo']/@href"/></xsl:attribute><xsl:if test="contains($subject, 'maths')">Maths</xsl:if><xsl:if test="contains($subject, 'science')">Science</xsl:if></a></h1>
+        <replace theme="//span[@id='sitetitlebottom']">
+            <span id="sitetitlebottom" class="sitetitle"><a><xsl:attribute name="href"><xsl:value-of select="//a[@id='portal-logo']/@href"/></xsl:attribute><xsl:if test="contains($subject, 'maths')"> Maths</xsl:if><xsl:if test="contains($subject, 'science')"> Science</xsl:if></a></span>
         </replace>
 
         <replace theme="//h2[@id='belowtitle']">
-            <h2 id="belowtitle" class="sitetitle"><xsl:if test="contains($subject, 'maths')">Excel in Mathematics</xsl:if><xsl:if test="contains($subject, 'Science')">Excel in Science</xsl:if></h2>
+            <h2 id="belowtitle" class="sitetitle"><xsl:if test="contains($subject, 'maths')">Excel in Mathematics</xsl:if><xsl:if test="contains($subject, 'science')">Excel in Science</xsl:if></h2>
         </replace>
 
         <!-- Copy over the id/class attributes on the body tag.
@@ -84,6 +84,8 @@
             css:content="#portal-column-two .portlet"
             css:if="#table-of-contents"/>
 
+        <drop css:content=".managePortletsFallback"/>            
+
         <!-- Content -->
         <replace
             css:theme="h1.documentFirstHeading"
@@ -97,6 +99,9 @@
         <replace
             css:content-children="#content-core"
             css:theme-children="#content-core" />
+        <copy attributes="class" 
+            css:content="#content-core" 
+            css:theme="#content-core" />
         <replace
             css:if-content="div.pfg-form"
             css:theme-children="#content" 
