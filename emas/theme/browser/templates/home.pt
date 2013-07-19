@@ -11,7 +11,8 @@
         <script type="text/javascript">
         <!-- Don''t focus the username input on load since this hides the placeholder text in IE10 -->
         $(function() {
-            $('#__ac_name').blur()
+            $('#__ac_name').blur();
+            $('input').placeholder();
         });
         </script>
      </metal:style>
