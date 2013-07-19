@@ -186,4 +186,13 @@
                 id="++resource++emas.theme.resources/answers.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                conditionalcomment=""
+                cookable="True"
+                enabled="True"
+                expression="request/HTTP_X_THEME_ENABLED"
+                inline="False"
+                id="++resource++emas.theme.resources/jquery.placeholder.min.js"/>
+
 </object>
