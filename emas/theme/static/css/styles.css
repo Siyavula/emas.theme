@@ -819,3 +819,18 @@ div#expiry-warning {
 div#duplicate-payment-warning {
     font-weight: bold;
 }
+
+#search-form-table {
+    border: none;
+}
+
+#search-form-table.listing td,
+#search-form-table.listing tbody tr,
+#search-form-table.listing tbody tr.odd {
+    background-color: transparent;
+    border: none;
+}
+
+#search-form-table.listing label {
+    font-weight: normal;
+}
