@@ -33,7 +33,7 @@ class TableOfContents(BrowserView):
 
     def getContentItems(self, container=None):
         result = self._items(container)
-        if self.has_practise_content(self.context):
+        if result and self.has_practise_content(self.context):
             # get the chapter context from the last link of the chapter
             lastitem_url = result[len(result)-1].absolute_url()
             lastitem_type = result[len(result)-1].portal_type
