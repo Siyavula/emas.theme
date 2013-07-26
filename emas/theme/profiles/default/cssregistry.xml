@@ -124,5 +124,19 @@
         title=""
         />
 
+    <stylesheet
+        applyPrefix="True"
+        authenticated="False"
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        enabled="on"
+        expression="request/HTTP_X_THEME_ENABLED | nothing"
+        id="++theme++emas.theme/css/buttons.css"
+        media=""
+        rel="stylesheet"
+        rendering="link"
+        title=""
+        />
 
 </object>

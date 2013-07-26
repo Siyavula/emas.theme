@@ -167,11 +167,32 @@
          emas.theme.browser.viewlets.MathJaxViewlet -->
     <javascript cacheable="False"
                 compression="none"
-                cookable="False"
                 enabled="False"
                 expression=""
                 id="++resource++fullmarks.mathjax/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"
                 inline="False"/>
 
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"                
+                id="++resource++emas.theme.resources/tour.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                cookable="True"
+                enabled="True"                
+                id="++resource++emas.theme.resources/answers.js"
+                inline="False"/>
+
+    <javascript cacheable="True"
+                compression="none"
+                conditionalcomment=""
+                cookable="True"
+                enabled="True"
+                expression="request/HTTP_X_THEME_ENABLED"
+                inline="False"
+                id="++resource++emas.theme.resources/jquery.placeholder.min.js"/>
 
 </object>

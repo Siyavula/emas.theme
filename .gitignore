@@ -2,3 +2,5 @@
 .~lock.*
 Paste*
 *egg-info*
+*.[a-z]*~
+build
