@@ -190,4 +190,4 @@ class EMASRSSViewlet(RSSViewlet):
 
 class EMASPersonalBarViewlet(PersonalBarViewlet):
     
-    index = ViewPageTemplateFile('templates/personal_bar.pt')
+    index = ViewPageTemplateFile('templates/esi_personal_bar.pt')

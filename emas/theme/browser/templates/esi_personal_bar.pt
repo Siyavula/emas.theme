@@ -1,0 +1,6 @@
+<tal:definitions define="esi_header request/HTTP_X_ESI | nothing;">
+  <esi:include tal:condition="esi_header"
+      tal:attributes="src string:${context/absolute_url}/@@emas-personalbar" />
+  <tal:noesi condition="not: esi_header"
+      replace="structure here/@@emas-personaltoolbar" />
+</tal:definitions>
