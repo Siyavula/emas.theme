@@ -15,6 +15,7 @@ from plone.app.layout.links.viewlets import (
     NavigationViewlet,
     RSSViewlet,
     )
+from plone.app.layout.viewlets.common import PersonalBarViewlet
 
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from webcouturier.dropdownmenu.browser import dropdown
@@ -185,3 +186,8 @@ class EMASRSSViewlet(RSSViewlet):
     
     def render(self):
         return ''
+
+
+class EMASPersonalBarViewlet(PersonalBarViewlet):
+    
+    index = ViewPageTemplateFile('templates/personal_bar.pt')

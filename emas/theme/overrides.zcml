@@ -93,4 +93,12 @@
         permission="zope2.View" 
         />
 
+    <!-- Override the personal bar to add ESI tags -->
+    <browser:viewlet
+        name="plone.personal_bar"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".browser.viewlets.EMASPersonalBarViewlet"
+        permission="zope2.View"
+        />
+
 </configure>
