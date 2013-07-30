@@ -36,6 +36,11 @@
             css:theme="#personaltools"
             /> 
 
+        <replace
+            css:content="#personaltools-esi"
+            css:theme="#personaltools"
+            /> 
+
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
 
