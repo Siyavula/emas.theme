@@ -37,10 +37,10 @@
             css:if-content="#portal-personaltools-wrapper"
             /> 
 
-        <replace
-            css:content="#personaltools-esi"
+        <append
             css:theme="#personaltools"
             css:if-content="#personaltools-esi"
+            href="/@@emas-personaltoolbar"
             method="esi"
             /> 
 
