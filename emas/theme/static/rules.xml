@@ -41,6 +41,7 @@
             css:content="#personaltools-esi"
             css:theme="#personaltools"
             css:if-content="#personaltools-esi"
+            method="esi"
             /> 
 
         <drop content="//div[@id='plone-document-byline']" />
