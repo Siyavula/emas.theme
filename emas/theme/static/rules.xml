@@ -34,11 +34,13 @@
         <replace
             css:content="#portal-personaltools-wrapper"
             css:theme="#personaltools"
+            css:if-content="#portal-personaltools-wrapper"
             /> 
 
         <replace
             css:content="#personaltools-esi"
             css:theme="#personaltools"
+            css:if-content="#personaltools-esi"
             /> 
 
         <drop content="//div[@id='plone-document-byline']" />
