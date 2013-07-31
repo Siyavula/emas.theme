@@ -66,6 +66,7 @@ class Practice(BrowserView):
         self.subject = \
             get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         self.memberservices = []
+        self.dao = MemberServicesDataAccess(self.context)
         self.practice_services = []
         self.accessto = ''
 
@@ -278,7 +279,7 @@ class Practice(BrowserView):
         expiring_services = {}
         for ms in self.memberservices:
             if self.is_expiring(now, ms):
-                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                grade = int(self.dao.related_service(ms).grade.split('-')[-1])
                 tmpservices = expiring_services.get(grade, [])
                 tmpservices.append(ms)
                 expiring_services[grade] = tmpservices
@@ -289,7 +290,7 @@ class Practice(BrowserView):
         active_services = {}
         for ms in self.memberservices:
             if not self.is_expiring(now, ms):
-                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                grade = int(self.dao.related_service(ms).grade.split('-')[-1])
                 tmpservices = active_services.get(grade, [])
                 tmpservices.append(ms)
                 active_services[grade] = tmpservices
@@ -313,7 +314,7 @@ class Practice(BrowserView):
             we want to show the message within the,
             'monthly_expiry_warning_threshold'. 
         """
-        subperiod = memberservice.related_service.to_object.subscription_period
+        subperiod = self.dao.related_service(memberservice).subscription_period
         if subperiod <= MONTH:
             return self.settings.monthly_expiry_warning_threshold
         elif subperiod <= YEAR:
@@ -326,12 +327,11 @@ class Practice(BrowserView):
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         memberid = pps.member().getId()
         service_uuids = practice_service_intids(self.context)
-        dao = MemberServicesDataAccess(self.context)
-        tmpservices = dao.get_memberservices_by_subject(memberid,
-                                                        subject)
+        tmpservices = self.dao.get_memberservices_by_subject(memberid,
+                                                             subject)
 
         for ms in tmpservices:
-            service = ms.related_service.to_object
+            service = self.dao.related_service(ms)
             if '@@practice' in service.access_path:
                 memberservices.append(ms)
                 services.append(service)
