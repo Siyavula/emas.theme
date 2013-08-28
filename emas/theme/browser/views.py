@@ -325,7 +325,7 @@ class EnabledServicesView(BrowserView):
         ps = self.context.restrictedTraverse('@@plone_portal_state')
         memberid = ps.member().getId()
         dao = MemberServicesDataAccess(self.context)
-        memberservices = dao.get_member_services(intids, memberid)
+        memberservices = dao.get_memberservices(intids, memberid)
         # if we cannot find any memberservices the exercise link should not be
         # available.
         if memberservices is None or len(memberservices) < 1:
@@ -798,3 +798,14 @@ class EMASPersonalBarView(ViewletBase):
                 self.user_name = fullname
             else:
                 self.user_name = userid
+
+
+class EMASPortalMessage(BrowserView):
+    """ Very basic browser view to give us something to call from our edge
+        side include macros.
+    """    
+
+    index = ViewPageTemplateFile('templates/portalmessage.pt')
+
+    def __call__(self):
+        return self.index()
