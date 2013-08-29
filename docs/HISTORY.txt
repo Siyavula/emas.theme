@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.33
+----
+
+- Override CMFPlone's popupform.js to fix the login overlay to not
+  reload when a user is logging in from the "logged_out" page but
+  redirect to the home page instead
+
 1.32
 ----
 
