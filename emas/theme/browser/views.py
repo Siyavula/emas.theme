@@ -2,7 +2,10 @@ import json
 import hashlib
 from datetime import datetime, timedelta, date
 from DateTime import DateTime
-from zope.component import queryUtility, queryAdapter
+from Acquisition import aq_inner
+from AccessControl import getSecurityManager
+
+from zope.component import queryUtility, queryAdapter, getMultiAdapter
 from zope.component import createObject
 from z3c.relationfield.relation import create_relation
 
@@ -753,4 +756,50 @@ class IndividualProductsPricingView(BrowserView):
         return getToolByName(self.context, 'portal_url')
 
 
+class EMASPersonalBarView(ViewletBase):
+    
+    def __init__(self, context, request):
+        super(ViewletBase, self).__init__(context, request)
+        self.__parent__ = self.context.aq_parent
+        self.context = context
+        self.request = request
+        self.view = self
+        self.manager = None
+    
+    def __call__(self):
+        self.update()
+        return self.index()
 
+    def update(self):
+        super(EMASPersonalBarView, self).update()
+        context = aq_inner(self.context)
+
+        context_state = getMultiAdapter((context, self.request),
+                                        name=u'plone_context_state')
+
+        sm = getSecurityManager()
+        self.user_actions = context_state.actions('user')
+        self.anonymous = self.portal_state.anonymous()
+
+        if not self.anonymous:
+            member = self.portal_state.member()
+            userid = member.getId()
+
+            if sm.checkPermission('Portlets: View dashboard', context):
+                self.homelink_url = "%s/useractions" % self.navigation_root_url
+            else:
+                self.homelink_url = "%s/personalize_form" % (
+                                        self.navigation_root_url)
+
+            membership = getToolByName(context, 'portal_membership')
+            member_info = membership.getMemberInfo(userid)
+            # member_info is None if there's no Plone user object, as when
+            # using OpenID.
+            if member_info:
+                fullname = member_info.get('fullname', '')
+            else:
+                fullname = None
+            if fullname:
+                self.user_name = fullname
+            else:
+                self.user_name = userid

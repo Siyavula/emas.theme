@@ -1,0 +1,8 @@
+<tal:definitions define="esi_header request/HTTP_X_ESI | nothing;">
+<div id="personaltools-esi" tal:condition="esi_header">
+    <esi:include xmlns:esi="http://www.edge-delivery.org/esi/1.0"
+          tal:attributes="src string:${context/absolute_url}/@@emas-personaltoolbar" />
+</div>
+<tal:noesi condition="not: esi_header"
+  replace="structure here/@@emas-personaltoolbar" />
+</tal:definitions>
