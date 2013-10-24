@@ -803,3 +803,14 @@ class EMASPersonalBarView(ViewletBase):
                 self.user_name = fullname
             else:
                 self.user_name = userid
+
+
+class EMASPortalMessage(BrowserView):
+    """ Very basic browser view to give us something to call from our edge
+        side include macros.
+    """    
+
+    index = ViewPageTemplateFile('templates/portalmessage.pt')
+
+    def __call__(self):
+        return self.index()
