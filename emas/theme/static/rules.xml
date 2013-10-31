@@ -44,7 +44,7 @@
             method="esi"
             /> 
 
-        <append                                                                
+        <replace
             css:theme="dl.portalMessage"                                       
             css:if-content="#portal-message-esi"                               
             href="/@@emas-portalmessage"                                       
