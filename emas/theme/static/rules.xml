@@ -44,6 +44,13 @@
             method="esi"
             /> 
 
+        <append                                                                
+            css:theme="dl.portalMessage"                                       
+            css:if-content="#portal-message-esi"                               
+            href="/@@emas-portalmessage"                                       
+            method="esi"                                                       
+            />  
+
         <drop content="//div[@id='plone-document-byline']" />
         <drop css:content="div.searchSection" />
 
