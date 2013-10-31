@@ -299,4 +299,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="emas-portalmessage"
+        class=".views.EMASPortalMessage"
+        permission="zope2.View"
+        />
+
 </configure>
