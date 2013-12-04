@@ -19,9 +19,12 @@ def update_subscription(subscribers, new_state):
         subscriber.setMemberProperties({'subscribe_to_newsletter': new_state})
 
 def onUserInitialLogin(obj, event):
-    set_welcome_message(obj, event)
-    update_newsletter_subscription(obj, event)
-    store_initial_login_date(obj, event)    
+    try:
+        set_welcome_message(obj, event)
+        update_newsletter_subscription(obj, event)
+        store_registration_date(obj, event)    
+    except AttributeError:
+	return
 
 def onMemberPropsUpdated(obj, event):
     update_newsletter_subscription(obj, event)
@@ -43,10 +46,8 @@ def update_newsletter_subscription(obj, event):
     else:
         portal_groups.removePrincipalFromGroup(memberid, group_id)
 
-def store_initial_login_date(obj, event):
-
+def store_registration_date(obj, event):
     memberid = obj.getId()
     pm = getSite().portal_membership
     member = pm.getMemberById(memberid)
     member.setMemberProperties(mapping={"registrationdate": DateTime()})
-
