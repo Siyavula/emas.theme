@@ -138,6 +138,11 @@ class Practice(BrowserView):
         if tuple(path.split('/')[:2]) not in [('','static'), ('','image')]:
             self.request.RESPONSE.appendHeader('Cache-Control',
                                                'no-store, no-cache')
+        else:
+            for key in ['Cache-Control', 'Expires']:
+                value = response.getheader(key)
+                if value is not None:
+                    self.request.RESPONSE.appendHeader(key, value)
 
         if response.status == 200:   # Ok
             body = response.read()
