@@ -19,12 +19,9 @@ def update_subscription(subscribers, new_state):
         subscriber.setMemberProperties({'subscribe_to_newsletter': new_state})
 
 def onUserInitialLogin(obj, event):
-    try:
-        set_welcome_message(obj, event)
-        update_newsletter_subscription(obj, event)
-        store_registration_date(obj, event)    
-    except AttributeError:
-	return
+    set_welcome_message(obj, event)
+    update_newsletter_subscription(obj, event)
+    store_registration_date(obj, event)    
 
 def onMemberPropsUpdated(obj, event):
     update_newsletter_subscription(obj, event)
