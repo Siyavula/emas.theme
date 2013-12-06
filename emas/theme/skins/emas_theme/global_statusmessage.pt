@@ -8,7 +8,7 @@
 
 <tal:block i18n:domain="plone" metal:define-macro="portal_message">
 
-<tal:definitions define="esi_header request/HTTP_X_ESI | nothing;">
+<tal:definitions define="esi_header python:request.get('HTTP_X_ESI', False);">
 <div id="portal-message-esi" class="portalMessage"
     tal:condition="esi_header">
     <esi:include xmlns:esi="http://www.edge-delivery.org/esi/1.0"
