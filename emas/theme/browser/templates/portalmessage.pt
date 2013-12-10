@@ -24,7 +24,7 @@
                 i18n:translate="">
                 Info
             </dt>
-            <dd tal:content="message/message | nothing"
+            <dd tal:content="structure message/message | nothing"
                 i18n:translate="">
                 The status message.
             </dd>
