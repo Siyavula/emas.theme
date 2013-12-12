@@ -165,7 +165,7 @@ class MxitPaymentRequest(grok.View):
         service_intids = practice_service_intids(self.context)
         dao = MemberServicesDataAccess(self.context)
         memberservices = dao.get_memberservices(service_intids, memberid)
-        active_services = [m.related_service.to_object for m in memberservices]
+        active_services = [m.related_service(self.context) for m in memberservices]
 
         # check if the currently requested one is in the list
         if self.product in active_services:
