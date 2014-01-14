@@ -71,6 +71,9 @@
                 Since cookie authentication is disabled, cookie-based login is not available.
             </div>
 
+            <h3>Please log in to view this page</h3>
+
+
             <form tal:attributes="action python:context.absolute_url()+'/'+template.id"
                   class="enableAutoFocus"
                   method="post"
