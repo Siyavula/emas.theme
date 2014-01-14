@@ -34,13 +34,7 @@
                         <th class="underline">Gr 10, 11, 12</th>                        
                     </tr>
                     <tr>
-                        <td class="red title">Promotional offer: <br/> 6 month subscription</td>
-                        <td class="red">R75</td>
-                        <td class="red">R75</td>
-                        <td class="red">R150</td>
-                    </tr>  
-                    <tr>
-                        <td class="grey title">From January 2014: <br/> 1 year subscription</td>
+                        <td class="grey title">1 year subscription</td>
                         <td class="grey">R150</td>
                         <td class="grey">R150</td>
                         <td class="grey">R300</td>
@@ -54,6 +48,13 @@
                      carine@siyavula.com</a>
                      or call 021 469 4748.
                 </div>
+            </div>
+
+            <div class="order-text">
+                To order hard copies of textbooks or teachers’
+                guides,<br/>
+                please e-mail <a href="mailto:orders@siyavula.com">orders@siyavula.com</a> or phone +27 (021) 469
+                4740
             </div>
 
             <div class="pricing-tour-container">
