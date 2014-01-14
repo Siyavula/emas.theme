@@ -27,7 +27,6 @@
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
                 <li><a href="#" title="Learners' user guide" tal:attributes="href string:$portal_url/marketing-materials/learner-guide">Learners' user guide</a></li>
                 <li><a href="#" title="Teachers' user guide" tal:attributes="href string:$portal_url/marketing-materials/teacher-guide">Teachers' user guide</a></li>
-                <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">About Intelligent Practice</a></li>
             </ul>
         </li>
         <li tal:condition="python:'science' in portal_url" id="portaltab-practice" class="plain">
@@ -38,7 +37,6 @@
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
                 <li><a href="#" title="Learners' user guide" tal:attributes="href string:$portal_url/marketing-materials/learner-guide">Learners' user guide</a></li>
                 <li><a href="#" title="Teachers' user guide" tal:attributes="href string:$portal_url/marketing-materials/teacher-guide">Teachers' user guide</a></li>
-                <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">About Intelligent Practice</a></li>
             </ul>
         </li>
 
@@ -62,6 +60,7 @@
                        tal:attributes="href string:$portal_url/@@individual-products-and-pricing">For Parents and Learners</a></li>
                 <li><a href="#" title="For Teachers and Schools" 
                        tal:attributes="href string:$portal_url/@@school-products-and-pricing">For Teachers and Schools</a></li>
+                <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">About Intelligent Practice</a></li>
             </ul>
         </li>
 
