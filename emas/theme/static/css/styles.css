@@ -793,6 +793,7 @@ div#expiry-warning {
 
 div#duplicate-payment-warning {
     font-weight: bold;
+    color: red;
 }
 
 h2.spacing {
@@ -1473,6 +1474,10 @@ p#order-discount {
     color: #cb2b5b;
     margin: 0;
     padding: 0;
+}
+
+#content #send-proof-of-payment a {
+    color: black;
 }
 
 #content #redeem-voucher,
