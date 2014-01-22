@@ -52,6 +52,10 @@
                     <a href="#" title="Grade 10 Mathematical Literacy" 
                        tal:attributes="href string:$portal_url/grade-10-mathematical-literacy">Grade 10 Mathematical Literacy</a>
                 </li>
+                <li tal:condition="python:'science' in portal_url">
+                    <a href="#" title="Grade 10 Life Sciences" 
+                       tal:attributes="href string:$portal_url/lifesciences/grade-10">Grade 10 Life Sciences</a>
+                </li>
             </ul>
         </li>
 
