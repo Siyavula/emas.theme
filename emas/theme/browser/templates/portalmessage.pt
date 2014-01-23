@@ -14,8 +14,7 @@
         <dd><tal:block replace="nothing">KSS portal message</tal:block></dd>
     </dl>
 
-    <tal:statusmsg tal:define="messages python:context.plone_utils.showPortalMessages()"
-                   tal:repeat="message messages">
+    <tal:statusmsg tal:repeat="message view/messages">
 
         <dl class="portalMessage info"
             tal:define="mtype message/type | nothing;"
