@@ -808,7 +808,4 @@ class EMASPortalMessage(BrowserView):
     index = ViewPageTemplateFile('templates/portalmessage.pt')
 
     def __call__(self):
-        self.messages = []
-        if hasattr(self.context, 'plone_utils'):
-            self.messages = self.context.plone_utils.showPortalMessages()
         return self.index()
