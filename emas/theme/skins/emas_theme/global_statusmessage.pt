@@ -13,7 +13,7 @@
 <div id="portal-message-esi" class="portalMessage"
     tal:condition="esi_header">
     <esi:include xmlns:esi="http://www.edge-delivery.org/esi/1.0"
-          tal:attributes="src string:${context/absolute_url}/@@emas-portalmessage" />
+          tal:attributes="src string:${portal/absolute_url}/@@emas-portalmessage" />
 </div>
 <tal:noesi condition="not:esi_header"
   replace="structure here/@@emas-portalmessage" />
