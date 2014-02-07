@@ -337,7 +337,7 @@ class Practice(BrowserView):
 
         for ms in tmpservices:
             service = self.dao.related_service(ms)
-            if '@@practice' in service.access_path:
+            if service.access_path and '@@practice' in service.access_path:
                 memberservices.append(ms)
                 services.append(service)
         return memberservices, services
