@@ -332,8 +332,8 @@ class Practice(BrowserView):
         pps = self.context.restrictedTraverse('@@plone_portal_state')
         memberid = pps.member().getId()
         service_uuids = practice_service_intids(self.context)
-        tmpservices = self.dao.get_memberservices_by_subject(memberid,
-                                                             subject)
+        tmpservices = self.dao.get_active_memberservices_by_subject(memberid,
+                                                                    subject)
 
         for ms in tmpservices:
             service = self.dao.related_service(ms)
