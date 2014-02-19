@@ -88,7 +88,7 @@ class Practice(BrowserView):
         else:
             self.accessto = ''
 
-        self.show_no_access_message = not self.services_active()
+        self.show_no_access_message = False
 
         if portal_state.anonymous():
             memberid = 'Anonymous'
