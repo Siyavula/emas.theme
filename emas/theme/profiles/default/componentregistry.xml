@@ -5,9 +5,5 @@
             interface="plone.app.users.userdataschema.IUserDataSchemaProvider"
             factory="emas.theme.userdataschema.UserDataSchemaProvider"
             />
-        <utility
-            interface="emas.theme.usercatalog.IUserCatalog"
-            factory="emas.theme.usercatalog.UserCatalog"
-            />
     </utilities>
 </componentregistry>
