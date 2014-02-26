@@ -2,6 +2,8 @@ import logging
 from DateTime import DateTime
 from types import ListType
 from zope.component.hooks import getSite
+from zope.component import getUtility
+from emas.theme.usercatalog import IUserCatalog
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme.userdataschema import IEmasUserDataSchema
@@ -22,9 +24,11 @@ def onUserInitialLogin(obj, event):
     set_welcome_message(obj, event)
     update_newsletter_subscription(obj, event)
     store_registration_date(obj, event)    
+    getUtility(IUserCatalog).index(obj)
 
 def onMemberPropsUpdated(obj, event):
     update_newsletter_subscription(obj, event)
+    getUtility(IUserCatalog).index(obj)
 
 def set_welcome_message(obj, event):
     plone_utils = getToolByName(obj, 'plone_utils')

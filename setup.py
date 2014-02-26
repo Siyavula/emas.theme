@@ -31,6 +31,7 @@ setup(name='emas.theme',
           'upfront.shorturl',
           'asciimathml',
           'ordereddict',
+          'zope.index',
       ],
       tests_require=[
         'plone.app.registry',
