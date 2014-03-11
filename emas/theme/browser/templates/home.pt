@@ -213,7 +213,7 @@
                         <span id="go-to-dashboard-text">Go to your dashboard to view your points and progress and
                                                         to chose what to practise next!</span>
                         <span id="dashboard-img"></span>
-                        <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
+                        <a href="#" tal:attributes="href string:$portal_url/@@practice/">
                             <span class="dashboard homebutton btn btn-success btn-large">Take me to my dashboard</span>
                         </a>
                     </span>
