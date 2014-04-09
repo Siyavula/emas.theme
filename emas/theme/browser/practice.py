@@ -123,7 +123,7 @@ class Practice(BrowserView):
             conn.request("GET", path, headers=headers)
         elif self.request.method == 'POST':
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            conn = httplib.HTTPConnection(practiceserver, timeout=10)
+            conn = httplib.HTTPConnection(practiceserver, timeout=30)
             conn.request("POST", path,
                          body=urlencode(self.request.form.items()),
                          headers=headers)
