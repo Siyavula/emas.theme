@@ -2,9 +2,11 @@ import logging
 from DateTime import DateTime
 from types import ListType
 from zope.component.hooks import getSite
+from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme.userdataschema import IEmasUserDataSchema
+from emas.app.usercatalog import IUserCatalog
 
 LOGGER = logging.getLogger('emas.theme:eventhandlers:')
 
@@ -48,3 +50,6 @@ def store_registration_date(obj, event):
     pm = getSite().portal_membership
     member = pm.getMemberById(memberid)
     member.setMemberProperties(mapping={"registrationdate": DateTime()})
+
+    # make sure registration date gets indexed
+    getUtility(IUserCatalog).index(obj)
