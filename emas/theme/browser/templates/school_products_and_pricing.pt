@@ -8,51 +8,50 @@
 <body>
 
     <metal:core fill-slot="main">
-        <div id="content-core" class="height-650"
+        <div id="content-core" class="height-700"
              tal:define="portal_url view/site_url">
 
-            <h3 class="center spacing">Products and pricing: teachers and schools</h3>
+            <h3 class="center spacing">School subscription pricing</h3>
             <div class="center subtitle pricing">
-                <span>Intelligent practice allows educators to track learners' progress with a personalised teacher's dashboard. <br>
-                      Our system marks learners' homework automatically and helps educators identify and target areas of <br>
-                      weakness in Maths and Science. Contact us now to sign up your class, grade or entire school.
+                <span>Subscriptions provide access to content from all grades currently available on the service. <br>
+                      That is, Maths Gr8-12 and Physical Sciences Gr10-12.
                 </span>
             </div>
 
             <div class="price-table-div">
-                <table class="pricing-table">
+                <table class="pricing-table longer-table">
                     <tr> 
-                        <th></th>
-                        <th>Maths</th>
-                        <th>Science</th>
-                        <th>Maths & Science</th>                        
-                    </tr>
-                    <tr> 
-                        <th class="underline"></th>
-                        <th class="underline">Gr 10, 11, 12</th>
-                        <th class="underline">Gr 10, 11, 12</th>
-                        <th class="underline">Gr 10, 11, 12</th>                        
+                        <th class="underline">2015 Pricing</th>
+                        <th class="underline"></th>                        
                     </tr>
                     <tr>
-                        <td class="red title">Promotional offer: <br/> 6 month subscription</td>
-                        <td class="red">R75</td>
-                        <td class="red">R75</td>
-                        <td class="red">R150</td>
-                    </tr>  
+                        <td class="grey title underline">Fewer than 180 learner subscriptions</td>
+                        <td class="grey underline">R200<br>per learner, per subject</td>
+                    </tr>
                     <tr>
-                        <td class="grey title">From January 2014: <br/> 1 year subscription</td>
-                        <td class="grey">R150</td>
-                        <td class="grey">R150</td>
-                        <td class="grey">R300</td>
+                        <td class="grey title underline">180 or more learner subscriptions; or<br>An entire department<br>
+                            <i>(i.e. Maths Gr8-12, or Physical Sciences G10-12)</i></td>
+                        <td class="grey underline">R165<br>per learner, per subject</td>
+                    </tr>
+                    <tr>
+                        <td class="grey title">Both Maths and Science departments<br>
+                            <i>(i.e. all learners for Gr8-12 Maths and Gr10-12 Physical Sciences)</i></td>
+                        <td class="grey">R150<br>per learner per, subject</td>
                     </tr>
                 </table>
             </div>
 
             <div class="price-action-text">
-                <div class="order-text">To trial or buy bulk access to the service e-mail 
-                     <a href="mailto:carine@siyavula.com?subject=Mail from EMAS Site - Trial or buy bulk access to the service">
-                     carine@siyavula.com</a>
+                <div class="order-text">To bulk-buy access to the service for your school, please e-mail
+                     <a href="mailto:will@siyavula.com?subject=Mail from EMAS Site - Buy bulk access to the service">
+                     will@siyavula.com</a>
                      or call 021 469 4748.
+                </div>
+            </div>
+            <div class="price-action-text">
+                <div class="order-text">To find out more about the practice service 
+                     <a href="#" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">
+                     click here.</a>
                 </div>
             </div>
 

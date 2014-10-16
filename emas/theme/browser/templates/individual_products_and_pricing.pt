@@ -8,54 +8,64 @@
 <body>
 
     <metal:core fill-slot="main">
-        <div id="content-core" class="height-670"
+        <div id="content-core" class="height-700"
              tal:define="portal_url view/site_url">
 
-            <h3 class="center spacing">Products and pricing: parents and learners</h3>
+            <h3 class="center spacing">Individual subscription pricing</h3>
             <div class="center subtitle pricing">
-                <span>Unlimited Maths and Science practice: track your progress, achieve higher accuracy and meet your goals. <br>
-                      Intelligent practice is curriculum aligned, allows you to work at your own level of mastery and is integrated <br>
-                      with our free online textbooks. 
+                <span>Subscriptions provide access to content from all grades currently available on the service. <br>
+                      That is, Maths Gr8-12 and Physical Sciences Gr10-12.
                 </span>
             </div>
 
             <div class="price-table-div">
                 <table class="pricing-table">
                     <tr> 
-                        <th></th>
-                        <th>Maths</th>
-                        <th>Science</th>
-                        <th>Maths & Science</th>                        
+                        <th class="underline">2014 Pricing</th>
+                        <th class="underline"></th>                        
                     </tr>
+                    <tr>
+                        <td class="grey title underline">1 year subscription for a single subject</td>
+                        <td class="grey underline">R350 per learner</td>
+                    </tr>
+                    <tr>
+                        <td class="grey title">1 year subscription to <i>both</i> Maths and Science</td>
+                        <td class="grey">R500 per learner</td>
+                    </tr>
+                </table>
+                <br/>
+                <table class="pricing-table">
                     <tr> 
-                        <th class="underline"></th>
-                        <th class="underline">Gr 10, 11, 12</th>
-                        <th class="underline">Gr 10, 11, 12</th>
-                        <th class="underline">Gr 10, 11, 12</th>                        
+                        <th class="underline">New prices in place from 1st January 2015</th>
+                        <th class="underline"></th>                        
                     </tr>
                     <tr>
-                        <td class="red title">Promotional offer: <br/> 6 month subscription</td>
-                        <td class="red">R150</td>
-                        <td class="red">R150</td>
-                        <td class="red">R300</td>
-                    </tr>  
+                        <td class="grey title underline">1 year subscription for a single subject</td>
+                        <td class="grey underline">R400 per learner</td>
+                    </tr>
                     <tr>
-                        <td class="grey title">From January 2014: <br/> 1 year subscription</td>
-                        <td class="grey">R350</td>
-                        <td class="grey">R350</td>
-                        <td class="grey">R500</td>
+                        <td class="grey title">1 year subscription to <i>both</i> Maths and Science</td>
+                        <td class="grey">R600 per learner</td>
                     </tr>
                 </table>
             </div>
+            <div class="price-action-text">
+                <div class="order-text">To find out more about the practice service 
+                     <a href="#" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">
+                     click here.</a>
+                </div>
+            </div>
 
-            <div class="order-text">
+            <!-- Not sure if they still want this copy in here -->
+
+<!--            <div class="order-text">
                 <a href="#" tal:attributes="href string:$portal_url/order" class="buy-now-link">
                     <span class="buy-now homebutton btn btn-danger btn-large">Buy now</span>
                 </a>
 
                 <b>&nbsp; OR &nbsp;</b> 
                 <a href="#" tal:attributes="href string:$portal_url/@@register">Sign up for a free trial.</a>
-            </div>
+            </div> -->
 
             <div class="pricing-tour-container">
 

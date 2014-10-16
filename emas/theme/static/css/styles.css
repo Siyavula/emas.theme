@@ -190,6 +190,10 @@ ul.submenu {
     min-height: 670px;
 }
 
+.height-700 {
+    min-height: 700px;
+}
+
 #content div.media {
     width: 100%;
 .    text-align: center;
@@ -1408,14 +1412,23 @@ div#content a.practice-link {
     margin: 0 auto;
 }
 
+.longer-table {
+    width: 680px !important;
+    margin: 0 auto;
+}
+
 .pricing-table th.underline,
 .pricing-table td {
-    border-bottom: solid 2px #000;
+    border-bottom: solid 2px #111;
+}
+
+.pricing-table td.underline.grey {
+    border-bottom: solid 2px #888 !important;
 }
 
 .pricing-table th,
 .pricing-table td {
-    text-align: center;
+    text-align: left;
 }
 
 td.red {
