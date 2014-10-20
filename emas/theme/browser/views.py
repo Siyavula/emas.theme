@@ -2,7 +2,10 @@ import json
 import hashlib
 from datetime import datetime, timedelta, date
 from DateTime import DateTime
-from zope.component import queryUtility, queryAdapter
+from Acquisition import aq_inner
+from AccessControl import getSecurityManager
+
+from zope.component import queryUtility, queryAdapter, getMultiAdapter
 from zope.component import createObject
 from z3c.relationfield.relation import create_relation
 
@@ -31,10 +34,8 @@ from siyavula.what.browser.views import DeleteQuestionView as \
     DeleteQuestionBaseView 
 
 from emas.app.browser.utils import member_credits
-from emas.app.browser.utils import practice_service_expirydate
-from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import subject_and_grade
-from emas.app.browser.utils import member_services 
+from emas.app.browser.utils import practice_service_intids
+from emas.app.memberservice import MemberServicesDataAccess
 
 from emas.theme.behaviors.annotatable import IAnnotatableContent
 from emas.theme.interfaces import IEmasSettings, IEmasServiceCost
@@ -255,16 +256,10 @@ class EnabledServicesView(BrowserView):
         if memberid is None:
             memberid = portal_state.member().getId()
         
-        ms_folder = portal_state.portal()._getOb('memberservices')
-
-        pc = getToolByName(self.context, 'portal_catalog')
-        query = {'portal_type': 'emas.app.memberservice',
-                 'memberid': memberid,
-                 'subject': subject,
-                 'path': '/'.join(ms_folder.getPhysicalPath())}
-        
-        for brain in pc(query):
-            ms = brain.getObject()
+        dao = MemberServicesDataAccess(self.context)
+        memberid = member.getId()
+        memberservices = dao.get_memberservices_by_subject(memberid, subject)
+        for ms in memberservices:
             service = ms.related_service.to_object
             st = service.service_type
             details = {'service_title': service.Title(),
@@ -326,8 +321,11 @@ class EnabledServicesView(BrowserView):
         if pmt.checkPermission(permission, context):
             return True
         
-        service_uuids = practice_service_uuids(context)
-        memberservices = member_services(context, service_uuids)
+        intids = practice_service_intids(context)
+        ps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = ps.member().getId()
+        dao = MemberServicesDataAccess(self.context)
+        memberservices = dao.get_memberservices(intids, memberid)
         # if we cannot find any memberservices the exercise link should not be
         # available.
         if memberservices is None or len(memberservices) < 1:
@@ -753,4 +751,64 @@ class IndividualProductsPricingView(BrowserView):
         return getToolByName(self.context, 'portal_url')
 
 
+class EMASPersonalBarView(ViewletBase):
+    
+    def __init__(self, context, request):
+        super(ViewletBase, self).__init__(context, request)
+        self.__parent__ = self.context.aq_parent
+        self.context = context
+        self.request = request
+        self.view = self
+        self.manager = None
+    
+    def __call__(self):
+        self.update()
+        return self.index()
 
+    def update(self):
+        super(EMASPersonalBarView, self).update()
+        context = aq_inner(self.context)
+
+        context_state = getMultiAdapter((context, self.request),
+                                        name=u'plone_context_state')
+
+        sm = getSecurityManager()
+        self.user_actions = context_state.actions('user')
+        self.anonymous = self.portal_state.anonymous()
+
+        if not self.anonymous:
+            member = self.portal_state.member()
+            userid = member.getId()
+
+            if sm.checkPermission('Portlets: View dashboard', context):
+                self.homelink_url = "%s/useractions" % self.navigation_root_url
+            else:
+                self.homelink_url = "%s/personalize_form" % (
+                                        self.navigation_root_url)
+
+            membership = getToolByName(context, 'portal_membership')
+            member_info = membership.getMemberInfo(userid)
+            # member_info is None if there's no Plone user object, as when
+            # using OpenID.
+            if member_info:
+                fullname = member_info.get('fullname', '')
+            else:
+                fullname = None
+            if fullname:
+                self.user_name = fullname
+            else:
+                self.user_name = userid
+
+
+class EMASPortalMessage(BrowserView):
+    """ Very basic browser view to give us something to call from our edge
+        side include macros.
+    """    
+
+    index = ViewPageTemplateFile('templates/portalmessage.pt')
+
+    def __call__(self):
+        self.messages = []
+        if hasattr(self.context, 'plone_utils'):
+            self.messages = self.context.plone_utils.showPortalMessages()
+        return self.index()

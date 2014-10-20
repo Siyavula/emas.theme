@@ -9,6 +9,14 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.uuid.interfaces import IUUID
 from plone.app.layout.viewlets.common import ViewletBase
 from plone.app.layout.viewlets.common import PathBarViewlet
+from plone.app.layout.links.viewlets import (
+    SearchViewlet,
+    AuthorViewlet,
+    NavigationViewlet,
+    RSSViewlet,
+    )
+from plone.app.layout.viewlets.common import PersonalBarViewlet
+
 from siyavula.what.browser.viewlets import QAViewlet as BaseQAViewlet
 from webcouturier.dropdownmenu.browser import dropdown
 from webcouturier.dropdownmenu.browser.interfaces import IDropdownMenuViewlet
@@ -151,3 +159,35 @@ class EMASPathBarViewlet(PathBarViewlet):
         if self.context.portal_type == 'rhaptos.xmlfile.xmlfile':
             return True
         return False
+
+
+""" No-op viewlets as part of EMAS optimisation.
+    We remove the links to search, author, navigation and RSS from the head
+    section.
+"""
+class EMASSearchViewlet(SearchViewlet):
+    def render(self):
+        return ''
+
+
+class EMASAuthorViewlet(AuthorViewlet):
+    
+    def render(self):
+        return ''
+
+
+class EMASNavigationViewlet(NavigationViewlet):
+    
+    def render(self):
+        return ''
+
+
+class EMASRSSViewlet(RSSViewlet):
+    
+    def render(self):
+        return ''
+
+
+class EMASPersonalBarViewlet(PersonalBarViewlet):
+    
+    index = ViewPageTemplateFile('templates/esi_personal_bar.pt')

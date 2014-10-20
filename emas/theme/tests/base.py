@@ -2,9 +2,10 @@ import unittest2 as unittest
 
 from Products.CMFCore.utils import getToolByName
 
+from plone.app.testing import TEST_USER_ID
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import IntegrationTesting
+from plone.app.testing import IntegrationTesting, FunctionalTesting
 from plone.app.testing import quickInstallProduct
 from plone.app.testing import logout, login, setRoles
 
@@ -14,7 +15,7 @@ from plone.testing import z2
 
 PROJECTNAME = "emas.theme"
 
-class TestCase(PloneSandboxLayer):
+class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
@@ -54,37 +55,23 @@ class TestCase(PloneSandboxLayer):
         self.loadZCML('overrides.zcml', package=emas.theme)
 
     def setUpPloneSite(self, portal):
+        setRoles(portal, TEST_USER_ID, ['Administrator'])
         quickInstallProduct(portal, 'emas.theme')
         self.applyProfile(portal, '%s:default' % PROJECTNAME)
+        setRoles(portal, TEST_USER_ID, ['Member'])
 
     def tearDownZope(self, app):
         z2.uninstallProduct(app, PROJECTNAME)
 
-FIXTURE = TestCase()
-INTEGRATION_TESTING = IntegrationTesting(bases=(FIXTURE,), name="fixture:Integration")
 
-TEST_USER_ID = 'emastestuser'
-TEST_USER_PWD = '12345'
+FIXTURE = Fixture()
 
-class BaseFunctionalTestCase(unittest.TestCase):
-    """
-    """
-    layer = INTEGRATION_TESTING
+INTEGRATION_TESTING = IntegrationTesting(
+    bases=(FIXTURE,),
+    name="fixture:Integration"
+    )
 
-    def setUp(self):
-        super(BaseFunctionalTestCase, self).setUp()
-        self.portal = self.layer['portal']
-        acl_users = getToolByName(self.portal, 'acl_users')
-        acl_users.userFolderAddUser(TEST_USER_ID, TEST_USER_PWD, ['Member'], [])
-        self.login(TEST_USER_ID)
-
-    def login(self, userid=None):
-        userid = userid or TEST_USER_ID
-        login(self.portal, userid)
-
-    def logout(self):
-        logout()
-
-    def setRoles(self, newroles, userid=None):
-        userid = userid or TEST_USER_ID
-        setRoles(self.portal, TEST_USER_ID, newroles)
+FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(FIXTURE,),
+    name="fixture:Functional",
+    )

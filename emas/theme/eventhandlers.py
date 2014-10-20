@@ -2,9 +2,11 @@ import logging
 from DateTime import DateTime
 from types import ListType
 from zope.component.hooks import getSite
+from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 
 from emas.theme.userdataschema import IEmasUserDataSchema
+from emas.app.usercatalog import IUserCatalog
 
 LOGGER = logging.getLogger('emas.theme:eventhandlers:')
 
@@ -21,7 +23,7 @@ def update_subscription(subscribers, new_state):
 def onUserInitialLogin(obj, event):
     set_welcome_message(obj, event)
     update_newsletter_subscription(obj, event)
-    store_initial_login_date(obj, event)    
+    store_registration_date(obj, event)    
 
 def onMemberPropsUpdated(obj, event):
     update_newsletter_subscription(obj, event)
@@ -43,10 +45,11 @@ def update_newsletter_subscription(obj, event):
     else:
         portal_groups.removePrincipalFromGroup(memberid, group_id)
 
-def store_initial_login_date(obj, event):
-
+def store_registration_date(obj, event):
     memberid = obj.getId()
     pm = getSite().portal_membership
     member = pm.getMemberById(memberid)
     member.setMemberProperties(mapping={"registrationdate": DateTime()})
 
+    # make sure registration date gets indexed
+    getUtility(IUserCatalog).index(obj)

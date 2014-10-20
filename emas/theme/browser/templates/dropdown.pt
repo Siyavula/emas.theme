@@ -20,19 +20,25 @@
         </li>
 
         <li tal:condition="python:'maths' in portal_url" id="portaltab-practice" class="plain">
-            <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard" title="Practise Maths">Practise Maths</a> 
+            <a href="#" tal:attributes="href string:$portal_url/@@practice/" title="Practise Maths">Practise Maths</a> 
             <ul class="submenu">
+                <li><a href="#" title="Grade 8" tal:attributes="href string:$portal_url/@@practice/grade-8">Grade 8</a></li>
+                <li><a href="#" title="Grade 9" tal:attributes="href string:$portal_url/@@practice/grade-9">Grade 9</a></li>
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
                 <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/@@practice/grade-11">Grade 11</a></li>
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
+                <li><a href="#" title="Learners' user guide" tal:attributes="href string:$portal_url/marketing-materials/learner-guide">Learners' user guide</a></li>
+                <li><a href="#" title="Teachers' user guide" tal:attributes="href string:$portal_url/marketing-materials/teacher-guide">Teachers' user guide</a></li>
             </ul>
         </li>
         <li tal:condition="python:'science' in portal_url" id="portaltab-practice" class="plain">
-            <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard" title="Practise Science">Practise Science</a>
+            <a href="#" tal:attributes="href string:$portal_url/@@practice/" title="Practise Science">Practise Science</a>
             <ul class="submenu">
                 <li><a href="#" title="Grade 10" tal:attributes="href string:$portal_url/@@practice/grade-10">Grade 10</a></li>
                 <li><a href="#" title="Grade 11" tal:attributes="href string:$portal_url/@@practice/grade-11">Grade 11</a></li>
                 <li><a href="#" title="Grade 12" tal:attributes="href string:$portal_url/@@practice/grade-12">Grade 12</a></li>
+                <li><a href="#" title="Learners' user guide" tal:attributes="href string:$portal_url/marketing-materials/learner-guide">Learners' user guide</a></li>
+                <li><a href="#" title="Teachers' user guide" tal:attributes="href string:$portal_url/marketing-materials/teacher-guide">Teachers' user guide</a></li>
             </ul>
         </li>
 
@@ -46,6 +52,10 @@
                     <a href="#" title="Grade 10 Mathematical Literacy" 
                        tal:attributes="href string:$portal_url/grade-10-mathematical-literacy">Grade 10 Mathematical Literacy</a>
                 </li>
+                <li tal:condition="python:'science' in portal_url">
+                    <a href="#" title="Grade 10 Life Sciences" 
+                       tal:attributes="href string:$portal_url/lifesciences/grade-10">Grade 10 Life Sciences</a>
+                </li>
             </ul>
         </li>
 
@@ -56,6 +66,7 @@
                        tal:attributes="href string:$portal_url/@@individual-products-and-pricing">For Parents and Learners</a></li>
                 <li><a href="#" title="For Teachers and Schools" 
                        tal:attributes="href string:$portal_url/@@school-products-and-pricing">For Teachers and Schools</a></li>
+                <li><a href="#" title="About Intelligent Practice" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">About Intelligent Practice</a></li>
             </ul>
         </li>
 

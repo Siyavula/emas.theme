@@ -42,6 +42,10 @@ td, th {
     float: right;
 }
 
+#login-form label {
+    width: 5em;
+}
+
 .sitetitle {
     font-family: "Montserrat", "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-weight: normal;
@@ -324,6 +328,7 @@ ul.submenu {
     border-top: 1px solid #ccc;
     height: 140px;
     white-space: nowrap;
+    clear: both;
 }
 #footer div.logo {
     margin: 30px 15px;
@@ -778,12 +783,17 @@ dl.portalMessage dt {
     background-color: red;
 }
 
+dl.info dt {
+    display: none;
+}
+
 div#expiry-warning {
     color: red;
 }
 
 div#duplicate-payment-warning {
     font-weight: bold;
+    color: red;
 }
 
 h2.spacing {
@@ -1457,7 +1467,7 @@ td.grey.title {
 }
 
 div#selectpackage {
-    margin: 0em 2em;
+    margin-left: 1em;
 }
 
 p#order-discount {
@@ -1466,10 +1476,40 @@ p#order-discount {
     padding: 0;
 }
 
+#content #send-proof-of-payment a {
+    color: black;
+}
+
+#content #redeem-voucher,
+#content #individual-order-form {
+    margin-left: 2em;
+}
+
+#content #redeem-voucher-form {
+    text-align: center;
+}
+
 #individual-order-form ul {
     list-style: none outside none;
     margin: 1em;
 }
+
+#or-line {
+    padding: 1em;
+}
+
+#or-line h3 { 
+    width:100%;
+    text-align:center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    font-weight: normal;
+    } 
+#or-line h3 span {
+    background: #fff;
+    padding: 0 10px;
+    }
 
 /* overwrite style of Login, Register, Search, Start Password Reset
    buttons to look like btn style from buttons.css */
@@ -1607,4 +1647,19 @@ input.searchPage.searchButton {
 input.standalone {
   padding: 8px 12px;
   font: 700 14px/100% Arial,Helvetica,sans-serif !important;
+}
+
+#search-form-table {
+    border: none;
+}
+
+#search-form-table.listing td,
+#search-form-table.listing tbody tr,
+#search-form-table.listing tbody tr.odd {
+    background-color: transparent;
+    border: none;
+}
+
+#search-form-table.listing label {
+    font-weight: normal;
 }

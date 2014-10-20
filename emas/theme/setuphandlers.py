@@ -98,11 +98,12 @@ def setupPortalContent(portal):
         'exclude_from_nav':True,
         'workflowid': 'simple_publication_workflow',
         'publish': True,
-        'sub_items': [{'id': 'everything-news',
-                        'type': 'EasyNewsletter',
-                        'title': 'Everything Newsletter',
-                        'exclude_from_nav':True,
-                      },
+        'sub_items': [
+        #{'id': 'everything-news',
+        #                'type': 'EasyNewsletter',
+        #                'title': 'Everything Newsletter',
+        #                'exclude_from_nav':True,
+        #              },
                      ]
         },
     ]
@@ -119,8 +120,8 @@ def setupPortalContent(portal):
 
         # Nobody is allowed to modify the constraints or tweak the
         # display here
-        folder.manage_permission(ModifyConstrainTypes, roles=[])
-        folder.manage_permission(ModifyViewTemplate, roles=[])
+        #folder.manage_permission(ModifyConstrainTypes, roles=[])
+        #folder.manage_permission(ModifyViewTemplate, roles=[])
         
         if prop_dict.get('publish', False):
             wf = getToolByName(portal, 'portal_workflow')

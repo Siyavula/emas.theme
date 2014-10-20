@@ -41,7 +41,7 @@
             information to give you better advice.</p>
         </div>
 
-        <div tal:condition="view/services_active" id="content-core"
+        <div tal:condition="not:view/show_no_access_message" id="content-core"
             tal:define="messages view/practice_service_messages">
             <dl class="portalMessage info" id="practice-service-messages" tal:condition="python:len(messages) > 0">
                 <tal:messages repeat="message messages">

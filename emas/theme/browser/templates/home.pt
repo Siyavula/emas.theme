@@ -79,7 +79,7 @@
 
                 <span tal:condition="not:context/@@plone_portal_state/anonymous" class="home-left">
                     <span id="I-want-to-text">I want to:</span>
-                    <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
+                    <a href="#" tal:attributes="href string:$portal_url/@@practice/">
                         <tal:maths tal:condition="python:'maths' in site_absolute_url">
                             <span class="practice homebutton btn btn-info btn-large">Practise Maths</span>
                         </tal:maths>
@@ -213,7 +213,7 @@
                         <span id="go-to-dashboard-text">Go to your dashboard to view your points and progress and
                                                         to chose what to practise next!</span>
                         <span id="dashboard-img"></span>
-                        <a href="#" tal:attributes="href string:$portal_url/@@practice/dashboard">
+                        <a href="#" tal:attributes="href string:$portal_url/@@practice/">
                             <span class="dashboard homebutton btn btn-success btn-large">Take me to my dashboard</span>
                         </a>
                     </span>

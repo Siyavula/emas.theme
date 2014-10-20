@@ -291,4 +291,19 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        for="*"
+        name="emas-personaltoolbar"
+        class=".views.EMASPersonalBarView"
+        template = "templates/personal_bar.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        for="*"
+        name="emas-portalmessage"
+        class=".views.EMASPortalMessage"
+        permission="zope2.View"
+        />
+
 </configure>

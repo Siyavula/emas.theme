@@ -24,11 +24,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from emas.app.browser.utils import practice_service_uuids
-from emas.app.browser.utils import member_services_for_subject
-from emas.app.browser.utils import get_subject_from_path, get_grade_from_path
+from emas.app.browser.utils import practice_service_intids
+from emas.app.browser.utils import get_subject_from_path
+from emas.app.memberservice import MemberServicesDataAccess 
 
-from emas.theme.interfaces import IEmasSettings, IMemberServiceGroup
+from emas.theme.interfaces import IEmasSettings
 
 from emas.theme import MessageFactory as _
 
@@ -66,6 +66,7 @@ class Practice(BrowserView):
         self.subject = \
             get_subject_from_path('/'.join(self.context.getPhysicalPath()))
         self.memberservices = []
+        self.dao = MemberServicesDataAccess(self.context)
         self.practice_services = []
         self.accessto = ''
 
@@ -87,7 +88,7 @@ class Practice(BrowserView):
         else:
             self.accessto = ''
 
-        self.show_no_access_message = not self.services_active()
+        self.show_no_access_message = False
 
         if portal_state.anonymous():
             memberid = 'Anonymous'
@@ -122,7 +123,7 @@ class Practice(BrowserView):
             conn.request("GET", path, headers=headers)
         elif self.request.method == 'POST':
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            conn = httplib.HTTPConnection(practiceserver, timeout=10)
+            conn = httplib.HTTPConnection(practiceserver, timeout=30)
             conn.request("POST", path,
                          body=urlencode(self.request.form.items()),
                          headers=headers)
@@ -137,6 +138,11 @@ class Practice(BrowserView):
         if tuple(path.split('/')[:2]) not in [('','static'), ('','image')]:
             self.request.RESPONSE.appendHeader('Cache-Control',
                                                'no-store, no-cache')
+        else:
+            for key in ['Cache-Control', 'Expires']:
+                value = response.getheader(key)
+                if value is not None:
+                    self.request.RESPONSE.appendHeader(key, value)
 
         if response.status == 200:   # Ok
             body = response.read()
@@ -200,49 +206,6 @@ class Practice(BrowserView):
         """
         return self.ismanager or len(self.memberservices) > 0
     
-    def get_days_to_expiry_date(self):
-        """ Sort member services according to expiry date,
-            closest to expiry first.
-            Then return the difference in days, between 'now'
-            and the member service expiry date.
-            This is naive, since the member services potentially all have
-            different expiry dates.
-
-            TODO:
-            Update the design in conjunction with the Siyavula team.
-        """
-        path = self.request.get_header('PATH_INFO', '')
-        subject = get_subject_from_path(path)
-        grade = get_grade_from_path(path)
-
-        days = self.settings.annual_expiry_warning_threshold
-        now = datetime.now().date()
-
-        for ms in self.filtered(self.memberservices, subject, grade):
-            delta = (ms.expiry_date - now).days
-            if delta < days:
-                days = delta
-        return days
-
-    def filtered(self, memberservices, subject, grade):
-        # Short circuit the filtering here. If we don't have a subject, we
-        # cannot filter properly.
-        if  subject == None:
-            return memberservices
-
-        filteredms = []
-        for ms in memberservices:
-            service = ms.related_service.to_object
-            if service.subject == subject:
-                # if we don't have a grade, we want to return this memberservice
-                if not grade:
-                    filteredms.append(ms)
-                # if we have a grade, check it
-                elif service.grade == grade:
-                    filteredms.append(ms)
-                
-        return filteredms 
-        
     def practice_service_messages(self):
         grades = [10, 11, 12]
         messages = []
@@ -321,7 +284,7 @@ class Practice(BrowserView):
         expiring_services = {}
         for ms in self.memberservices:
             if self.is_expiring(now, ms):
-                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                grade = int(self.dao.related_service(ms).grade.split('-')[-1])
                 tmpservices = expiring_services.get(grade, [])
                 tmpservices.append(ms)
                 expiring_services[grade] = tmpservices
@@ -332,7 +295,7 @@ class Practice(BrowserView):
         active_services = {}
         for ms in self.memberservices:
             if not self.is_expiring(now, ms):
-                grade = int(ms.related_service.to_object.grade.split('-')[-1])
+                grade = int(self.dao.related_service(ms).grade.split('-')[-1])
                 tmpservices = active_services.get(grade, [])
                 tmpservices.append(ms)
                 active_services[grade] = tmpservices
@@ -356,7 +319,7 @@ class Practice(BrowserView):
             we want to show the message within the,
             'monthly_expiry_warning_threshold'. 
         """
-        subperiod = memberservice.related_service.to_object.subscription_period
+        subperiod = self.dao.related_service(memberservice).subscription_period
         if subperiod <= MONTH:
             return self.settings.monthly_expiry_warning_threshold
         elif subperiod <= YEAR:
@@ -366,14 +329,15 @@ class Practice(BrowserView):
         memberservices = []
         services = []
 
-        service_uuids = practice_service_uuids(self.context)
-        tmpservices = member_services_for_subject(self.context,
-                                                  service_uuids,
-                                                  userid,
-                                                  subject)
+        pps = self.context.restrictedTraverse('@@plone_portal_state')
+        memberid = pps.member().getId()
+        service_uuids = practice_service_intids(self.context)
+        tmpservices = self.dao.get_active_memberservices_by_subject(memberid,
+                                                                    subject)
+
         for ms in tmpservices:
-            service = ms.related_service.to_object
-            if '@@practice' in service.access_path:
+            service = self.dao.related_service(ms)
+            if service.access_path and '@@practice' in service.access_path:
                 memberservices.append(ms)
                 services.append(service)
         return memberservices, services
