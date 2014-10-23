@@ -56,20 +56,16 @@
                 </div>
             </div>
 
-            <!-- Not sure if they still want this copy in here -->
-
-<!-- 
             <div class="order-text">
                 <a href="#" tal:attributes="href string:$portal_url/order" class="buy-now-link">
                     <span class="buy-now homebutton btn btn-danger btn-large">Buy now</span>
                 </a>
 
-                <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
+<!--                <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
                     <b>&nbsp; OR &nbsp;</b> 
                     <a href="#" tal:attributes="href string:$portal_url/@@register">Sign up for a free trial.</a>
-                </tal:signup>
+                </tal:signup> -->
             </div>
-            -->
 
             <div class="order-text">
                 To order hard copies of textbooks or teachers’

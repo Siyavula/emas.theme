@@ -30,13 +30,13 @@
                     </tr>
                     <tr>
                         <td class="grey title underline">180 or more learner subscriptions; or<br>An entire department<br>
-                            <i>(i.e. Maths Gr8-12, or Physical Sciences G10-12)</i></td>
+                            <i>(i.e. Maths Gr8-12, or Physical Sciences Gr10-12)</i></td>
                         <td class="grey underline">R165<br>per learner, per subject</td>
                     </tr>
                     <tr>
                         <td class="grey title">Both Maths and Science departments<br>
                             <i>(i.e. all learners for Gr8-12 Maths and Gr10-12 Physical Sciences)</i></td>
-                        <td class="grey">R150<br>per learner per, subject</td>
+                        <td class="grey">R150<br>per learner, per subject</td>
                     </tr>
                 </table>
             </div>
@@ -53,6 +53,17 @@
                      <a href="#" tal:attributes="href string:$portal_url/marketing-materials/info-brochure">
                      click here.</a>
                 </div>
+            </div>
+
+            <div class="order-text">
+                <a href="#" tal:attributes="href string:$portal_url/order" class="buy-now-link">
+                    <span class="buy-now homebutton btn btn-danger btn-large">Buy now</span>
+                </a>
+
+<!--                <tal:signup tal:condition="context/@@plone_portal_state/anonymous">
+                    <b>&nbsp; OR &nbsp;</b> 
+                    <a href="#" tal:attributes="href string:$portal_url/@@register">Sign up for a free trial.</a>
+                </tal:signup> -->
             </div>
 
             <div class="order-text">
