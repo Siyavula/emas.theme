@@ -1423,7 +1423,7 @@ div#content a.practice-link {
 }
 
 .longer-table {
-    width: 680px !important;
+    width: 700px !important;
     margin: 0 auto;
 }
 
@@ -1439,6 +1439,11 @@ div#content a.practice-link {
 .pricing-table th,
 .pricing-table td {
     text-align: left;
+    padding: 0.5em 0em !important;
+}
+
+.pricing-table td.wide {
+    width: 210px! important;    
 }
 
 td.red {
