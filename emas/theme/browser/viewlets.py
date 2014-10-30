@@ -128,7 +128,7 @@ MathJax.Hub.Config({
     jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"]
 });
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
+<script type="text/javascript" src="++resource++emas.theme.resources/MathJax-2.4-latest/MathJax.js">
 </script>
 """
 
