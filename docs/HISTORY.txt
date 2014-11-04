@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.34
+----
+
+- Update copy for school-products-and-pricing and
+  individual-products-and-pricing views.
+
+- Switch to local version of MathJax
+
 1.33
 ----
 
